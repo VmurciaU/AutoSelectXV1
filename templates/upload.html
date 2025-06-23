@@ -39,10 +39,40 @@
         </button>
       </form>
 
+      <!-- Botón de procesamiento -->
+      <form method="POST" action="/procesar">
+        <input type="hidden" name="procesar" value="true">
+        <button type="submit"
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
+           Procesar Documentos
+        </button>
+      </form>
+
+      <!-- Barra de estado -->
+      {% if processing_status %}
+      <div class="mt-6">
+        <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
+        <div class="w-full bg-gray-700 rounded-full h-4">
+          {% if processing_status == 'in_progress' %}
+            <div class="bg-yellow-400 h-4 rounded-full animate-pulse w-3/4"></div>
+          {% elif processing_status == 'done' %}
+            <div class="bg-green-500 h-4 rounded-full w-full"></div>
+          {% endif %}
+        </div>
+        <p class="text-xs mt-2 text-gray-300">
+          {% if processing_status == 'in_progress' %}
+            ⏳ Procesando documentos, por favor espera...
+          {% elif processing_status == 'done' %}
+            ✅ Procesamiento completado. Puedes continuar con las búsquedas.
+          {% endif %}
+        </p>
+      </div>
+      {% endif %}
+
       <!-- Botón buscar -->
       <form action="/buscar" method="GET">
         <button type="submit"
-                class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded transition mt-4">
+                class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
           Buscar
         </button>
       </form>

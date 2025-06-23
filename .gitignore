@@ -5,7 +5,11 @@ venv/
 __pycache__/
 *.pyc
 *.log
+venv/
+.env
+*.sqlite
 .DS_Store
+outputs/
 
 # Archivos de Jupyter
 .ipynb_checkpoints/

@@ -1,4 +1,3 @@
-# routers/upload_routes.py
 from fastapi import APIRouter, Request, UploadFile, File, Form, Depends, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.templating import Jinja2Templates
@@ -6,14 +5,17 @@ import os, shutil
 from utils.auth import get_current_user_id
 from database.conection import SessionLocal
 from models.user import User
+from scripts.pipeline_procesamiento_pdf import procesar_pdfs_por_usuario
+from fastapi import BackgroundTasks
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 UPLOAD_BASE_DIR = "outputs/session_files"
 
+# --- RENDER UPLOAD PAGE ---
 @router.get("/upload", response_class=HTMLResponse)
-def show_upload_form(request: Request):
+def show_upload_form(request: Request, processing_status: str = None):
     user_id = get_current_user_id(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=302)
@@ -25,15 +27,21 @@ def show_upload_form(request: Request):
     db.close()
 
     user_folder = os.path.join(UPLOAD_BASE_DIR, str(user_id))
-    files = os.listdir(user_folder) if os.path.exists(user_folder) else []
+    files = [
+        f for f in os.listdir(user_folder)
+        if os.path.isfile(os.path.join(user_folder, f)) and f.lower().endswith(".pdf")
+    ] if os.path.exists(user_folder) else []
 
     return templates.TemplateResponse("upload.html", {
         "request": request,
         "files": files,
         "user_name": user_name,
-        "user_rol": user_rol
+        "user_rol": user_rol,
+        "processing_status": processing_status
     })
 
+
+# --- CARGAR ARCHIVO ---
 @router.post("/upload")
 def handle_upload(
     request: Request,
@@ -52,6 +60,8 @@ def handle_upload(
 
     return RedirectResponse(url="/upload", status_code=status.HTTP_302_FOUND)
 
+
+# --- ELIMINAR ARCHIVO ---
 @router.post("/delete-file")
 def delete_file(request: Request, filename: str = Form(...)):
     user_id = get_current_user_id(request)
@@ -65,3 +75,22 @@ def delete_file(request: Request, filename: str = Form(...)):
         os.remove(file_path)
 
     return RedirectResponse(url="/upload", status_code=302)
+
+
+# --- PROCESAR ARCHIVOS (SINCRÓNICO POR AHORA) ---
+@router.post("/procesar")
+def procesar_archivos(request: Request):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=302)
+
+    # 1. Redirige para mostrar "in_progress"
+    in_progress_url = "/upload?processing_status=in_progress"
+    response = RedirectResponse(url=in_progress_url, status_code=302)
+
+    # 2. Procesa de forma síncrona (bloquea por ahora)
+    procesar_pdfs_por_usuario(user_id)
+
+    # 3. Redirige a "done"
+    done_url = "/upload?processing_status=done"
+    return RedirectResponse(url=done_url, status_code=302)
