@@ -9,10 +9,19 @@ venv/
 .env
 *.sqlite
 .DS_Store
-outputs/
+/outputs/
+/outputs/*.json
 
 # Archivos de Jupyter
 .ipynb_checkpoints/
 
 # Archivos de VSCode u otros editores
 .vscode/
+
+#Otros
+*.pyo
+*.pyd
+*.so
+build/
+dist/
+*.egg-info/
