@@ -1,17 +1,18 @@
-from fastapi import APIRouter, Request, UploadFile, File, Form, Depends, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Request, UploadFile, File, Form, status, BackgroundTasks
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from starlette.templating import Jinja2Templates
 import os, shutil
 from utils.auth import get_current_user_id
 from database.conection import SessionLocal
 from models.user import User
 from scripts.pipeline_procesamiento_pdf import procesar_pdfs_por_usuario
-from fastapi import BackgroundTasks
+from scripts.progress_tracker import get_progress, reset_progress
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 UPLOAD_BASE_DIR = "outputs/session_files"
+
 
 # --- RENDER UPLOAD PAGE ---
 @router.get("/upload", response_class=HTMLResponse)
@@ -43,10 +44,7 @@ def show_upload_form(request: Request, processing_status: str = None):
 
 # --- CARGAR ARCHIVO ---
 @router.post("/upload")
-def handle_upload(
-    request: Request,
-    file: UploadFile = File(...)
-):
+def handle_upload(request: Request, file: UploadFile = File(...)):
     user_id = get_current_user_id(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=302)
@@ -77,20 +75,26 @@ def delete_file(request: Request, filename: str = Form(...)):
     return RedirectResponse(url="/upload", status_code=302)
 
 
-# --- PROCESAR ARCHIVOS (SINCRÓNICO POR AHORA) ---
+# --- PROCESAR ARCHIVOS ---
 @router.post("/procesar")
-def procesar_archivos(request: Request):
+def procesar_archivos(request: Request, background_tasks: BackgroundTasks):
     user_id = get_current_user_id(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=302)
 
-    # 1. Redirige para mostrar "in_progress"
-    in_progress_url = "/upload?processing_status=in_progress"
-    response = RedirectResponse(url=in_progress_url, status_code=302)
+    reset_progress(user_id)  # Reinicia el progreso
 
-    # 2. Procesa de forma síncrona (bloquea por ahora)
-    procesar_pdfs_por_usuario(user_id)
+    # Ejecutar el procesamiento en segundo plano
+    background_tasks.add_task(procesar_pdfs_por_usuario, user_id)
 
-    # 3. Redirige a "done"
-    done_url = "/upload?processing_status=done"
-    return RedirectResponse(url=done_url, status_code=302)
+    # Redirige con la bandera que activa el seguimiento del progreso
+    return RedirectResponse(url="/upload?processing_status=in_progress", status_code=302)
+
+
+# --- PROGRESO PARA BARRA AJAX ---
+@router.get("/progress")
+def consultar_progreso():
+    user_id = 3  # 🔧 Forzar manualmente
+    print(f"🔧 Consulta manual de progreso para el usuario: {user_id}")
+    progreso = get_progress(user_id)
+    return JSONResponse(content={"progress": progreso})

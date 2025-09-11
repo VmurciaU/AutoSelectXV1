@@ -11,6 +11,8 @@ venv/
 .DS_Store
 /outputs/
 /outputs/*.json
+/outputs/session_files/
+requirements_full_backup.txt
 
 # Archivos de Jupyter
 .ipynb_checkpoints/
@@ -25,3 +27,7 @@ venv/
 build/
 dist/
 *.egg-info/
+
+
+# Backups o pruebas
+

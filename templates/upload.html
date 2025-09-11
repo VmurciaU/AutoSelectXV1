@@ -44,27 +44,63 @@
         <input type="hidden" name="procesar" value="true">
         <button type="submit"
                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
-           Procesar Documentos
+          Procesar Documentos
         </button>
       </form>
 
-      <!-- Barra de estado -->
-      {% if processing_status %}
+      <!-- Barra de progreso dinámica -->
+      {% if processing_status == 'in_progress' %}
       <div class="mt-6">
         <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
         <div class="w-full bg-gray-700 rounded-full h-4">
-          {% if processing_status == 'in_progress' %}
-            <div class="bg-yellow-400 h-4 rounded-full animate-pulse w-3/4"></div>
-          {% elif processing_status == 'done' %}
-            <div class="bg-green-500 h-4 rounded-full w-full"></div>
-          {% endif %}
+          <div id="barra-progreso" class="bg-yellow-400 h-4 rounded-full transition-all duration-300 ease-in-out" style="width: 0%;"></div>
+        </div>
+        <p id="mensaje-progreso" class="text-xs mt-2 text-gray-300">
+          ⏳ Procesando documentos, por favor espera...
+        </p>
+      </div>
+
+      <script>
+        function actualizarProgreso() {
+          fetch('/progress')
+            .then(res => res.json())
+            .then(data => {
+              const progreso = data.progress;
+              console.log("📡 Progreso recibido:", progreso); // 👈 esto ayuda a verificar
+      
+              const barra = document.getElementById('barra-progreso');
+              const mensaje = document.getElementById('mensaje-progreso');
+      
+              barra.style.width = progreso + '%';
+      
+              if (progreso >= 100) {
+                mensaje.textContent = '✅ Procesamiento completado. Redirigiendo...';
+                setTimeout(() => {
+                  window.location.href = '/upload?processing_status=done';
+                }, 1500);
+              } else {
+                setTimeout(actualizarProgreso, 1000);
+              }
+            })
+            .catch(err => {
+              console.error("Error al consultar progreso:", err);
+              setTimeout(actualizarProgreso, 2000); // reintenta tras error
+            });
+        }
+      
+        window.addEventListener('load', () => {
+          actualizarProgreso();
+        });
+      </script>
+      
+      {% elif processing_status == 'done' %}
+      <div class="mt-6">
+        <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
+        <div class="w-full bg-gray-700 rounded-full h-4">
+          <div class="bg-green-500 h-4 rounded-full w-full"></div>
         </div>
         <p class="text-xs mt-2 text-gray-300">
-          {% if processing_status == 'in_progress' %}
-            ⏳ Procesando documentos, por favor espera...
-          {% elif processing_status == 'done' %}
-            ✅ Procesamiento completado. Puedes continuar con las búsquedas.
-          {% endif %}
+          ✅ Procesamiento completado. Puedes continuar con las búsquedas.
         </p>
       </div>
       {% endif %}
