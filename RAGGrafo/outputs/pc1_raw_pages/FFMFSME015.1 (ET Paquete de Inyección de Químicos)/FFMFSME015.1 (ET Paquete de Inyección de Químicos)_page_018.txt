@@ -1,0 +1,29 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 12 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+6. Alcance del suministro
+El PROVEEDOR deberá suministrar totalmente nuevos y con todos los accesorios, insumos y equipos
+asociados para su correcto funcionamiento, probar y realizar la asistencia técnica en SITIO durante la
+instalación, comisionamiento y puesta en marcha del PAQUETE incluyendo, pero no limitándose a los
+siguiente.
+6.1. Equipos y Componentes
+ Seis (6) bombas dosificadoras de químico de acuerdo con API STD 675
+ Seis (6) motores eléctricos de las bombas.
+ Tres (3) tanque de almacenamiento portátil tipo IBC (bulkdrum) para almacenamiento de químicos.
+ Conexión rápida entre tanque de almacenamiento de químico y múltiple (manifold) de succión bombas
+de dosificación.
+ Seis (6) boquillas de inyección de químico en tubería con su respectivo atomizador (Quill de inyección).
+ Toda la instrumentación y válvulas de control necesarias para la operación del PAQUETE.
+ Todo el cableado eléctrico de control dentro del límite de batería del PAQUETE.
+ Todas las tuberías de interconexión dentro del límite de batería del PAQUETE.
+ Cajas de conexionado (junction boxes) Explosion Proof
+ Terminales para puesta a tierra.
+6.2. Servicios y Misceláneos
+ Placa de identificación.
+ Preparación de superficie y pintura de acuerdo con el numeral 6.8 de esta especificación.
+ Herramientas especiales (Si aplica).

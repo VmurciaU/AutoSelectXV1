@@ -1,0 +1,19 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 11 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Equipos Voltajes
+Alimentación principal de baja 480 VAC, 60 Hz, 3 Fases + Tierra (*)
+tensión
+Panel de Control 120 VAC, 60 Hz voltaje regulado 1 Fases + Neutro + Tierra
+Tabla 2. Suministro de Energía Eléctrica
+(*) Cualquier otro sistema de voltaje requerido debe ser derivado internamente por el VENDEDOR.
+5.7. Área Disponible
+El PAQUETE de inyección de químicos deberá ser instalado en el CPF CUPIAGUA dentro de la zona N°5
+funcionando para el nuevo equipo de compresión de gas de proceso, según el plano FFD/F-PCF-MP-PIL-
+10-822-1/1.
+El área disponible estimada es un rectángulo de aproximadamente 3.1 m x 4.5 m para la instalación del
+PAQUETE como se muestra a continuación. El VENDEDOR deberá considerar esto para preparar el
+arreglo general de los equipos del PAQUETE asegurando áreas de mantenimiento y operativas:
+Figura 2. Área disponible para el PAQUETE. (ver FFD/F-PCF-MP-PIL-10-822-1/1)

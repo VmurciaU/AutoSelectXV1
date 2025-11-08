@@ -1,0 +1,30 @@
+DESCRIPCIÓN,"CON LA
+OFERTA","PRIMERA EMISIÓN DESPUES DE LA
+ORDEN DE COMPRA",,,"EMISIÓN FINAL
+(5)"
+,,"FECHA
+DE
+EMISIÓN
+(2)","PROPÓSITO
+(3)","CANTIDAD
+TIPO
+(4)","CANTIDAD
+TIPO
+(4)"
+"Lista de comentarios, desviaciones y excepciones a
+esta requisición y sus anexos, sin esta información
+las propuestas serán rechazadas (*)",X,-,IFR,E,-
+"Cronograma de ingeniería, adquisición, fabricación y
+pruebas",X,+2Sem,IFR,E,-
+Plan de calidad y certificación del sistema de calidad,,+2Sem,IFR,-,E
+Sub-proveedor y lista de proveedores principales,,-,IFR,E,E
+Calificación de sub-proveedores,,+4Sem,IFR,-,E
+Literatura/Catálogos del equipo y componentes,X,-,IFR,E,E
+Placa de identificación,,+4Sem,IFR,E,E
+"Planos de arreglos generales del PAQUETE (*) con
+pesos, dimensiones, listado de partes y materiales
+referenciales",X,+3Sem,IFR,E,E
+"Planos detallados del PAQUETE con pesos,
+dimensiones, listado de partes y materiales",,+6Sem,IFR,E,E
+"Modelo 3D del paquete adecuado para ser integrado
+en Smart Plan",,+6Sem,IFR,E,E

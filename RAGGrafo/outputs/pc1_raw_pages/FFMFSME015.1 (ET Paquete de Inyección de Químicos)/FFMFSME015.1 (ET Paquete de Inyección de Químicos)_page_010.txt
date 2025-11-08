@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 4 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+3. Documentos de Referencia
+El PAQUETE que se suministrará debe estar diseñado, fabricado y probado de acuerdo con la última
+versión vigente y en uso de los siguientes códigos, estándares y documentos del proyecto.
+El VENDEDOR deberá identificar y referenciar, en la oferta, cualquier otro estándar, especificación o
+código que no se mencione en esta especificación técnica.
+EL VENDEDOR deberá tener en cuenta el orden de jerarquías para la solución de discrepancias entre
+este documento y los que se incluyan en la requisición de material del PAQUETE considerando que existen
+otros documentos complementarios que formaran parte para el suministro de este que no se encuentran
+indicados en este documento.
+La versión de los documentos referenciados deberá ser la última actualización a la fecha de la firma del
+acuerdo de suministro del PAQUETE con el CLIENTE.
+El VENDEDOR deberá indicar cualquier conflicto entre los códigos, estándares, o cualquier otro
+documento normativo que se referencia esta especificación técnica.
+El VENDEDOR deberá informar al CLIENTE y/o su representante sobre el conflicto de manera escrita, en
+el periodo de aclaraciones del proceso de licitación a través de una lista de desviaciones.
+La última versión de los códigos y estándares internacionales (según corresponda) como ASME, API,
+ASTM, ISO, IEEE, AWS, IEC, etc. son obligatorios y se deben cumplir íntegramente en este suministro.
+3.1. Códigos y Estándares
+3.1.1. American Petroleum Institute (API)
+ API STD 520 Sizing, Selection and Installation or Pressure-Relieving Valves in Refineries
+ API STD 526 Flanged Steel Pressure Relief Valves
+ API STD 614 Lubrication, Shaft-Sealing and Oil-control Systems and Auxiliaries
+ API STD 670 Machinery Protection Systems
+ API STD 675 Positive Displacement Pumps – Controlled Volume
+ API STD 686 Machinery Installation and Installation Design
+ API RP500 Recommended Practice for Classification of Locations for Electrical Installations
+at Petroleum Facilities classified as Class I Division 1 and Division 2
+3.1.2. American Society of Mechanical Engineers (ASME)
+ Boilers and Pressure Vessel Code – BPVC

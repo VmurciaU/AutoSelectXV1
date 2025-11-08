@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 29 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Cumplirán con los requerimientos del código ASME sección VIII, Div. I, API RP-520, 526 y 527. El tamaño
+de la válvula se definirá por el cálculo del orificio de la tecnología de bombeo que seleccione el
+VENDEDOR.
+El tipo de válvula (Safety, Relief, Safety-Relief, Thermal-Relief, Pressure and Vacuum Break), el diseño de
+la válvula (resorte cargado u operada por piloto), el tipo de sello (blandos o metálicos) y las demás
+características de la válvula, como materiales, tipos de conexión y rating de presión, serán seleccionados
+de acuerdo con el servicio, con la especificación de tuberías y la función requerida por el PAQUETE.
+El VENDEDOR deberá verificar con los fabricantes que los instrumentos seleccionados no requieran
+accesorios especiales y que su precisión no sea afectada durante la operación bajo las condiciones de
+dosificación.
+El área requerida del orificio mínimo se determinará de acuerdo con API RP 520, Parte I. El VENDEDOR
+deberá incluir la capacidad de la válvula y el tamaño del orificio en la oferta.
+Los límites de presión en la entrada y la salida estarán regidos por: los límites de presión/temperatura de
+la brida (ej: Aplicable rating ASME B16.5) o por los límites del diseño del VENDEDOR.
+Las caras de las bridas y las dimensiones deberán estar de acuerdo con ASME B16.5.
+El material del trim normalmente es acero inoxidable 316. Otros grados de acero inoxidable se pueden
+utilizar, dependiendo de la aplicación, según aprobación del CLIENTE.
+7.7.4. Clasificación Eléctrica de Instrumentos
+Todos los aparatos electrónicos instalados deben estar equipados con la protección adecuada para cumplir
+con el requisito de la clasificación del área eléctrica especificada en la Hoja de Datos N° FFM/F-MEX-033,
+exigencias de las condiciones ambientales del sitio y tropicalizados para humedad y hongos. Así mismo,
+deberán contar con los certificados de aprobación.
+Se deberán validar los materiales con respecto al piping class del proyecto.
+El tipo de protección eléctrica a ser implementada será para intemperie sin protección de techo.
+La protección mecánica mínima de los instrumentos y equipos instalados en sitio deberá ser NEMA 4X.
+7.8. Pintura y Recubrimiento
+El VENDEDOR debe presentar su procedimiento de pintura y recubrimiento de protección de superficies
+para aprobación del CLIENTE antes de iniciar los trabajos, como mínimo deberá cumplir con la norma ISO
+12944 clasificación C5 – I Very high / Industrial Areas con altos niveles de humedad.

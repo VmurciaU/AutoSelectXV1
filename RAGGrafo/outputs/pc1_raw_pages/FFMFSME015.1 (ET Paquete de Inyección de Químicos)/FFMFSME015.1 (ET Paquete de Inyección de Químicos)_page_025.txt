@@ -1,0 +1,41 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 19 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7.3. Mecánica
+Se requiere de un PAQUETE que realice la inyección de inhibidor de corrosión en fase gaseosa para seis
+(6) puntos en diferentes ubicaciones dentro del tren dos de separación y el nuevo compresor de gas de
+proceso M155-K-21150.
+Las bombas no cuentan con respaldo, operarán en configuración 1+0 cada uno de los seis (6) puntos de
+inyección contemplados a la fecha de emisión de este documento.
+7.3.1. Bombas de dosificación
+El PAQUETE de inyección de químicos contará con bombas de desplazamiento positivo tipo dosificación
+según API STD 675 capaces de suministrar inhibidor de corrosión en las líneas indicadas, la inyección
+deberá cumplir con las condiciones del proceso (ver Tabla 4) y cada bomba debe tener la opción de regular
+manualmente la longitud de los émbolos para ajustarse a las condiciones necesarias de dosis.
+En la descarga de cada una de las bombas deberá ser incluido un medidor de calibración, para comprobar
+los caudales de inyección de la bomba. Cada bomba estará provista de una válvula de alivio de presión
+(PSV) y un transmisor de presión para generar alarma y protección por alta alta o baja presión con el fin
+de proteger la bomba y la tubería a la descarga de sobrepresiones o por evento de fuga/ruptura se genere
+la parada del PAQUETE.
+El modelo de la bomba debe ser el mismo o similar a otras bombas producidas regularmente por el
+VENDEDOR.
+La precisión de la dosificación de químico deberá ser de ± 1% dentro del rango comprendido entre el 100%
+‐ 10% de la capacidad nominal de la bomba (turndown ratio 10:1), según lo establecido en la API STD 675.
+Las bombas deben ser diseñadas para operar continuamente 24 horas.
+A continuación, se listan las condiciones establecidas para la operación de las bombas de dosificación del
+PAQUETE.
+Paquete de inyección de
+Unidad P-5540 P-5541 P-5542 P-5543 P-5544 P-5545
+inhibidor de corrosión
+Capacidad mínima de
+GPD 0.1 0.1 0.01 0.1 0.3 0.1
+bombeo
+Capacidad máxima de
+GPD 2.0 1.0 0.51 1.0 3.0 2.0
+bombeo
+Temperatura de entrada °F 85 85 85 85 85 85

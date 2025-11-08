@@ -1,0 +1,49 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PAQUETE: Hace referencia al conjunto de equipos, instrumentos, controles, componentes eléctricos,
+tuberías y todos los elementos requeridos para conformar un ensamble completo e integrado de
+inyección de químicos que se describen en el alcance del suministro indicado en esta requisición de
+materiales.
+SITIO: Describe las condiciones de las instalaciones y áreas donde se ejecutará el proyecto, en este
+caso es el CPF Cupiagua localizado en Aguazul, departamento de Casanare, Colombia.
+1.3. ORDEN DE PREVALENCIA
+El proveedor deberá aplicar para la resolución de conflictos el siguiente orden de prevalencia, siendo la
+mayor prevalencia el número 1:
+1. Las leyes y reglamentos legales y gubernamentales locales
+2. Códigos y estándares industriales
+3. Hojas de datos y diagramas de tubería e instrumentación, última revisión.
+4. Esta requisición de materiales, en su última revisión.
+5. Especificación técnica
+6. Orden de compra
+En caso de conflicto entre los requerimientos de esta requisición y alguno de los documentos,
+referenciados que forman parte de la requisición de materiales, el PROVEEDOR notificará
+inmediatamente al ECOPETROL por escrito de los conflictos identificados para su resolución, los cuales
+deben quedar resueltos en la reunión de lanzamiento (siglas en inglés KOM), cuando aplique.
+2. ALCANCE DEL SUMINISTRO
+2.1. ALCANCE GENERAL
+A continuación, se describe el listado general alcance de suministro objeto de esta requisición de
+materiales. El listado particular de componentes se indica en la sección “10.1 lista del alcance”.
+Ítem Cantidad Unidad TAG Descripción Código de Catálogo
+ECOPETROL
+1 UNO (1) UN M156CIP-5503 Paquete de Inyección de Químicos
+EDP-F-046 – 20/11/2017 V-1 5/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

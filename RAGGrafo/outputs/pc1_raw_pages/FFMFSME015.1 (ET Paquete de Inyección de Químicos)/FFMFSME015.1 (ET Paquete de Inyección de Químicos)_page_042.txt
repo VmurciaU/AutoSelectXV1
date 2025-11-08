@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 36 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+11. Embalaje, Conservación y Preparación para el Envío
+El VENDEDOR será responsable de la preparación para el envío, incluido el embalaje, la protección, la
+conservación, el etiquetado y el marcado de todos los componentes alcance del suministro.
+Las limitaciones de transporte para el proyecto son:
+Descripción Ancho Largo Alto (Nota 1)
+No requiere permiso de transporte Máximo 2.6 m Sobresaliendo hacia atrás Máximo 4.4 m
+Max. 1 m
+Requiere inscripción en el registro Entre 2.6 y 3.6 m Sobresaliendo hacia atrás Máximo 4.4 m
+de operadores entre 1 m y 2 m
+Requiere procedimiento de Mas de 3.6m Sobresaliendo hacia atrás Mas de 4.4 m
+autorización entre 2 m and 3 m
+El permiso no está autorizado - Sobresaliendo al frente en -
+cualquier longitud
+Nota 1: Incluye la altura del vehículo
+Tabla 5. Restricciones de Transporte - Fuente: "Resolución 4959 de 2006"
+El VENDEDOR deberá proporcionar una protección adecuada para los componentes fabricados en el taller
+para el transporte, el envío y el almacenamiento en el CPF Cupiagua.
+Los certificados de prueba de carga deberán ser enviados con todos los equipos requeridos de elevación,
+barras esparcidoras, eslingas y grilletes.
+Se enviará una copia impresa del manual de instalación y operación con el PAQUETE.
+11.1. Embalaje
+El componente deberá embalarse de forma segura para su envío desde la ubicación del VENDEDOR
+hasta el destino que indique el CLIENTE. Todas las partes y componentes deben protegerse de daños por
+manipulación. Todo embalaje deberá ser adecuado para el transporte marítimo y deberá ajustarse a los
+requisitos de embalaje de exportación.
+Toda parte y componente del PAQUETE debe embalarse de manera que sea posible manipularlo con grúa
+y/o equipo de izaje. Si existe riesgo de daños en los componentes y otros accesorios durante el transporte,
+se desmontarán y etiquetarán. Todos los componentes se embalarán de forma segura como se indica
+anteriormente.

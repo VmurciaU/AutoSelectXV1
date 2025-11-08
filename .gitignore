@@ -29,5 +29,10 @@ dist/
 *.egg-info/
 
 
+# Pdf documentos base especificaciones
+*.pdf
 # Backups o pruebas
+
+#Tiene la Key 
+RAGGrafo/scripts/key.txt
 

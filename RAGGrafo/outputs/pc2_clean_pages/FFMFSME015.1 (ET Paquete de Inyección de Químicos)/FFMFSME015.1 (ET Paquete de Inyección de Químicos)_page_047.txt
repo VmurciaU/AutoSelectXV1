@@ -1,0 +1,38 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 41 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Las funciones y descripciones de funcionamiento abordarán específicamente cuestiones como el arranque
+y apagado rutinarios, la supervisión y solución de problemas de rutina, así como las funciones de control
+manual y automático. Sin embargo, dará una visión general en el documento de filosofía de operación y
+control del PAQUETE.
+Las instrucciones de mantenimiento menores que normalmente se clasifican como tareas rutinarias de
+mantenimiento o supervisión formarán parte de este manual.
+b) Volumen 2
+Este volumen contendrá instrucciones y procedimientos de funcionamiento detallados relacionados
+específicamente con la puesta en marcha, el control y la supervisión del sistema de control de procesos,
+así como con las respuestas de emergencia. Se facilitarán diseños esquemáticos que muestren la
+ubicación de los dispositivos de parada de emergencia.
+c) Volumen 3
+Este volumen contendrá copias de dibujos / documentos clave a los que el personal operativo hace
+referencia comúnmente. Todos los planos deberán tener como mínimo un tamaño A3 y ser claramente
+legibles y en formato incorporado. Los siguientes planos / documentos se dan como una guía mínima y no
+constituyen totales requeridos:
+ Diagramas de tuberías e instrumentos para sistemas de procesos, servicios públicos y drenajes.
+ Condiciones límite de la batería (incluyendo presión / temperatura / caudal y composiciones).
+ Unidades detalladas de puesta en marcha, control, apagado y reinicio de esquemas / diagramas
+lógicos, arquitectura de control, diagramas de conexión.
+ Lista de equipos, hojas de datos de equipos.
+ Hojas de datos de instrumentos y cálculos de dimensionamiento.
+ Planos típicos para instalación de instrumentos, armarios eléctricos, controlador.
+ Programación de instrumentos (número de TAG, marca, número de modelo, rango de calibración, punto
+de ajuste y servicio como mínimo).
+ Planos de terminación de la caja de conexiones del instrumento y diagramas de cableado.
+ Diagramas eléctricos de una sola línea, lista de consumidores eléctricos, programación de cables, lista
+de materiales.
+ Simplificación de los esquemas generales de control del PAQUETE.
+ Cronograma de equipos y sus condiciones normales de operación y calificaciones de diseño.
+ Plot plan y distribución de equipos.
+ Planos de Disposición General de Equipos.
+ Esquemas de control, diagramas de causa y efectos, diagramas de jerarquía y mapa.

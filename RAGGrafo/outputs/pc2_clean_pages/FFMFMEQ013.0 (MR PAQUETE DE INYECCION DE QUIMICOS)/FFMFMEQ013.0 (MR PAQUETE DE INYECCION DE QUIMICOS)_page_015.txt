@@ -1,0 +1,40 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+- Manifold de succión
+- Caja de conexión (JB) de potencia, suministrada por el PROVEEDOR.
+- Caja de conexión, tablero de control.
+- Punto de entrega de drenajes del PAQUETE, incluyendo válvula.
+- Agujeros para pernos de anclaje del patín.
+- Orejas de puesta a tierra del patín.
+- Bloque de terminales dentro del panel de control (WHCP) local con prensa cables.
+5.8. REQUERIMIENTOS DE PRE Y COMISIONAMIENTO
+El PROVEEDOR deberá incluir en la oferta, en un ítem aparte la asistencia técnica durante el pre
+comisionamiento, comisionamiento y puesta en marcha.
+Los requerimientos mínimos de certificación a tener en cuenta en las etapas de precomisionamiento y
+comisionamiento serán los estipulados en la normativa y estándares del CLIENTE aplicables, y las
+recomendaciones suministradas por el PROVEEDOR. El PROVEEDOR debe presentar para aprobación del
+CLIENTE las listas de chequeo para las actividades de precomisionamiento y comisionamiento del
+PAQUETE.
+El PROVEEDOR deberá suministrar los consumibles requeridos para el pre y comisionamiento del
+equipo, que deben estar incluidos en el juego de repuestos y consumibles para arranque del PAQUETE.
+6. PRESERVACIÓN, EMPAQUE, MARQUILLADO, IZAJE Y TRANSPORTE
+El PROVEEDOR es responsable del empaque del PAQUETE y los materiales suministrados. El
+PROVEEDOR debe incluir en su oferta el transporte al SITIO.
+El PAQUETE y sus componentes deben ser limpiados previamente a su despacho y ser preparados y
+empacados para su conservación a la intemperie en ambiente tropical por un mínimo de doce meses.
+Todas las superficies externas deben recubrirse adecuadamente y todas las bridas/boquillas abiertas
+deben estar tapadas.
+Otros requerimientos para la preservación, empaque, marquillado, izaje y transporte del PAQUETE
+están descritos en la especificación técnica particular de este N° FFM/F-S-ME-015.
+7. REQUERIMIENTOS DE QA E INSPECCIÓN
+7.1. SISTEMA DE ADMINISTRACIÓN DE LA CALIDAD (QMS)
+EDP-F-046 – 20/11/2017 V-1 15/20

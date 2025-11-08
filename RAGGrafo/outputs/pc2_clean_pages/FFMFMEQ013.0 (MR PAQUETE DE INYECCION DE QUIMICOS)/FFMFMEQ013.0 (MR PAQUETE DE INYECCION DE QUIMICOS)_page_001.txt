@@ -1,0 +1,31 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+CAMBIOS
+SECCIÓN DESCRIPCIÓN
+REQUERIMIENTOS DE INSPECCIÓN:
+Nivel de criticidad:
+Criterio de disponibilidad operacional: Equipo no crítico.
+Criterio de criticidad por seguridad de proceso: Equipo no crítico
+Es requerida inspección: SI
+Nivel de inspección: 3
+Requerimientos especiales para la inspección: NO
+REVISIONES:
+EMITIDO PARA
+0 01-11-2023
+COMPRA
+OAH MSC OVM
+EMITIDO PARA
+A1 COMENTARIOS DEL 13-09-2022
+CLIENTE
+MSC OVM OCA
+REV. DESCRIPCIÓN ELABORÓ REVISÓ APROBÓ FECHA
+EDP-F-046 – 20/11/2017 V-1 1/20

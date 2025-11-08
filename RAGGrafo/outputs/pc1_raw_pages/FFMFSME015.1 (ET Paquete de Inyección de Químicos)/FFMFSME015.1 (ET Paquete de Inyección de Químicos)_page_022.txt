@@ -1,0 +1,38 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 16 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7. Requerimientos Técnicos
+7.1. General
+El VENDEDOR es el responsable de diseñar a detalle, suministrar, fabricar, ensamblar, empacar,
+despachar, realizar el control de calidad, las pruebas operativas, entregar la documentación y prestar
+asistencia técnica en sitio durante la instalación, el comisionamiento, puesta en marcha y pruebas en sitio
+del PAQUETE.
+El VENDEDOR también es totalmente responsable de la selección y el control de calidad de todos los
+materiales, incluidos los consumibles, soldaduras, pruebas, dispositivos de protección, maquinaria,
+herramientas y todos los materiales y servicios necesarios para completar el suministro funcional, seguro
+y confiable del PAQUETE, así estén o no indicados explícitamente en esta especificación y los demás
+documentos de referencia indicados en el capítulo 3, incluso los proporcionados por SUB-VENDEDORES.
+Todas las consideraciones de diseño, métodos de fabricación y pruebas del PAQUETE estarán sujetas a
+revisión, comentarios y aprobación del CLIENTE.
+Todas las propuestas se elaborarán y presentarán de acuerdo con esta especificación y la hoja de datos,
+requisición de materiales y demás documentos de referencia indicados en el capítulo 3. El VENDEDOR
+puede presentar diseños alternativos que se consideren iguales o mejores que el diseño especificado en
+este documento, pero debe presentarse la propuesta base de diseño requerida por el CLIENTE como
+mandatoria y en caso de alguna alternativa debe presentarse por separado incluyendo la justificación
+técnica y económica detallada resaltando las ventajas fundamentales.
+El VENDEDOR deberá suministrar en su oferta todas las dimensiones principales del paquete y equipos
+asociados, detalles preliminares y estimados de instalación y pesos, espacios de operación y
+mantenimiento, superior y lateral.
+Cualquier excepción a esta especificación deberá ser explícita y claramente establecida e indicada por
+escrito en una sección separada de la propuesta.
+El VENDEDOR ofrecerá equipos probados y de línea de fabricación estándar. El VENDEDOR
+proporcionará su experiencia similar al suministro requerido junto con detalles completos en su propuesta
+para establecer la experiencia del modelo ofrecido. A menos que el CLIENTE indique lo contrario, no se
+aceptan prototipos o equipos no probados que no tengan un historial operativo bien establecido de más
+de dos (2) años continuos. El VENDEDOR deberá demostrar que los equipos ofrecidos son modelos
+probados y con suficientes referencias de uso operativo para aplicaciones similares.

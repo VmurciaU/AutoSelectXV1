@@ -1,0 +1,256 @@
+{
+  "api": "http://localhost:8777",
+  "style": "concise",
+  "results": [
+    {
+      "question": "¿La especificacion solicita bombas dosificadoras? Dame los Tags, las cantidades y cual parte del documento son solicitadas",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 6.796447515487671,
+          "response": "- **Bombas dosificadoras solicitadas**: Sí. \n- **Cantidad**: Seis (6) bombas.\n- **Tag de las bombas**: P-5540, P-5541, P-5542, P-5543, P-5544, P-5545.\n- **Especificación Normativa**: Las bombas deben cumplir con **API STD 675**.\n- **Condiciones de operación**: Capacidad de dosificación entre **0.1 GPD** (mínima) y **3.0 GPD** (máxima) según la unidad específica.\n- **Referencia en el documento**: Detallado en la sección **6.1. Equipos y Componentes** del documento FFM/F-S-ME-015.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 8.069847583770752,
+          "response": "- **Bombas Dosificadoras de Químico**: Seis (6) bombas de inyección de químicos.\n- **Tag**: M156CIP-5503.\n- **Norma/Referencia**: De acuerdo con API STD 675.\n- **Sección del Documento**: 1. Introducción, 6. Alcance del suministro.\n- **Requisito específico**: Precisión de dosificación de ± 1% dentro del rango 10%-100% de la capacidad nominal de la bomba (turndown ratio 10:1).\n- **Condiciones de operación**: Operación continua 24 horas.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 9.350277423858643,
+          "response": "- **Tipo y Cantidad de Bombas Dosificadoras:** Seis (6) bombas dosificadoras de químico.\n- **Norma:** Deben cumplir con API STD 675.\n- **Tags:**\n  - P-5540\n  - P-5541\n  - P-5542\n  - P-5543\n  - P-5544\n  - P-5545\n- **Referencia del Documento:** Especificación Técnica Paquete de Inyección de Químicos M156CIP-5503, sección sobre Equipos y Componentes.\n- **Documentos Relacionados:** FFM/F-S-ME-015 especificación técnica.\n- **Condiciones de Operación:** Cada bomba suministrará inhibidor de corrosión a seis (6) corrientes.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 13.888585567474365,
+          "response": "- **Bombas dosificadoras**: Se requieren **seis (6)** bombas dosificadoras de químico.\n- **Norma**: Deben cumplir con **API STD 675**.\n- **Tags de las Bombas**: \n  - P-5540\n  - P-5541\n  - P-5542\n  - P-5543\n  - P-5544\n  - P-5545\n- **Sección del documento**: Se menciona en la **Especificación Técnica Paquete de Inyección de Químicos**, documento con referencia **FFM/F-S-ME-015**.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "¿Cuál es el caudal nominal, presión de trabajo, viscosidad y el turndown de la o las bombas dosificadoras?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 8.024449110031128,
+          "response": "- **Caudal nominal**: \n  - Bombas P-5540 y P-5544: 2.0 GPD \n  - Bombas P-5541 y P-5543: 1.0 GPD \n  - Bomba P-5542: 0.51 GPD \n  - Bomba P-5545: 3.0 GPD\n\n- **Pressión de trabajo**: \n  - Bombas P-5540: 75 psig \n  - Bombas P-5541: 67 psig \n  - Bomba P-5542: 137 psig \n  - Bombas P-5543 y P-5545: 150 psig \n  - Bomba P-5544: 80 psig \n\n- **Viscosidad**: No especificado.\n\n- **Turndown ratio**: 10:1.\n\n- **Precisión de dosificación**: ± 1% dentro del rango de 10%-100% de la capacidad nominal según API STD 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 6.74638819694519,
+          "response": "- **Caudal nominal**: No especificado.\n- **Presión de trabajo**:\n  - Máxima: 150 psig (para ciertos puntos de inyección).\n  - Mínima: 1 psig (para ciertos puntos de inyección).\n- **Viscosidad**: No especificado.\n- **Turndown**: 10:1, con una precisión del ± 1% según API STD 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 7.3562071323394775,
+          "response": "- **Caudal nominal**: No especificado.\n- **Presión de trabajo**: Máxima presión de descarga de 150 psig (Unidad P-5543) y 75 psig (Unidad P-5540 y P-5541).\n- **Viscosidad**: No especificado.\n- **Turndown ratio**: 10:1, con una precisión de ± 1% según norma API 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 23.15429401397705,
+          "response": "- **Caudal nominal**: Entre 0.1 GPD y 3.0 GPD, dependiendo de la unidad (P-5540 a P-5545).\n- **Presión de trabajo**: Hasta 150 psig máxima de descarga (para algunas bombas).\n- **Viscosidad**: No especificado.\n- **Turndown**: Ratio de 10:1, con precisión de dosificación de ± 1% según API STD 675.\n- **Condiciones de operación**: Las bombas deben operar continuamente durante 24 horas.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "¿Qué normas aplican a FAT y cómo se vinculan con el paquete de inyección?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 7.781134366989136,
+          "response": "- Las pruebas de aceptación de fábrica (FAT) deben realizarse de acuerdo con las normas asociadas del VENDEDOR y su cumplimiento con las especificaciones técnicas del paquete de inyección de químicos.\n\n- Entre las normas relevantes se incluye API STD 675, que se refiere a las bombas de desplazamiento positivo y está relacionada con el diseño y construcción del sistema de dosificación.\n\n- El VENDEDOR debe proporcionar procedimientos de pruebas al CLIENTE para aprobación, que deben ser acordados con una antelación de dos (2) semanas.\n\n- Los procedimientos de FAT incluirán formatos de registro de datos específicamente preparados para las pruebas correspondientes.\n\n- Las inspecciones y pruebas requeridas están detalladas en las especificaciones técnicas FFM/F-S-ME-015.\n\n- La aceptación del desempeño, funcionamiento mecánico y pruebas de funcionamiento no eximen al VENDEDOR de cumplir con las condiciones de operación especificadas.\n\n- Se realizarán pruebas de presión conforme a las especificaciones pertinentes, garantizando que no se realicen reparaciones después de las pruebas hidrostáticas.\n\n- El CLIENTE se reserva el derecho de presenciar estas pruebas, asegurando un control total sobre la calidad del paquete de inyección entregado.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 13.621030807495117,
+          "response": "- **Pruebas FAT (Factory Acceptance Testing)**: El documento EDP-F-046 estipula que el VENDEDOR debe llevar a cabo pruebas FAT para asegurar que el PAQUETE de inyección cumple con las especificaciones técnicas.\n\n- **Estándares de Inspección**: Las inspecciones y pruebas requeridas se indican en las especificaciones técnicas FFM/F-S-ME-015, que guía sobre los procedimientos necesarios para la aceptación del paquete.\n\n- **Normativa de Calidad**: El VENDEDOR debe cumplir con lo estipulado en el documento EDP-ET-001-i, que establece requisitos mínimos de calidad para el equipo y materiales en el PAQUETE.\n\n- **Control de Calidad**: La garantía de que todos los materiales para la fabricación del PAQUETE son fabricados, ensamblados y probados de acuerdo con esta especificación es responsabilidad del VENDEDOR.\n\n- **Documentación de Pruebas**: Los certificados de pruebas e inspecciones formarán parte de la documentación del PAQUETE y deben ser válidos por el CLIENTE.\n\n- **Cumplimiento de Normas**: El PAQUETE debe cumplir con los estándares internacionales aplicables (p. ej., API, ASTM, ISO) durante las pruebas FAT.\n\n- **Responsabilidad del Proveedor**: Durante las pruebas FAT, el VENDEDOR es el responsable único del cumplimiento de los requisitos especificados en las normativas.\n\n- **Pruebas a Realizar**: Las pruebas incluyen, pero no se limitan a, prueba de entradas y salidas, prueba de activación de alarmas, y prueba de lógica de operación, según el plan de inspección del CLIENTE.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 9.313037633895874,
+          "response": "- **Certificado de Resultados Pruebas FAT**: Documento requerido que valida los resultados de las pruebas FAT realizadas en el equipo del Paquete de Inyección de Químicos.\n\n- **Norma FAT**: Las pruebas de rendimiento (FAT) se llevarán a cabo de acuerdo con las normas asociadas y los procedimientos del VENDEDOR.\n\n- **Pruebas mecánicas y de funcionamiento**: Estas pruebas deben asegurarse para validar la operación adecuada de todos los componentes y dispositivos instalados dentro del PAQUETE.\n\n- **Plan de Inspección y Ensayos (ITP)**: El VENDEDOR deberá presentar un ITP que incluya la realización de FAT, conforme a los requisitos técnicos especificados. \n\n- **Documentación de Pruebas**: Todo el equipo de instrumentación debe ser calibrado antes de las pruebas de funcionamiento mecánico y de desempeño, asegurando la trazabilidad y validez de los resultados.\n\n- **Cumplimiento de Especificaciones**: Todas las pruebas y validaciones deben realizarse en conformidad con las especificaciones del proyecto y los códigos relevantes mencionados en el documento de requisición.\n\n- **Norma ISO 2151**: Las pruebas de ruido, si se requieren en el contexto del paquete, deben ajustarse a esta norma o a una similar que aplique.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 9.424888372421265,
+          "response": "- Las pruebas FAT (Factory Acceptance Testing) deben realizarse de acuerdo a los parámetros establecidos por el CLIENTE en el documento EDP-ET-001-i.\n\n- El VENDEDOR es responsable de realizar todas las pruebas e inspecciones pertinentes, según el plan de inspección y pruebas (ITP) de la requisición del PAQUETE.\n\n- Durante las pruebas FAT, se evaluarán aspectos como pruebas de activación de alarmas, lógica de operación, registro de eventos y comunicaciones.\n\n- Las bombas de dosificación de químico del PAQUETE deben cumplir con la norma API STD 675 en cuanto a precisión del caudal, que debe ser de ± 1%.\n\n- El VENDEDOR deberá presentar los certificados de pruebas y reportes requeridos por el plan de inspección y pruebas suministrado por el CLIENTE.\n\n- Los equipos y componentes del PAQUETE de inyección de químicos deben ser suministrados con certificados de calidad y pruebas, según especificaciones de aseguramiento de calidad descritas en el documento EDP-F-046.\n\n- Las pruebas e inspecciones formarán parte del dossier del PAQUETE y deberán ser validadas por el CLIENTE para garantizar el cumplimiento de los estándares establecidos.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Conecta Bomba Dosificadora → Prueba FAT → API 675; indica el camino y la justificación.",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 10.01784372329712,
+          "response": "- **Bomba Dosificadora**: Seis (6) bombas dosificadoras de químico, tipo desplazamiento positivo según API STD 675, diseñadas para inyección de inhibidor de corrosión. Cada bomba debe operar continuamente 24 horas y mantener una precisión de dosificación de ± 1% en el rango de 100%-10% de su capacidad nominal (turndown ratio 10:1).\n\n- **Pruebas FAT (Factory Acceptance Tests)**: Se realizarán pruebas de aceptación en fábrica (FAT) para verificar el rendimiento y funcionamiento de las bombas de dosificación antes de su envío al sitio. Estas pruebas asegurarán que las bombas cumplan con las especificaciones de API 675.\n\n- **Normativa/criterio - API 675**: Las bombas deben cumplir con los requisitos establecidos en API 675, que regulan la exactitud y la calidad de las bombas dosificadoras de líquidos.\n\n- **Camino de conexión**: Las bombas dosificadoras (especificadas bajo API 675) deben ser sometidas a pruebas FAT para garantizar que los parámetros de operación estén dentro de los límites especificados y cumplan las normas, lo que proporcionará la validación de su desempeño antes de ser instaladas en el campo.\n\n- **Requisitos de pruebas FAT**: Las pruebas incluirán evaluación de entradas y salidas, activación de alarmas, registro de eventos, verificación de comunicación y pruebas de comandos para asegurar que las bombas funcionen correctamente según las especificaciones de API 675.\n\n- **Componentes a probar**: Certificados de cada ensayo mecánico y/o de rendimiento son requeridos, incluyendo los certificados de prueba hidrostática para validar la integridad del sistema según las normas relevantes y el cumplimiento de API 675.\n\n- **Documentación requerida**: El VENDEDOR deberá proporcionar toda la documentación de prueba y certificados pertinentes que demuestran el cumplimiento con la normativa API 675 durante la etapa de pruebas FAT.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 10.362148761749268,
+          "response": "- **Bomba Dosificadora**: Es un componente esencial para la inyección de químicos en un sistema. Debe cumplir con **API STD 675**, que regula su diseño, selección e instalación.\n  \n- **Pruebas FAT (Factory Acceptance Test)**: Estas pruebas son requeridas para asegurar que la bomba dosificadora funcione según las especificaciones antes de su entrega al cliente.\n\n- **Norma API 675**: Establece los estándares para pruebas y aceptación de la funcionalidad de las bombas dosificadoras, lo que incluye evaluar el rendimiento y la efectividad operativa.\n\n- **Relación**: La Bomba Dosificadora es sometida a pruebas FAT para demostrar su conformidad con los requisitos establecidos en API 675, asegurando así que cumple con las normas de calidad y desempeño.\n\n- **Estándares de Inspección y Pruebas**: Las pruebas para la Bomba Dosificadora deben incluir los requisitos establecidos en el plan de inspección y pruebas (ITP) especificados en la documentación del proyecto.\n\n- **Condiciones de operación**: La Bomba Dosificadora debe operar dentro de las condiciones especificadas en los documentos técnicos, garantizando que los resultados de las pruebas FAT se alineen con las expectativas basadas en API 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 11.979590654373169,
+          "response": "- **Bomba Dosificadora**: Debe cumplir con los estándares establecidos por **API STD 675**, que especifica condiciones de operación y requisitos de precisión de dosificación. \n\n- **Requisitos de Bomba**: Las bombas deben operar en un rango de caudal con una **precisión de ± 1%** en el rango de 100% - 10% de la capacidad nominal, y tener un **turndown ratio de 10:1**.\n\n- **Prueba FAT (Factory Acceptance Test)**: Se llevan a cabo pruebas de rendimiento de las bombas dosificadoras antes de su envío, según se especifica en los requisitos de calidad y desempeño del **CLIENTE**.\n\n- **Conexión a API 675**: Las pruebas FAT incluyen verificación de la precisión de dosificación conforme a lo estipulado por **API 675**, asegurando que la bomba pueda entregar los caudales necesarios de manera precisa en condiciones de operación.\n\n- **Proceso de Validación**: La aprobación de la Bomba Dosificadora en la prueba FAT es crítica para validar que cumpla con el desempeño requerido según **API 675**, lo que garantiza que se pueda instalar y operar correctamente en el campo. \n\n- **Certificaciones**: El VENDEDOR debe proporcionar certificados de las pruebas realizadas durante el FAT para asegurar que la bomba dosificadora cumpla con **API 675** y otros requisitos adicionales establecidos por el CLIENTE. \n\n- **Documentación**: Los informes de pruebas FAT y los certificados se incluirán en el dossier del PAQUETE, como parte de la documentación que sustenta el cumplimiento de estándares y especificaciones.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 10.205126285552979,
+          "response": "- **Bomba Dosificadora**: Equipos críticos diseñados para inyección de químicos, deben cumplir el **API STD 675**, que establece los requisitos para bombas de desplazamiento positivo.\n  \n- **Requerimientos de la Bomba**: Deben presentar una precisión de dosificación de ± 1% en un rango de operación de 100% a 10% de su capacidad nominal, con un **turndown ratio de 10:1**.\n\n- **Pruebas FAT (Factory Acceptance Test)**: Se realizan para validar que la Bomba Dosificadora cumple con los estándares de funcionamiento antes de su envío.\n\n- **Normativa Aplicable**: Las pruebas de aceptación en fábrica (FAT) son necesarias como parte de los requisitos establecidos en la **Especificación Técnica** del Paquete de Inyección de Químicos.\n\n- **Condiciones de Prueba**: Las FAT verifican el funcionamiento, la calibración y que las bombas operan dentro de las especificaciones estipuladas en **API 675**.\n\n- **Documentación**: El proveedor debe presentar certificados de las pruebas FAT que demuestren el cumplimiento con los estándares y requisitos establecidos en la especificación técnica.\n\n- **Relevancia de API 675**: Proporciona el marco normativo que asegura el rendimiento y la fiabilidad de las Bombas Dosificadoras en el Paquete de Inyección de Químicos.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Dame setpoint y la instrumentacion y tipo de instrumentos requeridos para el equipo de dosificación (si aplica).",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 9.442003011703491,
+          "response": "- **Setpoints de presión**:\n  - Presiones de descarga máximas: 75 psig (P-5541), 137 psig (P-5542), 150 psig (P-5543), 80 psig (P-5544), 150 psig (P-5545) (documento P-5540 no especificado).\n  \n- **Instrumentación requerida**:\n  - **Indicadores de presión**: \n    - Conexión por la parte inferior, ½\" NPT-M.\n    - Rango de operación ajustado para asegurar que la presión normal esté entre 40% y 70% de la escala.\n  - **Transmisores de presión**: \n    - Deben tener salida 4-20 mA, si es posible, utilizar protocolo HART a 24 VDC.\n    - Exactitud de ±0.075% del span.\n  \n- **Válvulas de alivio**: \n  - Tipo convencional, balanceado o pilotadas, según especificaciones del servicio.\n  - Diseño en cumplimiento con el código ASME sección VIII, conforme a API RP-520, 526 y 527.\n\n- **Propósito de los instrumentos**: Controlar y monitorear las condiciones de presión y asegurar la operación segura del sistema de dosificación conforme a las especificaciones técnicas.\n\n- **Normativa**: La dosificación deberá cumplir con la norma API 675 para bombas de desplazamiento positivo.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 9.523281574249268,
+          "response": "- **Setpoint**: \n  - Capacidad mínima de bombeo: 0.01 - 0.3 GPD (Gallons Per Day)\n  - Capacidad máxima de bombeo: 1.0 - 3.0 GPD\n  - Presión máxima de descarga: 67 - 150 psig\n  - Precisión de dosificación: ±1% según API STD 675\n  - Turndown ratio: 10:1\n\n- **Instrumentación requerida**:\n  - **Transmisores de presión**: \n    - Tipo smart, salida 4 a 20 mA, con protocolo de comunicaciones HART.\n    - Material de diafragmas: Hastelloy C-276.\n    - Exactitud: ±0.075% del span.\n  \n  - **Manómetros**: \n    - Tipo con caja de acero inoxidable, presión de 1/2\" NPT-M.\n    - Exactitud: 0.5% de escala.\n  \n  - **Válvulas de alivio**: \n    - Tipo convencional, balanceado o pilotadas según aplicación.\n\n- **Válvula de corte**: \n  - Necesaria en succión y descarga de la bomba.\n\n- **Boquillas de inyección (Quills)**: \n  - Seis (6) boquillas para dosificación de químicos.\n\n- **Medidor de calibración**: \n  - Para comprobar los caudales de inyección de la bomba.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 13.827958583831787,
+          "response": "- **Setpoint de Dosificación**: \n  - Precisión de dosificación de químico: ± 1% dentro del rango del 100% - 10% de la capacidad nominal. (API STD 675)\n  - Turndown ratio de 10:1.\n\n- **Instrumentación Requerida**:\n  - **Válvulas de Alivio de Presión (PSV)**: necesarias para proteger la bomba.\n  - **Transmisores de Presión**: deben contar con salida 4 a 20 mA como mínimo y configuración HART.\n  - **Manómetros**: para medir la presión de operación, con exactitud del 0.5% de la escala.\n  \n- **Especificaciones Técnicas**:\n  - Los transmisores deben soportar hasta 1.3 veces la máxima presión de operación.\n  - Manómetros deben estar protegidos para soportar sobrepresiones (1.3 veces la máxima presión de escala).\n  \n- **Tipo de Instrumentos**:\n  - Instrumentos tipo smart para transmisores de presión.\n  - Manómetros de caja fenólica o de aleación de aluminio.\n  \n- **Conexiones**:\n  - Transmisores de presión: deben estar montados en línea o remotos, según condición de operación.\n  \n- **Voltajes de Alimentación**:\n  - Alimentación principal de bajo voltaje: 480 VAC, 60 Hz, 3 fases.\n  - Panel de control: 120 VAC, 60 Hz, voltaje regulado 1 fase.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 11.741737127304077,
+          "response": "- **Setpoints de presión**: \n  - Presión de descarga máxima de 150 psig (según especificaciones del PAQUETE).\n  \n- **Bombas de dosificación**: \n  - Tipo: desplazamiento positivo conforme a **API STD 675**.\n  - Turndown ratio de 10:1 con precisión del caudal de ±1% en el rango del 100% - 10% de la capacidad nominal.\n\n- **Transmisores de presión**: \n  - Tipo: smart, con salida de 4 a 20 mA y protocolo de comunicación HART.\n  - Material del diafragma: **Hastelloy C-276** para partes húmedas.\n\n- **Manómetros**: \n  - Conexión a proceso: 1/2\" NPT-M, con protección de ruptura y escala de precisión de 0.5% según **ASME B40.100**.\n  \n- **Válvulas de alivio**: \n  - Tipo: convencional, balanceado o pilotado, según especificaciones de API RP-520.\n\n- **Indicadores de nivel y flujo**: \n  - No especificado. \n\n- **Panel de Control**: \n  - Categoría: automatización con control local y remoto. Incluye comunicaciones hacia el DCS de la planta.\n\n- **Accesorios de instalación**: \n  - Incluye válvula de corte en succión y descarga, válvula de chequeo en descarga.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    }
+  ]
+}

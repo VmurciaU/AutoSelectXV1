@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 6 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ ISO 8821 Mechanical vibration – Balancing Shaft and fitment key convention
+ ISO 9001 Quality Systems
+ ISO 15664 Noise Control Design Procedures for Open Plant
+3.1.5. Institute of Electrical and Electronic Engineers (IEEE)
+ IEEE STD 1 Recommended Practice General Principles for Temperature Limits in the Rating
+of Electrical Equipment and for the evaluation of Electrical Insulation
+ IEEE STD 43 Recommended Practice for Testing Insulation Resistance of Rotating Machinery
+ IEEE STD 115 Test Procedures for Synchronous Machine
+ IEEE STD 841 IEEE Standard for Petroleum and Chemical Industry–Premium-Efficiency,
+Severe-Duty, Totally Enclosed Fan-Cooled (TEFC) Squirrel Cage Induction
+Motors–Up to and Including 370 kW (500 hp)
+3.1.6. Instrument Society of America (ISA)
+ ISA 5. 1 Instrument Symbols and Identification
+ ISA 5.2 Binary Logic Diagrams for Process Operation
+ ISA 5.4 Instrument Loop Drawing
+ ISA 5.5 Graphic Symbols for Process Display
+ ISA 75.05 Control Valve Terminology
+ ISA 84.01 Application of Safety Instrumented Systems for the Process Industries
+ MC-96.1 Temperature Measurement Thermocouples
+3.1.7. International Electrotechnical Commission (IEC)
+ IEC 60079-10-1 Explosive atmospheres – Part 10-1: Classification of 6reas – Explosive gas
+atmospheres
+ IEC 60529 Degrees of protection provided by enclosures (IP Codes)
+3.1.8. American Welding Society (AWS)
+ AWS D1.1 Structural Welding Code
+3.1.9. Spanish Association for Standardization – UNE
+ EN 10204 Productos metálicos. Tipos de documentos de inspección.
+3.1.10. Códigos y Estándares Nacionales
+ RETIE Reglamento Técnico de Instalaciones Eléctricas

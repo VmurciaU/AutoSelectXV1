@@ -1,0 +1,97 @@
+TAG M156CIP-5503
+ESPEC. FFM/F-S-ME-015
+INYECCIÓN DE QUÍMICOS
+P&ID FFD/F-PCF-US-PRE-55-552-2/2
+REQUISICIÓN FFM/F-MEQ-014
+1 APLICABLE PARA: l PETICIÓN OFERTA mCOMPRA m COMO CONSTRUIDO
+2 TAG M156CIP-5503
+3 LOCALIDAD CPF CUPIAGUA N° DE BOMBAS REQUERIDAS Seis (6) (NOTAS 2, 11) 1
+4 SERVICIO INYECCIÓN DE QUIMICO
+TAMAÑO Y TIPO POSITIVE DISP. PUMPS - API STD 675
+5 FABRICANTE MODELO N° DE SERIE
+6 NOTAS: INFOR. FACILITADA POR: mCOMPRADOR o FABRICANTE m FABRICANTE O COMPRADOR
+7 GENERAL
+8 N° bombas accionadas por motor 1 Seis (6) (NOTAS 2, 11) Otro tipo de accionamiento
+9 N° ítem bombas N° ítem bombas
+10 N° ítem motores N° ítem accionamiento N° Ítem reductor
+11 Motor suministrado por POR PROVEEDOR Suministrado por Suministrado por
+12 Motor montado por POR PROVEEDOR Montado por Montado por
+13 Hoja de datos motor N° N/A H.D. Accionamiento N° H.D. Reductor N°
+14 l CONDICIONES DE OPERACIÓN (Ver NOTAS 1, 13) l LÍQUIDO
+15 l Caudal a temperatura de bombeo (gpd) l Líquido bombeado INHIBIDOR DE CORROSIÓN
+16 Máximo Mínimo Nominal l Temperatura de bombeo (°F):
+17 l Presión de descarga (psig): Normal 85 Máxima Mínima
+18 Máxima Mínima l Gravedad Especifica
+19 l Presión de aspiración (psig): Normal 1 Máxima Mínima
+20 Máxima Mínima Nominal ATM l Viscosidad (cP) TBD
+21 l Presión diferencial (psi): m Agentes corrosivos/erosivos A secuestrar:
+22 Máxima Mínima m Concentración cloruros (ppm)
+23 m NPSH disponible (ft) Concentración H S (ppm)
+2
+24 Sin altura de aceleración Real m Líquido m Tóxico l Inflamable mOtros
+25 Relación caudal máximo/mínimo
+26 o DESEMPEÑO l SERVICIO, LOCALIZACIÓN Y SERVICIOS AUXILIARES
+27 o Nº alimentaciones Caudal nominal (ghp) Localización m Interior l Exterior
+28 o NPSH requerido (ft) m Calefacción m Sin calefacción mBajo techo
+29 o Potencia nominal (hp) 1/2 hp (NOTA 10) l Clase 1 Div 2 Grupo D Clase temp.
+30 o Potencia a presión tarado PSV (hp) m Antiheladas requerido l Tropicalización requerida
+31 o Velocidad émbolo (min-1) Diseño máx. Datos emplazamiento
+32 o Diámetro (in) Por proveedor Longitud carrera (in) Humedad Relativa min/max 65 / 90 %
+33 o Tipo de cabezal Rango temp. ambiente min/max 59 / 104 °F
+34 o Presión máxima admisible (psig) POR PROVEEDOR Condiciones inusuales
+35 o Presión prueba hidráulica (psig) POR PROVEEDOR l Polvo l Vapores mAtmósfera salina
+36 o Máxima presión de descarga con el accionamiento m Otros
+37 suministrado (psig) POR PROVEEDOR m Condiciones de servicios auxiliares
+38 o Máx. potencia admitida por reductor hp Electricidad Sitio Calef. Control Paro
+39 oCARACTERÍSTICAS CONSTRUCTIVAS (NOTA 2) Voltaje (V) 480 / 120
+Conexiones a Frecuencia (Hz) 60
+40 Diámetro Tipo Observación
+borde de patín Fases 3
+Interconexion
+Arreglo de interconexion con
+41 Tanque - 2" (NOTA 24) Agua refrig. Retorno Diseño Max D
+accesorios
+Bombas
+42 Descarga hacía Temp. °C max
+3/4" Bridadas #150 (NOTA 6)
+43 bombas Presión (barg) max
+Entrada desde
+44 1" Bridadas #150 (NOTA 6) Fuente
+tanque
+45 Cabezal hidráulico m Encamisado requerido Aire instrumentos
+46 Tipo mDiafragma m Émbolo Presión (barg) Máxima Mínima
+47 o Diá. diafragma (mm) POR PROVEEDOR N° requerido POR PROVEEDOR ESPECIFICACIONES APLICABLES:
+48 o Válvulas Aspiración Impulsión l API 675 - POSITIVE DISP. PUMPS - CONTROLLED VOLUME
+49 Tipo m ATEX (94/9/EC) Grupo Categ. Clase temp.
+50 Número m Otra:
+51 o MATERIALES BOMBAS (NOTA 2) CONTROL (ver NOTAS 8, 18)
+52 Cabezal hidráulico 316 SS Control de bombas (CCM y DCS): Instrumentación:
+52 Placas de contorno l Remoto l Electrónica
+53 Diafragma l Local l Local
+53 Émbolo N/A
+54 Anillo linterna Método de control de capacidad:
+54 Prensaestopas Variación de: l Carrera mVelocidad
+55 Empaquetadura
+55 Válvula 316 SS Control de carrera:
+56 Asiento de válvula 316 SS Neumático (psig): N/A
+56 Guía de válvula Mínimo Máximo
+57 Cuerpo válvula 316 SS Electrónico (mA): N/A
+57 Juntas válvula Mínimo Máximo
+58 Skid 316 SS
+58 OTROS REQUERIMIENTOS DEL COMPRADOR
+59 Ensayos especiales materiales Unidades en placa características l U.S. mS.I.
+59 m Ensayos de materiales a baja temperatura ambiente l Tuberías de proceso suministradas por vendedor
+60 l Panel View para cada paquete de Inyección
+60 REQUISITOS DE INSPECCIÓN Y PRUEBAS l Quill de inyección con boquilla de dosificación
+61 l Inspección usando la lista de comprobación de API 675 (Según aplique) l El vendedor suministra válvula de alivio de presión (NOTA 20)
+61 l Certificados de materiales m Interna a la bomba m Externa a la bomba
+62 m Tolerancias montaje final o Presión disparo válvula de alivio (psig) POR PROVEEDOR
+62 l Ensayos no destructivos l Indicador de presión a la descarga de las bombas (ver NOTAS 11, 18)
+63 mRadiográfico l Válvulas dobles de antirretorno requeridas
+63 mUltrasonidos l Tablero eléctrico (mínimo NEMA 4X)
+64 mPartículas magnéticas l Sistema de Control (ver NOTAS 8, 18)
+64 mLíquidos penetrantes l Indicador de nivel
+65 m Limpieza antes del montaje final l Skid estructural para paquetizado
+65 m Durezas en soldaduras y zonas térmicamente afectadas l El vendedor suministra válvula de contrapresión (NOTA 14)
+66 l Suministrar procedimientos de ensayos presenciados l Otros
+Page 1

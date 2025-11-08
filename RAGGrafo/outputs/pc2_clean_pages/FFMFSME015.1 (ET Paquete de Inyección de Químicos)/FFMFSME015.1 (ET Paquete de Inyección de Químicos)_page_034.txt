@@ -1,0 +1,33 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 28 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7.7.2. Transmisores de Presión
+Los transmisores deberán contar con display indicado configurable en unidades de ingeniería y deberán
+ser tipo smart, contar con salida 4 a 20mA como mínimo y en lo posible contar con protocolo de
+comunicaciones HART a 24 VDC.
+Para medición de presión manométrica o absoluta, los transmisores deberán montarse en línea o remotos.
+Los transmisores de presión en montaje remoto y los transmisores de presión diferencial, deberán ser
+suministrados los con kits de montaje en soporte de tipo tubo de 2”, preferiblemente en acero inoxidable.
+La exactitud de los transmisores de presión y presión diferencial deberá ser de mínimo ±0.075% del span.
+El material de los diafragmas para sello de montaje directo o remoto con capilar deberá ser Hastelloy C-
+276 para las partes húmedas (diafragmas, lower housing en sellos de diafragma, plugs, etc.). El material
+del upper housing y capilar, cuando se requiera, será acero inoxidable 316 como mínimo.
+El fluido de relleno de los sellos de diafragma deberá seleccionarse para cubrir las temperaturas de
+proceso y diseño de las líneas en las que serán instalados.
+Los transmisores de presión deberán soportar como mínimo 1.3 veces la máxima presión de operación.
+En el caso de los transmisores de presión diferencial, deberán soportar como mínimo una presión igual a
+la presión de operación máxima del proceso en cualquiera de las cámaras de medición (alta o baja
+presión).
+Los manifolds y sellos remotos de todos los transmisores deben ser suministrados con certificado de
+prueba hidrostática, la presión de prueba estará dada por el rating de la brida del sello remoto para el caso
+de conexiones bridadas.
+Los transmisores de presión y presión diferencial deberán suministrarse con la siguiente información típica
+de calibración:
+ Certificado de calibración en el rango solicitado en las hojas de datos.
+ Al menos tres puntos de calibración en el rango de operación.
+ Desviación de cero después de un año de operación.
+7.7.3. Válvulas de Alivio
+Las válvulas de seguridad y relevo serán del tipo convencional, balanceado o pilotadas según el caso
+específico.

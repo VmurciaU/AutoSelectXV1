@@ -1,0 +1,46 @@
+{
+  "doc_id": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)",
+  "file_name": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS).pdf",
+  "doc_type": "HD",
+  "rev": "033.1",
+  "n_pages": 4,
+  "detected_patterns": {
+    "header": [
+      "PROYECTO Ingeniería Detallada Proyecto Acondicionamiento Estratégico de Cupiagua",
+      "CLIENTE Ecopetrol S.A.",
+      "ESTACIÓN CPF CUPIAGUA",
+      "HOJA DE DATOS PAQUETE DE"
+    ],
+    "footer": []
+  },
+  "pages": [
+    {
+      "page": 1,
+      "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+      "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+      "n_lines_before": 29,
+      "n_lines_after": 29
+    },
+    {
+      "page": 2,
+      "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+      "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+      "n_lines_before": 101,
+      "n_lines_after": 97
+    },
+    {
+      "page": 3,
+      "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+      "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+      "n_lines_before": 100,
+      "n_lines_after": 96
+    },
+    {
+      "page": 4,
+      "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+      "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+      "n_lines_before": 12,
+      "n_lines_after": 8
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503
+5.3. REQUERIMIENTOS ELÉCTRICOS
+Todos los requerimientos eléctricos para el PAQUETE y sus componentes se consignan en las
+especificaciones que acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503
+5.4. REQUERIMIENTOS DE INSTRUMENTACIÓN Y CONTROL
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503
+5.5. REQUERIMIENTOS ESTRUCTURALES Y CIVILES
+Todos los requerimientos civiles y estructurales del PAQUETE se consignan en las especificaciones que
+acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+5.6. OTROS REQUERIMIENTOS
+N/A.
+5.7. EXTENSIÓN PRE-ENSAMBLE
+Todos los elementos componentes del PAQUETE deben estar montados sobre un patín estructural
+común. Los límites de batería del PAQUETE comprenden (inclusive):
+- Brida de salida de la bomba después del indicador de presión según se indica en el P&ID
+EDP-F-046 – 20/11/2017 V-1 14/20

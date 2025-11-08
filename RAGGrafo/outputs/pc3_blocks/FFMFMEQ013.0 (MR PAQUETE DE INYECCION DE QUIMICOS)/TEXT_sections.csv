@@ -1,0 +1,847 @@
+type,section_number,section_title,text,page
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+CAMBIOS
+SECCIÓN DESCRIPCIÓN
+REQUERIMIENTOS DE INSPECCIÓN:
+Nivel de criticidad:
+Criterio de disponibilidad operacional: Equipo no crítico.
+Criterio de criticidad por seguridad de proceso: Equipo no crítico
+Es requerida inspección: SI
+Nivel de inspección: 3
+Requerimientos especiales para la inspección: NO
+REVISIONES:
+EMITIDO PARA
+0 01-11-2023
+COMPRA
+OAH MSC OVM
+EMITIDO PARA
+A1 COMENTARIOS DEL 13-09-2022
+CLIENTE
+MSC OVM OCA
+REV. DESCRIPCIÓN ELABORÓ REVISÓ APROBÓ FECHA
+EDP-F-046 – 20/11/2017 V-1 1/20",1
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+TABLA DE CONTENIDO
+Página
+1. INTRODUCCIÓN .................................................................................................................................................................. 4",2
+section_header,1.1,CONDICIONES GENERALES...................................................................................................................................... 4,,2
+section_header,1.2,GLOSARIO ................................................................................................................................................................... 4,,2
+section_header,1.3,ORDEN DE PREVALENCIA......................................................................................................................................... 5,,2
+paragraph,1.3,ORDEN DE PREVALENCIA......................................................................................................................................... 5,2. ALCANCE DEL SUMINISTRO ............................................................................................................................................ 5,2
+section_header,2.1,ALCANCE GENERAL .................................................................................................................................................. 5,,2
+section_header,2.2,EXCLUSIONES ............................................................................................................................................................ 6,,2
+section_header,2.3,OPCIONES DEL SUMINISTRO .................................................................................................................................... 6,,2
+paragraph,2.3,OPCIONES DEL SUMINISTRO .................................................................................................................................... 6,"3. RESPONSABILIDAD ........................................................................................................................................................... 6
+4. REQUERIMIENTOS GENERALES ...................................................................................................................................... 6",2
+section_header,4.1,GENERAL .................................................................................................................................................................... 6,,2
+section_header,4.2,PROPUESTAS ALTERNATIVAS ................................................................................................................................. 6,,2
+section_header,4.3,DOCUMENTACIÓN REQUERIDA CON LA OFERTA ................................................................................................. 7,,2
+section_header,4.4,DOCUMENTACIÓN REQUERIDA DESPUÉS DE LA ORDEN DE COMPRA ............................................................. 7,,2
+section_header,4.5,REQUERIMIENTOS DE CONFIABILIDAD ................................................................................................................ 10,,2
+section_header,4.6,MARCAS HOMOLOGADAS DE ECOPETROL ......................................................................................................... 11,,2
+section_header,4.7,PROVEEDORES HOMOLOGADOS DE ECOPETROL ............................................................................................. 11,,2
+section_header,4.8,REUNIONES DE INGENIERÍA Y VISITAS ................................................................................................................. 11,,2
+section_header,4.9,ASISTENCIA EN SITIO .............................................................................................................................................. 11,,2
+section_header,4.10,ENTRENAMIENTO ..................................................................................................................................................... 12,,2
+section_header,4.11,REPUESTOS .............................................................................................................................................................. 12,,2
+section_header,4.12,HERRAMIENTAS ESPECIALES ................................................................................................................................ 12,,2
+section_header,4.13,DOCUMENTACIÓN .................................................................................................................................................... 13,,2
+paragraph,4.13,DOCUMENTACIÓN .................................................................................................................................................... 13,5. REQUERIMIENTOS TÉCNICOS ....................................................................................................................................... 13,2
+section_header,5.1,REQUERIMIENTOS MECÁNICOS ............................................................................................................................. 13,,2
+section_header,5.2,REQUERIMIENTOS DE TUBERÍA ............................................................................................................................. 13,,2
+section_header,5.3,REQUERIMIENTOS ELÉCTRICOS ........................................................................................................................... 14,,2
+paragraph,5.3,REQUERIMIENTOS ELÉCTRICOS ........................................................................................................................... 14,EDP-F-046 – 20/11/2017 V-1 2/20,2
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos",3
+section_header,5.4,REQUERIMIENTOS DE INSTRUMENTACIÓN Y CONTROL.................................................................................... 14,,3
+section_header,5.5,REQUERIMIENTOS ESTRUCTURALES Y CIVILES ................................................................................................. 14,,3
+section_header,5.6,OTROS REQUERIMIENTOS ...................................................................................................................................... 14,,3
+section_header,5.7,EXTENSIÓN PRE-ENSAMBLE .................................................................................................................................. 14,,3
+section_header,5.8,REQUERIMIENTOS DE PRE Y COMISIONAMIENTO .............................................................................................. 15,,3
+paragraph,5.8,REQUERIMIENTOS DE PRE Y COMISIONAMIENTO .............................................................................................. 15,"6. PRESERVACIÓN, EMPAQUE, MARQUILLADO, IZAJE Y TRANSPORTE ..................................................................... 15
+7. REQUERIMIENTOS DE QA E INSPECCIÓN .................................................................................................................... 15",3
+section_header,7.1,SISTEMA DE ADMINISTRACIÓN DE LA CALIDAD (QMS)...................................................................................... 15,,3
+section_header,7.2,NIVEL DE CRITICIDAD Y NIVEL DE INSPECCIÓN .................................................................................................. 16,,3
+section_header,7.3,"PLAN DE INSPECCIÓN Y PRUEBAS (ITP), FIR....................................................................................................... 16",,3
+paragraph,7.3,"PLAN DE INSPECCIÓN Y PRUEBAS (ITP), FIR....................................................................................................... 16","8. REQUERIMIENTOS EN SALUD, SEGURIDAD Y MEDIO AMBIENTE (HSE) .................................................................. 16
+9. GARANTÍAS TÉCNICAS ................................................................................................................................................... 17
+10. ANEXOS ............................................................................................................................................................................ 18",3
+section_header,10.1,LISTA DEL ALCANCE ............................................................................................................................................... 18,,3
+section_header,10.2,ESTÁNDARES DE REFERENCIA ............................................................................................................................. 19,,3
+section_header,10.3,DOCUMENTOS DE REFERENCIA ............................................................................................................................ 20,,3
+paragraph,10.3,DOCUMENTOS DE REFERENCIA ............................................................................................................................ 20,EDP-F-046 – 20/11/2017 V-1 3/20,3
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+1. INTRODUCCIÓN",4
+section_header,1.1,CONDICIONES GENERALES,,4
+paragraph,1.1,CONDICIONES GENERALES,"Esta requisición de materiales establece las condiciones generales y específicas para el suministro de
+un (1) PAQUETE de inyección de químicos para el proyecto INGENIERÍA DETALLADA
+ACONDICIONAMIENTO ESTRATÉGICO CUPIAGUA” a ser instalados en el CPF Cupiagua – Ecopetrol.
+El PAQUETE incluye la ingeniería de detalle, fabricación, armado y el suministro de todos los equipos y
+accesorios (si se requiere algunos componentes pueden ser enviados por separado) y de las tuberías
+de interconexión y el cableado eléctrico y de control dentro de los límites del PAQUETE.
+El PAQUETE incluye todos los dispositivos, elementos y materiales necesarios y suficientes para que sea
+funcional y opere adecuadamente bajo las condiciones indicadas en los documentos anexos que hacen
+parte de este documento. El PAQUETE debe operar como un sistema totalmente ensamblado e integral
+controlado.
+El PAQUETE debe cumplir con reglamentos, códigos y normas vigentes en los acuerdos regionales,
+nacionales e internacionales indicados en esta requisición y sus documentos anexos.
+El PAQUETE y sus accesorios deben ser diseñados y construidos para una vida útil de veinte (20) años
+y mínimo 3 años de operación continua con el mantenimiento adecuado.",4
+section_header,1.2,GLOSARIO,,4
+paragraph,1.2,GLOSARIO,"CLIENTE: Es la empresa propietaria del proyecto, ECOPETROL S.A, el cual generalmente especificará
+los requerimientos técnicos. ECOPETROL también puede nombrar un agente o consultor autorizado
+para actuar en su nombre.
+PROVEEDOR: Es quien presenta oferta para suministrar los equipos y/o servicios, de acuerdo con esta
+requisición de materiales y sus documentos asociados una vez sea adjudicado por ECOPETROL. Será
+quien diseña, fabrica, suministra e integra el PAQUETE y todos sus componentes (listados en el capítulo
+10.1) en conformidad al alcance de suministro contratado.
+INSPECTOR: La parte que es asignada para la inspección del desarrollo del trabajo realizado por el
+proveedor o vendedor. En algunos casos, el CLIENTE puede actuar como AUTORIDAD DE INSPECCION.
+EDP-F-046 – 20/11/2017 V-1 4/20",4
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PAQUETE: Hace referencia al conjunto de equipos, instrumentos, controles, componentes eléctricos,
+tuberías y todos los elementos requeridos para conformar un ensamble completo e integrado de
+inyección de químicos que se describen en el alcance del suministro indicado en esta requisición de
+materiales.
+SITIO: Describe las condiciones de las instalaciones y áreas donde se ejecutará el proyecto, en este
+caso es el CPF Cupiagua localizado en Aguazul, departamento de Casanare, Colombia.",5
+section_header,1.3,ORDEN DE PREVALENCIA,,5
+paragraph,1.3,ORDEN DE PREVALENCIA,"El proveedor deberá aplicar para la resolución de conflictos el siguiente orden de prevalencia, siendo la
+mayor prevalencia el número 1:
+1. Las leyes y reglamentos legales y gubernamentales locales
+2. Códigos y estándares industriales
+3. Hojas de datos y diagramas de tubería e instrumentación, última revisión.
+4. Esta requisición de materiales, en su última revisión.
+5. Especificación técnica
+6. Orden de compra
+En caso de conflicto entre los requerimientos de esta requisición y alguno de los documentos,
+referenciados que forman parte de la requisición de materiales, el PROVEEDOR notificará
+inmediatamente al ECOPETROL por escrito de los conflictos identificados para su resolución, los cuales
+deben quedar resueltos en la reunión de lanzamiento (siglas en inglés KOM), cuando aplique.
+2. ALCANCE DEL SUMINISTRO",5
+section_header,2.1,ALCANCE GENERAL,,5
+paragraph,2.1,ALCANCE GENERAL,"A continuación, se describe el listado general alcance de suministro objeto de esta requisición de
+materiales. El listado particular de componentes se indica en la sección “10.1 lista del alcance”.
+Ítem Cantidad Unidad TAG Descripción Código de Catálogo
+ECOPETROL
+1 UNO (1) UN M156CIP-5503 Paquete de Inyección de Químicos
+EDP-F-046 – 20/11/2017 V-1 5/20",5
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+El PROVEEDOR deberá suministrar El PAQUETE como una unidad completa y funcional incluyendo todos
+los elementos necesarios para garantizar su segura y correcta instalación, arranque, puesta en marcha
+y operación",6
+section_header,2.2,EXCLUSIONES,,6
+paragraph,2.2,EXCLUSIONES,"Se excluye del suministro de los equipos:
+- Obras civiles, fundaciones e instalación de pernos de anclaje.
+- Interconexiones de tubería, cableado e instrumentación fuera de los límites del PAQUETE.
+- Trabajos de cableado eléctrico y de Instrumentación fuera del PAQUETE.
+- Sistemas de iluminación exterior.",6
+section_header,2.3,OPCIONES DEL SUMINISTRO,,6
+paragraph,2.3,OPCIONES DEL SUMINISTRO,"N/A
+3. RESPONSABILIDAD
+Está dentro del alcance de suministro del PROVEEDOR del PAQUETE la planeación y programación del
+diseño, fabricación de este, suministro de equipos, accesorios, recipientes, tableros de potencia y
+control, instrumentación, partes y materiales, fabricación en taller, pruebas, inspección, pintura,
+control y aseguramiento de calidad, entrega de documentación técnica y certificados,
+embalaje/empaque, almacenamiento y preparación para envío a SITIO, soporte en sitio durante el
+comisionamiento y arranque, garantías y demás, incluidos e indicados en esta requisición de materiales
+y los documentos anexos.
+4. REQUERIMIENTOS GENERALES",6
+section_header,4.1,GENERAL,,6
+paragraph,4.1,GENERAL,"Los requisitos generales y alcance del suministro se indican en la especificación técnica y hoja de datos
+anexa a esta requisición de materiales (ver sección 10.3 documentos de referencia).",6
+section_header,4.2,PROPUESTAS ALTERNATIVAS,,6
+paragraph,4.2,PROPUESTAS ALTERNATIVAS,"El PROVEEDOR podrá presentar propuestas alternativas, siempre y cuando sean de igual o superior
+calidad que la propuesta principal. No se aceptarán como válidas alternativas que reduzcan la
+integridad mecánica o eléctrica y que no cumplan con el criterio de vida útil.
+EDP-F-046 – 20/11/2017 V-1 6/20",6
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Tampoco se aceptarán alternativas de menor capacidad a las condiciones de operación solicitadas, con
+menor cantidad de equipos o componentes, o que no cumplan con la calidad solicitada.",7
+section_header,4.3,DOCUMENTACIÓN REQUERIDA CON LA OFERTA,,7
+paragraph,4.3,DOCUMENTACIÓN REQUERIDA CON LA OFERTA,"La información requerida con la oferta se indica en la tabla mostrada en el numeral 4.4 junto con la
+documentación requerida después de la orden de compra.",7
+section_header,4.4,DOCUMENTACIÓN REQUERIDA DESPUÉS DE LA ORDEN DE COMPRA,,7
+paragraph,4.4,DOCUMENTACIÓN REQUERIDA DESPUÉS DE LA ORDEN DE COMPRA,"En la tabla a continuación se muestran los documentos requeridos del vendedor (LDRV) y los tiempos
+de entrega referidos a la emisión de la orden de compra.
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Lista de comentarios, desviaciones y excepciones a
+esta requisición y sus anexos, sin esta información X - IFR E -
+las propuestas serán rechazadas (*)
+Cronograma de ingeniería, adquisición, fabricación y
+X +2Sem IFR E -
+pruebas
+Plan de calidad y certificación del sistema de calidad
++2Sem IFR - E
+Sub-proveedor y lista de proveedores principales - IFR E E
+Calificación de sub-proveedores +4Sem IFR - E
+Literatura/Catálogos del equipo y componentes X - IFR E E
+Placa de identificación
++4Sem IFR E E
+Planos de arreglos generales del PAQUETE (*) con
+pesos, dimensiones, listado de partes y materiales X +3Sem IFR E E
+referenciales
+Planos detallados del PAQUETE con pesos,
++6Sem IFR E E
+dimensiones, listado de partes y materiales
+Modelo 3D del paquete adecuado para ser integrado
++6Sem IFR E E
+en Smart Plan
+EDP-F-046 – 20/11/2017 V-1 7/20",7
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Diagrama de cargas para fundaciones y planos de
++4Sem IFR E E
+localización de pernos de anclaje.
+Lista de cargas y momentos admisibles en
++3Sem IFR E E
+conexiones.
+Hoja de datos FFM/F-MEX-033 del PAQUETE
+X +2Sem IFR E E
+completamente diligenciadas por el PROVEEDOR (*)
+Hojas de datos de instrumentos (si aplica)
++2Sem IFR E E
+Reporte y curvas de desempeño de las bombas de
+dosificación, incluyendo el consumo de potencia a lo
++4Sem IFR E E
+largo la curva.
+Diagrama de terminales para conexionado de control
++4Sem IFR E E
+Lista de instrumentos del PAQUETE (incluye
++6Sem IFR E E
+instrumentos suministrados sueltos
+Plan de inspección y pruebas (siglas en inglés ITP)
+X +6Sem IFR E E
+del PAQUETE
+Lógica narrativa +6Sem IFR E E
+Diagrama de tubería e instrumentación (P&ID)
++6Sem IFR E E
+Lista de documentos y planos del PROVEEDOR X +3Sem IFR E -
+Lista de repuestos Y consumibles para la instalación,
+comisionamiento y puesta en marcha (incluyendo
+X +4Sem IFR - E
+precios) **
+Lista de repuestos y consumibles para dos (2) años
+X +4Sem IFR E E
+de operación (incluyendo precios)
+Lista de herramientas especiales para montaje
+X +4Sem IFR - E
+(incluyendo precios)
+Lista de requerimientos y consumo de servicios
++4Sem IFR E E
+auxiliares
+Procedimiento de pruebas en taller
++4Sem IFR E E
+Procedimiento de soldadura WPS, PQR, etc
++2Sem IFR E E
+Procedimiento de ensayos no destructivos +2Sem IFR E E
+EDP-F-046 – 20/11/2017 V-1 8/20",8
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Procedimiento y especificación de pintura y
++2Sem IFR E E
+preparación de superficies
+Procedimiento de embalaje, embarque y
++4Sem IFR E E
+almacenamiento
+Registros de trazabilidad de material
++8Sem IFR E E
+Reportes de inspección
+-2 Sem IFR E E
+Certificado de resultados pruebas FAT -4Sem IFR E E
+Certificado de prueba hidrostática
+-4Sem IFR E E
+Certificados RETIE -4Sem IFR E E
+Manuales de preservación, operación y
+-2Sem IFR - E
+mantenimiento (En español)
+Procedimiento de pre-comisionamiento /
+-4Sem IFR E E
+comisionamiento
+Índice del dossier final del PAQUETE (Vendor data
+X -4Sem IFR E E
+book index)
+Dossier final del PAQUETE (Vendor data book (VDB)) -2Sem IFR E 3+E
+Dossier de fabricación y control de calidad (7)
+-2Sem IFR E E
+Términos de entrega X - IFR E E
+Garantías
+X - - - E
+EDP-F-046 – 20/11/2017 V-1 9/20",9
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+NOTAS
+(1) (*) DOCUMENTOS PRIORITARIOS SUJETOS A PENALIZACIÓN O TÉRMINOS DE PAGO
+(2) (**) LOS REPUESTOS PARA ARRANQUE Y COMISIONAMIENTO DEBERÁN SER SUMINISTRADOS POR EL PROVEEDOR, COMO PARTE DE LA
+OFERTA SE DEBE ENTREGAR UN LISTADO QUE INDIQUE NÚMERO DE PARTE Y PRECIOS
+(3) FECHA DE EMISIÓN: “+” significa Días (D) o Semanas (Sem) o Meses (M) después de la fecha efectiva de la Orden de Compra
+“-“ significa Días (D) o Semanas (Sem) o Meses (M) antes de la fecha efectiva de despacho
+(4) PROPÓSITO: IFR = Emitido para revisión y comentarios / INFO = Emitido para Información
+(5) CANTIDAD TIPO: Número de copias más archivo Electrónico (E)
+(6) EMISIÓN FINAL: Documento sin comentarios (con estado del documento= 3)
+(7) LIBRO DE CERTIFICADOS DE INSPECCIÓN: Una copia adicional se entregará junto con los productos y se indicará en la lista de Embalaje
+relacionada.",10
+section_header,4.5,REQUERIMIENTOS DE CONFIABILIDAD,,10
+paragraph,4.5,REQUERIMIENTOS DE CONFIABILIDAD,"Los equipos y partes que componen el PAQUETE y que son suministrados por el PROVEEDOR deben ser
+nuevos, sin uso, fabricados apropiadamente, libres de defectos de manufactura y completamente
+adecuados para el trabajo requerido; deben ser de un diseño moderno y haber demostrado un
+desempeño satisfactorio bajo condiciones de servicio similares a aquellas en que serán utilizados.
+El PROVEEDOR debe tener experiencia probada en el diseño, fabricación y/o suministro del PAQUETE,
+por lo menos 10 años de experiencia probada en la manufactura, suministro e instalación de sistemas
+paquetizados de inyección de químicos.
+El PROVEEDOR debe tener representación en Colombia y servicio post-venta para los requisitos de
+asistencia en sitio durante instalación y arranque, y requerimientos de mantenimiento o solicitud de
+partes.
+El PROVEEDOR debe indicar las garantías del PAQUETE en la oferta y suministrarlas con la entrega de
+este. Todos los requerimientos de confiabilidad deben estar alineados y en completo acuerdo con las
+especificaciones técnicas referenciadas en este documento.
+EDP-F-046 – 20/11/2017 V-1 10/20",10
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos",11
+section_header,4.6,MARCAS HOMOLOGADAS DE ECOPETROL,,11
+paragraph,4.6,MARCAS HOMOLOGADAS DE ECOPETROL,"Aplica Marcas Homologadas de ECOPETROL: SI
+Nivel: 1.2.2 (Metering Pumps)
+Nivel: 5.1.2 (Low Voltage Electrical Motors)
+Nivel: 6.1 (Instruments and Controls General)",11
+section_header,4.7,PROVEEDORES HOMOLOGADOS DE ECOPETROL,,11
+paragraph,4.7,PROVEEDORES HOMOLOGADOS DE ECOPETROL,"Aplica Proveedores Homologados de ECOPETROL: NO APLICA
+Categoría (s) Proveedores Homologados ECOPETROL: NO APLICA",11
+section_header,4.8,REUNIONES DE INGENIERÍA Y VISITAS,,11
+paragraph,4.8,REUNIONES DE INGENIERÍA Y VISITAS,"El CLIENTE solicitará en los términos de referencia u orden de compra del proceso, las reuniones o
+visitas necesarias en donde el PROVEEDOR debe estar o se sugiere que asista. A continuación, se
+presenta un listado de reuniones y visitas sugerido:
+Ítem Cantidad Objeto de la reunión o visita Sitio
+1 1 KOM Oficina CLIENTE
+2 1 Reunión de Pre-Inspección Fábrica
+Visitas de vigilancia “en progreso” no especificadas
+3 TBD1 Fábrica
+(visitas de control de calidad al taller)
+4 TBD1 Inspección final en Fábrica previo al envío Fábrica
+5 1 Cualquier otra requerida Donde sea solicitado",11
+section_header,4.9,ASISTENCIA EN SITIO,,11
+paragraph,4.9,ASISTENCIA EN SITIO,"La propuesta del PROVEEDOR deberá considerar el suministro de personal técnico capacitado,
+consistente en soporte para las labores de arranque y puesta en marcha del PAQUETE. Para tal efecto,
+se solicita con la oferta, un programa y organigrama del personal técnico y de dirección que será
+empleado en dicha operación.
+La propuesta deberá incluir el tiempo mínimo recomendado que se requiere para realizar cada etapa de
+la asistencia en sitio, incluyendo las tarifas por día en caso de tiempo adicional, y también considerar el
+suministro del personal técnico competente para las tareas asociadas.
+EDP-F-046 – 20/11/2017 V-1 11/20",11
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Para el alistamiento y puesta en marcha, el PROVEEDOR deberá tener aprobados por el CLIENTE todos
+los documentos que hacen parte del suministro, incluyendo los planos de ensamble e instalación, los
+procedimientos, protocolos de puesta en marcha y los manuales de operación y mantenimiento al igual
+que todos los documentos que sean solicitados en esta requisición.",12
+section_header,4.10,ENTRENAMIENTO,,12
+paragraph,4.10,ENTRENAMIENTO,"El PROVEEDOR deberá ofertar el entrenamiento para arranque y operación del sistema por separado,
+teniendo en cuenta que dichas labores podrán ser realizadas por el CLIENTE en conjunto con el
+personal técnico de este o su contratista. El entrenamiento debe cubrir como mínimo aspectos
+relacionados con las características de los equipos, condiciones de operación, precauciones de
+seguridad y la operación y mantenimiento del PAQUETE.",12
+section_header,4.11,REPUESTOS,,12
+paragraph,4.11,REPUESTOS,"El PROVEEDOR deberá suministrar todas las partes de repuesto y consumibles necesarios para el
+precomisionamiento, comisionamiento y puesta en marcha del PAQUETE. El PROVEEDOR deberá
+presentar en la oferta por separado la lista con las partes de repuesto y consumibles requeridos para el
+comisionamiento y arranque incluyendo precios.
+El PROVEEDOR deberá presentar una lista con los repuestos y consumibles necesarios para la correcta
+operación del PAQUETE durante el arranque y 2 años de operación, según considere y aplique.
+Para el listado de repuestos se debe suministrar como mínimo la siguiente información:
+- Descripción de partes de repuesto con al menos tres características técnicas, por ejemplo: (para
+un rodamiento: tipo de rodamiento, diámetro interno, material, tipo de sello).
+- Número de parte.
+- Cantidad.
+- Listado de precios unitarios.
+- En caso de especificar “kits” dentro del listado de repuestos, se debe detallar las partes que lo
+componen.",12
+section_header,4.12,HERRAMIENTAS ESPECIALES,,12
+paragraph,4.12,HERRAMIENTAS ESPECIALES,"El PROVEEDOR debe indicar o suministrar como parte del suministro las herramientas especiales para
+el comisionamiento, puesta en marcha, operación y mantenimiento del PAQUETE. Si aplica, se debe
+incluir una lista de herramientas especiales (como un ítem separado en la oferta).
+EDP-F-046 – 20/11/2017 V-1 12/20",12
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos",13
+section_header,4.13,DOCUMENTACIÓN,,13
+paragraph,4.13,DOCUMENTACIÓN,"La documentación mínima requerida que el PROVEEDOR debe suministrar y sus tiempos de entrega
+después de formalizada la orden de compra se encuentra indicada en numeral 4.4 de esta requisición.
+La documentación se debe entregar en español. En caso de que el PROVEEDOR de los equipos emita
+documentos y planos en inglés solo se aceptan si son documentos originales del fabricante, excepto
+para el manual de preservación, instalación, operación y mantenimiento que debe estar en español.
+La revisión o comentarios del CLIENTE a la documentación de ingeniería y fabricación del PAQUETE, no
+exime al PROVEEDOR de la responsabilidad de entregar un PAQUETE que cumpla con lo establecido en
+esta requisición y sus documentos anexos, de acuerdo con las buenas prácticas de ingeniería y los
+requerimientos de lo que sea contratado.
+La codificación y formatos para la presentación de los documentos de fabricación del PAQUETE serán el
+estándar del PROVEEDOR a menos que el CLIENTE indique otra situación en la orden de compra y
+anexos. Para las hojas de datos y planos específicos del PAQUETE, se usará el documento EGP-G-089
+“Guía para Codificación y Numeración Local de Documentos de Ingeniería y Planos” de la
+Vicepresidencia de Desarrollo y Producción Piedemonte (VPI).
+5. REQUERIMIENTOS TÉCNICOS",13
+section_header,5.1,REQUERIMIENTOS MECÁNICOS,,13
+paragraph,5.1,REQUERIMIENTOS MECÁNICOS,"Todos los requerimientos mecánicos para el PAQUETE y el suministro de los componentes se consignan
+en las especificaciones que acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503",13
+section_header,5.2,REQUERIMIENTOS DE TUBERÍA,,13
+paragraph,5.2,REQUERIMIENTOS DE TUBERÍA,"Todos los requerimientos de tubería y líneas para el PAQUETE se consignan en las especificaciones que
+acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+EDP-F-046 – 20/11/2017 V-1 13/20",13
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503",14
+section_header,5.3,REQUERIMIENTOS ELÉCTRICOS,,14
+paragraph,5.3,REQUERIMIENTOS ELÉCTRICOS,"Todos los requerimientos eléctricos para el PAQUETE y sus componentes se consignan en las
+especificaciones que acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503",14
+section_header,5.4,REQUERIMIENTOS DE INSTRUMENTACIÓN Y CONTROL,,14
+paragraph,5.4,REQUERIMIENTOS DE INSTRUMENTACIÓN Y CONTROL,"• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503",14
+section_header,5.5,REQUERIMIENTOS ESTRUCTURALES Y CIVILES,,14
+paragraph,5.5,REQUERIMIENTOS ESTRUCTURALES Y CIVILES,"Todos los requerimientos civiles y estructurales del PAQUETE se consignan en las especificaciones que
+acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503",14
+section_header,5.6,OTROS REQUERIMIENTOS,,14
+paragraph,5.6,OTROS REQUERIMIENTOS,N/A.,14
+section_header,5.7,EXTENSIÓN PRE-ENSAMBLE,,14
+paragraph,5.7,EXTENSIÓN PRE-ENSAMBLE,"Todos los elementos componentes del PAQUETE deben estar montados sobre un patín estructural
+común. Los límites de batería del PAQUETE comprenden (inclusive):
+- Brida de salida de la bomba después del indicador de presión según se indica en el P&ID
+EDP-F-046 – 20/11/2017 V-1 14/20",14
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+- Manifold de succión
+- Caja de conexión (JB) de potencia, suministrada por el PROVEEDOR.
+- Caja de conexión, tablero de control.
+- Punto de entrega de drenajes del PAQUETE, incluyendo válvula.
+- Agujeros para pernos de anclaje del patín.
+- Orejas de puesta a tierra del patín.
+- Bloque de terminales dentro del panel de control (WHCP) local con prensa cables.",15
+section_header,5.8,REQUERIMIENTOS DE PRE Y COMISIONAMIENTO,,15
+paragraph,5.8,REQUERIMIENTOS DE PRE Y COMISIONAMIENTO,"El PROVEEDOR deberá incluir en la oferta, en un ítem aparte la asistencia técnica durante el pre
+comisionamiento, comisionamiento y puesta en marcha.
+Los requerimientos mínimos de certificación a tener en cuenta en las etapas de precomisionamiento y
+comisionamiento serán los estipulados en la normativa y estándares del CLIENTE aplicables, y las
+recomendaciones suministradas por el PROVEEDOR. El PROVEEDOR debe presentar para aprobación del
+CLIENTE las listas de chequeo para las actividades de precomisionamiento y comisionamiento del
+PAQUETE.
+El PROVEEDOR deberá suministrar los consumibles requeridos para el pre y comisionamiento del
+equipo, que deben estar incluidos en el juego de repuestos y consumibles para arranque del PAQUETE.
+6. PRESERVACIÓN, EMPAQUE, MARQUILLADO, IZAJE Y TRANSPORTE
+El PROVEEDOR es responsable del empaque del PAQUETE y los materiales suministrados. El
+PROVEEDOR debe incluir en su oferta el transporte al SITIO.
+El PAQUETE y sus componentes deben ser limpiados previamente a su despacho y ser preparados y
+empacados para su conservación a la intemperie en ambiente tropical por un mínimo de doce meses.
+Todas las superficies externas deben recubrirse adecuadamente y todas las bridas/boquillas abiertas
+deben estar tapadas.
+Otros requerimientos para la preservación, empaque, marquillado, izaje y transporte del PAQUETE
+están descritos en la especificación técnica particular de este N° FFM/F-S-ME-015.
+7. REQUERIMIENTOS DE QA E INSPECCIÓN",15
+section_header,7.1,SISTEMA DE ADMINISTRACIÓN DE LA CALIDAD (QMS),,15
+paragraph,7.1,SISTEMA DE ADMINISTRACIÓN DE LA CALIDAD (QMS),EDP-F-046 – 20/11/2017 V-1 15/20,15
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+El PROVEEDOR debe cumplir con los lineamientos del documento EDP-ET-001-i TECHNICAL
+SPECIFICATION OF MINIMUM QUALITY REQUIREMENTS FOR EQUIPMENT AND MATERIAL
+PROCUREMENT.
+El dossier de fabricación del PAQUETE debe ser enviado al CLIENTE de acuerdo con el documento “ECP-
+VIN-G-GEN-GT-003 – GUIA PARA LA PREPARACIÓN DEL DOSSIER DE MANUFACTURA Y CONTROL DE
+CALIDAD”
+Otros requerimientos de Calidad están descritos en la especificación técnica anexa particular del
+PAQUETE N° FFM/F-S-ME-015.",16
+section_header,7.2,NIVEL DE CRITICIDAD Y NIVEL DE INSPECCIÓN,,16
+paragraph,7.2,NIVEL DE CRITICIDAD Y NIVEL DE INSPECCIÓN,"El PAQUETE es NO CRÍTICO por seguridad de proceso. Se requiere nivel de inspección 3, de acuerdo
+con el documento EDP-G-010 Guía Niveles de Inspección.
+ITEM CLASE DESCRIPCIÓN NIVEL INSPECCIÓN NIVEL INSPECCIÓN
+EN BODEGA EN FÁBRICA
+166 25 Paquete de Inyección de Químicos N/A 3",16
+section_header,7.3,"PLAN DE INSPECCIÓN Y ENSAYOS (ITP), FIR",,16
+paragraph,7.3,"PLAN DE INSPECCIÓN Y ENSAYOS (ITP), FIR","El CLIENTE tendrá el derecho de revisar en cualquier momento y lugar, durante la ingeniería,
+fabricación, ensamble y proceso de pruebas del PAQUETE y verificar todos los requerimientos de las
+especificaciones y documentos relacionados, incluyendo subcontratistas del PROVEEDOR.
+El PROVEEDOR deberá presentar al CLIENTE su plan de inspección y pruebas (siglas en ingles ITP),
+teniendo en cuenta incorporar los ítems del plan de inspección de prueba propuesto para fines de
+guía y referencia del PAQUETE.
+Los certificados de las pruebas e inspecciones formarán parte del dossier del PAQUETE. La aprobación
+de las pruebas e inspecciones no exime al PROVEEDOR del cumplimiento de las garantías exigidas para
+la calidad del PAQUETE y sus componentes, ni del cumplimiento de las condiciones de operación y
+desempeño del PAQUETE.
+8. REQUERIMIENTOS EN SALUD, SEGURIDAD Y MEDIO AMBIENTE (HSE)
+EDP-F-046 – 20/11/2017 V-1 16/20",16
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Durante el desarrollo de los trabajos de instalación del PAQUETE y cada uno de sus componentes
+considerados dentro del alcance de este proyecto, el PROVEEDOR deberá cumplir con todas las normas
+de seguridad implementadas por el CLIENTE en el sitio.
+Es responsabilidad del PROVEEDOR informar al CLIENTE, el inicio de cada una de las actividades y
+tomar las precauciones del caso de manera que el trabajo se ejecute en forma segura tanto para el
+personal que lo ejecuta, como para las instalaciones del CLIENTE.
+El PROVEEDOR tendrá autonomía técnica y directiva para la ejecución del alcance de suministro, sin
+embargo, deberá seguir los procedimientos y la especificación técnica elaborada para el PAQUETE.
+Es responsabilidad del PROVEEDOR el suministro de los equipos y accesorios requeridos para que el
+PAQUETE funcione correctamente, así como las herramientas y el personal necesario para la ejecución
+de los trabajos de montaje, pruebas y puesta en servicio del PAQUETE.
+El oferente debe seguir y aplicar todas las normas de higiene, seguridad industrial y protección
+Ambiental, inherentes a este tipo de trabajo, de acuerdo con los procedimientos normalizados por el
+CLIENTE.
+Todo el personal del PROVEEDOR debe tener en todo momento cualquier otro elemento de protección
+personal para ejecutar cualquier labor en el SITIO.
+Cuando deban realizarse trabajos dentro de las instalaciones del CLIENTE, todos los trabajadores del
+PROVEEDOR deben portar el carné que los identifique con la debida autorización del CLIENTE.
+El PROVEEDOR deberá asegurar que los productos y procedimientos utilizados en la realización de los
+trabajos no alteran, ni contaminan, ni perjudican el medio ambiente.
+9. GARANTÍAS TÉCNICAS
+El VENDEDOR debe garantizar el PAQUETE, sus componentes e instrumentación asociada contra
+cualquier defecto de fabricación y/o desempeño, válida por dos (2) años contados a partir de la fecha
+de puesta en funcionamiento y recibo a satisfacción de los mismos por parte del CLIENTE. Durante este
+período la garantía debe cubrir la reparación o reemplazo de los componentes de hardware y/o
+software defectuosos por parte del VENDEDOR incluyendo todas las labores, equipos, transporte y
+demás costos generados y requeridos para llevar a cabo dicha reparación y/o reemplazo.
+Todos los requerimientos de garantías técnicas del PAQUETE y el suministro de los componentes
+requeridos se consignan en la especificación que acompaña esta requisición de materiales:
+EDP-F-046 – 20/11/2017 V-1 17/20",17
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos M156CIP-
+5503
+10. ANEXOS",18
+section_header,10.1,LISTA DEL ALCANCE,,18
+paragraph,10.1,LISTA DEL ALCANCE,"Código de
+Ítem Cantidad Unidad TAG Descripción Catálogo
+ECOPETROL
+1. Paquete de inyección de químicos
+Planeación y programación de fabricación, diseño,
+suministro de partes y materiales, fabricación en
+taller, pruebas, inspección, pintura, control y
+aseguramiento de calidad, entrega de
+documentación técnica y certificados, embalaje,
+almacenamiento y envío, partes de repuesto para
+la instalación, garantías y demás incluido e
+indicado en esta requisición y los documentos
+anexos.
+El PAQUETE de Inyección de químicos incluye
+M156CIP- como mínimo:
+5503",18
+section_header,1.1,(1) UN,,18
+paragraph,1.1,(1) UN,"- Cuatro (4) bombas de inyección de químicos
+API STD 675, cada una con motor eléctrico
+acoplado.
+- Uno (1) tanque IBC bulkdrum en acero
+inoxidable.
+- Tablero de control
+- Monitor de control remoto
+- Válvulas de seguridad
+- Instrumentación
+- Tubería, válvulas y accesorios de tubería y
+soportes al interior del PAQUETE
+- Conexionado de tubería, eléctrico y de control,
+incluyendo Conduit.
+EDP-F-046 – 20/11/2017 V-1 18/20",18
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Código de
+Ítem Cantidad Unidad TAG Descripción Catálogo
+ECOPETROL
+- Etiqueta metálica del equipo eléctrico de
+acuerdo con RETIE
+- Bases y soportes para cada componente del
+PAQUETE.
+- Base estructural común (skid) con techo.
+- Cabina de insonorización y/o silenciadores (si
+se requiere)
+- Inspección y pruebas
+- Tratamiento de superficies y pintura.
+- Boquillas (QUILL) para dosificación de químicos,
+incluye accesorios de acuerdo con típico y hoja
+de datos N° FFM/F-MEX-033.
+Documentación técnica del PAQUETE según lo",19
+section_header,1.2,1 GL --,,19
+paragraph,1.2,1 GL --,"indicado en la sección 4.4.
+Listado de herramientas especiales para el",19
+section_header,1.3,1 GL ---,,19
+paragraph,1.3,1 GL ---,"montaje y puesta en marcha.
+Partes y consumibles para la instalación, pre-",19
+section_header,1.4,"1 GL --- comisionamiento, comisionamiento y puesta en",,19
+paragraph,1.4,"1 GL --- comisionamiento, comisionamiento y puesta en","marcha, con listado incluyendo precios. (2)
+Lista de partes de repuesto para dos (2) años de",19
+section_header,1.5,1 GL ---,,19
+paragraph,1.5,1 GL ---,"operación, incluyendo precios. (1)
+Asistencia en la instalación y puesta en marcha",19
+section_header,1.6,1 Día --- (pre-comisionamiento y comisionamiento). Cotizar,,19
+paragraph,1.6,1 Día --- (pre-comisionamiento y comisionamiento). Cotizar,"por aparte, por unidad de tiempo.
+Notas:
+(1) Lista de precios individual de repuestos como opcional, el CLIENTE definirá si están o no incluidos en la orden de compra.
+(2) El PROVEEDOR deberá presentar una lista de piezas sueltas sin costo donde identifique el número de parte con una descripción e
+identificación clara en el plano del equipo. El CLIENTE podría solicitar una lista con los precios, si es necesario.",19
+section_header,10.2,ESTÁNDARES DE REFERENCIA,,19
+paragraph,10.2,ESTÁNDARES DE REFERENCIA,EDP-F-046 – 20/11/2017 V-1 19/20,19
+paragraph,,,"MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Ítem Código REV Nombre
+1 EDP-P-013-2 11 LISTADO DE MARCAS HOMOLOGADAS
+2 EDP-F-077 2 FORMATO DE SOLICITUD TÉCNICAS
+GUÍA PARA LA PREPARACIÓN DEL DOSSIER DE
+3 ECP-VIN-G-GEN-GT-003 1
+MANUFACTURA Y CONTROL DE CALIDAD
+4 RETIE - REGLAMENTO TÉCNICO DE INSTALACIONES ELÉCTRICAS",20
+section_header,10.3,DOCUMENTOS DE REFERENCIA,,20
+paragraph,10.3,DOCUMENTOS DE REFERENCIA,"Ítem Código REV Nombre LINK
+FFD/F-PCF-MP- FFD/F-PCF-MP-
+1 PIL-10-822-1/1 6 Plot Plan PIL-10-822-1/1
+REV P
+FFM/F-PIB-007
+2 FFM/F-PIB-007 2 Piping Class
+REV 0
+Especificación Técnica Paquete de Inyección FFM/F-S-ME-015
+3 FFM/F-S-ME-015 0
+de químicos REV A1
+Hoja de Datos Paquete de Inyección de FFM/F-MEX-033
+4 FFM/F-MEX-033 0
+Químicos REV A1
+FFD/F-PCF-US-
+FFD/F-PCF-US- Piping and Instrumentation diagram New
+5 0 PRE-55-552-2/2
+PRE-55-552-2/2 Chemical Packages
+REV A1
+FFM/F-PCF-GN-
+FFM/F-PCF-GN-ELF-
+6 P Planimetría de clasificación de áreas ELF-00-001-2/4
+00-001-2/4
+REV P
+* La versión de los documentos aquí indicados es la disponible en el momento de la emisión de esta
+requisición de materiales en la versión que se evidencia. El PROVEEDOR deberá verificar que se realizó
+el envío de estos documentos en su última versión con ECOPETROL, la omisión de este requerimiento
+no exime al PROVEEDOR de la responsabilidad de cumplir con el alcance de suministro requerida en
+este documento y cualquier adicional que se disponga en las últimas versiones.
+EDP-F-046 – 20/11/2017 V-1 20/20",20

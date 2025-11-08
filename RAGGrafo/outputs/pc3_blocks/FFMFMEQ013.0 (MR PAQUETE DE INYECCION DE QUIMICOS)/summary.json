@@ -1,0 +1,35 @@
+{
+  "doc_id": "FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)",
+  "file_name": "FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS).pdf",
+  "doc_type": "MR",
+  "page_count": 20,
+  "embedded_pid_pages": [
+    8,
+    14,
+    20
+  ],
+  "pid_context": [
+    {
+      "page": 8,
+      "pid_like": true,
+      "pid_reference": "FFM/F-MEQ-013",
+      "pid_note": "",
+      "evidence": "Diagrama;P&ID"
+    },
+    {
+      "page": 14,
+      "pid_like": true,
+      "pid_reference": "FFM/F-MEQ-013",
+      "pid_note": "",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 20,
+      "pid_like": true,
+      "pid_reference": "FFM/F-MEQ-013",
+      "pid_note": "",
+      "evidence": "Piping and Instrumentation;diagram"
+    }
+  ],
+  "tables_total": 49
+}

@@ -1,0 +1,442 @@
+[
+  {
+    "page": 1,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 3,
+        "cols": 2
+      },
+      {
+        "rows": 5,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 2,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 3,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 4,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 5,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 2,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 6,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 7,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 12,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 8,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 20,
+        "cols": 6
+      }
+    ],
+    "pid_like": true,
+    "pid_evidence": [
+      "Diagrama",
+      "P&ID"
+    ],
+    "pid_reference": "FFM/F-MEQ-013",
+    "pid_note": null,
+    "__dispatched_to__": "pc3_pid_pipeline"
+  },
+  {
+    "page": 9,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 16,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 10,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 3,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 11,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 6,
+        "cols": 4
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 12,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 13,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 14,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": true,
+    "pid_evidence": [
+      "P&ID"
+    ],
+    "pid_reference": "FFM/F-MEQ-013",
+    "pid_note": null,
+    "__dispatched_to__": "pc3_pid_pipeline"
+  },
+  {
+    "page": 15,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 16,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 2,
+        "cols": 5
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 17,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 18,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 3,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 19,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 8,
+        "cols": 6
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 20,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 3,
+        "cols": 5
+      },
+      {
+        "rows": 2,
+        "cols": 3
+      },
+      {
+        "rows": 5,
+        "cols": 4
+      },
+      {
+        "rows": 7,
+        "cols": 5
+      }
+    ],
+    "pid_like": true,
+    "pid_evidence": [
+      "Piping and Instrumentation",
+      "diagram"
+    ],
+    "pid_reference": "FFM/F-MEQ-013",
+    "pid_note": null,
+    "__dispatched_to__": "pc3_pid_pipeline"
+  }
+]

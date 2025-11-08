@@ -1,0 +1,39 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 37 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Los componentes del PAQUETE deberán embalarse adecuadamente para soportar al menos 12 meses
+de almacenamiento a la intemperie (tropical) en el sitio que indique el CLIENTE antes de la instalación. El
+VENDEDOR recomendará e indicará claramente los procedimientos de preservación necesarios que se
+necesiten durante el almacenamiento de este.
+Las piezas de repuesto (puesta en marcha, comisionamiento, repuestos operativos y repuestos de capital)
+y las herramientas especiales se empaquetarán por separado y se marcarán claramente como "Piezas de
+repuesto" y "Herramientas especiales", respectivamente. Los diagramas de pesos (en kg) y "Centro de
+gravedad" deben marcarse e identificarse claramente.
+Todo equipo y/o parte constructiva del PAQUETE se limpiará a fondo internamente y deberá estar libre de
+materiales extraños sueltos. El VENDEDOR reemplazará todas las piezas que tengan defectos debidos a
+los escombros aflojados que queden de las pruebas en taller a su propio costo.
+Todas las superficies no pintadas con el sistema de pintura indicado en el numeral 6.8 deberán estar
+recubiertas con grasa protectora contra la corrosión para el transporte y 12 meses de almacenamiento
+para ambiente tropical.
+Todas las aberturas se cubrirán o taparán para proteger el interior del polvo, el óxido y la humedad.
+Las aberturas con bridas deberán estar provistas de cierres metálicos de junta firmemente sujetos con
+pernos o abrazaderas.
+El VENDEDOR debe indicar el plan completo de conservación/preservación del PAQUETE (actividades,
+materiales, consumibles si es necesario) considerando la duración del almacenamiento indicada en la
+presente especificación (no menos de 12 meses). Dicho plan forma parte de los documentos técnicos que
+el VENDEDOR debe incluir en la oferta.
+11.2. Marcado de Envío
+El VENDEDOR adjuntará una lista de embarque, en un recinto impermeable, al exterior del PAQUETE.
+Además de los requisitos específicos identificados a través de la documentación a la que se hace
+referencia en la solicitud, la lista de embarque indicará claramente como mínimo:
+ Nombre del CLIENTE.
+ Dirección.
+ Nombre del Proyecto.
+ Nombre y dirección del VENDEDOR.
+ Numero de Orden de Compra del CLIENTE.
+ Numero de articulo de la Orden de Compra.
+ Entrega parcial o completa para cada número de orden.
+ Descripción de contenidos.
+ Número de PAQUETES (si aplica).

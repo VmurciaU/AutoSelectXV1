@@ -1,0 +1,2184 @@
+{
+  "ECOPETROL<SEP>Proveedores Homologados": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330214,
+    "update_time": 1761330214,
+    "_id": "ECOPETROL<SEP>Proveedores Homologados"
+  },
+  "Fábrica<SEP>Reunión de Pre-Inspección": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330214,
+    "update_time": 1761330214,
+    "_id": "Fábrica<SEP>Reunión de Pre-Inspección"
+  },
+  "Paquete de Inyección de Químicos<SEP>Repuestos y Consumibles": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330214,
+    "update_time": 1761330214,
+    "_id": "Paquete de Inyección de Químicos<SEP>Repuestos y Consumibles"
+  },
+  "CUPIAGUA<SEP>EDP-F-046": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330214,
+    "update_time": 1761330214,
+    "_id": "CUPIAGUA<SEP>EDP-F-046"
+  },
+  "PAQUETE<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330214,
+    "update_time": 1761330214,
+    "_id": "PAQUETE<SEP>Proveedor"
+  },
+  "Sub-Vendedores<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330215,
+    "update_time": 1761330215,
+    "_id": "Sub-Vendedores<SEP>Vendedor"
+  },
+  "CLIENTE<SEP>Proveedores Homologados": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330215,
+    "update_time": 1761330215,
+    "_id": "CLIENTE<SEP>Proveedores Homologados"
+  },
+  "Cupiagua<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330215,
+    "update_time": 1761330215,
+    "_id": "Cupiagua<SEP>Vendedor"
+  },
+  "Tanques de Almacenamiento<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330215,
+    "update_time": 1761330215,
+    "_id": "Tanques de Almacenamiento<SEP>VENDEDOR"
+  },
+  "CLIENTE<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 2,
+    "create_time": 1761330215,
+    "update_time": 1761330215,
+    "_id": "CLIENTE<SEP>Paquete de Inyección de Químicos"
+  },
+  "Estructurales y Civiles<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330216,
+    "update_time": 1761330216,
+    "_id": "Estructurales y Civiles<SEP>VENDEDOR"
+  },
+  "PAQUETE<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330216,
+    "update_time": 1761330216,
+    "_id": "PAQUETE<SEP>Vendedor"
+  },
+  "Cupiagua<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d",
+      "chunk-fa242c53f105ff780f1b2e2b995f427b",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 4,
+    "create_time": 1761330216,
+    "update_time": 1761330216,
+    "_id": "Cupiagua<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "Interruptores de Nivel<SEP>Tanques de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330216,
+    "update_time": 1761330216,
+    "_id": "Interruptores de Nivel<SEP>Tanques de Almacenamiento"
+  },
+  "Cliente<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330216,
+    "update_time": 1761330216,
+    "_id": "Cliente<SEP>PAQUETE"
+  },
+  "Indicador Local de Nivel<SEP>Tanques de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330217,
+    "update_time": 1761330217,
+    "_id": "Indicador Local de Nivel<SEP>Tanques de Almacenamiento"
+  },
+  "PAQUETE<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443",
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-f894555a75cb45c7313d502e2c83ba85",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 6,
+    "create_time": 1761330217,
+    "update_time": 1761330217,
+    "_id": "PAQUETE<SEP>VENDEDOR"
+  },
+  "Boquilla de Inyección<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330217,
+    "update_time": 1761330217,
+    "_id": "Boquilla de Inyección<SEP>PAQUETE"
+  },
+  "PAQUETE<SEP>Tubería": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330218,
+    "update_time": 1761330218,
+    "_id": "PAQUETE<SEP>Tubería"
+  },
+  "Atomizador<SEP>Boquilla de Inyección": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330218,
+    "update_time": 1761330218,
+    "_id": "Atomizador<SEP>Boquilla de Inyección"
+  },
+  "CLIENTE<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 2,
+    "create_time": 1761330218,
+    "update_time": 1761330218,
+    "_id": "CLIENTE<SEP>PAQUETE"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 3,
+    "create_time": 1761330218,
+    "update_time": 1761330218,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>VENDEDOR"
+  },
+  "Cupiagua<SEP>Ecopetrol S.A.": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330218,
+    "update_time": 1761330218,
+    "_id": "Cupiagua<SEP>Ecopetrol S.A."
+  },
+  "Brayan Quispe<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330219,
+    "update_time": 1761330219,
+    "_id": "Brayan Quispe<SEP>Paquete de Inyección de Químicos"
+  },
+  "Manual de Instrucciones<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330219,
+    "update_time": 1761330219,
+    "_id": "Manual de Instrucciones<SEP>PAQUETE"
+  },
+  "Manual de Operación<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Manual de Operación<SEP>PAQUETE"
+  },
+  "Manual de Instrucciones<SEP>Volumen 1": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Manual de Instrucciones<SEP>Volumen 1"
+  },
+  "Miguel Salamanca<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Miguel Salamanca<SEP>Paquete de Inyección de Químicos"
+  },
+  "Manual de Operación<SEP>Volumen 2": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Manual de Operación<SEP>Volumen 2"
+  },
+  "Guía de Requerimientos Ergonómicos y de Higiene Industrial HSE-G-051<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Guía de Requerimientos Ergonómicos y de Higiene Industrial HSE-G-051<SEP>PAQUETE"
+  },
+  "Omar Villarreal<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330220,
+    "update_time": 1761330220,
+    "_id": "Omar Villarreal<SEP>Paquete de Inyección de Químicos"
+  },
+  "PAQUETE<SEP>Reglamento Técnico de Instalaciones Eléctricas (RETIE)": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "PAQUETE<SEP>Reglamento Técnico de Instalaciones Eléctricas (RETIE)"
+  },
+  "Manual de Operación<SEP>Volumen 3": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "Manual de Operación<SEP>Volumen 3"
+  },
+  "Ecopetrol S.A.<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "Ecopetrol S.A.<SEP>Paquete de Inyección de Químicos"
+  },
+  "PAQUETE<SEP>Tablero Principal de Potencia": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "PAQUETE<SEP>Tablero Principal de Potencia"
+  },
+  "FFM/F-MEX-033<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd"
+    ],
+    "count": 2,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "FFM/F-MEX-033<SEP>Paquete de Inyección de Químicos"
+  },
+  "Acondicionamiento Estratégico<SEP>Ecopetrol S.A.": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330221,
+    "update_time": 1761330221,
+    "_id": "Acondicionamiento Estratégico<SEP>Ecopetrol S.A."
+  },
+  "Interruptores<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "Interruptores<SEP>PAQUETE"
+  },
+  "CUPIAGUA<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3"
+    ],
+    "count": 1,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "CUPIAGUA<SEP>Paquete de Inyección de Químicos"
+  },
+  "PROVEEDOR<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3"
+    ],
+    "count": 1,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "PROVEEDOR<SEP>Paquete de Inyección de Químicos"
+  },
+  "Cliente<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 2,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "Cliente<SEP>Vendedor"
+  },
+  "Cupiagua<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "Cupiagua<SEP>PAQUETE"
+  },
+  "Condiciones de operación<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330222,
+    "update_time": 1761330222,
+    "_id": "Condiciones de operación<SEP>Paquete"
+  },
+  "Contrato<SEP>Ingeniería Detalle Acondicionamiento Estratégico": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "Contrato<SEP>Ingeniería Detalle Acondicionamiento Estratégico"
+  },
+  "Cupiagua<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "Cupiagua<SEP>Paquete"
+  },
+  "EDP-F-046<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3"
+    ],
+    "count": 1,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "EDP-F-046<SEP>Paquete de Inyección de Químicos"
+  },
+  "CLIENTE<SEP>PROVEEDOR": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 2,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "CLIENTE<SEP>PROVEEDOR"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Ingeniería Detalle Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Ingeniería Detalle Acondicionamiento Estratégico Cupiagua"
+  },
+  "Cupiagua<SEP>Especificación": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "Cupiagua<SEP>Especificación"
+  },
+  "FFM/F-S-ME-015<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd"
+    ],
+    "count": 2,
+    "create_time": 1761330223,
+    "update_time": 1761330223,
+    "_id": "FFM/F-S-ME-015<SEP>Paquete de Inyección de Químicos"
+  },
+  "Documentación<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Documentación<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "Interruptores<SEP>Norma NEMA AB-1": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Interruptores<SEP>Norma NEMA AB-1"
+  },
+  "Paquete de Inyección de Químicos<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 3,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Paquete de Inyección de Químicos<SEP>Requisición de Materiales"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Pruebas": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Pruebas"
+  },
+  "Cableado y Conexionado<SEP>Documentos EDP-ET-335": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Cableado y Conexionado<SEP>Documentos EDP-ET-335"
+  },
+  "Bobinas de Contactores<SEP>Transformadores de Control": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330224,
+    "update_time": 1761330224,
+    "_id": "Bobinas de Contactores<SEP>Transformadores de Control"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Garantía": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Garantía"
+  },
+  "Cabina de Insonorización<SEP>Inspección y Pruebas": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Cabina de Insonorización<SEP>Inspección y Pruebas"
+  },
+  "Boquillas Quill<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Boquillas Quill<SEP>Paquete de Inyección de Químicos"
+  },
+  "Cliente<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 3,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Cliente<SEP>Proveedor"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Requerimientos Técnicos": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Requerimientos Técnicos"
+  },
+  "Paquete de Inyección de Químicos<SEP>Partes y Consumibles": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330225,
+    "update_time": 1761330225,
+    "_id": "Paquete de Inyección de Químicos<SEP>Partes y Consumibles"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Interruptores": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Interruptores"
+  },
+  "Ecopetrol<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Ecopetrol<SEP>Proveedor"
+  },
+  "Cupiagua<SEP>Ingeniería Detalle Acondicionamiento": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 2,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Cupiagua<SEP>Ingeniería Detalle Acondicionamiento"
+  },
+  "Cupiagua<SEP>FFM/F-MEQ-013": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd"
+    ],
+    "count": 1,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Cupiagua<SEP>FFM/F-MEQ-013"
+  },
+  "Especificación Técnica<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 2,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Especificación Técnica<SEP>Paquete de Inyección de Químicos"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Transformadores de Control": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Transformadores de Control"
+  },
+  "Ecopetrol S.A.<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35"
+    ],
+    "count": 1,
+    "create_time": 1761330226,
+    "update_time": 1761330226,
+    "_id": "Ecopetrol S.A.<SEP>Vendedor"
+  },
+  "Documentación<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd"
+    ],
+    "count": 1,
+    "create_time": 1761330227,
+    "update_time": 1761330227,
+    "_id": "Documentación<SEP>Proveedor"
+  },
+  "Ecopetrol<SEP>Estándares de Referencia": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330227,
+    "update_time": 1761330227,
+    "_id": "Ecopetrol<SEP>Estándares de Referencia"
+  },
+  "Cupiagua<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a",
+      "chunk-f2b9bce6abc51695537b621cf890ae15",
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 6,
+    "create_time": 1761330227,
+    "update_time": 1761330227,
+    "_id": "Cupiagua<SEP>Paquete de Inyección de Químicos"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Motores Eléctricos": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330227,
+    "update_time": 1761330227,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Motores Eléctricos"
+  },
+  "Fabricante<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35"
+    ],
+    "count": 1,
+    "create_time": 1761330227,
+    "update_time": 1761330227,
+    "_id": "Fabricante<SEP>Vendedor"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>Proyecto Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35"
+    ],
+    "count": 1,
+    "create_time": 1761330228,
+    "update_time": 1761330228,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>Proyecto Acondicionamiento Estratégico Cupiagua"
+  },
+  "Ecopetrol S.A<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330228,
+    "update_time": 1761330228,
+    "_id": "Ecopetrol S.A<SEP>Paquete de Inyección de Químicos"
+  },
+  "EDP-F-046<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330228,
+    "update_time": 1761330228,
+    "_id": "EDP-F-046<SEP>PAQUETE"
+  },
+  "CPF Cupiagua<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330228,
+    "update_time": 1761330228,
+    "_id": "CPF Cupiagua<SEP>Paquete de Inyección de Químicos"
+  },
+  "CUPIAGUA<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330228,
+    "update_time": 1761330228,
+    "_id": "CUPIAGUA<SEP>PAQUETE"
+  },
+  "01-11-2023<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330229,
+    "update_time": 1761330229,
+    "_id": "01-11-2023<SEP>PAQUETE"
+  },
+  "Ingeniería Detallada Acondicionamiento Estratégico Cupiagua<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330229,
+    "update_time": 1761330229,
+    "_id": "Ingeniería Detallada Acondicionamiento Estratégico Cupiagua<SEP>Paquete de Inyección de Químicos"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 2,
+    "create_time": 1761330229,
+    "update_time": 1761330229,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>PAQUETE"
+  },
+  "Paquete de Inyección de Químicos<SEP>Sistema de Administración de la Calidad (QMS)": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330229,
+    "update_time": 1761330229,
+    "_id": "Paquete de Inyección de Químicos<SEP>Sistema de Administración de la Calidad (QMS)"
+  },
+  "Etiqueta Metálica<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Etiqueta Metálica<SEP>PAQUETE"
+  },
+  "Nema 4X<SEP>TEFC": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Nema 4X<SEP>TEFC"
+  },
+  "Paquete de Inyección de Químicos<SEP>Requerimientos de QA e Inspección": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Paquete de Inyección de Químicos<SEP>Requerimientos de QA e Inspección"
+  },
+  "DCS de la Planta<SEP>Panel de Control (UCP)": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "DCS de la Planta<SEP>Panel de Control (UCP)"
+  },
+  "Base Estructural Común<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Base Estructural Común<SEP>PAQUETE"
+  },
+  "Cupiagua<SEP>Panel de Control (UCP)": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Cupiagua<SEP>Panel de Control (UCP)"
+  },
+  "Paquete de Inyección de Químicos<SEP>Plan de Inspección y Pruebas (ITP)": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Paquete de Inyección de Químicos<SEP>Plan de Inspección y Pruebas (ITP)"
+  },
+  "Clase 1, División 2<SEP>TEFC": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330230,
+    "update_time": 1761330230,
+    "_id": "Clase 1, División 2<SEP>TEFC"
+  },
+  "Cabina de Insonorización<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330231,
+    "update_time": 1761330231,
+    "_id": "Cabina de Insonorización<SEP>PAQUETE"
+  },
+  "Paquete de Inyección de Químicos<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 4,
+    "create_time": 1761330231,
+    "update_time": 1761330231,
+    "_id": "Paquete de Inyección de Químicos<SEP>Proveedor"
+  },
+  "HMI Local<SEP>Panel de Control (UCP)": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330231,
+    "update_time": 1761330231,
+    "_id": "HMI Local<SEP>Panel de Control (UCP)"
+  },
+  "PAQUETE<SEP>Quill": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330231,
+    "update_time": 1761330231,
+    "_id": "PAQUETE<SEP>Quill"
+  },
+  "Cupiagua<SEP>Ingeniería Detalle Acondicionamiento Estratégico": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330231,
+    "update_time": 1761330231,
+    "_id": "Cupiagua<SEP>Ingeniería Detalle Acondicionamiento Estratégico"
+  },
+  "Cliente<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 2,
+    "create_time": 1761330232,
+    "update_time": 1761330232,
+    "_id": "Cliente<SEP>Paquete de Inyección de Químicos"
+  },
+  "API<SEP>Documentos de Referencia": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330232,
+    "update_time": 1761330232,
+    "_id": "API<SEP>Documentos de Referencia"
+  },
+  "Especificación Técnica EDP-ET-001-i<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330232,
+    "update_time": 1761330232,
+    "_id": "Especificación Técnica EDP-ET-001-i<SEP>Paquete de Inyección de Químicos"
+  },
+  "Cupiagua<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330232,
+    "update_time": 1761330232,
+    "_id": "Cupiagua<SEP>Requisición de Materiales"
+  },
+  "ASME<SEP>Documentos de Referencia": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "ASME<SEP>Documentos de Referencia"
+  },
+  "Ecopetrol<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "Ecopetrol<SEP>Requisición de Materiales"
+  },
+  "Documentos de Inspección<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "Documentos de Inspección<SEP>Paquete de Inyección de Químicos"
+  },
+  "Documentos de Referencia<SEP>IEC": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "Documentos de Referencia<SEP>IEC"
+  },
+  "Fecha<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 2,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "Fecha<SEP>Requisición de Materiales"
+  },
+  "Cupiagua<SEP>Ecopetrol": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "Cupiagua<SEP>Ecopetrol"
+  },
+  "EDP-G-010<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "EDP-G-010<SEP>Paquete de Inyección de Químicos"
+  },
+  "CLIENTE<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 3,
+    "create_time": 1761330233,
+    "update_time": 1761330233,
+    "_id": "CLIENTE<SEP>VENDEDOR"
+  },
+  "Código de Catálogo<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "Código de Catálogo<SEP>Requisición de Materiales"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos<SEP>ISA 5.1": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos<SEP>ISA 5.1"
+  },
+  "Manómetros<SEP>Transmisores de Presión": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "Manómetros<SEP>Transmisores de Presión"
+  },
+  "Hastelloy C-276<SEP>Transmisores de Presión": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "Hastelloy C-276<SEP>Transmisores de Presión"
+  },
+  "ASME B31.3<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "ASME B31.3<SEP>Ductile Iron Pipe Flanges"
+  },
+  "MR #<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330234,
+    "update_time": 1761330234,
+    "_id": "MR #<SEP>Requisición de Materiales"
+  },
+  "Documentos de Referencia<SEP>NEMA": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330235,
+    "update_time": 1761330235,
+    "_id": "Documentos de Referencia<SEP>NEMA"
+  },
+  "EDP-P-013<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330235,
+    "update_time": 1761330235,
+    "_id": "EDP-P-013<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "ASTM E94<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330235,
+    "update_time": 1761330235,
+    "_id": "ASTM E94<SEP>Ductile Iron Pipe Flanges"
+  },
+  "Ductile Iron Pipe Flanges<SEP>ISO 3744": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330235,
+    "update_time": 1761330235,
+    "_id": "Ductile Iron Pipe Flanges<SEP>ISO 3744"
+  },
+  "Ductile Iron Pipe Flanges<SEP>Institute of Electrical and Electronic Engineers": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330236,
+    "update_time": 1761330236,
+    "_id": "Ductile Iron Pipe Flanges<SEP>Institute of Electrical and Electronic Engineers"
+  },
+  "Proveedor<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330236,
+    "update_time": 1761330236,
+    "_id": "Proveedor<SEP>Requisición de Materiales"
+  },
+  "Documentación Requerida<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330236,
+    "update_time": 1761330236,
+    "_id": "Documentación Requerida<SEP>Requisición de Materiales"
+  },
+  "Ductile Iron Pipe Flanges<SEP>ECOPETROL": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330237,
+    "update_time": 1761330237,
+    "_id": "Ductile Iron Pipe Flanges<SEP>ECOPETROL"
+  },
+  "Diagrama de Cargas<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330237,
+    "update_time": 1761330237,
+    "_id": "Diagrama de Cargas<SEP>Requisición de Materiales"
+  },
+  "ASTM A48<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330237,
+    "update_time": 1761330237,
+    "_id": "ASTM A48<SEP>Ductile Iron Pipe Flanges"
+  },
+  "Certificado de Calibración<SEP>Válvulas de Alivio": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330237,
+    "update_time": 1761330237,
+    "_id": "Certificado de Calibración<SEP>Válvulas de Alivio"
+  },
+  "CLIENTE<SEP>Cupiagua": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "CLIENTE<SEP>Cupiagua"
+  },
+  "Hoja de Datos<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "Hoja de Datos<SEP>Requisición de Materiales"
+  },
+  "ASTM A216<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "ASTM A216<SEP>Ductile Iron Pipe Flanges"
+  },
+  "ASME<SEP>Válvulas de Alivio": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "ASME<SEP>Válvulas de Alivio"
+  },
+  "CLIENTE<SEP>ECOPETROL S.A.": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "CLIENTE<SEP>ECOPETROL S.A."
+  },
+  "Cupiagua<SEP>ISO 12944": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "Cupiagua<SEP>ISO 12944"
+  },
+  "Paquete de Inyección de Químicos<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 2,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "Paquete de Inyección de Químicos<SEP>Vendedor"
+  },
+  "ASTM 278<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330238,
+    "update_time": 1761330238,
+    "_id": "ASTM 278<SEP>Ductile Iron Pipe Flanges"
+  },
+  "Brayan Quispe<SEP>Cupiagua": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Brayan Quispe<SEP>Cupiagua"
+  },
+  "HOJA DE DATOS N° FFM/F-MEX-033<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "HOJA DE DATOS N° FFM/F-MEX-033<SEP>Vendedor"
+  },
+  "Paquete de Inyección de Químicos<SEP>Proyecto": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Paquete de Inyección de Químicos<SEP>Proyecto"
+  },
+  "Miguel Salamanca<SEP>Omar Villarreal": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Miguel Salamanca<SEP>Omar Villarreal"
+  },
+  "Hoja de Datos Paquete de Inyección de Químicos<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Hoja de Datos Paquete de Inyección de Químicos<SEP>Paquete de Inyección de Químicos"
+  },
+  "CLIENT<SEP>CONTRACTOR": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "CLIENT<SEP>CONTRACTOR"
+  },
+  "Brayan Quispe<SEP>Miguel Salamanca": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Brayan Quispe<SEP>Miguel Salamanca"
+  },
+  "Campo Cupiagua<SEP>Casanare": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330239,
+    "update_time": 1761330239,
+    "_id": "Campo Cupiagua<SEP>Casanare"
+  },
+  "Campo Cupiagua<SEP>Gerencia de Operaciones de Desarrollo y Producción": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330240,
+    "update_time": 1761330240,
+    "_id": "Campo Cupiagua<SEP>Gerencia de Operaciones de Desarrollo y Producción"
+  },
+  "Código de Colores y Señales Industriales<SEP>Marcas Homologadas": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330240,
+    "update_time": 1761330240,
+    "_id": "Código de Colores y Señales Industriales<SEP>Marcas Homologadas"
+  },
+  "Miguel Salamanca<SEP>Rodrigo Feo": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330240,
+    "update_time": 1761330240,
+    "_id": "Miguel Salamanca<SEP>Rodrigo Feo"
+  },
+  "Clasificación de Áreas para Instalaciones Eléctricas<SEP>Motores de Baja Tensión": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330240,
+    "update_time": 1761330240,
+    "_id": "Clasificación de Áreas para Instalaciones Eléctricas<SEP>Motores de Baja Tensión"
+  },
+  "ECOPETROL S.A.<SEP>VENDEDOR/FABRICANTE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330241,
+    "update_time": 1761330241,
+    "_id": "ECOPETROL S.A.<SEP>VENDEDOR/FABRICANTE"
+  },
+  "Café de Bogotá<SEP>Campo Cupiagua": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330241,
+    "update_time": 1761330241,
+    "_id": "Café de Bogotá<SEP>Campo Cupiagua"
+  },
+  "ASTM A436<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330241,
+    "update_time": 1761330241,
+    "_id": "ASTM A436<SEP>Ductile Iron Pipe Flanges"
+  },
+  "PAQUETE<SEP>VENDEDOR/FABRICANTE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330241,
+    "update_time": 1761330241,
+    "_id": "PAQUETE<SEP>VENDEDOR/FABRICANTE"
+  },
+  "ASTM A439<SEP>Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "ASTM A439<SEP>Ductile Iron Pipe Flanges"
+  },
+  "Café de Bogotá<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Café de Bogotá<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "Ecopetrol S.A.<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 2,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Ecopetrol S.A.<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "CLIENTE<SEP>VENDEDOR/FABRICANTE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "CLIENTE<SEP>VENDEDOR/FABRICANTE"
+  },
+  "Equilibrio de Calidad<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Equilibrio de Calidad<SEP>PAQUETE"
+  },
+  "Cupiagua<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 2,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Cupiagua<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "API 675<SEP>Control de bombas": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "API 675<SEP>Control de bombas"
+  },
+  "Fecha de fabricación<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Fecha de fabricación<SEP>PAQUETE"
+  },
+  "316 SS<SEP>Válvulas Dobles de Antirretorno": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "316 SS<SEP>Válvulas Dobles de Antirretorno"
+  },
+  "CLIENTE<SEP>Plan de Inspección y Pruebas": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "CLIENTE<SEP>Plan de Inspección y Pruebas"
+  },
+  "Cabina de Insonorización<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330242,
+    "update_time": 1761330242,
+    "_id": "Cabina de Insonorización<SEP>Vendedor"
+  },
+  "Características Constructivas<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330243,
+    "update_time": 1761330243,
+    "_id": "Características Constructivas<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "Norma ISO 2151<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330243,
+    "update_time": 1761330243,
+    "_id": "Norma ISO 2151<SEP>Paquete de Inyección de Químicos"
+  },
+  "PSV<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330243,
+    "update_time": 1761330243,
+    "_id": "PSV<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "Bombas Dosificadoras de Químico<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "Bombas Dosificadoras de Químico<SEP>Paquete de Inyección de Químicos"
+  },
+  "Proveedor<SEP>Vendedor": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "Proveedor<SEP>Vendedor"
+  },
+  "CLIENTE<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "CLIENTE<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "Paquete de Inyección de Químicos<SEP>Vida de Servicio": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "Paquete de Inyección de Químicos<SEP>Vida de Servicio"
+  },
+  "Bombas Dosificadoras de Químico<SEP>Motores Eléctricos": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "Bombas Dosificadoras de Químico<SEP>Motores Eléctricos"
+  },
+  "Cupiagua<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 2,
+    "create_time": 1761330244,
+    "update_time": 1761330244,
+    "_id": "Cupiagua<SEP>VENDEDOR"
+  },
+  "Paquete de Inyección de Químicos<SEP>Unidades de Medida": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330245,
+    "update_time": 1761330245,
+    "_id": "Paquete de Inyección de Químicos<SEP>Unidades de Medida"
+  },
+  "Proyecto Acondicionamiento Estratégico de Cupiagua<SEP>Tanque de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330245,
+    "update_time": 1761330245,
+    "_id": "Proyecto Acondicionamiento Estratégico de Cupiagua<SEP>Tanque de Almacenamiento"
+  },
+  "Capacitación del Personal<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330245,
+    "update_time": 1761330245,
+    "_id": "Capacitación del Personal<SEP>VENDEDOR"
+  },
+  "Limitación de Ruido<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330245,
+    "update_time": 1761330245,
+    "_id": "Limitación de Ruido<SEP>Paquete de Inyección de Químicos"
+  },
+  "Contenedores para Exportación<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330245,
+    "update_time": 1761330245,
+    "_id": "Contenedores para Exportación<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "Clasificación de Áreas Peligrosas<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330246,
+    "update_time": 1761330246,
+    "_id": "Clasificación de Áreas Peligrosas<SEP>Paquete de Inyección de Químicos"
+  },
+  "INYECCIÓN DE QUÍMICOS<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330246,
+    "update_time": 1761330246,
+    "_id": "INYECCIÓN DE QUÍMICOS<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "Pruebas Mecánicas<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330246,
+    "update_time": 1761330246,
+    "_id": "Pruebas Mecánicas<SEP>VENDEDOR"
+  },
+  "Bombas Dosificadoras<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330246,
+    "update_time": 1761330246,
+    "_id": "Bombas Dosificadoras<SEP>Paquete de Inyección de Químicos"
+  },
+  "Herramientas Especiales<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "Herramientas Especiales<SEP>VENDEDOR"
+  },
+  "CLIENTE<SEP>Pruebas Mecánicas": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "CLIENTE<SEP>Pruebas Mecánicas"
+  },
+  "12 meses<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "12 meses<SEP>PAQUETE"
+  },
+  "Paquete de Inyección de Químicos<SEP>Tanque de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "Paquete de Inyección de Químicos<SEP>Tanque de Almacenamiento"
+  },
+  "Bombas Dosificadoras<SEP>Motores Eléctricos": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "Bombas Dosificadoras<SEP>Motores Eléctricos"
+  },
+  "Paquete de Inyección de Químicos<SEP>Válvulas de Control": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "Paquete de Inyección de Químicos<SEP>Válvulas de Control"
+  },
+  "Ecopetrol<SEP>Proveedores": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330247,
+    "update_time": 1761330247,
+    "_id": "Ecopetrol<SEP>Proveedores"
+  },
+  "Bomba de Dosificación<SEP>Válvula de Corte": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330248,
+    "update_time": 1761330248,
+    "_id": "Bomba de Dosificación<SEP>Válvula de Corte"
+  },
+  "Restricciones de Transporte<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330248,
+    "update_time": 1761330248,
+    "_id": "Restricciones de Transporte<SEP>VENDEDOR"
+  },
+  "Documentación<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330248,
+    "update_time": 1761330248,
+    "_id": "Documentación<SEP>Paquete de Inyección de Químicos"
+  },
+  "Paquete de Dosificación de Químicos<SEP>Proveedores": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330248,
+    "update_time": 1761330248,
+    "_id": "Paquete de Dosificación de Químicos<SEP>Proveedores"
+  },
+  "CLIENTE<SEP>Restricciones de Transporte": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "CLIENTE<SEP>Restricciones de Transporte"
+  },
+  "Compresor de Gas de Proceso M155-K-21150<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Compresor de Gas de Proceso M155-K-21150<SEP>Paquete de Inyección de Químicos"
+  },
+  "Bomba de Dosificación<SEP>Proveedores": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Bomba de Dosificación<SEP>Proveedores"
+  },
+  "P&ID<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "P&ID<SEP>Paquete"
+  },
+  "Nivel Máximo de Ruido<SEP>Proveedores": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Nivel Máximo de Ruido<SEP>Proveedores"
+  },
+  "Bomba de Dosificación<SEP>Especificaciones Técnicas FFM/F-S-ME-015": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Bomba de Dosificación<SEP>Especificaciones Técnicas FFM/F-S-ME-015"
+  },
+  "Cupiagua<SEP>EDP-F-046": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Cupiagua<SEP>EDP-F-046"
+  },
+  "Contenedores del Inhibidor de Corrosión<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330249,
+    "update_time": 1761330249,
+    "_id": "Contenedores del Inhibidor de Corrosión<SEP>Paquete de Inyección de Químicos"
+  },
+  "EDP-F-046<SEP>Químicos": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330250,
+    "update_time": 1761330250,
+    "_id": "EDP-F-046<SEP>Químicos"
+  },
+  "Bomba de Dosificación<SEP>Diámetros de Boquillas de Conexión": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330250,
+    "update_time": 1761330250,
+    "_id": "Bomba de Dosificación<SEP>Diámetros de Boquillas de Conexión"
+  },
+  "EDP-F-046<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb",
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 2,
+    "create_time": 1761330250,
+    "update_time": 1761330250,
+    "_id": "EDP-F-046<SEP>Requisición de Materiales"
+  },
+  "Bomba de Dosificación<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330251,
+    "update_time": 1761330251,
+    "_id": "Bomba de Dosificación<SEP>Paquete de Inyección de Químicos"
+  },
+  "ICO CUPIAGUA<SEP>Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330251,
+    "update_time": 1761330251,
+    "_id": "ICO CUPIAGUA<SEP>Requisición de Materiales"
+  },
+  "EDP-F-046<SEP>Ingeniería": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330251,
+    "update_time": 1761330251,
+    "_id": "EDP-F-046<SEP>Ingeniería"
+  },
+  "ECOPETROL<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330251,
+    "update_time": 1761330251,
+    "_id": "ECOPETROL<SEP>Proveedor"
+  },
+  "Número de Parte<SEP>Proveedor": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "Número de Parte<SEP>Proveedor"
+  },
+  "ICO CUPIAGUA<SEP>Ingeniería Detalle Acondicionamiento": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "ICO CUPIAGUA<SEP>Ingeniería Detalle Acondicionamiento"
+  },
+  "Cupiagua<SEP>Proyecto": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "Cupiagua<SEP>Proyecto"
+  },
+  "EDP-F-046<SEP>Inspección": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "EDP-F-046<SEP>Inspección"
+  },
+  "PAQUETE<SEP>SmartPlant": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "PAQUETE<SEP>SmartPlant"
+  },
+  "Documentación<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "Documentación<SEP>VENDEDOR"
+  },
+  "CAD<SEP>PAQUETE": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "CAD<SEP>PAQUETE"
+  },
+  "EDP-F-046<SEP>MR # FFM/F-MEQ-013": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "EDP-F-046<SEP>MR # FFM/F-MEQ-013"
+  },
+  "Hoja de Datos FFM/F-MEX-033<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330252,
+    "update_time": 1761330252,
+    "_id": "Hoja de Datos FFM/F-MEX-033<SEP>Paquete"
+  },
+  "EDP-F-046<SEP>Revisiones": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "EDP-F-046<SEP>Revisiones"
+  },
+  "Ecopetrol S.A.<SEP>Inistrodelmismo": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "Ecopetrol S.A.<SEP>Inistrodelmismo"
+  },
+  "Certificado de Resultados Pruebas FAT<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "Certificado de Resultados Pruebas FAT<SEP>Paquete"
+  },
+  "Estación CPF Cupiagua<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "Estación CPF Cupiagua<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "EDP-F-046<SEP>Fecha": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "EDP-F-046<SEP>Fecha"
+  },
+  "P&ID<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "P&ID<SEP>Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "Documentos y Planos<SEP>Paquete": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "Documentos y Planos<SEP>Paquete"
+  },
+  "API 675<SEP>Bomba": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "API 675<SEP>Bomba"
+  },
+  "Inistrodelmismo<SEP>Química": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330253,
+    "update_time": 1761330253,
+    "_id": "Inistrodelmismo<SEP>Química"
+  },
+  "Ecopetrol S.A.<SEP>Placa de Identificación": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330254,
+    "update_time": 1761330254,
+    "_id": "Ecopetrol S.A.<SEP>Placa de Identificación"
+  },
+  "Química<SEP>Sistema de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330254,
+    "update_time": 1761330254,
+    "_id": "Química<SEP>Sistema de Inyección de Químicos"
+  },
+  "Paquete de Inyección de Químicos<SEP>Separador de Media Presión V-2002": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330254,
+    "update_time": 1761330254,
+    "_id": "Paquete de Inyección de Químicos<SEP>Separador de Media Presión V-2002"
+  },
+  "EDP-F-046<SEP>Procedimiento de Soldadura WPS, PQR": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330254,
+    "update_time": 1761330254,
+    "_id": "EDP-F-046<SEP>Procedimiento de Soldadura WPS, PQR"
+  },
+  "Paquete de Inyección de Químicos<SEP>Separador V-2001": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330255,
+    "update_time": 1761330255,
+    "_id": "Paquete de Inyección de Químicos<SEP>Separador V-2001"
+  },
+  "EDP-F-046<SEP>Informe de Inspección": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330255,
+    "update_time": 1761330255,
+    "_id": "EDP-F-046<SEP>Informe de Inspección"
+  },
+  "Acondicionamiento Estratégico Cupiagua<SEP>CLIENTE": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330255,
+    "update_time": 1761330255,
+    "_id": "Acondicionamiento Estratégico Cupiagua<SEP>CLIENTE"
+  },
+  "Paquete de Inyección de Químicos<SEP>Separador de Baja Presión V-2003": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330255,
+    "update_time": 1761330255,
+    "_id": "Paquete de Inyección de Químicos<SEP>Separador de Baja Presión V-2003"
+  },
+  "Manual de Instrucciones<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330255,
+    "update_time": 1761330255,
+    "_id": "Manual de Instrucciones<SEP>VENDEDOR"
+  },
+  "Paquete de Inyección de Químicos<SEP>Separador de Alta Presión V-2001": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330256,
+    "update_time": 1761330256,
+    "_id": "Paquete de Inyección de Químicos<SEP>Separador de Alta Presión V-2001"
+  },
+  "Cuerpo del Texto<SEP>Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330256,
+    "update_time": 1761330256,
+    "_id": "Cuerpo del Texto<SEP>Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "Bombas de Dosificación<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330256,
+    "update_time": 1761330256,
+    "_id": "Bombas de Dosificación<SEP>Paquete de Inyección de Químicos"
+  },
+  "Paquete de Inyección de Químicos<SEP>Tanques de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330257,
+    "update_time": 1761330257,
+    "_id": "Paquete de Inyección de Químicos<SEP>Tanques de Almacenamiento"
+  },
+  "Paquete de Inyección de Químicos<SEP>VENDEDOR": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330257,
+    "update_time": 1761330257,
+    "_id": "Paquete de Inyección de Químicos<SEP>VENDEDOR"
+  },
+  "Documentación de Pruebas<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330258,
+    "update_time": 1761330258,
+    "_id": "Documentación de Pruebas<SEP>Paquete de Inyección de Químicos"
+  },
+  "Certificados de Material<SEP>Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330259,
+    "update_time": 1761330259,
+    "_id": "Certificados de Material<SEP>Paquete de Inyección de Químicos"
+  }
+}

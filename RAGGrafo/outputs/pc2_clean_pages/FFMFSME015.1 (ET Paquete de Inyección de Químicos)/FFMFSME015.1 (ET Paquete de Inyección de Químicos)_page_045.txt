@@ -1,0 +1,43 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 39 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Los planos de disposición general proporcionarán la siguiente información, que permitirá al CLIENTE
+revisar el diseño y realizar cualquier esfuerzo de ingeniería necesario en el equipo circundante /
+relacionado para el correcto funcionamiento del PAQUETE.
+ Vista de planta, elevación y sección del PAQUETE, con anotación "norte de planta", según sea
+necesario para proporcionar toda la información que se indica a continuación.
+ Detalles de todas las ubicaciones de la interfaz de interconexión VENDEDOR/CLIENTE que muestran
+las dimensiones finales, las orientaciones, los requisitos de espacio, los materiales, los detalles de
+soldadura / pernado / torque para la instalación en campo, otros detalles de instalación de campo
+requeridos (requisitos de soldadura, requisitos de aislamiento, etc.), cargas y momentos de boquilla
+permitidos, etc.
+ Detalles de todas las ubicaciones de interfaz mecánica del VENDEDOR / CLIENTE – pesos del
+PAQUETE (vacío y en operación), ubicaciones de soporte estructural / elevaciones / dimensiones,
+carga muerta, carga viva, etc. – para el soporte de este con las estructuras.
+ Detalles de los materiales de construcción para el PAQUETE tal como se suministra.
+ Detalles del alcance del suministro con respecto a la preparación de la superficie y la pintura del
+PAQUETE.
+ Detalles sobre la elevación / manipulación de equipo para su envío e instalación en el sitio.
+ Modelo 3D del PAQUETE en un formato adecuado para ser integrado en SmartPlant.
+Para la Instrumentación, el VENDEDOR considerará como mínimo los siguientes, sin limitarse a ellos:
+ Planos de cableado de la caja de conexiones.
+ Listado de instrumentos.
+ Hojas de datos de todos los instrumentos.
+ Detalles completos de los sistemas de control del VENDEDOR.
+ Guías de instalación.
+ Diagramas de conexión de instrumentos.
+ Diagramas de cableado de interconexión al sistema de control.
+ Disposición del cableado de instrumentos (dentro del patín).
+ Detalles del panel de control.
+ Diagramas de lazo.
+ Índice de cable (patín).
+ Listado de cable.
+ Diagrama de cableado de bloques.
+ Detalles de todos los requisitos de la fuente de alimentación.
+ Diagramas de cableado esquemático.
+ Filosofía de operación y control.
+ Certificados de calibración de fábrica.
+ Certificados de uso en áreas clasificadas (si aplica).
+ Certificados de cumplimiento con los requisitos de la norma RETIE (Colombia).

@@ -1,0 +1,77 @@
+[
+  {
+    "page": 1,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 14,
+        "cols": 9
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 2,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 82,
+        "cols": 9
+      },
+      {
+        "rows": 5,
+        "cols": 4
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [
+      "P&ID",
+      "RULE_NO_PID"
+    ],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 3,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 49,
+        "cols": 4
+      }
+    ],
+    "pid_like": false,
+    "pid_evidence": [
+      "P&ID",
+      "RULE_NO_PID"
+    ],
+    "pid_reference": null,
+    "pid_note": null,
+    "__dispatched_to__": "pc3_text_tables_pipeline"
+  },
+  {
+    "page": 4,
+    "has_text": true,
+    "tables_shapes": [
+      {
+        "rows": 4,
+        "cols": 3
+      }
+    ],
+    "pid_like": true,
+    "pid_evidence": [
+      "DIAGRAMA",
+      "P&ID",
+      "diagrama",
+      "RULE_FORCE_PID"
+    ],
+    "pid_reference": "FFM/F-S-ME-015",
+    "pid_note": "Este diagrama es ilustrativo, el diseño y representación es responsabilidad del PROVEEDOR, Tomado de PUM/F-PCF-PU-PRE-55-552-2/2, se debe pedir la ultima versión del P&ID para este paquete.",
+    "__dispatched_to__": "pc3_pid_pipeline"
+  }
+]

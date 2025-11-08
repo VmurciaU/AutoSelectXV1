@@ -1,0 +1,50 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Procedimiento y especificación de pintura y
++2Sem IFR E E
+preparación de superficies
+Procedimiento de embalaje, embarque y
++4Sem IFR E E
+almacenamiento
+Registros de trazabilidad de material
++8Sem IFR E E
+Reportes de inspección
+-2 Sem IFR E E
+Certificado de resultados pruebas FAT -4Sem IFR E E
+Certificado de prueba hidrostática
+-4Sem IFR E E
+Certificados RETIE -4Sem IFR E E
+Manuales de preservación, operación y
+-2Sem IFR - E
+mantenimiento (En español)
+Procedimiento de pre-comisionamiento /
+-4Sem IFR E E
+comisionamiento
+Índice del dossier final del PAQUETE (Vendor data
+X -4Sem IFR E E
+book index)
+Dossier final del PAQUETE (Vendor data book (VDB)) -2Sem IFR E 3+E
+Dossier de fabricación y control de calidad (7)
+-2Sem IFR E E
+Términos de entrega X - IFR E E
+Garantías
+X - - - E
+EDP-F-046 – 20/11/2017 V-1 9/20

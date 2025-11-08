@@ -1,0 +1,19 @@
+{
+  "doc_id": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)",
+  "file_name": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS).pdf",
+  "doc_type": "HD",
+  "page_count": 4,
+  "embedded_pid_pages": [
+    4
+  ],
+  "pid_context": [
+    {
+      "page": 4,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "Este diagrama es ilustrativo, el diseño y representación es responsabilidad del PROVEEDOR, Tomado de PUM/F-PCF-PU-PRE-55-552-2/2, se debe pedir la ultima versión del P&ID para este paquete.",
+      "evidence": "DIAGRAMA;P&ID;diagrama;RULE_FORCE_PID"
+    }
+  ],
+  "tables_total": 5
+}

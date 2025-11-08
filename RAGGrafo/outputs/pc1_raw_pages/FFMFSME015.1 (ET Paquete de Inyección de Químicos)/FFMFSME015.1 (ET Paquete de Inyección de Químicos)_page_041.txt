@@ -1,0 +1,29 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 35 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+10. Piezas de Repuesto y Herramientas Especiales
+El VENDEDOR deberá incluir en el alcance del suministro las piezas de repuesto y consumibles requeridos
+y recomendadas para la instalación, pre-comisionamiento, comisionamiento y puesta en marcha del
+PAQUETE.
+Se proporcionará la lista recomendada de piezas de repuesto y consumibles para los primeros dos (2)
+años de operación. Las piezas de repuesto recomendadas estarán en formato de registro de
+intercambiabilidad de piezas de repuesto (SPIR) en un archivo excel y contendrán como mínimo detalles
+como el número de pieza, el número de dibujo. material, cantidad e información del VENDEDOR (es decir,
+nombre de contacto, cargo, correo electrónico, etc.) incluyendo su precio individual. También las piezas
+de repuesto propuestas deberán ser fáciles de conseguir. El VENDEDOR incluirá las piezas de repuesto
+durante dos años de operación en su oferta técnica como un artículo separado.
+Cualquier pieza de repuesto y onsumibles, además de las cantidades especificadas por el VENDEDOR,
+requeridas durante el montaje, el pre-comisionamiento y comisionamiento será suministrada por el
+VENDEDOR sin ninguna implicación comercial para el CLIENTE.
+La primera carga de cualquier fluido (aceite lubricante, refrigerante etc) requerido para operar el PAQUETE
+es alcance de suministro del VENDEDOR.
+10.1. Herramientas Especiales
+Si se requieren herramientas especiales para el funcionamiento y mantenimiento normal del PAQUETE.
+El VENDEDOR identificará las herramientas especiales requeridas en su propuesta. La lista de
+herramientas especiales se detallará y se presentará para la revisión del CLIENTE en inclusión o no en la
+compra del PAQUETE.

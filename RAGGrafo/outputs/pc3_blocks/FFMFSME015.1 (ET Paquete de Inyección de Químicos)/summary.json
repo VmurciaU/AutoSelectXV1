@@ -1,0 +1,75 @@
+{
+  "doc_id": "FFMFSME015.1 (ET Paquete de Inyección de Químicos)",
+  "file_name": "FFMFSME015.1 (ET Paquete de Inyección de Químicos).pdf",
+  "doc_type": "ET",
+  "page_count": 49,
+  "embedded_pid_pages": [
+    6,
+    13,
+    19,
+    20,
+    23,
+    24,
+    45,
+    46
+  ],
+  "pid_context": [
+    {
+      "page": 6,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 13,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "El VENDEDOR debe incluir todos los estándares y códigos industriales aplicables dentro de su oferta en",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 19,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 20,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 23,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 24,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "se debe pedir la última versión del P&ID para este paquete.",
+      "evidence": "P&ID"
+    },
+    {
+      "page": 45,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "Diagrama"
+    },
+    {
+      "page": 46,
+      "pid_like": true,
+      "pid_reference": "FFM/F-S-ME-015",
+      "pid_note": "",
+      "evidence": "Diagrama"
+    }
+  ],
+  "tables_total": 54
+}

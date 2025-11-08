@@ -1,0 +1,51 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+4.6. MARCAS HOMOLOGADAS DE ECOPETROL
+Aplica Marcas Homologadas de ECOPETROL: SI
+Nivel: 1.2.2 (Metering Pumps)
+Nivel: 5.1.2 (Low Voltage Electrical Motors)
+Nivel: 6.1 (Instruments and Controls General)
+4.7. PROVEEDORES HOMOLOGADOS DE ECOPETROL
+Aplica Proveedores Homologados de ECOPETROL: NO APLICA
+Categoría (s) Proveedores Homologados ECOPETROL: NO APLICA
+4.8. REUNIONES DE INGENIERÍA Y VISITAS
+El CLIENTE solicitará en los términos de referencia u orden de compra del proceso, las reuniones o
+visitas necesarias en donde el PROVEEDOR debe estar o se sugiere que asista. A continuación, se
+presenta un listado de reuniones y visitas sugerido:
+Ítem Cantidad Objeto de la reunión o visita Sitio
+1 1 KOM Oficina CLIENTE
+2 1 Reunión de Pre-Inspección Fábrica
+Visitas de vigilancia “en progreso” no especificadas
+3 TBD1 Fábrica
+(visitas de control de calidad al taller)
+4 TBD1 Inspección final en Fábrica previo al envío Fábrica
+5 1 Cualquier otra requerida Donde sea solicitado
+4.9. ASISTENCIA EN SITIO
+La propuesta del PROVEEDOR deberá considerar el suministro de personal técnico capacitado,
+consistente en soporte para las labores de arranque y puesta en marcha del PAQUETE. Para tal efecto,
+se solicita con la oferta, un programa y organigrama del personal técnico y de dirección que será
+empleado en dicha operación.
+La propuesta deberá incluir el tiempo mínimo recomendado que se requiere para realizar cada etapa de
+la asistencia en sitio, incluyendo las tarifas por día en caso de tiempo adicional, y también considerar el
+suministro del personal técnico competente para las tareas asociadas.
+EDP-F-046 – 20/11/2017 V-1 11/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

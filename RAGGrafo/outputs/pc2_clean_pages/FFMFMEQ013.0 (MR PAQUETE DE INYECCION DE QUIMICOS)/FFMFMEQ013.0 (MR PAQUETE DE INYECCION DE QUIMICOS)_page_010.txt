@@ -1,0 +1,46 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+NOTAS
+(1) (*) DOCUMENTOS PRIORITARIOS SUJETOS A PENALIZACIÓN O TÉRMINOS DE PAGO
+(2) (**) LOS REPUESTOS PARA ARRANQUE Y COMISIONAMIENTO DEBERÁN SER SUMINISTRADOS POR EL PROVEEDOR, COMO PARTE DE LA
+OFERTA SE DEBE ENTREGAR UN LISTADO QUE INDIQUE NÚMERO DE PARTE Y PRECIOS
+(3) FECHA DE EMISIÓN: “+” significa Días (D) o Semanas (Sem) o Meses (M) después de la fecha efectiva de la Orden de Compra
+“-“ significa Días (D) o Semanas (Sem) o Meses (M) antes de la fecha efectiva de despacho
+(4) PROPÓSITO: IFR = Emitido para revisión y comentarios / INFO = Emitido para Información
+(5) CANTIDAD TIPO: Número de copias más archivo Electrónico (E)
+(6) EMISIÓN FINAL: Documento sin comentarios (con estado del documento= 3)
+(7) LIBRO DE CERTIFICADOS DE INSPECCIÓN: Una copia adicional se entregará junto con los productos y se indicará en la lista de Embalaje
+relacionada.
+4.5. REQUERIMIENTOS DE CONFIABILIDAD
+Los equipos y partes que componen el PAQUETE y que son suministrados por el PROVEEDOR deben ser
+nuevos, sin uso, fabricados apropiadamente, libres de defectos de manufactura y completamente
+adecuados para el trabajo requerido; deben ser de un diseño moderno y haber demostrado un
+desempeño satisfactorio bajo condiciones de servicio similares a aquellas en que serán utilizados.
+El PROVEEDOR debe tener experiencia probada en el diseño, fabricación y/o suministro del PAQUETE,
+por lo menos 10 años de experiencia probada en la manufactura, suministro e instalación de sistemas
+paquetizados de inyección de químicos.
+El PROVEEDOR debe tener representación en Colombia y servicio post-venta para los requisitos de
+asistencia en sitio durante instalación y arranque, y requerimientos de mantenimiento o solicitud de
+partes.
+El PROVEEDOR debe indicar las garantías del PAQUETE en la oferta y suministrarlas con la entrega de
+este. Todos los requerimientos de confiabilidad deben estar alineados y en completo acuerdo con las
+especificaciones técnicas referenciadas en este documento.
+EDP-F-046 – 20/11/2017 V-1 10/20

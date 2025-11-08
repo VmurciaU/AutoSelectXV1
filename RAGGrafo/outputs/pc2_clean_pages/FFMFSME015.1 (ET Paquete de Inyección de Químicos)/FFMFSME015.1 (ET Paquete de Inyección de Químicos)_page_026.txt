@@ -1,0 +1,33 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 20 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Paquete de inyección de
+Unidad P-5540 P-5541 P-5542 P-5543 P-5544 P-5545
+inhibidor de corrosión
+Máxima presión de
+psig 75 67 137 150 80 150
+descarga
+SP. GR. @°F / @ 60°F - 1.0 1.0 1.0 1.0 1.0 1.0
+Rango de calibración ml 100 100 100 100 100 100
+Tabla 4. Especificaciones técnicas de las bombas del PAQUETE de inyección de químicos.
+Nota 1: Las especificaciones técnicas como el NPSH requerido, la eficiencia estimada de la bomba, el set
+de presión de las PSV, la temperatura y presión de diseño deben ser confirmadas por el VENDEDOR del
+PAQUETE.
+Nota 2: Los valores de caudales deberán ser confirmados por el VENDEDOR validando la tecnología
+disponible y los valores mínimos para asegurar una correcta dosificación del químico en la tubería de
+proceso.
+7.3.2. Tanques de Almacenamiento
+Los tanques será del tipo IBC metálico con capacidad de 1325 litros (350 gal) de almacenamiento y estará
+provisto mínimo de los siguientes elementos:
+ Válvulas de drenaje.
+ Tapa de llenado.
+ Boquilla de salida con válvula (succión bomba).
+ Interruptores de nivel.
+ Indicador local de nivel.
+Los tanques serán de acero inoxidable AISI.
+7.3.3. Boquilla de inyección (Quill)
+El PAQUETE debe suministrar las seis (6) boquillas de inyección. De igual manera el PAQUETE deberá
+garantizar la conexión de la boquilla de inyección (quill) con la facilidad de que será instalada en las
+tuberías de proceso.

@@ -1,0 +1,36 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 30 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+La codificación de colores se seguirá como guía de acuerdo con la especificación del CLIENTE N° “ECP-
+DHS-G-009 - Guía sobre Código de Colores y Señales Industriales, los colores finales y las definiciones
+de las etiquetas se deberán confirmar con el CLIENTE por escrito antes de aplicar y etiquetar.
+7.9. Placa de Identificación y Estampado
+Cada equipo del PAQUETE deberá estar provisto de una placa de identificación en SS316.
+La placa de identificación se fijará al soporte (soldada al equipo) con un mínimo de cuatro (4) tornillos o
+remaches de acero inoxidable. El etiquetado del equipo debe ser visible desde el frente. Toda descripción
+será en español.
+Las placas de identificación y los soportes de montaje de la placa de identificación deben ubicarse de
+manera que no queden cubiertos por el aislamiento y se puedan leer fácilmente desde una plataforma. Los
+soportes se extenderán desde el exterior del equipo para despejar el aislamiento y con suficiente acceso
+para la preparación de la superficie y la pintura.
+La placa de identificación deberá contener como mínimo la siguiente información:
+ Nombre del cliente: ECOPETROL S.A.
+ Identificación del VENDEDOR/FABRICANTE.
+ Identificación o “TAG” del PAQUETE.
+ Fecha de finalización de la construcción.
+ Tamaño y modelo de la bomba
+ Número de serie de la bomba
+ Presión de prueba hidrostática de bomba.
+ Capacidad de dosificación en caudal y presión
+ Velocidad de rotación del motor en rpm
+ Potencia nominal de motor en hp
+ Fecha de fabricación.
+ Tamaño y tipo de Equipo.
+ Límites máximos y mínimos de condiciones de diseño.
+7.10. Materiales
+Los materiales de construcción del PAQUETE y equipos asociados deberán cumplir con los requerimientos
+que se indican en las hojas de datos, especificaciones de proyector, normas aplicables y estándares
+indicados en el capítulo 3 y deben ser adecuados para el servicio especificado. Aplicación de materiales
+alternativos deben ser sujetos a revisión y comentarios del CLIENTE.

@@ -1,0 +1,9 @@
+{
+  "page": 13,
+  "pid_outputs": [
+    "pid_context/page_013_titleblock.csv",
+    "pid_context/page_013_tags.csv",
+    "pid_context/page_013_linelist.csv"
+  ],
+  "tables_emitted": 1
+}

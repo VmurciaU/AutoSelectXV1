@@ -1,0 +1,49 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+El PROVEEDOR debe cumplir con los lineamientos del documento EDP-ET-001-i TECHNICAL
+SPECIFICATION OF MINIMUM QUALITY REQUIREMENTS FOR EQUIPMENT AND MATERIAL
+PROCUREMENT.
+El dossier de fabricación del PAQUETE debe ser enviado al CLIENTE de acuerdo con el documento “ECP-
+VIN-G-GEN-GT-003 – GUIA PARA LA PREPARACIÓN DEL DOSSIER DE MANUFACTURA Y CONTROL DE
+CALIDAD”
+Otros requerimientos de Calidad están descritos en la especificación técnica anexa particular del
+PAQUETE N° FFM/F-S-ME-015.
+7.2. NIVEL DE CRITICIDAD Y NIVEL DE INSPECCIÓN
+El PAQUETE es NO CRÍTICO por seguridad de proceso. Se requiere nivel de inspección 3, de acuerdo
+con el documento EDP-G-010 Guía Niveles de Inspección.
+ITEM CLASE DESCRIPCIÓN NIVEL INSPECCIÓN NIVEL INSPECCIÓN
+EN BODEGA EN FÁBRICA
+166 25 Paquete de Inyección de Químicos N/A 3
+7.3. PLAN DE INSPECCIÓN Y ENSAYOS (ITP), FIR
+El CLIENTE tendrá el derecho de revisar en cualquier momento y lugar, durante la ingeniería,
+fabricación, ensamble y proceso de pruebas del PAQUETE y verificar todos los requerimientos de las
+especificaciones y documentos relacionados, incluyendo subcontratistas del PROVEEDOR.
+El PROVEEDOR deberá presentar al CLIENTE su plan de inspección y pruebas (siglas en ingles ITP),
+teniendo en cuenta incorporar los ítems del plan de inspección de prueba propuesto para fines de
+guía y referencia del PAQUETE.
+Los certificados de las pruebas e inspecciones formarán parte del dossier del PAQUETE. La aprobación
+de las pruebas e inspecciones no exime al PROVEEDOR del cumplimiento de las garantías exigidas para
+la calidad del PAQUETE y sus componentes, ni del cumplimiento de las condiciones de operación y
+desempeño del PAQUETE.
+8. REQUERIMIENTOS EN SALUD, SEGURIDAD Y MEDIO AMBIENTE (HSE)
+EDP-F-046 – 20/11/2017 V-1 16/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

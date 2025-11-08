@@ -1,0 +1,19 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 1 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+1. Introducción
+1.1. Objetivo
+El objetivo de este documento es definir los requerimientos mínimos para un (1) PAQUETE de inyección
+de químicos que funcionará para el nuevo paquete de compresión de gas de proceso M155-K-21150 para
+el proyecto “ACONDICIONAMIENTO ESTRATEGICO CUPIAGUA” para ECOPETROL S.A.
+1.2. Alcance
+Esta especificación técnica, junto los demás documentos del proyecto referenciados (especificaciones,
+hojas de datos, diagramas de tubería e instrumentación, planos, etc.) y los códigos y estándares de la
+industria aplican para el suministro de un (1) PAQUETE de inyección de químicos (componentes
+principales, accesorios necesarios para la operación, instrumentación y controles necesarios para un
+funcionamiento seguro y sin riesgos para la operación continua de este PAQUETE.
+El VENDEDOR se encargará de la selección, ingeniería, fabricación, suministro, aseguramiento y control
+de calidad, embalaje, transporte y entrega al lugar indicado por el CLIENTE del PAQUETE con las
+modificaciones o adicionales necesarias para cumplir con esta especificación.

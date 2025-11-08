@@ -1,0 +1,48 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Ítem Código REV Nombre
+1 EDP-P-013-2 11 LISTADO DE MARCAS HOMOLOGADAS
+2 EDP-F-077 2 FORMATO DE SOLICITUD TÉCNICAS
+GUÍA PARA LA PREPARACIÓN DEL DOSSIER DE
+3 ECP-VIN-G-GEN-GT-003 1
+MANUFACTURA Y CONTROL DE CALIDAD
+4 RETIE - REGLAMENTO TÉCNICO DE INSTALACIONES ELÉCTRICAS
+10.3. DOCUMENTOS DE REFERENCIA
+Ítem Código REV Nombre LINK
+FFD/F-PCF-MP- FFD/F-PCF-MP-
+1 PIL-10-822-1/1 6 Plot Plan PIL-10-822-1/1
+REV P
+FFM/F-PIB-007
+2 FFM/F-PIB-007 2 Piping Class
+REV 0
+Especificación Técnica Paquete de Inyección FFM/F-S-ME-015
+3 FFM/F-S-ME-015 0
+de químicos REV A1
+Hoja de Datos Paquete de Inyección de FFM/F-MEX-033
+4 FFM/F-MEX-033 0
+Químicos REV A1
+FFD/F-PCF-US-
+FFD/F-PCF-US- Piping and Instrumentation diagram New
+5 0 PRE-55-552-2/2
+PRE-55-552-2/2 Chemical Packages
+REV A1
+FFM/F-PCF-GN-
+FFM/F-PCF-GN-ELF-
+6 P Planimetría de clasificación de áreas ELF-00-001-2/4
+00-001-2/4
+REV P
+* La versión de los documentos aquí indicados es la disponible en el momento de la emisión de esta
+requisición de materiales en la versión que se evidencia. El PROVEEDOR deberá verificar que se realizó
+el envío de estos documentos en su última versión con ECOPETROL, la omisión de este requerimiento
+no exime al PROVEEDOR de la responsabilidad de cumplir con el alcance de suministro requerida en
+este documento y cualquier adicional que se disponga en las últimas versiones.
+EDP-F-046 – 20/11/2017 V-1 20/20

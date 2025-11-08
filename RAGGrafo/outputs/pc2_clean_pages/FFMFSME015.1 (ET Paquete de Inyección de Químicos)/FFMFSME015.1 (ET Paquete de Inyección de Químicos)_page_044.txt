@@ -1,0 +1,36 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 38 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+12. Documentación
+12.1. General
+La documentación técnica emitida por el VENDEDOR será aceptada en inglés y/o español, a excepción
+de las instrucciones de preservación y manuales de operación y mantenimiento que deberán ser
+desarrollados y emitidos en español.
+Después de la orden de compra, el primer documento que presentará el VENDEDOR será el listado de
+documentos del VENDEDOR que enumerará todos los planos y documentos que se presentarán para la
+revisión del CLIENTE con fechas anticipadas para su emisión.
+El listado de documentos del VENDEDOR incluirá planos adicionales que no se enumeran
+específicamente en esta especificación y documentos de referencia, pero que se consideran de valor. El
+CLIENTE asignará los números de plano y documento en el listado de documentos del VENDEDOR y este
+los reflejará durante la presentación de los planos y documentos reales.
+Todos los planos deben estar en un formato compatible con SmartPlant y copia en PDF, los documentos
+deben estar en MS word o MS excel.
+El diseño del PAQUETE integralmente se modelará en un software CAD compatible para integrarse con
+SmartPlant 3D (SP3D). Durante el envío final del PAQUETE, el VENDEDOR deberá entregar todos los
+archivos pertenecientes al modelo 3D de este, incluida la base de datos, para que pueda integrarse
+adecuadamente y sea compatible con el programa SmartPlant empleado por el CLIENTE del proyecto.
+La culminación de los requisitos de documentación a satisfacción del CLIENTE será una condición para el
+cumplimiento de la obligación del VENDEDOR en virtud del contrato.
+Todos los documentos emitidos por el VENDEDOR serán revisados y firmados por este para verificar el
+cumplimiento de los códigos y especificaciones antes de que los documentos definitivos se envíen al
+CLIENTE. Cualquier documento en el que falte la nota de verificación se considerará no presentado.
+El VENDEDOR deberá presentar todos los documentos (incluidos los planos) para su revisión por parte
+del CLIENTE. El VENDEDOR deberá enviar una copia electrónica al CLIENTE para fines de revisión.
+La revisión, comentarios o aprobación por parte del CLIENTE o cualquier falta de revisión, no eximirá al
+VENDEDOR de la responsabilidad por la exactitud, responsabilidad de producir un sistema de trabajo que
+cumpla con la intención de la solicitud, especificación y documentación adjunta para la integridad de los
+documentos de acuerdo con las buenas prácticas de ingeniería y cumpliendo con el requisito del contrato.
+El VENDEDOR deberá seguir el procedimiento de etiquetado del proyecto del CLIENTE que se lista en el
+numeral 3.

@@ -1,0 +1,40 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 5 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ ASME Section II Materials and Specifications
+ ASME Section V Non-destructive Examination
+ ASME Section IX Welding and Brazing Requirements
+ ASME B1.1 Unified Inch Screw Threads (UN and UNR Thread Form)
+ ASME B1.20.1 Pipe Threads, General Purpose (inch)
+ ASME B16.1 Gray Iron Pipe Flanges and Flanged Fittings (Classes 25, 125, 250)
+ ASME B16.5 Pipe Flanges and Flanged Fittings NPS ½ through NPS 24
+ ASME B16.11 Forged Fittings, Socket Welding and Threaded
+ ASME B16.20 Metallic Gaskets for Pipe Flanges
+ ASME B16.34 Valves–Flanged, Threaded, and Welding End
+ ASME B16.42 Ductile Iron Pipe Flanges and Flanged Fittings Classes 150 and 300
+ ASME B31.3 Process Piping
+ ASME B36.10 Welded and Seamless Wrought Steel Pipe
+ ASME B36.19 Stainless Steel Pipe
+3.1.3. American Society for Testing and Materials (ASTM)
+ ASTM E94 Standard Guide for Radiographic Examination Using Industrial Radiographic Film
+ ASTM A388 Standard Practice for Ultrasonic Examination of Steel Forgings
+ ASTM A536 Standard Specification for Ductile Iron Castings
+ ASTM A609 Standard Practice for Castings, Carbon, Low-Alloy, and Martensitic Stainless
+Steel, Ultrasonic Examination
+ ASTM E165 Standard Practice for Liquid Penetrant Examination for General Industry
+ ASTM E709 Standard Guide for Magnetic Particle Testing
+ ASTM A 48 Standard specification for gray iron castings
+ ASTM A 216 Standard specification for 5reas castings, carbon, suitable for 5reas5 welding, for
+high- 5reas5of5ra service
+ ASTM 278 Standard specification for gray iron castings for pressure-containing parts for
+5reas5of5ra up to 650 degrees
+ ASTM A 436 Standard specification for austenitic gray iron castings
+ ASTM A 439 Standard specification for austenitic ductile iron castings
+3.1.4. International Organization for Standardization (ISO)
+ ISO 1217
+ ISO 3744 Determination of Sound Power 5reas5of Noise Sources using Sound Pressure

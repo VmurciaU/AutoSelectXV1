@@ -1,0 +1,234 @@
+Collecting rapidocr
+  Using cached rapidocr-3.4.2-py3-none-any.whl.metadata (1.2 kB)
+Collecting docling
+  Using cached docling-2.58.0-py3-none-any.whl.metadata (11 kB)
+Requirement already satisfied: huggingface_hub in ./venv/lib/python3.12/site-packages (0.34.4)
+Requirement already satisfied: transformers in ./venv/lib/python3.12/site-packages (4.56.1)
+Collecting accelerate
+  Using cached accelerate-1.11.0-py3-none-any.whl.metadata (19 kB)
+Requirement already satisfied: pandas in ./venv/lib/python3.12/site-packages (2.3.2)
+Collecting openpyxl
+  Using cached openpyxl-3.1.5-py2.py3-none-any.whl.metadata (2.5 kB)
+Requirement already satisfied: regex in ./venv/lib/python3.12/site-packages (2025.9.1)
+Collecting filetype
+  Using cached filetype-1.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
+Collecting python-docx
+  Using cached python_docx-1.2.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting python-pptx
+  Using cached python_pptx-1.0.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting rtree
+  Using cached rtree-1.4.1-py3-none-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (2.1 kB)
+Collecting shapely
+  Using cached shapely-2.1.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.8 kB)
+Collecting lxml
+  Using cached lxml-6.0.2-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.6 kB)
+Collecting pyclipper>=1.2.0 (from rapidocr)
+  Using cached pyclipper-1.3.0.post6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.0 kB)
+Collecting opencv-python>=4.5.1.48 (from rapidocr)
+  Using cached opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (19 kB)
+Requirement already satisfied: numpy<3.0.0,>=1.19.5 in ./venv/lib/python3.12/site-packages (from rapidocr) (1.26.4)
+Requirement already satisfied: six>=1.15.0 in ./venv/lib/python3.12/site-packages (from rapidocr) (1.17.0)
+Requirement already satisfied: PyYAML in ./venv/lib/python3.12/site-packages (from rapidocr) (6.0.2)
+Requirement already satisfied: Pillow in ./venv/lib/python3.12/site-packages (from rapidocr) (11.2.1)
+Requirement already satisfied: tqdm in ./venv/lib/python3.12/site-packages (from rapidocr) (4.66.2)
+Collecting omegaconf (from rapidocr)
+  Using cached omegaconf-2.3.0-py3-none-any.whl.metadata (3.9 kB)
+Requirement already satisfied: requests in ./venv/lib/python3.12/site-packages (from rapidocr) (2.32.5)
+Collecting colorlog (from rapidocr)
+  Using cached colorlog-6.10.1-py3-none-any.whl.metadata (11 kB)
+Requirement already satisfied: pydantic<3.0.0,>=2.0.0 in ./venv/lib/python3.12/site-packages (from docling) (2.11.4)
+Collecting docling-core<3.0.0,>=2.48.2 (from docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached docling_core-2.49.0-py3-none-any.whl.metadata (6.7 kB)
+Collecting docling-parse<5.0.0,>=4.7.0 (from docling)
+  Using cached docling_parse-4.7.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+Collecting docling-ibm-models<4,>=3.9.1 (from docling)
+  Using cached docling_ibm_models-3.10.1-py3-none-any.whl.metadata (7.3 kB)
+Collecting pypdfium2!=4.30.1,<5.0.0,>=4.30.0 (from docling)
+  Using cached pypdfium2-4.30.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (48 kB)
+Requirement already satisfied: pydantic-settings<3.0.0,>=2.3.0 in ./venv/lib/python3.12/site-packages (from docling) (2.10.1)
+Requirement already satisfied: certifi>=2024.7.4 in ./venv/lib/python3.12/site-packages (from docling) (2025.6.15)
+Requirement already satisfied: typer<0.20.0,>=0.12.5 in ./venv/lib/python3.12/site-packages (from docling) (0.17.4)
+Requirement already satisfied: beautifulsoup4<5.0.0,>=4.12.3 in ./venv/lib/python3.12/site-packages (from docling) (4.13.5)
+Collecting marko<3.0.0,>=2.1.2 (from docling)
+  Using cached marko-2.2.1-py3-none-any.whl.metadata (4.5 kB)
+Collecting lxml
+  Using cached lxml-5.4.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+Collecting pluggy<2.0.0,>=1.0.0 (from docling)
+  Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pylatexenc<3.0,>=2.10 (from docling)
+  Using cached pylatexenc-2.10.tar.gz (162 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: scipy<2.0.0,>=1.6.0 in ./venv/lib/python3.12/site-packages (from docling) (1.16.2)
+Collecting polyfactory>=2.22.2 (from docling)
+  Using cached polyfactory-2.22.3-py3-none-any.whl.metadata (27 kB)
+Requirement already satisfied: filelock in ./venv/lib/python3.12/site-packages (from huggingface_hub) (3.19.1)
+Requirement already satisfied: fsspec>=2023.5.0 in ./venv/lib/python3.12/site-packages (from huggingface_hub) (2025.9.0)
+Requirement already satisfied: packaging>=20.9 in ./venv/lib/python3.12/site-packages (from huggingface_hub) (25.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in ./venv/lib/python3.12/site-packages (from huggingface_hub) (4.14.0)
+Requirement already satisfied: hf-xet<2.0.0,>=1.1.3 in ./venv/lib/python3.12/site-packages (from huggingface_hub) (1.1.9)
+Requirement already satisfied: psutil in ./venv/lib/python3.12/site-packages (from accelerate) (7.0.0)
+Requirement already satisfied: torch>=2.0.0 in ./venv/lib/python3.12/site-packages (from accelerate) (2.8.0)
+Requirement already satisfied: safetensors>=0.4.3 in ./venv/lib/python3.12/site-packages (from accelerate) (0.6.2)
+Requirement already satisfied: python-dateutil>=2.8.2 in ./venv/lib/python3.12/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in ./venv/lib/python3.12/site-packages (from pandas) (2025.2)
+Requirement already satisfied: tzdata>=2022.7 in ./venv/lib/python3.12/site-packages (from pandas) (2025.2)
+Collecting et-xmlfile (from openpyxl)
+  Using cached et_xmlfile-2.0.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting XlsxWriter>=0.5.7 (from python-pptx)
+  Using cached xlsxwriter-3.2.9-py3-none-any.whl.metadata (2.7 kB)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.12/site-packages (from beautifulsoup4<5.0.0,>=4.12.3->docling) (2.8)
+Requirement already satisfied: jsonschema<5.0.0,>=4.16.0 in ./venv/lib/python3.12/site-packages (from docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling) (4.25.1)
+Collecting jsonref<2.0.0,>=1.1.0 (from docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached jsonref-1.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting tabulate<0.10.0,>=0.9.0 (from docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached tabulate-0.9.0-py3-none-any.whl.metadata (34 kB)
+Collecting latex2mathml<4.0.0,>=3.77.0 (from docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached latex2mathml-3.78.1-py3-none-any.whl.metadata (15 kB)
+Collecting semchunk<3.0.0,>=2.2.0 (from docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached semchunk-2.2.2-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in ./venv/lib/python3.12/site-packages (from transformers) (0.22.0)
+Collecting torchvision<1,>=0 (from docling-ibm-models<4,>=3.9.1->docling)
+  Using cached torchvision-0.24.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (5.9 kB)
+Collecting jsonlines<5.0.0,>=3.1.0 (from docling-ibm-models<4,>=3.9.1->docling)
+  Using cached jsonlines-4.0.0-py3-none-any.whl.metadata (1.6 kB)
+Requirement already satisfied: attrs>=19.2.0 in ./venv/lib/python3.12/site-packages (from jsonlines<5.0.0,>=3.1.0->docling-ibm-models<4,>=3.9.1->docling) (25.3.0)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in ./venv/lib/python3.12/site-packages (from jsonschema<5.0.0,>=4.16.0->docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling) (2025.9.1)
+Requirement already satisfied: referencing>=0.28.4 in ./venv/lib/python3.12/site-packages (from jsonschema<5.0.0,>=4.16.0->docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling) (0.36.2)
+Requirement already satisfied: rpds-py>=0.7.1 in ./venv/lib/python3.12/site-packages (from jsonschema<5.0.0,>=4.16.0->docling-core<3.0.0,>=2.48.2->docling-core[chunking]<3.0.0,>=2.48.2->docling) (0.27.1)
+Requirement already satisfied: annotated-types>=0.6.0 in ./venv/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.0.0->docling) (0.7.0)
+Requirement already satisfied: pydantic-core==2.33.2 in ./venv/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.0.0->docling) (2.33.2)
+Requirement already satisfied: typing-inspection>=0.4.0 in ./venv/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.0.0->docling) (0.4.1)
+Requirement already satisfied: python-dotenv>=0.21.0 in ./venv/lib/python3.12/site-packages (from pydantic-settings<3.0.0,>=2.3.0->docling) (1.1.1)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.12/site-packages (from requests->rapidocr) (3.4.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.12/site-packages (from requests->rapidocr) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.12/site-packages (from requests->rapidocr) (2.5.0)
+Collecting mpire[dill] (from semchunk<3.0.0,>=2.2.0->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached mpire-2.10.2-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: setuptools in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (80.9.0)
+Requirement already satisfied: sympy>=1.13.3 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (1.14.0)
+Requirement already satisfied: networkx in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (3.5)
+Requirement already satisfied: jinja2 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (3.1.2)
+Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.8.93 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.93)
+Requirement already satisfied: nvidia-cuda-runtime-cu12==12.8.90 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.90)
+Requirement already satisfied: nvidia-cuda-cupti-cu12==12.8.90 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.90)
+Requirement already satisfied: nvidia-cudnn-cu12==9.10.2.21 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (9.10.2.21)
+Requirement already satisfied: nvidia-cublas-cu12==12.8.4.1 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.4.1)
+Requirement already satisfied: nvidia-cufft-cu12==11.3.3.83 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (11.3.3.83)
+Requirement already satisfied: nvidia-curand-cu12==10.3.9.90 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (10.3.9.90)
+Requirement already satisfied: nvidia-cusolver-cu12==11.7.3.90 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (11.7.3.90)
+Requirement already satisfied: nvidia-cusparse-cu12==12.5.8.93 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.5.8.93)
+Requirement already satisfied: nvidia-cusparselt-cu12==0.7.1 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (0.7.1)
+Requirement already satisfied: nvidia-nccl-cu12==2.27.3 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (2.27.3)
+Requirement already satisfied: nvidia-nvtx-cu12==12.8.90 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.90)
+Requirement already satisfied: nvidia-nvjitlink-cu12==12.8.93 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (12.8.93)
+Requirement already satisfied: nvidia-cufile-cu12==1.13.1.3 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (1.13.1.3)
+Requirement already satisfied: triton==3.4.0 in ./venv/lib/python3.12/site-packages (from torch>=2.0.0->accelerate) (3.4.0)
+Collecting torch>=2.0.0 (from accelerate)
+  Using cached torch-2.9.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (30 kB)
+Collecting nvidia-nccl-cu12==2.27.5 (from torch>=2.0.0->accelerate)
+  Using cached nvidia_nccl_cu12-2.27.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.0 kB)
+Collecting nvidia-nvshmem-cu12==3.3.20 (from torch>=2.0.0->accelerate)
+  Using cached nvidia_nvshmem_cu12-3.3.20-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.1 kB)
+Collecting triton==3.5.0 (from torch>=2.0.0->accelerate)
+  Using cached triton-3.5.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (1.7 kB)
+Requirement already satisfied: click>=8.0.0 in ./venv/lib/python3.12/site-packages (from typer<0.20.0,>=0.12.5->docling) (8.2.1)
+Requirement already satisfied: shellingham>=1.3.0 in ./venv/lib/python3.12/site-packages (from typer<0.20.0,>=0.12.5->docling) (1.5.4)
+Requirement already satisfied: rich>=10.11.0 in ./venv/lib/python3.12/site-packages (from typer<0.20.0,>=0.12.5->docling) (13.7.1)
+Collecting numpy<3.0.0,>=1.19.5 (from rapidocr)
+  Using cached numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+Collecting faker>=5.0.0 (from polyfactory>=2.22.2->docling)
+  Using cached faker-37.11.0-py3-none-any.whl.metadata (15 kB)
+Requirement already satisfied: markdown-it-py>=2.2.0 in ./venv/lib/python3.12/site-packages (from rich>=10.11.0->typer<0.20.0,>=0.12.5->docling) (3.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in ./venv/lib/python3.12/site-packages (from rich>=10.11.0->typer<0.20.0,>=0.12.5->docling) (2.19.2)
+Requirement already satisfied: mdurl~=0.1 in ./venv/lib/python3.12/site-packages (from markdown-it-py>=2.2.0->rich>=10.11.0->typer<0.20.0,>=0.12.5->docling) (0.1.2)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in ./venv/lib/python3.12/site-packages (from sympy>=1.13.3->torch>=2.0.0->accelerate) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in ./venv/lib/python3.12/site-packages (from jinja2->torch>=2.0.0->accelerate) (3.0.2)
+Collecting multiprocess>=0.70.15 (from mpire[dill]->semchunk<3.0.0,>=2.2.0->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached multiprocess-0.70.18-py312-none-any.whl.metadata (7.5 kB)
+Collecting dill>=0.4.0 (from multiprocess>=0.70.15->mpire[dill]->semchunk<3.0.0,>=2.2.0->docling-core[chunking]<3.0.0,>=2.48.2->docling)
+  Using cached dill-0.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting antlr4-python3-runtime==4.9.* (from omegaconf->rapidocr)
+  Using cached antlr4-python3-runtime-4.9.3.tar.gz (117 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Using cached rapidocr-3.4.2-py3-none-any.whl (15.1 MB)
+Using cached docling-2.58.0-py3-none-any.whl (251 kB)
+Using cached accelerate-1.11.0-py3-none-any.whl (375 kB)
+Using cached openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+Using cached filetype-1.2.0-py2.py3-none-any.whl (19 kB)
+Using cached python_docx-1.2.0-py3-none-any.whl (252 kB)
+Using cached python_pptx-1.0.2-py3-none-any.whl (472 kB)
+Using cached rtree-1.4.1-py3-none-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (507 kB)
+Using cached lxml-5.4.0-cp312-cp312-manylinux_2_28_x86_64.whl (5.0 MB)
+Using cached docling_core-2.49.0-py3-none-any.whl (164 kB)
+Using cached docling_ibm_models-3.10.1-py3-none-any.whl (87 kB)
+Using cached docling_parse-4.7.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.1 MB)
+Using cached jsonlines-4.0.0-py3-none-any.whl (8.7 kB)
+Using cached jsonref-1.1.0-py3-none-any.whl (9.4 kB)
+Using cached latex2mathml-3.78.1-py3-none-any.whl (73 kB)
+Using cached marko-2.2.1-py3-none-any.whl (42 kB)
+Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Using cached pypdfium2-4.30.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.8 MB)
+Using cached semchunk-2.2.2-py3-none-any.whl (10 kB)
+Using cached tabulate-0.9.0-py3-none-any.whl (35 kB)
+Using cached torchvision-0.24.0-cp312-cp312-manylinux_2_28_x86_64.whl (8.1 MB)
+Downloading torch-2.9.0-cp312-cp312-manylinux_2_28_x86_64.whl (899.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 899.7/899.7 MB 43.7 MB/s  0:00:15
+Downloading nvidia_nccl_cu12-2.27.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (322.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.3/322.3 MB 58.1 MB/s  0:00:05
+Downloading nvidia_nvshmem_cu12-3.3.20-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (124.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.7/124.7 MB 55.4 MB/s  0:00:02
+Downloading triton-3.5.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (170.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 170.5/170.5 MB 56.1 MB/s  0:00:03
+Downloading shapely-2.1.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 31.3 MB/s  0:00:00
+Downloading opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (67.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.0/67.0 MB 56.3 MB/s  0:00:01
+Downloading numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 45.1 MB/s  0:00:00
+Downloading polyfactory-2.22.3-py3-none-any.whl (63 kB)
+Downloading faker-37.11.0-py3-none-any.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 45.5 MB/s  0:00:00
+Downloading pyclipper-1.3.0.post6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (963 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 963.8/963.8 kB 45.0 MB/s  0:00:00
+Downloading xlsxwriter-3.2.9-py3-none-any.whl (175 kB)
+Downloading colorlog-6.10.1-py3-none-any.whl (11 kB)
+Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Downloading mpire-2.10.2-py3-none-any.whl (272 kB)
+Downloading multiprocess-0.70.18-py312-none-any.whl (150 kB)
+Downloading dill-0.4.0-py3-none-any.whl (119 kB)
+Downloading omegaconf-2.3.0-py3-none-any.whl (79 kB)
+Building wheels for collected packages: pylatexenc, antlr4-python3-runtime
+  Building wheel for pylatexenc (setup.py): started
+  Building wheel for pylatexenc (setup.py): finished with status 'done'
+  Created wheel for pylatexenc: filename=pylatexenc-2.10-py3-none-any.whl size=136897 sha256=d4da59e5933e2a81699ff08b17a0e3324eea12ea94ec1b1e96d0df3d7abd5814
+  Stored in directory: /home/user/.cache/pip/wheels/06/3e/78/fa1588c1ae991bbfd814af2bcac6cef7a178beee1939180d46
+  Building wheel for antlr4-python3-runtime (setup.py): started
+  Building wheel for antlr4-python3-runtime (setup.py): finished with status 'done'
+  Created wheel for antlr4-python3-runtime: filename=antlr4_python3_runtime-4.9.3-py3-none-any.whl size=144591 sha256=5c4095bf5125fd83b895de7dd3d95067e08109215e0dcf6b13c10cda1bd5ee77
+  Stored in directory: /home/user/.cache/pip/wheels/1f/be/48/13754633f1d08d1fbfc60d5e80ae1e5d7329500477685286cd
+Successfully built pylatexenc antlr4-python3-runtime
+Installing collected packages: pylatexenc, pyclipper, filetype, antlr4-python3-runtime, XlsxWriter, triton, tabulate, rtree, pypdfium2, pluggy, omegaconf, nvidia-nvshmem-cu12, nvidia-nccl-cu12, numpy, mpire, marko, lxml, latex2mathml, jsonref, jsonlines, faker, et-xmlfile, dill, colorlog, shapely, python-pptx, python-docx, polyfactory, openpyxl, opencv-python, multiprocess, torch, rapidocr, torchvision, semchunk, docling-core, accelerate, docling-parse, docling-ibm-models, docling
+  Attempting uninstall: triton
+    Found existing installation: triton 3.4.0
+    Uninstalling triton-3.4.0:
+      Successfully uninstalled triton-3.4.0
+  Attempting uninstall: pypdfium2
+    Found existing installation: pypdfium2 4.30.1
+    Uninstalling pypdfium2-4.30.1:
+      Successfully uninstalled pypdfium2-4.30.1
+  Attempting uninstall: nvidia-nccl-cu12
+    Found existing installation: nvidia-nccl-cu12 2.27.3
+    Uninstalling nvidia-nccl-cu12-2.27.3:
+      Successfully uninstalled nvidia-nccl-cu12-2.27.3
+  Attempting uninstall: numpy
+    Found existing installation: numpy 1.26.4
+    Uninstalling numpy-1.26.4:
+      Successfully uninstalled numpy-1.26.4
+  Attempting uninstall: torch
+    Found existing installation: torch 2.8.0
+    Uninstalling torch-2.8.0:
+      Successfully uninstalled torch-2.8.0
+
+Successfully installed XlsxWriter-3.2.9 accelerate-1.11.0 antlr4-python3-runtime-4.9.3 colorlog-6.10.1 dill-0.4.0 docling-2.58.0 docling-core-2.49.0 docling-ibm-models-3.10.1 docling-parse-4.7.0 et-xmlfile-2.0.0 faker-37.11.0 filetype-1.2.0 jsonlines-4.0.0 jsonref-1.1.0 latex2mathml-3.78.1 lxml-5.4.0 marko-2.2.1 mpire-2.10.2 multiprocess-0.70.18 numpy-2.2.6 nvidia-nccl-cu12-2.27.5 nvidia-nvshmem-cu12-3.3.20 omegaconf-2.3.0 opencv-python-4.12.0.88 openpyxl-3.1.5 pluggy-1.6.0 polyfactory-2.22.3 pyclipper-1.3.0.post6 pylatexenc-2.10 pypdfium2-4.30.0 python-docx-1.2.0 python-pptx-1.0.2 rapidocr-3.4.2 rtree-1.4.1 semchunk-2.2.2 shapely-2.1.2 tabulate-0.9.0 torch-2.9.0 torchvision-0.24.0 triton-3.5.0

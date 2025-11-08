@@ -1,0 +1,10 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 42 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Todos los planos (incluido el cableado y el bucle) / documentos relacionados con el conductor, la
+instrumentación / control y los auxiliares.
+ Alarma y lista de trips.
+ Lista de I/O de comunicación serie y lista de verificación.
+ El VENDEDOR preparará documentos en formato como parte de la estandarización.

@@ -1,0 +1,962 @@
+{
+  "doc-c33f523447cb80038d758d8e78f2202b": {
+    "relation_pairs": [
+      [
+        "Paquete de Inyección de Químicos",
+        "Separador de Baja Presión V-2003"
+      ],
+      [
+        "Pruebas Mecánicas",
+        "VENDEDOR"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Requerimientos Técnicos"
+      ],
+      [
+        "Bomba de Dosificación",
+        "Válvula de Corte"
+      ],
+      [
+        "PAQUETE",
+        "Tablero Principal de Potencia"
+      ],
+      [
+        "Bombas Dosificadoras de Químico",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Cupiagua",
+        "Especificación"
+      ],
+      [
+        "Cabina de Insonorización",
+        "Inspección y Pruebas"
+      ],
+      [
+        "Fecha de fabricación",
+        "PAQUETE"
+      ],
+      [
+        "ECOPETROL S.A.",
+        "VENDEDOR/FABRICANTE"
+      ],
+      [
+        "Ductile Iron Pipe Flanges",
+        "ECOPETROL"
+      ],
+      [
+        "Cliente",
+        "PAQUETE"
+      ],
+      [
+        "ECOPETROL",
+        "Proveedores Homologados"
+      ],
+      [
+        "CLIENTE",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "CUPIAGUA",
+        "PAQUETE"
+      ],
+      [
+        "Clase 1, División 2",
+        "TEFC"
+      ],
+      [
+        "Documentación Requerida",
+        "Requisición de Materiales"
+      ],
+      [
+        "Proyecto Acondicionamiento Estratégico de Cupiagua",
+        "Tanque de Almacenamiento"
+      ],
+      [
+        "Documentación de Pruebas",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Miguel Salamanca",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Brayan Quispe",
+        "Miguel Salamanca"
+      ],
+      [
+        "Paquete de Dosificación de Químicos",
+        "Proveedores"
+      ],
+      [
+        "Diagrama de Cargas",
+        "Requisición de Materiales"
+      ],
+      [
+        "EDP-F-046",
+        "Informe de Inspección"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "PAQUETE"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Proyecto Acondicionamiento Estratégico Cupiagua"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "VENDEDOR"
+      ],
+      [
+        "Bombas Dosificadoras",
+        "Motores Eléctricos"
+      ],
+      [
+        "HMI Local",
+        "Panel de Control (UCP)"
+      ],
+      [
+        "EDP-F-046",
+        "Inspección"
+      ],
+      [
+        "Boquillas Quill",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "ICO CUPIAGUA",
+        "Requisición de Materiales"
+      ],
+      [
+        "CLIENTE",
+        "PAQUETE"
+      ],
+      [
+        "EDP-F-046",
+        "Revisiones"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "ISA 5.1"
+      ],
+      [
+        "Ecopetrol S.A.",
+        "Placa de Identificación"
+      ],
+      [
+        "Cuerpo del Texto",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "CLIENTE",
+        "PROVEEDOR"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Requisición de Materiales"
+      ],
+      [
+        "PAQUETE",
+        "Proveedor"
+      ],
+      [
+        "Bomba de Dosificación",
+        "Especificaciones Técnicas FFM/F-S-ME-015"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Garantía"
+      ],
+      [
+        "Cabina de Insonorización",
+        "PAQUETE"
+      ],
+      [
+        "ASME B31.3",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Nivel Máximo de Ruido",
+        "Proveedores"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Sistema de Administración de la Calidad (QMS)"
+      ],
+      [
+        "Manómetros",
+        "Transmisores de Presión"
+      ],
+      [
+        "Café de Bogotá",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Ingeniería Detalle Acondicionamiento Estratégico Cupiagua"
+      ],
+      [
+        "Proveedor",
+        "Requisición de Materiales"
+      ],
+      [
+        "CLIENTE",
+        "ECOPETROL S.A."
+      ],
+      [
+        "Especificación Técnica EDP-ET-001-i",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Norma ISO 2151",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "EDP-F-046",
+        "Fecha"
+      ],
+      [
+        "Campo Cupiagua",
+        "Gerencia de Operaciones de Desarrollo y Producción"
+      ],
+      [
+        "Fabricante",
+        "Vendedor"
+      ],
+      [
+        "EDP-F-046",
+        "Procedimiento de Soldadura WPS, PQR"
+      ],
+      [
+        "Ecopetrol",
+        "Estándares de Referencia"
+      ],
+      [
+        "Ecopetrol S.A.",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "PAQUETE",
+        "VENDEDOR"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Plan de Inspección y Pruebas (ITP)"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Interruptores"
+      ],
+      [
+        "Indicador Local de Nivel",
+        "Tanques de Almacenamiento"
+      ],
+      [
+        "Contrato",
+        "Ingeniería Detalle Acondicionamiento Estratégico"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Separador V-2001"
+      ],
+      [
+        "FFM/F-MEX-033",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Hoja de Datos",
+        "Requisición de Materiales"
+      ],
+      [
+        "PSV",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Proyecto"
+      ],
+      [
+        "Documentos y Planos",
+        "Paquete"
+      ],
+      [
+        "ASME",
+        "Válvulas de Alivio"
+      ],
+      [
+        "Sub-Vendedores",
+        "Vendedor"
+      ],
+      [
+        "CLIENTE",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "PAQUETE",
+        "VENDEDOR/FABRICANTE"
+      ],
+      [
+        "Ecopetrol S.A",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Ecopetrol",
+        "Proveedores"
+      ],
+      [
+        "Documentos de Referencia",
+        "NEMA"
+      ],
+      [
+        "INYECCIÓN DE QUÍMICOS",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Ecopetrol",
+        "Requisición de Materiales"
+      ],
+      [
+        "P&ID",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "API 675",
+        "Bomba"
+      ],
+      [
+        "Equilibrio de Calidad",
+        "PAQUETE"
+      ],
+      [
+        "Fábrica",
+        "Reunión de Pre-Inspección"
+      ],
+      [
+        "CAD",
+        "PAQUETE"
+      ],
+      [
+        "Condiciones de operación",
+        "Paquete"
+      ],
+      [
+        "Miguel Salamanca",
+        "Rodrigo Feo"
+      ],
+      [
+        "CLIENTE",
+        "Proveedores Homologados"
+      ],
+      [
+        "ASME",
+        "Documentos de Referencia"
+      ],
+      [
+        "Cupiagua",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Boquilla de Inyección",
+        "PAQUETE"
+      ],
+      [
+        "Interruptores",
+        "PAQUETE"
+      ],
+      [
+        "Contenedores para Exportación",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Documentación",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Cliente",
+        "Vendedor"
+      ],
+      [
+        "Interruptores de Nivel",
+        "Tanques de Almacenamiento"
+      ],
+      [
+        "FFM/F-S-ME-015",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Documentación",
+        "Proveedor"
+      ],
+      [
+        "Hastelloy C-276",
+        "Transmisores de Presión"
+      ],
+      [
+        "Tanques de Almacenamiento",
+        "VENDEDOR"
+      ],
+      [
+        "CLIENTE",
+        "VENDEDOR"
+      ],
+      [
+        "Ecopetrol S.A.",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "CLIENTE",
+        "Plan de Inspección y Pruebas"
+      ],
+      [
+        "HOJA DE DATOS N° FFM/F-MEX-033",
+        "Vendedor"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Tanques de Almacenamiento"
+      ],
+      [
+        "Manual de Instrucciones",
+        "PAQUETE"
+      ],
+      [
+        "Nema 4X",
+        "TEFC"
+      ],
+      [
+        "CLIENTE",
+        "VENDEDOR/FABRICANTE"
+      ],
+      [
+        "P&ID",
+        "Paquete"
+      ],
+      [
+        "Interruptores",
+        "Norma NEMA AB-1"
+      ],
+      [
+        "Clasificación de Áreas para Instalaciones Eléctricas",
+        "Motores de Baja Tensión"
+      ],
+      [
+        "Cupiagua",
+        "ISO 12944"
+      ],
+      [
+        "Ingeniería Detallada Acondicionamiento Estratégico Cupiagua",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Restricciones de Transporte",
+        "VENDEDOR"
+      ],
+      [
+        "Manual de Instrucciones",
+        "VENDEDOR"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Proveedor"
+      ],
+      [
+        "Código de Colores y Señales Industriales",
+        "Marcas Homologadas"
+      ],
+      [
+        "CLIENT",
+        "CONTRACTOR"
+      ],
+      [
+        "Características Constructivas",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Cupiagua",
+        "Paquete"
+      ],
+      [
+        "Cabina de Insonorización",
+        "Vendedor"
+      ],
+      [
+        "Cupiagua",
+        "Ecopetrol"
+      ],
+      [
+        "CLIENTE",
+        "Restricciones de Transporte"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Partes y Consumibles"
+      ],
+      [
+        "Cupiagua",
+        "EDP-F-046"
+      ],
+      [
+        "Cupiagua",
+        "Requisición de Materiales"
+      ],
+      [
+        "ASTM A216",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Válvulas de Control"
+      ],
+      [
+        "Cupiagua",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Omar Villarreal",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Guía de Requerimientos Ergonómicos y de Higiene Industrial HSE-G-051",
+        "PAQUETE"
+      ],
+      [
+        "Base Estructural Común",
+        "PAQUETE"
+      ],
+      [
+        "ASTM E94",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Brayan Quispe",
+        "Cupiagua"
+      ],
+      [
+        "Bombas Dosificadoras",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Química",
+        "Sistema de Inyección de Químicos"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "VENDEDOR"
+      ],
+      [
+        "Capacitación del Personal",
+        "VENDEDOR"
+      ],
+      [
+        "Atomizador",
+        "Boquilla de Inyección"
+      ],
+      [
+        "Bobinas de Contactores",
+        "Transformadores de Control"
+      ],
+      [
+        "Herramientas Especiales",
+        "VENDEDOR"
+      ],
+      [
+        "PAQUETE",
+        "Vendedor"
+      ],
+      [
+        "ASTM A436",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Especificación Técnica",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "MR #",
+        "Requisición de Materiales"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Requerimientos de QA e Inspección"
+      ],
+      [
+        "Cupiagua",
+        "FFM/F-MEQ-013"
+      ],
+      [
+        "API",
+        "Documentos de Referencia"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Repuestos y Consumibles"
+      ],
+      [
+        "Campo Cupiagua",
+        "Casanare"
+      ],
+      [
+        "Cableado y Conexionado",
+        "Documentos EDP-ET-335"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Vendedor"
+      ],
+      [
+        "Documentación",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Motores Eléctricos"
+      ],
+      [
+        "Bombas Dosificadoras de Químico",
+        "Motores Eléctricos"
+      ],
+      [
+        "Ecopetrol",
+        "Proveedor"
+      ],
+      [
+        "PAQUETE",
+        "Quill"
+      ],
+      [
+        "Hoja de Datos FFM/F-MEX-033",
+        "Paquete"
+      ],
+      [
+        "Café de Bogotá",
+        "Campo Cupiagua"
+      ],
+      [
+        "Cupiagua",
+        "PAQUETE"
+      ],
+      [
+        "ASTM A439",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Cupiagua",
+        "Proyecto"
+      ],
+      [
+        "Proveedor",
+        "Vendedor"
+      ],
+      [
+        "Número de Parte",
+        "Proveedor"
+      ],
+      [
+        "01-11-2023",
+        "PAQUETE"
+      ],
+      [
+        "316 SS",
+        "Válvulas Dobles de Antirretorno"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Pruebas"
+      ],
+      [
+        "PAQUETE",
+        "Reglamento Técnico de Instalaciones Eléctricas (RETIE)"
+      ],
+      [
+        "PAQUETE",
+        "SmartPlant"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Vida de Servicio"
+      ],
+      [
+        "Cupiagua",
+        "Ecopetrol S.A."
+      ],
+      [
+        "ASTM A48",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Estructurales y Civiles",
+        "VENDEDOR"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Separador de Media Presión V-2002"
+      ],
+      [
+        "Certificado de Resultados Pruebas FAT",
+        "Paquete"
+      ],
+      [
+        "Cliente",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "CLIENTE",
+        "Cupiagua"
+      ],
+      [
+        "Bombas de Dosificación",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Separador de Alta Presión V-2001"
+      ],
+      [
+        "Ductile Iron Pipe Flanges",
+        "ISO 3744"
+      ],
+      [
+        "Documentación",
+        "VENDEDOR"
+      ],
+      [
+        "Código de Catálogo",
+        "Requisición de Materiales"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Tanque de Almacenamiento"
+      ],
+      [
+        "Limitación de Ruido",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Manual de Instrucciones",
+        "Volumen 1"
+      ],
+      [
+        "Cupiagua",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "Acondicionamiento Estratégico",
+        "Ecopetrol S.A."
+      ],
+      [
+        "PROVEEDOR",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "EDP-F-046",
+        "Ingeniería"
+      ],
+      [
+        "Paquete de Inyección de Químicos",
+        "Unidades de Medida"
+      ],
+      [
+        "Compresor de Gas de Proceso M155-K-21150",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Especificación Técnica Paquete de Inyección de Químicos",
+        "Transformadores de Control"
+      ],
+      [
+        "ECOPETROL",
+        "Proveedor"
+      ],
+      [
+        "EDP-F-046",
+        "Químicos"
+      ],
+      [
+        "Ecopetrol S.A.",
+        "Inistrodelmismo"
+      ],
+      [
+        "CPF Cupiagua",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "ICO CUPIAGUA",
+        "Ingeniería Detalle Acondicionamiento"
+      ],
+      [
+        "PAQUETE",
+        "Tubería"
+      ],
+      [
+        "Manual de Operación",
+        "PAQUETE"
+      ],
+      [
+        "Ecopetrol S.A.",
+        "Vendedor"
+      ],
+      [
+        "Miguel Salamanca",
+        "Omar Villarreal"
+      ],
+      [
+        "12 meses",
+        "PAQUETE"
+      ],
+      [
+        "EDP-F-046",
+        "Requisición de Materiales"
+      ],
+      [
+        "Estación CPF Cupiagua",
+        "Proyecto Acondicionamiento Estratégico de Cupiagua"
+      ],
+      [
+        "Ductile Iron Pipe Flanges",
+        "Institute of Electrical and Electronic Engineers"
+      ],
+      [
+        "EDP-F-046",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Acondicionamiento Estratégico Cupiagua",
+        "CLIENTE"
+      ],
+      [
+        "Clasificación de Áreas Peligrosas",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Fecha",
+        "Requisición de Materiales"
+      ],
+      [
+        "API 675",
+        "Control de bombas"
+      ],
+      [
+        "CLIENTE",
+        "Pruebas Mecánicas"
+      ],
+      [
+        "EDP-F-046",
+        "MR # FFM/F-MEQ-013"
+      ],
+      [
+        "EDP-P-013",
+        "Especificación Técnica Paquete de Inyección de Químicos"
+      ],
+      [
+        "Documentos de Inspección",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Cupiagua",
+        "VENDEDOR"
+      ],
+      [
+        "ASTM 278",
+        "Ductile Iron Pipe Flanges"
+      ],
+      [
+        "Documentos de Referencia",
+        "IEC"
+      ],
+      [
+        "Inistrodelmismo",
+        "Química"
+      ],
+      [
+        "Brayan Quispe",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "EDP-F-046",
+        "PAQUETE"
+      ],
+      [
+        "Manual de Operación",
+        "Volumen 3"
+      ],
+      [
+        "Cupiagua",
+        "Ingeniería Detalle Acondicionamiento Estratégico"
+      ],
+      [
+        "Bomba de Dosificación",
+        "Proveedores"
+      ],
+      [
+        "Cupiagua",
+        "Ingeniería Detalle Acondicionamiento"
+      ],
+      [
+        "Manual de Operación",
+        "Volumen 2"
+      ],
+      [
+        "Etiqueta Metálica",
+        "PAQUETE"
+      ],
+      [
+        "Cupiagua",
+        "Vendedor"
+      ],
+      [
+        "Bomba de Dosificación",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Certificados de Material",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "EDP-G-010",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Hoja de Datos Paquete de Inyección de Químicos",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "CUPIAGUA",
+        "EDP-F-046"
+      ],
+      [
+        "Certificado de Calibración",
+        "Válvulas de Alivio"
+      ],
+      [
+        "Bomba de Dosificación",
+        "Diámetros de Boquillas de Conexión"
+      ],
+      [
+        "Contenedores del Inhibidor de Corrosión",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "Cupiagua",
+        "Panel de Control (UCP)"
+      ],
+      [
+        "CUPIAGUA",
+        "Paquete de Inyección de Químicos"
+      ],
+      [
+        "DCS de la Planta",
+        "Panel de Control (UCP)"
+      ],
+      [
+        "Cliente",
+        "Proveedor"
+      ]
+    ],
+    "count": 238,
+    "create_time": 1761330259,
+    "update_time": 1761330259,
+    "_id": "doc-c33f523447cb80038d758d8e78f2202b"
+  }
+}

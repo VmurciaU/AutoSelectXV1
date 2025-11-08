@@ -1,0 +1,49 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+1. INTRODUCCIÓN
+1.1. CONDICIONES GENERALES
+Esta requisición de materiales establece las condiciones generales y específicas para el suministro de
+un (1) PAQUETE de inyección de químicos para el proyecto INGENIERÍA DETALLADA
+ACONDICIONAMIENTO ESTRATÉGICO CUPIAGUA” a ser instalados en el CPF Cupiagua – Ecopetrol.
+El PAQUETE incluye la ingeniería de detalle, fabricación, armado y el suministro de todos los equipos y
+accesorios (si se requiere algunos componentes pueden ser enviados por separado) y de las tuberías
+de interconexión y el cableado eléctrico y de control dentro de los límites del PAQUETE.
+El PAQUETE incluye todos los dispositivos, elementos y materiales necesarios y suficientes para que sea
+funcional y opere adecuadamente bajo las condiciones indicadas en los documentos anexos que hacen
+parte de este documento. El PAQUETE debe operar como un sistema totalmente ensamblado e integral
+controlado.
+El PAQUETE debe cumplir con reglamentos, códigos y normas vigentes en los acuerdos regionales,
+nacionales e internacionales indicados en esta requisición y sus documentos anexos.
+El PAQUETE y sus accesorios deben ser diseñados y construidos para una vida útil de veinte (20) años
+y mínimo 3 años de operación continua con el mantenimiento adecuado.
+1.2. GLOSARIO
+CLIENTE: Es la empresa propietaria del proyecto, ECOPETROL S.A, el cual generalmente especificará
+los requerimientos técnicos. ECOPETROL también puede nombrar un agente o consultor autorizado
+para actuar en su nombre.
+PROVEEDOR: Es quien presenta oferta para suministrar los equipos y/o servicios, de acuerdo con esta
+requisición de materiales y sus documentos asociados una vez sea adjudicado por ECOPETROL. Será
+quien diseña, fabrica, suministra e integra el PAQUETE y todos sus componentes (listados en el capítulo
+10.1) en conformidad al alcance de suministro contratado.
+INSPECTOR: La parte que es asignada para la inspección del desarrollo del trabajo realizado por el
+proveedor o vendedor. En algunos casos, el CLIENTE puede actuar como AUTORIDAD DE INSPECCION.
+EDP-F-046 – 20/11/2017 V-1 4/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

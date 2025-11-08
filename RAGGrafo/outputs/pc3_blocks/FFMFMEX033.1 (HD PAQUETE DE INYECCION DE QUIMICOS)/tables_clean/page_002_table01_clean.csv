@@ -1,0 +1,208 @@
+,,,,,,"PROYECTO Ingeniería Detallada Proyecto Acondicionamiento Estratégico de Cupiagua
+CLIENTE Ecopetrol S.A.
+ESTACIÓN CPF CUPIAGUA",,
+"HOJA DE DATOS PAQUETE DE
+INYECCIÓN DE QUÍMICOS",,,,,,"TAG M156CIP-5503
+ESPEC. FFM/F-S-ME-015
+P&ID FFD/F-PCF-US-PRE-55-552-2/2
+REQUISICIÓN FFM/F-MEQ-014",,
+1,"APLICABLE PARA: l PETICIÓN OFERTA mCOMPRA m COMO CONSTRUIDO
+TAG M156CIP-5503
+LOCALIDAD CPF CUPIAGUA N° DE BOMBAS REQUERIDASSeis (6) (NOTAS 2, 11) 1
+SERVICIO INYECCIÓN DE QUIMICO
+TAMAÑO Y TIPOPOSITIVE DISP. PUMPS - API STD 675
+FABRICANTE MODELO N° DE SERIE",,,,,,,
+2,,,,,,,,
+3,,,,,,,,
+4,,,,,,,,
+5,,,,,,,,
+6,NOTAS: INFOR. FACILITADA POR: mCOMPRADOR o FABRICANTE,,,,,,m,FABRICANTE O COMPRADOR
+7,GENERAL,,,,,,,
+8,"N° bombas accionadas por motor 1 Seis (6) (NOTAS 2, 11) Otro tipo de accionamiento
+N° ítem bombas N° ítem bombas
+N° ítem motores N° ítem accionamiento N° Ítem reductor
+Motor suministrado por POR PROVEEDOR Suministrado por Suministrado por
+Motor montado por POR PROVEEDOR Montado por Montado por
+Hoja de datos motor N° N/A H.D. Accionamiento N° H.D. Reductor N°",,,,,,,
+9,,,,,,,,
+10,,,,,,,,
+11,,,,,,,,
+12,,,,,,,,
+13,,,,,,,,
+14,"l CONDICIONES DE OPERACIÓN (Ver NOTAS 1, 13)",,,,l LÍQUIDO,,,
+15,"l Caudal a temperatura de bombeo (gpd)
+Máximo Mínimo Nominal
+l Presión de descarga (psig):
+Máxima Mínima
+l Presión de aspiración (psig):
+Máxima Mínima Nominal ATM
+l Presión diferencial (psi):
+Máxima Mínima
+mNPSH disponible (ft)
+Sin altura de aceleración Real
+Relación caudal máximo/mínimo",,,,"l Líquido bombeado INHIBIDOR DE CORROSIÓN
+l Temperatura de bombeo (°F):
+Normal 85 Máxima Mínima
+l Gravedad Especifica
+Normal 1 Máxima Mínima
+l Viscosidad (cP) TBD
+m Agentes corrosivos/erosivos A secuestrar:
+m Concentración cloruros (ppm)
+Concentración H2S (ppm)
+m Líquido m Tóxico l Inflamable mOtros",,,
+16,,,,,,,,
+17,,,,,,,,
+18,,,,,,,,
+19,,,,,,,,
+20,,,,,,,,
+21,,,,,,,,
+22,,,,,,,,
+23,,,,,,,,
+24,,,,,,,,
+25,,,,,,,,
+26,oDESEMPEÑO,,,,"l SERVICIO, LOCALIZACIÓN Y SERVICIOS AUXILIARES",,,
+27,"oNº alimentaciones Caudal nominal (ghp)
+oNPSH requerido (ft)
+oPotencia nominal (hp) 1/2 hp (NOTA 10)
+oPotencia a presión tarado PSV (hp)
+oVelocidad émbolo (min-1) Diseño máx.
+oDiámetro (in) Por proveedor Longitud carrera (in)
+oTipo de cabezal
+oPresión máxima admisible (psig) POR PROVEEDOR
+oPresión prueba hidráulica (psig) POR PROVEEDOR
+oMáxima presión de descarga con el accionamiento
+suministrado (psig) POR PROVEEDOR
+oMáx. potencia admitida por reductor hp",,,,"Localización m Interior lExterior
+m Calefacción m Sin calefacción mBajo techo
+l Clase 1 Div 2 Grupo D Clase temp.
+m Antiheladas requerido lTropicalización requerida
+Datos emplazamiento
+Humedad Relativa min/max 65 / 90 %
+Rango temp. ambiente min/max 59 / 104 °F
+Condiciones inusuales
+l Polvo l Vapores mAtmósfera salina
+m Otros
+m Condiciones de servicios auxiliares
+Electricidad Sitio Calef. Control Paro
+Voltaje (V) 480 / 120
+Frecuencia (Hz) 60
+Fases 3
+Agua refrig. Retorno Diseño Max D
+Temp. °C max
+Presión (barg) max
+Fuente
+Aire instrumentos
+Presión (barg) Máxima Mínima",,,
+28,,,,,,,,
+29,,,,,,,,
+30,,,,,,,,
+31,,,,,,,,
+32,,,,,,,,
+33,,,,,,,,
+34,,,,,,,,
+35,,,,,,,,
+36,,,,,,,,
+37,,,,,,,,
+38,,,,,,,,
+39,oCARACTERÍSTICAS CONSTRUCTIVAS (NOTA 2),,,,,,,
+40,"Conexiones a
+borde de patín",Diámetro,Tipo,Observación,,,,
+41,"Interconexion
+Tanque -
+Bombas","2""","Arreglo de interconexion con
+accesorios",(NOTA 24),,,,
+42,"Descarga hacía
+bombas","3/4""",Bridadas #150,(NOTA 6),,,,
+43,,,,,,,,
+44,"Entrada desde
+tanque","1""",Bridadas #150,(NOTA 6),,,,
+45,"Cabezal hidráulico mEncamisado requerido
+Tipo mDiafragma mÉmbolo
+oDiá. diafragma (mm) POR PROVEEDOR N° requerido POR PROVEEDOR
+oVálvulas Aspiración Impulsión
+Tipo
+Número",,,,,,,
+46,,,,,,,,
+47,,,,,ESPECIFICACIONES APLICABLES:,,,
+48,,,,,"l API 675 - POSITIVE DISP. PUMPS - CONTROLLED VOLUME
+m ATEX (94/9/EC) Grupo Categ. Clase temp.
+m Otra:",,,
+49,,,,,,,,
+50,,,,,,,,
+51,o MATERIALES BOMBAS (NOTA 2),,,,"CONTROL (ver NOTAS 8, 18)",,,
+52,"Cabezal hidráulico 316 SS
+Placas de contorno
+Diafragma
+Émbolo N/A
+Anillo linterna
+Prensaestopas
+Empaquetadura
+Válvula 316 SS
+Asiento de válvula 316 SS
+Guía de válvula
+Cuerpo válvula 316 SS
+Juntas válvula
+Skid 316 SS
+Ensayos especiales materiales
+mEnsayos de materiales a baja temperatura ambiente",,,,"Control de bombas (CCM y DCS): Instrumentación:
+l Remoto lElectrónica
+l Local lLocal
+Método de control de capacidad:
+Variación de: l Carrera mVelocidad
+Control de carrera:
+Neumático (psig): N/A
+Mínimo Máximo
+Electrónico (mA): N/A
+Mínimo Máximo",,,
+52,,,,,,,,
+53,,,,,,,,
+53,,,,,,,,
+54,,,,,,,,
+54,,,,,,,,
+55,,,,,,,,
+55,,,,,,,,
+56,,,,,,,,
+56,,,,,,,,
+57,,,,,,,,
+57,,,,,,,,
+58,,,,,,,,
+58,,,,,OTROS REQUERIMIENTOS DEL COMPRADOR,,,
+59,,,,,"Unidades en placa características lU.S. mS.I.
+l Tuberías de proceso suministradas por vendedor
+l Panel View para cada paquete de Inyección
+l Quill de inyección con boquilla de dosificación
+l El vendedor suministra válvula de alivio de presión (NOTA 20)
+m Interna a la bomba mExterna a la bomba
+o Presión disparo válvula de alivio (psig) POR PROVEEDOR
+l Indicador de presión a la descarga de las bombas (ver NOTAS 11, 18)
+l Válvulas dobles de antirretorno requeridas
+l Tablero eléctrico (mínimo NEMA 4X)
+l Sistema de Control (ver NOTAS 8, 18)
+l Indicador de nivel
+l Skid estructural para paquetizado
+l El vendedor suministra válvula de contrapresión (NOTA 14)
+l Otros",,,
+59,,,,,,,,
+60,,,,,,,,
+60,REQUISITOS DE INSPECCIÓN Y PRUEBAS,,,,,,,
+61,"l Inspección usando la lista de comprobación de API 675 (Según aplique)
+l Certificados de materiales
+mTolerancias montaje final
+l Ensayos no destructivos
+mRadiográfico
+mUltrasonidos
+mPartículas magnéticas
+mLíquidos penetrantes
+mLimpieza antes del montaje final
+mDurezas en soldaduras y zonas térmicamente afectadas
+l Suministrar procedimientos de ensayos presenciados",,,,,,,
+61,,,,,,,,
+62,,,,,,,,
+62,,,,,,,,
+63,,,,,,,,
+63,,,,,,,,
+64,,,,,,,,
+64,,,,,,,,
+65,,,,,,,,
+65,,,,,,,,
+66,,,,,,,,

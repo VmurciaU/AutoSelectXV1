@@ -1,0 +1,51 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Tampoco se aceptarán alternativas de menor capacidad a las condiciones de operación solicitadas, con
+menor cantidad de equipos o componentes, o que no cumplan con la calidad solicitada.
+4.3. DOCUMENTACIÓN REQUERIDA CON LA OFERTA
+La información requerida con la oferta se indica en la tabla mostrada en el numeral 4.4 junto con la
+documentación requerida después de la orden de compra.
+4.4. DOCUMENTACIÓN REQUERIDA DESPUÉS DE LA ORDEN DE COMPRA
+En la tabla a continuación se muestran los documentos requeridos del vendedor (LDRV) y los tiempos
+de entrega referidos a la emisión de la orden de compra.
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Lista de comentarios, desviaciones y excepciones a
+esta requisición y sus anexos, sin esta información X - IFR E -
+las propuestas serán rechazadas (*)
+Cronograma de ingeniería, adquisición, fabricación y
+X +2Sem IFR E -
+pruebas
+Plan de calidad y certificación del sistema de calidad
++2Sem IFR - E
+Sub-proveedor y lista de proveedores principales - IFR E E
+Calificación de sub-proveedores +4Sem IFR - E
+Literatura/Catálogos del equipo y componentes X - IFR E E
+Placa de identificación
++4Sem IFR E E
+Planos de arreglos generales del PAQUETE (*) con
+pesos, dimensiones, listado de partes y materiales X +3Sem IFR E E
+referenciales
+Planos detallados del PAQUETE con pesos,
++6Sem IFR E E
+dimensiones, listado de partes y materiales
+Modelo 3D del paquete adecuado para ser integrado
++6Sem IFR E E
+en Smart Plan
+EDP-F-046 – 20/11/2017 V-1 7/20

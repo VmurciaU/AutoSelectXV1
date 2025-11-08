@@ -1,0 +1,1445 @@
+type,section_number,section_title,text,page
+paragraph,,,"CLIENT
+CONTRACTOR
+PROJECT
+Aprobado para construcción – Actualización según donde se
+1 20-11-2023
+indique
+Brayan Quispe Miguel Salamanca Omar Villarreal
+(BQS) (MSC) (OVG)
+Brayan Quispe Miguel Salamanca Omar Villarreal
+0 30-10-2023 Aprobado para construcción
+(BQS) (MSC) (OVG)
+Miguel Salamanca Omar Villarreal Omar Carrillo
+A1 02-09-2022 Emitido para comentarios del cliente
+(MSC) (OVM) (OCA)
+Miguel Salamanca Omar Villarreal Omar Carrillo
+P 03-05-2022 Emitido para comentarios internos
+(MSC) (OVM) (OCA)
+REV DATE DESCRIPTION Author Checked by Approved by
+FOR PURCHASING
+S FOR INFORMATION
+U
+T FOR CONSTRUCTION
+A FOR APPROVAL/COMMENTS
+T
+S FOR DESIGN AS BUILT
+DOCUMENT NUMBER DOCUMENT TITLE
+FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de Químicos",1
+paragraph,,,"PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page i / i
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Tabla de Ediciones
+Edición Fecha Objeto de la Edición
+P Mayo 2022 Edición inicial
+A1 Agosto 2022 Emitido para cometarios del cliente
+0 Octubre 2023 Aprobado para construcción
+Noviembre
+1 Actualización
+2023",2
+paragraph,,,"PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page i / iv
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Índice
+1. Introducción ....................................................................................................................... 1",3
+section_header,1.1,Objetivo ............................................................................................................................... 1,,3
+section_header,1.2,Alcance ................................................................................................................................ 1,,3
+paragraph,1.2,Alcance ................................................................................................................................ 1,2. Definiciones y abreviaturas ............................................................................................. 2,3
+section_header,2.1,Definiciones ......................................................................................................................... 2,,3
+section_header,2.2,Abreviaturas ........................................................................................................................ 2,,3
+paragraph,2.2,Abreviaturas ........................................................................................................................ 2,3. Documentos de Referencia .............................................................................................. 4,3
+section_header,3.1,Códigos y Estándares ......................................................................................................... 4,,3
+section_header,3.1.1,American Petroleum Institute (API) ..................................................................... 4,,3
+section_header,3.1.3,American Society for Testing and Materials (ASTM) ........................................... 5,,3
+section_header,3.1.4,International Organization for Standardization (ISO)........................................... 5,,3
+section_header,3.1.5,Institute of Electrical and Electronic Engineers (IEEE) ........................................ 6,,3
+section_header,3.1.6,Instrument Society of America (ISA).................................................................... 6,,3
+section_header,3.1.7,International Electrotechnical Commission (IEC) ................................................ 6,,3
+section_header,3.1.8,American Welding Society (AWS) ....................................................................... 6,,3
+section_header,3.1.9,Spanish Association for Standardization – UNE ................................................. 6,,3
+section_header,3.1.10,Códigos y Estándares Nacionales ....................................................................... 6,,3
+section_header,3.1.11,ECOPETROL ....................................................................................................... 7,,3
+section_header,3.2,Documentos del Proyecto .................................................................................... 7,,3
+paragraph,3.2,Documentos del Proyecto .................................................................................... 7,4. Ubicación y Condiciones Ambientales del Sitio ............................................................ 8,3
+section_header,4.1,Ubicación ............................................................................................................................. 8,,3
+section_header,4.2,Condiciones del Sitio ........................................................................................................... 8,,3
+paragraph,4.2,Condiciones del Sitio ........................................................................................................... 8,5. Datos Generales y Requisitos ....................................................................................... 10,3
+section_header,5.1,Vida de servicio ................................................................................................................. 10,,3
+section_header,5.2,Unidades de medida ......................................................................................................... 10,,3
+section_header,5.3,Lenguaje ............................................................................................................................ 10,,3
+section_header,5.4,Limitación de Ruido ........................................................................................................... 10,,3
+section_header,5.5,Clasificación de Áreas Peligrosas ..................................................................................... 10,,3
+section_header,5.6,Suministro de Energía ....................................................................................................... 10,,3
+section_header,5.7,Área Disponible ................................................................................................................. 11,,3
+paragraph,5.7,Área Disponible ................................................................................................................. 11,6. Alcance del suministro ................................................................................................... 12,3
+section_header,6.1,Equipos y Componentes ................................................................................................... 12,,3
+section_header,6.2,Servicios y Misceláneos .................................................................................................... 12,,3
+section_header,6.3,Exclusiones ....................................................................................................................... 13,,3
+section_header,6.4,Límites de Batería ............................................................................................................. 14,,3
+section_header,6.4.1,Tubería ............................................................................................................... 14,,3
+section_header,6.4.2,Electricidad ........................................................................................................ 14,,3
+section_header,6.4.3,Instrumentación y Control .................................................................................. 14,,3
+paragraph,,,"PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page ii / iv
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1",4
+section_header,6.4.4,Civiles ................................................................................................................ 15,,4
+paragraph,6.4.4,Civiles ................................................................................................................ 15,7. Requerimientos Técnicos .............................................................................................. 16,4
+section_header,7.1,General .............................................................................................................................. 16,,4
+section_header,7.2,Procesos ........................................................................................................................... 17,,4
+section_header,7.2.1,Conexiones a Procesos .................................................................................................... 18,,4
+section_header,7.3,Mecánica ........................................................................................................................... 19,,4
+section_header,7.3.1,Bombas de dosificación ..................................................................................... 19,,4
+section_header,7.3.2,Tanques de Almacenamiento ............................................................................ 20,,4
+section_header,7.3.3,Boquilla de inyección (Quill) .............................................................................. 20,,4
+section_header,7.4,Tubería .............................................................................................................................. 21,,4
+section_header,7.5,Estructurales y Civiles ....................................................................................................... 21,,4
+section_header,7.6,Electricidad ........................................................................................................................ 22,,4
+section_header,7.6.1,Tablero de Potencia ........................................................................................... 23,,4
+section_header,7.6.2,Interruptores ....................................................................................................... 23,,4
+section_header,7.6.3,Contactores ........................................................................................................ 24,,4
+section_header,7.6.4,Botones pulsadores ........................................................................................... 24,,4
+section_header,7.6.5,Transformadores de Control .............................................................................. 24,,4
+section_header,7.6.6,Lámparas de Señalización ................................................................................ 24,,4
+section_header,7.6.7,Cableado y Conexionado .................................................................................. 25,,4
+section_header,7.6.8,Motores Eléctricos ............................................................................................. 25,,4
+section_header,7.7,Instrumentación y Control ................................................................................................. 25,,4
+section_header,7.7.1,Indicadores de Presión ...................................................................................... 27,,4
+section_header,7.7.2,Transmisores de Presión ................................................................................... 28,,4
+section_header,7.7.3,Válvulas de Alivio ............................................................................................... 28,,4
+section_header,7.7.4,Clasificación Eléctrica de Instrumentos ............................................................. 29,,4
+section_header,7.8,Pintura y Recubrimiento .................................................................................................... 29,,4
+section_header,7.9,Placa de Identificación y Estampado ................................................................................ 30,,4
+section_header,7.10,Materiales .......................................................................................................................... 30,,4
+paragraph,7.10,Materiales .......................................................................................................................... 30,"8. Aseguramiento de la Calidad, Inspección y Ensayos ................................................. 32",4
+section_header,8.1,Requerimientos de trazabilidad de los materiales ............................................................ 32,,4
+section_header,8.2,Pruebas ............................................................................................................................. 32,,4
+section_header,8.3,Inspección no Destructiva ................................................................................................. 33,,4
+section_header,8.3.1,Pruebas de presión ............................................................................................ 33,,4
+section_header,8.3.2,FAT .................................................................................................................... 33,,4
+paragraph,8.3.2,FAT .................................................................................................................... 33,"9. Servicios en Campo, Asistencia y Entrenamiento ...................................................... 34
+10. Piezas de Repuesto y Herramientas Especiales .......................................................... 35",4
+section_header,10.1,Herramientas Especiales .................................................................................................. 35,,4
+paragraph,10.1,Herramientas Especiales .................................................................................................. 35,"11. Embalaje, Conservación y Preparación para el Envío ................................................ 36",4
+section_header,11.1,Embalaje ........................................................................................................................... 36,,4
+section_header,11.2,Marcado de Envío ............................................................................................................. 37,,4
+paragraph,,,"PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page iii / iv
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+12. Documentación ............................................................................................................... 38",5
+section_header,12.1,General .............................................................................................................................. 38,,5
+section_header,12.2,Certificados de Pruebas y Documentación de las Pruebas .............................. 40,,5
+section_header,12.3,Certificados de Material..................................................................................................... 40,,5
+section_header,12.4,Manual de Instrucciones ................................................................................................... 40,,5
+paragraph,12.4,Manual de Instrucciones ................................................................................................... 40,14. Garantía ............................................................................................................................ 43,5
+paragraph,,,"PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page iv / iv
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Índice de Tablas
+Tabla 1. Condiciones del Sitio – Fuente: “Bases de Diseño – Interdisciplinario” – FFM/F-PEI-010 9
+Tabla 2. Suministro de Energía Eléctrica .................................................................................... 11
+Tabla 3. Lista de conexiones de salida del PAQUETE. .............................................................. 18
+Tabla 4. Especificaciones técnicas de las bombas del PAQUETE de inyección de químicos. .. 20
+Tabla 5. Restricciones de Transporte - Fuente: ""Resolución 4959 de 2006"" ............................. 36
+Índice de Figuras
+Figura 1. Localización geográfica del campo Cupiagua ............................................................... 8
+Figura 2. Área disponible para el PAQUETE. (ver FFD/F-PCF-MP-PIL-10-822-1/1) ................. 11
+Figura 3. P&ID Paquete de inyección de químicos. Tomado de PUM/F-PCF-PU-PRE-55-552-2/2 18",6
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 1 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+1. Introducción",7
+section_header,1.1,Objetivo,,7
+paragraph,1.1,Objetivo,"El objetivo de este documento es definir los requerimientos mínimos para un (1) PAQUETE de inyección
+de químicos que funcionará para el nuevo paquete de compresión de gas de proceso M155-K-21150 para
+el proyecto “ACONDICIONAMIENTO ESTRATEGICO CUPIAGUA” para ECOPETROL S.A.",7
+section_header,1.2,Alcance,,7
+paragraph,1.2,Alcance,"Esta especificación técnica, junto los demás documentos del proyecto referenciados (especificaciones,
+hojas de datos, diagramas de tubería e instrumentación, planos, etc.) y los códigos y estándares de la
+industria aplican para el suministro de un (1) PAQUETE de inyección de químicos (componentes
+principales, accesorios necesarios para la operación, instrumentación y controles necesarios para un
+funcionamiento seguro y sin riesgos para la operación continua de este PAQUETE.
+El VENDEDOR se encargará de la selección, ingeniería, fabricación, suministro, aseguramiento y control
+de calidad, embalaje, transporte y entrega al lugar indicado por el CLIENTE del PAQUETE con las
+modificaciones o adicionales necesarias para cumplir con esta especificación.",7
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 2 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+2. Definiciones y abreviaturas",8
+section_header,2.1,Definiciones,,8
+paragraph,2.1,Definiciones,"DEBE La palabra debe implica un requerimiento.
+CLIENTE ECOPETROL
+FABRICANTE Es la compañía o compañías representadas por el VENDEDOR que fabrica(n)
+los componentes del PAQUETE adquirido.
+VENDEDOR La organización seleccionada para fabricar o suministrar el PAQUETE o
+Servicios
+SUB-PROVEEDOR La organización seleccionada por el VENDEDOR para suministrar la pieza,
+equipo o servicio
+PAQUETE El conjunto de todos los equipos, instrumentos, controles, componentes
+eléctricos, tubería y todos los artículos auxiliares necesarios para el PAQUETE
+de inyección de químicos sea integrado sobre un skid estructural.
+PUEDE La palabra indica una recomendación.",8
+section_header,2.2,Abreviaturas,,8
+paragraph,2.2,Abreviaturas,"AISC American Institute of Steel Construction
+ANSI American National Standards Institute.
+API American Petroleum Institute.
+ASCE American Society of Civil Engineers.
+ASME American Society of Mechanical Engineers.
+ASTM American Society for Testing and Materials.
+AWS American Welding Society.
+NTC Normas Técnicas Colombianas.
+PCS Process control Systems
+PSS Process Security System
+SIS Security Instrumented Systems
+CCR Central Control Room
+ESD Emergency Shut Down.
+HMI Human – Machine Interface.
+ICSS Integrated Control and Safety System.
+UCP Unit Control Panel.",8
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 3 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+RETIE Reglamento Técnico de Instalaciones Eléctricas.
+IEC International Electrotechnical Commission.
+NEMA National Electrical Manufacturer Association.
+ISO International Standard Organization.
+IEEE Institute of Electrical and Electronics Engineers.
+SSPC The Society for Protective Coatings.",9
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 4 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+3. Documentos de Referencia
+El PAQUETE que se suministrará debe estar diseñado, fabricado y probado de acuerdo con la última
+versión vigente y en uso de los siguientes códigos, estándares y documentos del proyecto.
+El VENDEDOR deberá identificar y referenciar, en la oferta, cualquier otro estándar, especificación o
+código que no se mencione en esta especificación técnica.
+EL VENDEDOR deberá tener en cuenta el orden de jerarquías para la solución de discrepancias entre
+este documento y los que se incluyan en la requisición de material del PAQUETE considerando que existen
+otros documentos complementarios que formaran parte para el suministro de este que no se encuentran
+indicados en este documento.
+La versión de los documentos referenciados deberá ser la última actualización a la fecha de la firma del
+acuerdo de suministro del PAQUETE con el CLIENTE.
+El VENDEDOR deberá indicar cualquier conflicto entre los códigos, estándares, o cualquier otro
+documento normativo que se referencia esta especificación técnica.
+El VENDEDOR deberá informar al CLIENTE y/o su representante sobre el conflicto de manera escrita, en
+el periodo de aclaraciones del proceso de licitación a través de una lista de desviaciones.
+La última versión de los códigos y estándares internacionales (según corresponda) como ASME, API,
+ASTM, ISO, IEEE, AWS, IEC, etc. son obligatorios y se deben cumplir íntegramente en este suministro.",10
+section_header,3.1,Códigos y Estándares,,10
+section_header,3.1.1,American Petroleum Institute (API),,10
+paragraph,3.1.1,American Petroleum Institute (API)," API STD 520 Sizing, Selection and Installation or Pressure-Relieving Valves in Refineries
+ API STD 526 Flanged Steel Pressure Relief Valves
+ API STD 614 Lubrication, Shaft-Sealing and Oil-control Systems and Auxiliaries
+ API STD 670 Machinery Protection Systems
+ API STD 675 Positive Displacement Pumps – Controlled Volume
+ API STD 686 Machinery Installation and Installation Design
+ API RP500 Recommended Practice for Classification of Locations for Electrical Installations
+at Petroleum Facilities classified as Class I Division 1 and Division 2",10
+section_header,3.1.2,American Society of Mechanical Engineers (ASME),,10
+paragraph,3.1.2,American Society of Mechanical Engineers (ASME), Boilers and Pressure Vessel Code – BPVC,10
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 5 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ ASME Section II Materials and Specifications
+ ASME Section V Non-destructive Examination
+ ASME Section IX Welding and Brazing Requirements
+ ASME B1.1 Unified Inch Screw Threads (UN and UNR Thread Form)
+ ASME B1.20.1 Pipe Threads, General Purpose (inch)
+ ASME B16.1 Gray Iron Pipe Flanges and Flanged Fittings (Classes 25, 125, 250)
+ ASME B16.5 Pipe Flanges and Flanged Fittings NPS ½ through NPS 24
+ ASME B16.11 Forged Fittings, Socket Welding and Threaded
+ ASME B16.20 Metallic Gaskets for Pipe Flanges
+ ASME B16.34 Valves–Flanged, Threaded, and Welding End
+ ASME B16.42 Ductile Iron Pipe Flanges and Flanged Fittings Classes 150 and 300
+ ASME B31.3 Process Piping
+ ASME B36.10 Welded and Seamless Wrought Steel Pipe
+ ASME B36.19 Stainless Steel Pipe",11
+section_header,3.1.3,American Society for Testing and Materials (ASTM),,11
+paragraph,3.1.3,American Society for Testing and Materials (ASTM)," ASTM E94 Standard Guide for Radiographic Examination Using Industrial Radiographic Film
+ ASTM A388 Standard Practice for Ultrasonic Examination of Steel Forgings
+ ASTM A536 Standard Specification for Ductile Iron Castings
+ ASTM A609 Standard Practice for Castings, Carbon, Low-Alloy, and Martensitic Stainless
+Steel, Ultrasonic Examination
+ ASTM E165 Standard Practice for Liquid Penetrant Examination for General Industry
+ ASTM E709 Standard Guide for Magnetic Particle Testing
+ ASTM A 48 Standard specification for gray iron castings
+ ASTM A 216 Standard specification for 5reas castings, carbon, suitable for 5reas5 welding, for
+high- 5reas5of5ra service
+ ASTM 278 Standard specification for gray iron castings for pressure-containing parts for
+5reas5of5ra up to 650 degrees
+ ASTM A 436 Standard specification for austenitic gray iron castings
+ ASTM A 439 Standard specification for austenitic ductile iron castings",11
+section_header,3.1.4,International Organization for Standardization (ISO),,11
+paragraph,3.1.4,International Organization for Standardization (ISO)," ISO 1217
+ ISO 3744 Determination of Sound Power 5reas5of Noise Sources using Sound Pressure",11
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 6 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ ISO 8821 Mechanical vibration – Balancing Shaft and fitment key convention
+ ISO 9001 Quality Systems
+ ISO 15664 Noise Control Design Procedures for Open Plant",12
+section_header,3.1.5,Institute of Electrical and Electronic Engineers (IEEE),,12
+paragraph,3.1.5,Institute of Electrical and Electronic Engineers (IEEE)," IEEE STD 1 Recommended Practice General Principles for Temperature Limits in the Rating
+of Electrical Equipment and for the evaluation of Electrical Insulation
+ IEEE STD 43 Recommended Practice for Testing Insulation Resistance of Rotating Machinery
+ IEEE STD 115 Test Procedures for Synchronous Machine
+ IEEE STD 841 IEEE Standard for Petroleum and Chemical Industry–Premium-Efficiency,
+Severe-Duty, Totally Enclosed Fan-Cooled (TEFC) Squirrel Cage Induction
+Motors–Up to and Including 370 kW (500 hp)",12
+section_header,3.1.6,Instrument Society of America (ISA),,12
+paragraph,3.1.6,Instrument Society of America (ISA)," ISA 5. 1 Instrument Symbols and Identification
+ ISA 5.2 Binary Logic Diagrams for Process Operation
+ ISA 5.4 Instrument Loop Drawing
+ ISA 5.5 Graphic Symbols for Process Display
+ ISA 75.05 Control Valve Terminology
+ ISA 84.01 Application of Safety Instrumented Systems for the Process Industries
+ MC-96.1 Temperature Measurement Thermocouples",12
+section_header,3.1.7,International Electrotechnical Commission (IEC),,12
+paragraph,3.1.7,International Electrotechnical Commission (IEC)," IEC 60079-10-1 Explosive atmospheres – Part 10-1: Classification of 6reas – Explosive gas
+atmospheres
+ IEC 60529 Degrees of protection provided by enclosures (IP Codes)",12
+section_header,3.1.8,American Welding Society (AWS),,12
+paragraph,3.1.8,American Welding Society (AWS), AWS D1.1 Structural Welding Code,12
+section_header,3.1.9,Spanish Association for Standardization – UNE,,12
+paragraph,3.1.9,Spanish Association for Standardization – UNE, EN 10204 Productos metálicos. Tipos de documentos de inspección.,12
+section_header,3.1.10,Códigos y Estándares Nacionales,,12
+paragraph,3.1.10,Códigos y Estándares Nacionales, RETIE Reglamento Técnico de Instalaciones Eléctricas,12
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 7 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Resolución 1792 Valores Límites Permisibles para la Exposición Ocupacional al Ruido
+ NTC 2050 Código Eléctrico Colombiano",13
+section_header,3.1.11,ECOPETROL,,13
+paragraph,3.1.11,ECOPETROL,"Los documentos del CLIENTE que se indican a continuación son de referencia y guía, estos se emplearán
+SOLO si se indican explícitamente dentro de algún capítulo de este documento.
+ ECP-VIN-G-GEN-GT-003 Guía para la Preparación del Dossier de Manufactura y Control de Calidad
+ ECP-DHS-G-009 Guía sobre Código de Colores y Señales Industriales
+ ECP-P-013 Listado de Marcas Homologadas
+ ECP-VST-P-ELE-ET-006 Especificación Técnica Motores de Baja Tensión
+ ECP-VST-P-ELE-MT-004 Manual Técnico de Clasificación de Áreas para Instalaciones Eléctricas",13
+section_header,3.2,Documentos del Proyecto,,13
+paragraph,3.2,Documentos del Proyecto," FFM/F-PIB-007 PIPING CLASS
+ FFM/F-PRC-006 DEFINICIÓN Y DIMENSIONAMIENTO DE EQUIPOS DE
+UNIDADES PAQUETE
+ PUM/F-PCF-PU-PRE-65-552-2/2 P&ID NEW CHEMICAL PACKAGE
+ FFM/F-MEX-033 HOJA DE DATOS PAQUETE DE INYECCIÓN DE QUÍMICOS
+ FFM/F-MEU-007 CRITERIOS DE DISEÑO DE LA DISCIPLINA MECÁNICA
+ FFM/F-MEG-013 LISTADO DE EQUIPOS MECÁNICOS
+ FFM/F-PEI-010 BASES DE DISEÑO – INTERDISCIPLINARIO
+ FFD/F-PCF-MP-PIL-10-822-1/1 CUPIAGUA FACILITIES – PLOT PLAN – ZONE 5 MAIN PROCESS
+NO. 2
+Nota:
+El VENDEDOR debe incluir todos los estándares y códigos industriales aplicables dentro de su oferta en
+caso tal que no se listen en este documento.",13
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 8 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+4. Ubicación y Condiciones Ambientales del Sitio",14
+section_header,4.1,Ubicación,,14
+paragraph,4.1,Ubicación,"El Campo Cupiagua, de la Gerencia de Operaciones de Desarrollo y Producción Piedemonte, está
+localizado a 175 km, respectivamente, al noreste de Bogotá y al occidente de los municipios de Yopal y
+Aguazul, en el departamento de Casanare.
+Figura 1. Localización geográfica del campo Cupiagua",14
+section_header,4.2,Condiciones del Sitio,,14
+paragraph,4.2,Condiciones del Sitio,"Parámetros Valor
+Altitud CPF 396 m.a.s.l.
+Presión Barométrica 14.05 psia
+Temperatura Ambiente Promedio Mín. 70.8⁰ F (21.6⁰ C)
+Máx. 88.8⁰ F (31.5⁰C)
+Temperatura Ambiente Mín. 69.8⁰ F (21⁰ C)
+Máx. 92.5⁰ F (33.6⁰C)
+Temporada de Lluvias De abril a octubre
+Precipitación Promedio 80”-170” /año (203-432cm/año)
+Precipitación Máxima por Dia 9” /24h (228mm/24h)
+Brillo Solar Min.: 3.9 (hora/día)
+Max.: 7.4 (hora/día)
+Prom.: 5.4 (hora/día)",14
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 9 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Parámetros Valor
+Velocidad del Viento Prom.: 15 a 20 (millas/hora)
+Max.: 55 (millas/hora)
+NE hacia SW
+Humedad Relativa Min.: 68%
+Max.: 84%
+Prom.: 78%
+Zona Sísmica Alta (Figure A.2.3-1 – NSR-10)
+Nota Cálculos estructurales deben
+ser basados en “Wind Speed”:
+120 km/h (Figure B.6.4-1 –
+NSR-10)
+Tabla 1. Condiciones del Sitio – Fuente: “Bases de Diseño – Interdisciplinario” – FFM/F-PEI-010",15
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 10 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+5. Datos Generales y Requisitos",16
+section_header,5.1,Vida de servicio,,16
+paragraph,5.1,Vida de servicio,"Todos los equipos suministrados para el PAQUETE de inyección de químicos deben estar diseñados y
+fabricados para una vida útil de diseño por lo menos de 20 años y mínimo 3 años de operación continua.",16
+section_header,5.2,Unidades de medida,,16
+paragraph,5.2,Unidades de medida,"Todas las unidades de medida serán del sistema inglés (US), a menos que se especifique de otros
+sistemas de unidades en la documentación contractual.",16
+section_header,5.3,Lenguaje,,16
+paragraph,5.3,Lenguaje,"El lenguaje para esta especificación está en español, pero los documentos relacionados a este proyecto
+podrán estar en inglés, excepto el manual de operación y mantenimiento el cual deberá estar impreso en
+idioma español.",16
+section_header,5.4,Limitación de Ruido,,16
+paragraph,5.4,Limitación de Ruido,"El nivel de ruido combinado del nuevo PAQUETE y sus equipos asociados no deberán sobrepasar los 85
+dB (A) al aire libre, cuando se realicen mediciones a un (1) metro de distancia de la fuente de ruido en
+todas las direcciones.
+Si para cumplir el requerimiento de nivel de ruido, el VENDEDOR deberá disponer de una cabina de
+insonorización del PAQUETE, el VENDEDOR deberá incluirla dentro de su alcance y su diseño debe
+permitir el acceso fácil al equipo para realizar labores de inspección, limpieza, reemplazo de piezas y
+mantenimiento y deberá dejar accesibles las facilidades para izado del equipo para su manipulación y
+transporte. Las pruebas de ruido del PAQUETE y a cargo del VENDEDOR se deben realizar de acuerdo
+con la norma ISO 2151 o similar que aplique.",16
+section_header,5.5,Clasificación de Áreas Peligrosas,,16
+paragraph,5.5,Clasificación de Áreas Peligrosas,"La clasificación de áreas peligrosas en el área donde será instalado el equipo se encuentra defina como
+Clase I División 2 Grupo D según lo indicado en las hojas de datos y el documento FFM/F-PCF-GN-ELF-
+00-001-1/4 “Planimetría de Clasificación de Áreas Respaldo DEMAG”.",16
+section_header,5.6,Suministro de Energía,,16
+paragraph,5.6,Suministro de Energía,"El suministro de energía eléctrica será proporcionado por el CLIENTE hasta la caja de conexiones del
+PAQUETE a borde del patín. La energía suministrada por el VENDEDOR con los siguientes voltajes de
+acuerdo con RETIE (2013) ítem 12 y EDP-ET-344 ítem 4.4.1:",16
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 11 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Equipos Voltajes
+Alimentación principal de baja 480 VAC, 60 Hz, 3 Fases + Tierra (*)
+tensión
+Panel de Control 120 VAC, 60 Hz voltaje regulado 1 Fases + Neutro + Tierra
+Tabla 2. Suministro de Energía Eléctrica
+(*) Cualquier otro sistema de voltaje requerido debe ser derivado internamente por el VENDEDOR.",17
+section_header,5.7,Área Disponible,,17
+paragraph,5.7,Área Disponible,"El PAQUETE de inyección de químicos deberá ser instalado en el CPF CUPIAGUA dentro de la zona N°5
+funcionando para el nuevo equipo de compresión de gas de proceso, según el plano FFD/F-PCF-MP-PIL-
+10-822-1/1.
+El área disponible estimada es un rectángulo de aproximadamente 3.1 m x 4.5 m para la instalación del
+PAQUETE como se muestra a continuación. El VENDEDOR deberá considerar esto para preparar el
+arreglo general de los equipos del PAQUETE asegurando áreas de mantenimiento y operativas:
+Figura 2. Área disponible para el PAQUETE. (ver FFD/F-PCF-MP-PIL-10-822-1/1)",17
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 12 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+6. Alcance del suministro
+El PROVEEDOR deberá suministrar totalmente nuevos y con todos los accesorios, insumos y equipos
+asociados para su correcto funcionamiento, probar y realizar la asistencia técnica en SITIO durante la
+instalación, comisionamiento y puesta en marcha del PAQUETE incluyendo, pero no limitándose a los
+siguiente.",18
+section_header,6.1,Equipos y Componentes,,18
+paragraph,6.1,Equipos y Componentes," Seis (6) bombas dosificadoras de químico de acuerdo con API STD 675
+ Seis (6) motores eléctricos de las bombas.
+ Tres (3) tanque de almacenamiento portátil tipo IBC (bulkdrum) para almacenamiento de químicos.
+ Conexión rápida entre tanque de almacenamiento de químico y múltiple (manifold) de succión bombas
+de dosificación.
+ Seis (6) boquillas de inyección de químico en tubería con su respectivo atomizador (Quill de inyección).
+ Toda la instrumentación y válvulas de control necesarias para la operación del PAQUETE.
+ Todo el cableado eléctrico de control dentro del límite de batería del PAQUETE.
+ Todas las tuberías de interconexión dentro del límite de batería del PAQUETE.
+ Cajas de conexionado (junction boxes) Explosion Proof
+ Terminales para puesta a tierra.",18
+section_header,6.2,Servicios y Misceláneos,,18
+paragraph,6.2,Servicios y Misceláneos," Placa de identificación.
+ Preparación de superficie y pintura de acuerdo con el numeral 6.8 de esta especificación.
+ Herramientas especiales (Si aplica).",18
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 13 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Partes de repuesto y consumibles para instalación, comisionamiento, puesta en marcha y arranque del
+PAQUETE de inyección de químicos.
+ Listado de partes de repuesto para mantenimiento y dos años de operación (debe incluir (descripción
+detallada del repuesto según estándar del PROVEEDOR, cantidad por equipo según recomendado por
+el PROVEEDOR, número de parte y catálogo del repuesto y valor unitario).
+ Lista de repuestos y consumibles generales del equipo no incluidos en los anteriores listados
+(descripción detallada del repuesto según estándar del PROVEEDOR, cantidad por equipo según
+recomendado por el PROVEEDOR, número de parte y catálogo del repuesto).
+ Pruebas de aceptación en fabrica FAT.
+ Empaque, envío y descargue en sitio de instalación del PAQUETE.
+ Documentación de acuerdo con el capítulo 12 de esta especificación.
+ Asistencia técnica en sitio durante la instalación, el comisionamiento, puesta en marcha y pruebas SAT
+hasta estabilizar procesos y conseguir aprobación por escrito del CLIENTE.
+ Entrenamiento / capacitación en SITIO del personal del CLIENTE.
+ Certificaciones de fábrica.
+ Toda la documentación necesaria y suficiente para la certificación RETIE del PAQUETE.
+ Documentación As-Built, y de fabricación del PAQUETE.
+ Garantías.",19
+section_header,6.3,Exclusiones,,19
+paragraph,6.3,Exclusiones,"Quedan excluidos del alcance de suministro del VENDEDOR los siguientes items.
+ Tuberías, electricidad, control, válvulas, materiales que se encuentren por fuera de los límites de batería
+del PAQUETE. Para verificar los límites del PAQUETE, el PROVEEDOR debe consultar los P&ID que
+hagan referencia al proyecto referidos en el numeral 3.
+ Obras civiles (movimientos de tierra, cimentaciones, etc.).",19
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 14 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Malla puesta a tierra.
+ Iluminación exterior de áreas.",20
+section_header,6.4,Límites de Batería,,20
+paragraph,6.4,Límites de Batería,"Se establecen los siguientes límites de suministro. El VENDEDOR deberá incluir en su propuesta cualquier
+punto terminal adicional a considerar. Si no se especifica algún particular en la hoja de datos particular del
+PAQUETE, los puntos terminales estarán a cero “0” metros del borde de este.",20
+section_header,6.4.1,Tubería,,20
+paragraph,6.4.1,Tubería,"Conexiones de entrada/salida principal y drenajes.
+Se deberá entregar una facilidad de conexión principal para dosificación del químico a borde de patín del
+PAQUETE de acuerdo con el tamaño, tipo de conexión y normativa aplicable que se indica en la hoja de
+datos particular del PAQUETE y/o el P&ID referenciados en el numeral 3 de esta especificación. El
+PROVEEDOR deberá garantizar y optimizar el número de conexiones al límite de batería del patín para
+minimizar interconexiones.
+El PROVEEDOR deberá incluir todos los accesorios para empalme de las conexiones con las tuberías/
+tubing de suministro, quill o boquilla de inyección, válvulas, codos entre otros que sean requeridos para la
+correcta interconexión del PAQUETE y la correcta dosificación de los químicos.",20
+section_header,6.4.2,Electricidad,,20
+paragraph,6.4.2,Electricidad,"Los límites de batería eléctricos serán a 0 metros del tablero de alimentación eléctrica (potencia) / control
+del PAQUETE, teniendo en cuenta:
+ Alimentación eléctrica: Regletas de bornes en el equipo o caja intermedia.
+ Control e instrumentación: Regletas de bornes en el equipo o caja intermedia. Panel de terminales de
+potencia.
+ Puesta a tierra: Conexiones para el conexionado a la malla de puesta a tierra.",20
+section_header,6.4.3,Instrumentación y Control,,20
+paragraph,6.4.3,Instrumentación y Control,"Los límites de batería de instrumentación y control serán en la caja de conexionado de cada PAQUETE,
+teniendo en cuenta lo siguiente",20
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 15 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Se deben proporcionar terminales en cajas de conexiones locales.
+ Las cajas de derivación se ubicarán a nivel del suelo.",21
+section_header,6.4.4,Civiles,,21
+paragraph,6.4.4,Civiles,"El límite de batería del PROVEEDOR es el patín del PAQUETE
+El VENDEDOR suministrará los detalles de los pernos de anclaje (instalación y suministro de estos
+elementos por otros).",21
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 16 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7. Requerimientos Técnicos",22
+section_header,7.1,General,,22
+paragraph,7.1,General,"El VENDEDOR es el responsable de diseñar a detalle, suministrar, fabricar, ensamblar, empacar,
+despachar, realizar el control de calidad, las pruebas operativas, entregar la documentación y prestar
+asistencia técnica en sitio durante la instalación, el comisionamiento, puesta en marcha y pruebas en sitio
+del PAQUETE.
+El VENDEDOR también es totalmente responsable de la selección y el control de calidad de todos los
+materiales, incluidos los consumibles, soldaduras, pruebas, dispositivos de protección, maquinaria,
+herramientas y todos los materiales y servicios necesarios para completar el suministro funcional, seguro
+y confiable del PAQUETE, así estén o no indicados explícitamente en esta especificación y los demás
+documentos de referencia indicados en el capítulo 3, incluso los proporcionados por SUB-VENDEDORES.
+Todas las consideraciones de diseño, métodos de fabricación y pruebas del PAQUETE estarán sujetas a
+revisión, comentarios y aprobación del CLIENTE.
+Todas las propuestas se elaborarán y presentarán de acuerdo con esta especificación y la hoja de datos,
+requisición de materiales y demás documentos de referencia indicados en el capítulo 3. El VENDEDOR
+puede presentar diseños alternativos que se consideren iguales o mejores que el diseño especificado en
+este documento, pero debe presentarse la propuesta base de diseño requerida por el CLIENTE como
+mandatoria y en caso de alguna alternativa debe presentarse por separado incluyendo la justificación
+técnica y económica detallada resaltando las ventajas fundamentales.
+El VENDEDOR deberá suministrar en su oferta todas las dimensiones principales del paquete y equipos
+asociados, detalles preliminares y estimados de instalación y pesos, espacios de operación y
+mantenimiento, superior y lateral.
+Cualquier excepción a esta especificación deberá ser explícita y claramente establecida e indicada por
+escrito en una sección separada de la propuesta.
+El VENDEDOR ofrecerá equipos probados y de línea de fabricación estándar. El VENDEDOR
+proporcionará su experiencia similar al suministro requerido junto con detalles completos en su propuesta
+para establecer la experiencia del modelo ofrecido. A menos que el CLIENTE indique lo contrario, no se
+aceptan prototipos o equipos no probados que no tengan un historial operativo bien establecido de más
+de dos (2) años continuos. El VENDEDOR deberá demostrar que los equipos ofrecidos son modelos
+probados y con suficientes referencias de uso operativo para aplicaciones similares.",22
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 17 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+El VENDEDOR debe ser enteramente responsable de la coordinación con todos sus SUB-VENDEDORES
+de los materiales y servicios provistos por estos. El VENDEDOR será el único responsable frente al
+CLIENTE del cumplimiento de los requisitos especificados. La lista de SUB-VENDEDORES y el resumen
+de la experiencia se proporcionarán al CLIENTE para su revisión y comentarios antes de la adjudicación
+del trabajo.
+En caso de cualquier discrepancia, deficiencia o falta de claridad en cualquier parte de esta especificación
+o documentos referenciados en el numeral 3, el VENDEDOR deberá notificar al CLIENTE con una
+propuesta alternativa o adicional y precios para cada categoría así incluida. Cualquier artículo así
+identificado después de la adjudicación de la orden de compra no constituirá un cambio y no será motivo
+de alteración de costos ni tiempos.
+El VENDEDOR se asegurará de que los equipos y las partes seleccionadas del PAQUETE (equipos
+auxiliares, tuberías, instrumentos, componentes estructurales, etc.) sean simples y seguros de operar con
+alta disponibilidad, confiabilidad, mantenibilidad y buena accesibilidad.
+El VENDEDOR deberá proporcionar el arreglo general del PAQUETE indicando la disposición de los
+equipos, tuberías y auxiliares. La distribución y arreglo general del PAQUETE ensamblado completo
+deberá garantizar un acceso fácil y seguro a los equipos para facilitar la operación, el mantenimiento y el
+ajuste de los controles. Los equipos integrados en el patín deben disponerse de modo que el centro de
+gravedad del PAQUETE completo coincida lo más cerca posible con el centro geométrico.
+El PAQUETE se ensamblará completo con todos los accesorios, válvulas, tuberías, instrumentos, placas
+y cubiertas, paneles de control local, centrales y maestros, todo el cableado y tuberías eléctricas y de
+control dentro de los límites de la batería de cada patín y todos los dispositivos necesarios para una
+instalación completa y un funcionamiento satisfactorio como unidad integrada. Las piezas sueltas del envío
+que no puedan preensamblarse deben estar claramente identificadas y marcadas físicamente y
+referenciadas en los manuales y planos de instalación.
+La operación del PAQUETE será completamente automática en la medida posible.
+El VENDEDOR deberá desarrollar los planos requeridos (ej P&ID) que indiquen los equipos, la
+instrumentación y los controles, los dispositivos de seguridad necesarios según lo requiera el PAQUETE.
+El VENDEDOR deberá suministrar todos sus componentes y equipos eléctricos asociados que cumplan
+con el “Reglamento Técnico de Instalaciones Eléctricas” RETIE y suministrar toda la documentación
+requerida para la certificación.",23
+section_header,7.2,Procesos,,23
+paragraph,7.2,Procesos,"El PAQUETE funcionará inyectando inhibidor de corrosión desde seis (6) bombas de dosificación hacía
+seis (6) corrientes asociadas a la operación del nuevo compresor de gas de proceso M155-K-21150. Cada
+punto de inyección cuenta con una bomba dedicada y una línea de suministro.",23
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 18 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Figura 3. P&ID Paquete de inyección de químicos. Tomado de PUM/F-PCF-PU-PRE-55-552-2/2
+Nota: se debe pedir la última versión del P&ID para este paquete.
+En la parte izquierda de la Figura 3 se muestran los contenedores del inhibidor de corrosión que se acoplan
+de manera discontinua en el manifold de succión. Estos contenedores hacen parte del alcance de este
+PAQUETE al igual que las líneas que tendrán los acoples rápidos para la conexión del químico a los
+manifold de succión de las bombas de dosificación.",24
+section_header,7.2.1,Conexiones a Procesos,,24
+paragraph,7.2.1,Conexiones a Procesos,"Para el PAQUETE de inyección de químicos se cuentan con dos conexiones bridadas en la entrada, una
+alimentará inhibidor de corrosión para la fase liquida del proceso y la otra para fase gaseosa del proceso.
+Se contarán con seis (6) salidas bridadas a los puntos de inyección establecidos. (ver PUM/F-PCF-PU-
+PRE-55-552-2/2 P&ID NEW CHEMICAL PACKAGE)
+CONEXIÓN DIÁMETRO DE CONEXIÓN
+Salida de agua del separador de media presión V-2002 ¾”
+Entrada de líquidos del separador V-2001 / Glycol still columna CT-3301 salida ¾”
+gas
+Salida de gas del separador de baja presión V-2003 – línea 12”-PG-21130 ¾”
+Salida de gas del separador de alta presión V-2001 ¾”
+Salida de gas del separador de media presión V-2002 ¾”
+Bomba en spare ¾”
+Tabla 3. Lista de conexiones de salida del PAQUETE.",24
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 19 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1",25
+section_header,7.3,Mecánica,,25
+paragraph,7.3,Mecánica,"Se requiere de un PAQUETE que realice la inyección de inhibidor de corrosión en fase gaseosa para seis
+(6) puntos en diferentes ubicaciones dentro del tren dos de separación y el nuevo compresor de gas de
+proceso M155-K-21150.
+Las bombas no cuentan con respaldo, operarán en configuración 1+0 cada uno de los seis (6) puntos de
+inyección contemplados a la fecha de emisión de este documento.",25
+section_header,7.3.1,Bombas de dosificación,,25
+paragraph,7.3.1,Bombas de dosificación,"El PAQUETE de inyección de químicos contará con bombas de desplazamiento positivo tipo dosificación
+según API STD 675 capaces de suministrar inhibidor de corrosión en las líneas indicadas, la inyección
+deberá cumplir con las condiciones del proceso (ver Tabla 4) y cada bomba debe tener la opción de regular
+manualmente la longitud de los émbolos para ajustarse a las condiciones necesarias de dosis.
+En la descarga de cada una de las bombas deberá ser incluido un medidor de calibración, para comprobar
+los caudales de inyección de la bomba. Cada bomba estará provista de una válvula de alivio de presión
+(PSV) y un transmisor de presión para generar alarma y protección por alta alta o baja presión con el fin
+de proteger la bomba y la tubería a la descarga de sobrepresiones o por evento de fuga/ruptura se genere
+la parada del PAQUETE.
+El modelo de la bomba debe ser el mismo o similar a otras bombas producidas regularmente por el
+VENDEDOR.
+La precisión de la dosificación de químico deberá ser de ± 1% dentro del rango comprendido entre el 100%
+‐ 10% de la capacidad nominal de la bomba (turndown ratio 10:1), según lo establecido en la API STD 675.
+Las bombas deben ser diseñadas para operar continuamente 24 horas.
+A continuación, se listan las condiciones establecidas para la operación de las bombas de dosificación del
+PAQUETE.
+Paquete de inyección de
+Unidad P-5540 P-5541 P-5542 P-5543 P-5544 P-5545
+inhibidor de corrosión
+Capacidad mínima de
+GPD 0.1 0.1 0.01 0.1 0.3 0.1
+bombeo
+Capacidad máxima de
+GPD 2.0 1.0 0.51 1.0 3.0 2.0
+bombeo
+Temperatura de entrada °F 85 85 85 85 85 85",25
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 20 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Paquete de inyección de
+Unidad P-5540 P-5541 P-5542 P-5543 P-5544 P-5545
+inhibidor de corrosión
+Máxima presión de
+psig 75 67 137 150 80 150
+descarga
+SP. GR. @°F / @ 60°F - 1.0 1.0 1.0 1.0 1.0 1.0
+Rango de calibración ml 100 100 100 100 100 100
+Tabla 4. Especificaciones técnicas de las bombas del PAQUETE de inyección de químicos.
+Nota 1: Las especificaciones técnicas como el NPSH requerido, la eficiencia estimada de la bomba, el set
+de presión de las PSV, la temperatura y presión de diseño deben ser confirmadas por el VENDEDOR del
+PAQUETE.
+Nota 2: Los valores de caudales deberán ser confirmados por el VENDEDOR validando la tecnología
+disponible y los valores mínimos para asegurar una correcta dosificación del químico en la tubería de
+proceso.",26
+section_header,7.3.2,Tanques de Almacenamiento,,26
+paragraph,7.3.2,Tanques de Almacenamiento,"Los tanques será del tipo IBC metálico con capacidad de 1325 litros (350 gal) de almacenamiento y estará
+provisto mínimo de los siguientes elementos:
+ Válvulas de drenaje.
+ Tapa de llenado.
+ Boquilla de salida con válvula (succión bomba).
+ Interruptores de nivel.
+ Indicador local de nivel.
+Los tanques serán de acero inoxidable AISI.",26
+section_header,7.3.3,Boquilla de inyección (Quill),,26
+paragraph,7.3.3,Boquilla de inyección (Quill),"El PAQUETE debe suministrar las seis (6) boquillas de inyección. De igual manera el PAQUETE deberá
+garantizar la conexión de la boquilla de inyección (quill) con la facilidad de que será instalada en las
+tuberías de proceso.",26
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 21 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+La boquilla de inyección de químico deberá incluir un atomizador del líquido que permita el mínimo tamaño
+de gota posible de tal manera que la superficie de contacto entre gas/líquido sea máxima al momento de
+la inyección para optimizar la interacción química. La elección del tipo de boquilla de atomización está
+abierta a la recomendación del PROVEEDOR de acuerdo con los criterios propios de fabricante. Por su
+parte, el atomizador, boquilla de inyección, las válvulas de corte y cheques es responsabilidad del
+proveedor del paquete y deberán estar incluidos dentro de su alcance de suministro tal como se indica
+dentro del límite de batería en la hoja de datos y los diagramas de tubería e instrumentación (P&IDs)
+referenciados en el capítulo 3 de esta especificación.",27
+section_header,7.4,Tubería,,27
+paragraph,7.4,Tubería,"El VENDEDOR deberá suministrar la tubería de interconexión y accesorios requeridos entre cada uno de
+los equipos y en los límites del PAQUETE. Toda la tubería y sus componentes deberán estar conforme a
+lo dispuesto en ASME B31.3 sección materiales por los documentos referenciados en el capitulo 3 de esta
+especificación.
+Deberán estar de acuerdo con el Piping Class del proyecto FFM/F-PIB-016 para la clase A0G1.
+El mínimo diámetro nominal de la tubería debe ser de ¾”. Los tubos conductores “tubing” de acero
+inoxidable deben ser usados cuando se requieren líneas de diámetro pequeño. No se debe usar tuberías
+de diámetros nominales de 1¼”, 2 ½”, 3 ½”, 5” y 7”.
+Se deben mantener al mínimo las conexiones roscadas y en caso de hacerse, deben ser en tuberías no
+mayores a 1 ½”. Esta tubería roscada debe estar conforme al código ANSI B2.1 “Tubería Delgada
+Roscada”.
+Toda la tubería debe ser soportada adecuadamente para minimizar los esfuerzos por vibración.
+Se cuenta con el área disponible suficiente para la instalación del PAQUETE. Sin embargo, el VENDEDOR
+deberá realizar una distribución óptima y arreglo de los equipos pertenecientes al PAQUETE en el mínimo
+espacio posible que se tiene, indicado en el numeral 5.7 teniendo en cuenta su experiencia y
+recomendaciones para facilitar la accesibilidad a instalación, mantenimiento e inspeccion a este.
+El VENDEDOR debe suministrar todas las válvulas, ciegos, figuras en ocho y accesorios al interior del
+PAQUETE que considere de acuerdo con las buenas prácticas de aislamiento seguro de los equipos
+componentes de este y deben ser indicadas en la propuesta.",27
+section_header,7.5,Estructurales y Civiles,,27
+paragraph,7.5,Estructurales y Civiles,"Todos los equipos que componen el PAQUETE deben estar montados sobre un patín estructural fabricado
+en acero estructural y capaz de soportar el movimiento de este durante el izaje.",27
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 22 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Todas las estructuras como pasarelas, escaleras, plataformas, columnas, vigas, cubierta y soportes de
+estos, necesarios para el PAQUETE serán proporcionados por el VENDEDOR.
+La disposición del patín del PAQUETE debe ser tal que permita el acceso para el mantenimiento y la
+operación de todos los equipos. La placa base del patín debe ser adecuada para el grouting.
+El diseño del patín (skid) debe seguir las recomendaciones de la (Guía de Requerimientos Ergonómicos y
+de Higiene Industrial HSE-G-051), con el propósito de asegurar condiciones cómodas y seguras para la
+operación.
+El patín (skid) deberá ser de construcción robusta y estar diseñado para soportar todo el conjunto de
+equipos y componentes del PAQUETE. Este debe estar diseñado para resistir, sin desalineación de los
+equipos, las cargas térmicas o mecánicas que puedan imponerse al patín durante la instalación y el
+funcionamiento normal. Este patín también debe tener un piso en lamina antideslizante con un rodapié de
+tal manera que el fluido de operación se pueda recuperar y disponer adecuadamente mediante un drenaje
+a borde de patín.
+Ninguna parte de algún equipo, tubería, instrumentación, etc. deberá sobresalir del borde del patín del
+PAQUETE.
+Los planos necesarios relacionados con la disposición del PAQUETE, equipos, la disposición de las
+tuberías, las huellas (incluida la información de los pernos de anclaje) y los planos de soporte, los planos
+estructurales (incluidas las plataformas de acceso y las escaleras), la ubicación de los pernos de anclaje
+y las placas de nivelación, etc. para el PAQUETE deberán ser proporcionados por el VENDEDOR.
+El patín tendrá orejas de izaje en los puntos apropiados, las soldaduras de las orejas de izaje deben ser
+100% inspeccionadas por ensayos no destructivos, también deberá contar con terminales para la conexión
+a la malla a tierra, orificios para pernos de anclaje, orificios para aplicación de mortero de nivelación,
+orificios para venteo, tornillos de nivelación y alineación de los equipos, un sistema de contención de
+líquidos producidos en la operación, adema, se proveerá drenaje para el patín.
+El VENDEDOR deberá indicar los pesos y dimensiones de los componentes y equipos del PAQUETE, el
+centro de gravedad y los planos generales de este y sus complementos principales.",28
+section_header,7.6,Electricidad,,28
+paragraph,7.6,Electricidad,"Los equipos y componentes eléctricos que conforman el PAQUETE deberán ser entregados en su totalidad
+instalados de manera adecuada, cableados, conectados y probados.
+El VENDEDOR deberá entregar los diagramas unifilares, de conexionado y de control respectivos. Así
+como la información de conexionado de las señales de arranque, parada, estados y selector local/remoto,
+para el respectivo sistema de control.",28
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 23 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+De acuerdo con lo indicado en el artículo 5 del Reglamento Técnico de Instalaciones Eléctricas (RETIE),
+en las instalaciones objeto del reglamento se debe aplicar el Sistema Internacional de Unidades (SI). La
+simbología que se utilizará en los diseños estará de acuerdo con el RETIE, Artículo 6 “Simbología y
+Señalización” y con lo estipulado en las normas IEC 60617 (y actualización 1082), IEC 60750, ANSI Y32
+o IEEE 315, en cualquier caso, se debe especificar claramente por el diseñador la simbología a utilizar.",29
+section_header,7.6.1,Tablero de Potencia,,29
+paragraph,7.6.1,Tablero de Potencia,"Será parte del alcance del VENDEDOR proveer el PAQUETE con un (1) tablero principal de potencia para
+la alimentación de las cargas que lo conforman (motores, equipos eléctricos, etc.). El tablero se alimentará
+en 480 VAC, en el caso de requerir diferentes niveles de tensión, el VENDEDOR deberá incluir los
+transformadores y/o fuentes necesarias para los niveles de tensión que se requiera. El VENDEDOR deberá
+realizar todo el cableado interno requerido para la alimentación de los diferentes equipos eléctricos que
+conformen el PAQUETE, incluyendo; cableado, tubería y todos los accesorios de montaje necesarios y
+acordes a la clasificación de áreas del sitio. El Tablero deberá cumplir con lo indicado en el documento de
+referencia: EDP-ET-335 Especificación Técnica Tableros de Baja Tensión Hasta 600V.",29
+section_header,7.6.2,Interruptores,,29
+paragraph,7.6.2,Interruptores,"Los interruptores serán del tipo de caja moldeada y deberán cumplir con los requerimientos generales
+establecidos en la Norma NEMA AB-1 ó IEEE C37.13 ó IEC 60947-2.
+Los interruptores serán monopolares, bipolares o tripolares, según lo indiquen los planos para cada tablero
+y la posición de disparo estará indicada claramente por la perilla de operación.
+Los interruptores bipolares o tripolares serán de disparo común y serán accionados por una sola perilla de
+operación; no se permite interruptores bipolares o tripolares ensamblados con unidades monopolares.
+Los interruptores serán de protección térmica y magnética, a menos que se indique lo contrario en los
+requerimientos particulares.
+El número de circuitos y las capacidades de corriente nominal serán las indicadas en los cuadros de cargas
+o planos unifilares respectivos.
+Los interruptores serán operados manualmente mediante mecanismo de disparo mecánicamente libre.
+Dispondrán también de disparo automático, quedando en posición intermedia entre cerrado y abierto.
+En caso de requerirse operación de los interruptores en la parte exterior del tablero, esta característica
+será incluida en las observaciones de las hojas de datos particular del PAQUETE.",29
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 24 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1",30
+section_header,7.6.3,Contactores,,30
+paragraph,7.6.3,Contactores,"Se utilizarán contactores para sistema de control de potencia si son requeridos.
+Las bobinas de los contactores deberán estar diseñadas para operación continua sin exceder los límites
+de temperatura permitidos con una temperatura ambiente de 40°C.
+Los contactores deberán operar correctamente con variaciones de voltaje de + 10% -15% del voltaje
+nominal y frecuencia de ±5% del valor nominal (60 Hz). La capacidad de los contactores deberá ser
+seleccionada según el 125 % de la potencia nominal de la carga.",30
+section_header,7.6.4,Botones pulsadores,,30
+paragraph,7.6.4,Botones pulsadores,"Los botones pulsadores, se suministrarán con contactos para trabajo pesado, de retorno automático a la
+posición normal. Todos los botones pulsadores deberán ser adecuados para operación continua a 600V.
+Cada botón pulsador será suministrado con una placa de identificación. El tamaño de los caracteres deberá
+ser como mínimo 5mm.
+El texto será aprobado por el CLIENTE. El VENDEDOR suministrará una propuesta de las leyendas para
+cada botón pulsador.",30
+section_header,7.6.5,Transformadores de Control,,30
+paragraph,7.6.5,Transformadores de Control,"La capacidad de los transformadores de control deberá ser definida teniendo en cuenta el 130% de la
+potencia al cierre que requiere la bobina del contactor, lámparas de indicación, relés auxiliares, fuentes y
+demás dispositivos de control incorporados.
+El primario de los transformadores de control estará protegido con minibreakers siempre que las corrientes
+de corto circuito del circuito al que se conectan así lo permitan. En caso contrario serán aceptables fusibles
+montados en base extraíble, el secundario deberá estar protegido con minibreakers.
+En el lado de 120 V se deberá instalar un supresor de sobretensiones (varistor) para proteger los circuitos
+de control.",30
+section_header,7.6.6,Lámparas de Señalización,,30
+paragraph,7.6.6,Lámparas de Señalización,"Todas las lámparas de señalización deberán ser del tipo larga vida o multiled adecuados para operación
+permanente con alimentación de 120 VAC y variaciones de voltaje de ± 15 %. Los lentes y filtros de color
+que suministre el VENDEDOR serán resistentes a los efectos de la iluminación permanente de la lámpara.",30
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 25 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1",31
+section_header,7.6.7,Cableado y Conexionado,,31
+paragraph,7.6.7,Cableado y Conexionado,"El cableado y conexionado de los equipos eléctricos estará definido dentro de los lineamientos del
+documento EDP-ET-335 Especificación Técnica Tableros de Baja Tensión Hasta 600V.",31
+section_header,7.6.8,Motores Eléctricos,,31
+paragraph,7.6.8,Motores Eléctricos,"Se deberán especificar motores eléctricos de inducción jaula de ardilla de las bombas. Los motores
+eléctricos para potencias desde 1/3 HP en adelante deben ser trifásicos y se alimentarán en baja tensión
+a 480 VCA, 3F, 4H, 60 Hz.
+Los motores deben ser completamente cerrados, tipo TEFC según NEMA o IP55 según IEC, cerramiento
+Nema 4X, refrigerados por ventilador, para instalación en área clasificada como Clase 1, División 2, Grupo
+D, incorporando materiales especiales resistentes a la corrosión, aptos para instalación a la intemperie.
+Los motores para instalar en áreas clasificadas clase 1, división 2 grupo C y D deberán ser TEFC y a
+prueba de explosión (XP o similar).
+Todo motor estará diseñado para arranque directo sin importar la potencia o el voltaje de conexión, excepto
+donde se indique lo contrario.
+ Cumplimiento del estándar NEMA MG-1
+ Voltaje del Motor 460 Vac para un voltaje del sistema de 480 Vac
+ Factor de Servicio = 1 (según IEEE 84)
+ Descarga TEFC para áreas no clasificadas y clasificación Clase I División II Áreas clasificadas Clase I
+División 2, los motores serán a prueba de explosión (XP)
+ Aislamiento Clase F
+ Diseño de torque normal NEMA B",31
+section_header,7.7,Instrumentación y Control,,31
+paragraph,7.7,Instrumentación y Control,"El PAQUETE se entregará con un Panel de Control (UCP) patentado ubicado sobre un patín, que inluya
+un controlador y su respectiva HMI Local.
+El panel de control de la unidad (UCP) encenderá/apagará el equipo y deberá garantizar el control continuo
+de inyección de químico.
+El DCS de la planta monitoreará el PAQUETE a través de señales cableadas en duro y por comunicaciones
+usando el protocolo Modbus TCP/IP.
+El Proveedor deberá instalar en el panel de control local de la unidad",31
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 26 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+n conversor de Fibra optica (FO tipo Multimodo, para comunicación Modbus Ethernet TCP/IP- para
+conexión a puerto 1000 Mbit/s with LC connector) para la comunicación hacia el DCS de planta con el fin
+de monitorear remotamente las variables y alarmas del proceso.
+Las siguientes son las señales cableadas en duro requeridas entre el sistema de control del paquete y los
+controladores DCS/SIS de la planta:
+M156-XLR-5540 – Señal de ""runing"" de bomba P-5540 a DCS (Contacto seco)
+M156-XLR-5541 – Señal de ""runing"" de bomba P-5541 a DCS (Contacto seco)
+M156-XLR-5542 – Señal de ""runing"" de bomba P-5542 a DCS (Contacto seco)
+M156-XLR-5543 – Señal de ""runing"" de bomba P-5543 a DCS (Contacto seco)
+M156-XLR-5544 – Señal de ""runing"" de bomba P-5544 a DCS (Contacto seco)
+M158-XSE-5540 – Señal de apagado desde SIS interlock 3TA(Contacto Seco)
+M158-XSE-5541 – Señal de apagado desde SIS interlock 3TB(Contacto Seco)
+M158-XSE-5542 – Señal de apagado desde SIS interlock 3TC(Contacto Seco)
+El PAQUETE debe disponer de interruptores para arrancar o parar las bombas. También deben incluir
+interruptores para posición local o remota de las bombas y alarmas que indican la posición en que se
+encuentra cada bomba.
+El VENDEDOR debe entregar las válvulas de seguridad (PSV), indicadores de presión (PI), medidores de
+nivel (LG), medidores de flujo (FI), protección por alta alta presión panel de control, señal de estatus,
+parada por interlock, tubing, tubería y demás accesorios necesarios asociados al PAQUETE.
+La instrumentación y actuadores deben ser suministrados completamente instalados y conectados, con
+todos los accesorios requeridos para la conexión a proceso tales como tubing y conectores, soportes y
+accesorios de montaje y todos los accesorios necesarios para la conexión eléctrica tales como cables de
+instrumentación, conduits, accesorios y cajas de conexionado.
+Las cajas de conexionado deberán ser suministradas precableadas con los cables de instrumentación
+desde los instrumentos y actuadores hasta las cajas, segregados por tipo de señal y ubicación.",32
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 27 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+El VENDEDOR deberá suministrar las hojas de datos de todos los instrumentos en formatos basados en
+estándar ISA o a menos que se acuerde otro entre el CLIENTE y el VENDEDOR.
+La simbología e identificación de instrumentos será de acuerdo con la última revisión del estándar ISA 5.1
+""Instrumentation Symbols and Identification"".
+Los instrumentos del PAQUETE deben cumplir con el documento EDP-P-013: LISTADO DE MARCAS
+HOMOLOGADAS PROCEDIMIENTO DE HOMOLOGACIÓN DE MARCAS del CLIENTE.",33
+section_header,7.7.1,Indicadores de Presión,,33
+paragraph,7.7.1,Indicadores de Presión,"La conexión a proceso de los manómetros será por la parte de abajo y roscada de 1/2"" NPT-M. En servicios
+con vibración, los manómetros serán de tipo rellenos de líquido. Para servicios de fluidos pulsantes se
+deberá proveer snubber.
+Los manómetros serán de caja fenólica o de aleación de aluminio (En ambientes muy corrosivos, la caja
+de los manómetros deberá ser especificada en acero inoxidable). La caja del manómetro deberá ser de
+frente sólido y con protección de ruptura “Blowout” en la parte de atrás.
+El elemento será tubo “bourdon” o fuelle, de acero inoxidable 316 como mínimo. El elemento sensor debe
+ser especificado para operar en un rango de -40°F a 220°F.
+Los manómetros serán generalmente de dial de 4-1/2"". La escala será indicada en negro sobre fondo
+blanco. Para presión de vacío será indicada en rojo sobre fondo blanco.
+El rango de indicación o escala del manómetro será seleccionado tal qué, la presión normal de operación
+se encuentre entre un 40% y un 70% de la escala, y que la presión máxima no exceda el tope de la escala.
+Las escalas de los manómetros serán de acuerdo con los estándares del fabricante. La exactitud del
+manómetro deberá ser de 0.5% de la escala (Grado 2A de acuerdo con ASME B40.100). La escala
+principal del manómetro estará indicada en PSI. El manómetro deberá incluir topes por cero y máximo
+valor del rango.
+Los manómetros deberán ser especificados para que estén protegidos y soporten una sobre presión de
+1.3 veces la máxima presión de la escala de medición.
+Para manómetros en servicio de presión de vacío se utilizan los valores de presión en unidades de mmH2O
+(inH2O), mmHg (in Hg).
+Los indicadores de presión deberán suministrarse con certificado de calibración y materiales.",33
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 28 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1",34
+section_header,7.7.2,Transmisores de Presión,,34
+paragraph,7.7.2,Transmisores de Presión,"Los transmisores deberán contar con display indicado configurable en unidades de ingeniería y deberán
+ser tipo smart, contar con salida 4 a 20mA como mínimo y en lo posible contar con protocolo de
+comunicaciones HART a 24 VDC.
+Para medición de presión manométrica o absoluta, los transmisores deberán montarse en línea o remotos.
+Los transmisores de presión en montaje remoto y los transmisores de presión diferencial, deberán ser
+suministrados los con kits de montaje en soporte de tipo tubo de 2”, preferiblemente en acero inoxidable.
+La exactitud de los transmisores de presión y presión diferencial deberá ser de mínimo ±0.075% del span.
+El material de los diafragmas para sello de montaje directo o remoto con capilar deberá ser Hastelloy C-
+276 para las partes húmedas (diafragmas, lower housing en sellos de diafragma, plugs, etc.). El material
+del upper housing y capilar, cuando se requiera, será acero inoxidable 316 como mínimo.
+El fluido de relleno de los sellos de diafragma deberá seleccionarse para cubrir las temperaturas de
+proceso y diseño de las líneas en las que serán instalados.
+Los transmisores de presión deberán soportar como mínimo 1.3 veces la máxima presión de operación.
+En el caso de los transmisores de presión diferencial, deberán soportar como mínimo una presión igual a
+la presión de operación máxima del proceso en cualquiera de las cámaras de medición (alta o baja
+presión).
+Los manifolds y sellos remotos de todos los transmisores deben ser suministrados con certificado de
+prueba hidrostática, la presión de prueba estará dada por el rating de la brida del sello remoto para el caso
+de conexiones bridadas.
+Los transmisores de presión y presión diferencial deberán suministrarse con la siguiente información típica
+de calibración:
+ Certificado de calibración en el rango solicitado en las hojas de datos.
+ Al menos tres puntos de calibración en el rango de operación.
+ Desviación de cero después de un año de operación.",34
+section_header,7.7.3,Válvulas de Alivio,,34
+paragraph,7.7.3,Válvulas de Alivio,"Las válvulas de seguridad y relevo serán del tipo convencional, balanceado o pilotadas según el caso
+específico.",34
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 29 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Cumplirán con los requerimientos del código ASME sección VIII, Div. I, API RP-520, 526 y 527. El tamaño
+de la válvula se definirá por el cálculo del orificio de la tecnología de bombeo que seleccione el
+VENDEDOR.
+El tipo de válvula (Safety, Relief, Safety-Relief, Thermal-Relief, Pressure and Vacuum Break), el diseño de
+la válvula (resorte cargado u operada por piloto), el tipo de sello (blandos o metálicos) y las demás
+características de la válvula, como materiales, tipos de conexión y rating de presión, serán seleccionados
+de acuerdo con el servicio, con la especificación de tuberías y la función requerida por el PAQUETE.
+El VENDEDOR deberá verificar con los fabricantes que los instrumentos seleccionados no requieran
+accesorios especiales y que su precisión no sea afectada durante la operación bajo las condiciones de
+dosificación.
+El área requerida del orificio mínimo se determinará de acuerdo con API RP 520, Parte I. El VENDEDOR
+deberá incluir la capacidad de la válvula y el tamaño del orificio en la oferta.
+Los límites de presión en la entrada y la salida estarán regidos por: los límites de presión/temperatura de
+la brida (ej: Aplicable rating ASME B16.5) o por los límites del diseño del VENDEDOR.
+Las caras de las bridas y las dimensiones deberán estar de acuerdo con ASME B16.5.
+El material del trim normalmente es acero inoxidable 316. Otros grados de acero inoxidable se pueden
+utilizar, dependiendo de la aplicación, según aprobación del CLIENTE.",35
+section_header,7.7.4,Clasificación Eléctrica de Instrumentos,,35
+paragraph,7.7.4,Clasificación Eléctrica de Instrumentos,"Todos los aparatos electrónicos instalados deben estar equipados con la protección adecuada para cumplir
+con el requisito de la clasificación del área eléctrica especificada en la Hoja de Datos N° FFM/F-MEX-033,
+exigencias de las condiciones ambientales del sitio y tropicalizados para humedad y hongos. Así mismo,
+deberán contar con los certificados de aprobación.
+Se deberán validar los materiales con respecto al piping class del proyecto.
+El tipo de protección eléctrica a ser implementada será para intemperie sin protección de techo.
+La protección mecánica mínima de los instrumentos y equipos instalados en sitio deberá ser NEMA 4X.",35
+section_header,7.8,Pintura y Recubrimiento,,35
+paragraph,7.8,Pintura y Recubrimiento,"El VENDEDOR debe presentar su procedimiento de pintura y recubrimiento de protección de superficies
+para aprobación del CLIENTE antes de iniciar los trabajos, como mínimo deberá cumplir con la norma ISO
+12944 clasificación C5 – I Very high / Industrial Areas con altos niveles de humedad.",35
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 30 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+La codificación de colores se seguirá como guía de acuerdo con la especificación del CLIENTE N° “ECP-
+DHS-G-009 - Guía sobre Código de Colores y Señales Industriales, los colores finales y las definiciones
+de las etiquetas se deberán confirmar con el CLIENTE por escrito antes de aplicar y etiquetar.",36
+section_header,7.9,Placa de Identificación y Estampado,,36
+paragraph,7.9,Placa de Identificación y Estampado,"Cada equipo del PAQUETE deberá estar provisto de una placa de identificación en SS316.
+La placa de identificación se fijará al soporte (soldada al equipo) con un mínimo de cuatro (4) tornillos o
+remaches de acero inoxidable. El etiquetado del equipo debe ser visible desde el frente. Toda descripción
+será en español.
+Las placas de identificación y los soportes de montaje de la placa de identificación deben ubicarse de
+manera que no queden cubiertos por el aislamiento y se puedan leer fácilmente desde una plataforma. Los
+soportes se extenderán desde el exterior del equipo para despejar el aislamiento y con suficiente acceso
+para la preparación de la superficie y la pintura.
+La placa de identificación deberá contener como mínimo la siguiente información:
+ Nombre del cliente: ECOPETROL S.A.
+ Identificación del VENDEDOR/FABRICANTE.
+ Identificación o “TAG” del PAQUETE.
+ Fecha de finalización de la construcción.
+ Tamaño y modelo de la bomba
+ Número de serie de la bomba
+ Presión de prueba hidrostática de bomba.
+ Capacidad de dosificación en caudal y presión
+ Velocidad de rotación del motor en rpm
+ Potencia nominal de motor en hp
+ Fecha de fabricación.
+ Tamaño y tipo de Equipo.
+ Límites máximos y mínimos de condiciones de diseño.",36
+section_header,7.10,Materiales,,36
+paragraph,7.10,Materiales,"Los materiales de construcción del PAQUETE y equipos asociados deberán cumplir con los requerimientos
+que se indican en las hojas de datos, especificaciones de proyector, normas aplicables y estándares
+indicados en el capítulo 3 y deben ser adecuados para el servicio especificado. Aplicación de materiales
+alternativos deben ser sujetos a revisión y comentarios del CLIENTE.",36
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 31 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+El VENDEDOR deberá proporcionar certificados de materiales según el numeral 12.3 que indiquen las
+propiedades químicas y mecánicas de todos los componentes principales del PAQUETE, incluidas las
+piezas que contienen presión, las piezas húmedas, etc. Todos los materiales deben ser nuevos, sin usar
+y libres de defectos.
+Todo el material se especificará en los grados ASTM, en caso de que el VENDEDOR utilice otras normas
+para especificar el material, proporcionará una comparación equivalente con ASTM. El VENDEDOR
+deberá utilizar productos que no contengan asbesto.",37
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 32 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+8. Aseguramiento de la Calidad, Inspección y Ensayos
+El vendedor deberá cumplir con los parámetros establecidos por el CLIENTE en el documento EDP-ET-
+001-i.",38
+section_header,8.1,Requerimientos de trazabilidad de los materiales,,38
+paragraph,8.1,Requerimientos de trazabilidad de los materiales,"El VENDEDOR debe cumplir con los requerimientos específicos indicados en esta especificación y los
+documentos anexos, así como con los estándares internacionales y prácticas de revisión, identificación y
+marcado efectivo de materiales para su buena trazabilidad.",38
+section_header,8.2,Pruebas,,38
+paragraph,8.2,Pruebas,"El VENDEDOR deberá realizar todas las pruebas e inspecciones pertinentes como mínimo como está
+establecido en el plan de inspección y pruebas (siglas en inglés ITP: Inspection and Test) de la requisición
+de materiales del PAQUETE referenciada en el capítulo 3 de esta especificación y los códigos relevantes,
+previo al envío de estos.
+El plan de inspección y pruebas del CLIENTE es para referencia y guía con lo mínimo exigido para la
+entrega del PAQUETE por lo tanto no reemplaza el plan de inspección y pruebas del VENDEDOR quien
+es el total responsable de este.
+El VENDEDOR deberá realizar todas las inspecciones y pruebas en todos los instrumentos o como esté
+indicado en el plan de inspección y pruebas (ITP) suministrado por el CLIENTE.
+El VENDEDOR debe presentar los certificados de pruebas y reportes de estas como lo requiera el plan
+de inspección y pruebas suministrado por el CLIENTE. Los certificados deben ser válidos por el CLIENTE.
+Las actividades de inspecciones y pruebas operativas de los PAQUETES estarán incluidas dentro del
+alcance del suministro del VENDEDOR serán de acuerdo con los procedimientos del CLIENTE. Dentro de
+las pruebas a realizar estarán sin limitarse a estas:
+• Prueba de entradas y salidas.
+• Prueba de activación de alarmas.
+• Prueba de lógica de operación.
+• Prueba de registro de eventos.
+• Prueba de comunicaciones.",38
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 33 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+• Prueba de comandos.
+• Prueba de visualización de variable y estados.
+• Prueba de los puntos de ajuste de operación de los equipos.
+• Prueba de operación del panel de control local.
+• Prueba de interlock entre otros.
+• Pruebas FAT y SAT
+Pruebas mecánicas y de funcionamiento del PAQUETE deberá ser realizada para asegurar la operación
+apropiada de todos los componentes y dispositivos instalados. El VENDEDOR deberá suministrar los
+procedimientos de pruebas al CLIENTE para aprobación con anticipación de dos (2) semanas. Los
+procedimientos deberán incluir formatos de registro de datos específicamente preparados para las pruebas
+correspondientes. El CLIENTE se reserva el derecho de presenciar estas pruebas.
+Todos los instrumentos y dispositivos eléctricos deberán ser calibrados antes del alistamiento para pruebas
+de funcionamiento mecánico y de desempeño.
+Durante el arranque y estabilización de los equipos intervenidos el VENDEDOR deberá prestar servicio de
+apoyo y acompañamiento durante el tiempo que el CLIENTE considere necesario.
+La aceptación del desempeño, funcionamiento mecánico, pruebas de funcionamiento o inspecciones no
+liberan al VENDEDOR de la responsabilidad de cumplir las condiciones de operación especificadas",39
+section_header,8.3,Inspección no Destructiva,,39
+section_header,8.3.1,Pruebas de presión,,39
+paragraph,8.3.1,Pruebas de presión,"Los ensayos de presión se llevarán a cabo en conformidad con las especificaciones pertinentes del
+proyecto, las fichas técnicas, los códigos y las normas a que se refiere en el capítulo 3 de la presente
+especificación.
+No se realizarán reparaciones después de las pruebas hidrostáticas.",39
+section_header,8.3.2,FAT,,39
+paragraph,8.3.2,FAT,"La prueba de rendimiento se llevará a cabo de acuerdo con las normas asociadas y los procedimientos
+propios del VENDEDOR en las instalaciones de este.",39
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 34 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+9. Servicios en Campo, Asistencia y Entrenamiento
+El VENDEDOR proporcionará la asistencia/supervisión técnica en SITIO necesaria durante la instalación,
+las pruebas, el alistamiento, el arranque y la puesta en marcha. El VENDEDOR, en su propuesta,
+identificará cualquier requisito o recomendación especial para el soporte técnico en el sitio durante la
+instalación, el comisionamiento, puesta en marcha y las pruebas en el sitio. La aceptación final del
+PAQUETE por parte del CLIENTE estará sujeta a una prueba de rendimiento en el sitio una vez que este
+haya sido instalado y puesto en marcha hasta confirmar estabilización de los sistemas asociados.
+El VENDEDOR incluirá en un ítem, por separado, dentro de la propuesta los servicios completos y la
+asistencia técnica en sitio recomendada indicando claramente las tarifas y los costos, la duración mínima
+recomendada y la cantidad de técnicos requeridos. El VENDEDOR acordará con el CLIENTE la fecha para
+realizar la asistencia técnica de campo de acuerdo con el cronograma de instalación del PAQUETE.
+El VENDEDOR incluirá, en su oferta, la capacitación del personal de operación y mantenimiento del
+CLIENTE en sitio. En la oferta, la formación técnica se indicará en un punto aparte.
+El VENDEDOR indicará en la propuesta información sobre la formación, como temas, lugares, fechas y
+duración. Estos serán acordados entre el VENDEDOR y el CLIENTE durante la reunión de lanzamiento
+(en inglés KOM).",40
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 35 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+10. Piezas de Repuesto y Herramientas Especiales
+El VENDEDOR deberá incluir en el alcance del suministro las piezas de repuesto y consumibles requeridos
+y recomendadas para la instalación, pre-comisionamiento, comisionamiento y puesta en marcha del
+PAQUETE.
+Se proporcionará la lista recomendada de piezas de repuesto y consumibles para los primeros dos (2)
+años de operación. Las piezas de repuesto recomendadas estarán en formato de registro de
+intercambiabilidad de piezas de repuesto (SPIR) en un archivo excel y contendrán como mínimo detalles
+como el número de pieza, el número de dibujo. material, cantidad e información del VENDEDOR (es decir,
+nombre de contacto, cargo, correo electrónico, etc.) incluyendo su precio individual. También las piezas
+de repuesto propuestas deberán ser fáciles de conseguir. El VENDEDOR incluirá las piezas de repuesto
+durante dos años de operación en su oferta técnica como un artículo separado.
+Cualquier pieza de repuesto y onsumibles, además de las cantidades especificadas por el VENDEDOR,
+requeridas durante el montaje, el pre-comisionamiento y comisionamiento será suministrada por el
+VENDEDOR sin ninguna implicación comercial para el CLIENTE.
+La primera carga de cualquier fluido (aceite lubricante, refrigerante etc) requerido para operar el PAQUETE
+es alcance de suministro del VENDEDOR.",41
+section_header,10.1,Herramientas Especiales,,41
+paragraph,10.1,Herramientas Especiales,"Si se requieren herramientas especiales para el funcionamiento y mantenimiento normal del PAQUETE.
+El VENDEDOR identificará las herramientas especiales requeridas en su propuesta. La lista de
+herramientas especiales se detallará y se presentará para la revisión del CLIENTE en inclusión o no en la
+compra del PAQUETE.",41
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 36 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+11. Embalaje, Conservación y Preparación para el Envío
+El VENDEDOR será responsable de la preparación para el envío, incluido el embalaje, la protección, la
+conservación, el etiquetado y el marcado de todos los componentes alcance del suministro.
+Las limitaciones de transporte para el proyecto son:
+Descripción Ancho Largo Alto (Nota 1)
+No requiere permiso de transporte Máximo 2.6 m Sobresaliendo hacia atrás Máximo 4.4 m
+Max. 1 m
+Requiere inscripción en el registro Entre 2.6 y 3.6 m Sobresaliendo hacia atrás Máximo 4.4 m
+de operadores entre 1 m y 2 m
+Requiere procedimiento de Mas de 3.6m Sobresaliendo hacia atrás Mas de 4.4 m
+autorización entre 2 m and 3 m
+El permiso no está autorizado - Sobresaliendo al frente en -
+cualquier longitud
+Nota 1: Incluye la altura del vehículo
+Tabla 5. Restricciones de Transporte - Fuente: ""Resolución 4959 de 2006""
+El VENDEDOR deberá proporcionar una protección adecuada para los componentes fabricados en el taller
+para el transporte, el envío y el almacenamiento en el CPF Cupiagua.
+Los certificados de prueba de carga deberán ser enviados con todos los equipos requeridos de elevación,
+barras esparcidoras, eslingas y grilletes.
+Se enviará una copia impresa del manual de instalación y operación con el PAQUETE.",42
+section_header,11.1,Embalaje,,42
+paragraph,11.1,Embalaje,"El componente deberá embalarse de forma segura para su envío desde la ubicación del VENDEDOR
+hasta el destino que indique el CLIENTE. Todas las partes y componentes deben protegerse de daños por
+manipulación. Todo embalaje deberá ser adecuado para el transporte marítimo y deberá ajustarse a los
+requisitos de embalaje de exportación.
+Toda parte y componente del PAQUETE debe embalarse de manera que sea posible manipularlo con grúa
+y/o equipo de izaje. Si existe riesgo de daños en los componentes y otros accesorios durante el transporte,
+se desmontarán y etiquetarán. Todos los componentes se embalarán de forma segura como se indica
+anteriormente.",42
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 37 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Los componentes del PAQUETE deberán embalarse adecuadamente para soportar al menos 12 meses
+de almacenamiento a la intemperie (tropical) en el sitio que indique el CLIENTE antes de la instalación. El
+VENDEDOR recomendará e indicará claramente los procedimientos de preservación necesarios que se
+necesiten durante el almacenamiento de este.
+Las piezas de repuesto (puesta en marcha, comisionamiento, repuestos operativos y repuestos de capital)
+y las herramientas especiales se empaquetarán por separado y se marcarán claramente como ""Piezas de
+repuesto"" y ""Herramientas especiales"", respectivamente. Los diagramas de pesos (en kg) y ""Centro de
+gravedad"" deben marcarse e identificarse claramente.
+Todo equipo y/o parte constructiva del PAQUETE se limpiará a fondo internamente y deberá estar libre de
+materiales extraños sueltos. El VENDEDOR reemplazará todas las piezas que tengan defectos debidos a
+los escombros aflojados que queden de las pruebas en taller a su propio costo.
+Todas las superficies no pintadas con el sistema de pintura indicado en el numeral 6.8 deberán estar
+recubiertas con grasa protectora contra la corrosión para el transporte y 12 meses de almacenamiento
+para ambiente tropical.
+Todas las aberturas se cubrirán o taparán para proteger el interior del polvo, el óxido y la humedad.
+Las aberturas con bridas deberán estar provistas de cierres metálicos de junta firmemente sujetos con
+pernos o abrazaderas.
+El VENDEDOR debe indicar el plan completo de conservación/preservación del PAQUETE (actividades,
+materiales, consumibles si es necesario) considerando la duración del almacenamiento indicada en la
+presente especificación (no menos de 12 meses). Dicho plan forma parte de los documentos técnicos que
+el VENDEDOR debe incluir en la oferta.",43
+section_header,11.2,Marcado de Envío,,43
+paragraph,11.2,Marcado de Envío,"El VENDEDOR adjuntará una lista de embarque, en un recinto impermeable, al exterior del PAQUETE.
+Además de los requisitos específicos identificados a través de la documentación a la que se hace
+referencia en la solicitud, la lista de embarque indicará claramente como mínimo:
+ Nombre del CLIENTE.
+ Dirección.
+ Nombre del Proyecto.
+ Nombre y dirección del VENDEDOR.
+ Numero de Orden de Compra del CLIENTE.
+ Numero de articulo de la Orden de Compra.
+ Entrega parcial o completa para cada número de orden.
+ Descripción de contenidos.
+ Número de PAQUETES (si aplica).",43
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 38 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+12. Documentación",44
+section_header,12.1,General,,44
+paragraph,12.1,General,"La documentación técnica emitida por el VENDEDOR será aceptada en inglés y/o español, a excepción
+de las instrucciones de preservación y manuales de operación y mantenimiento que deberán ser
+desarrollados y emitidos en español.
+Después de la orden de compra, el primer documento que presentará el VENDEDOR será el listado de
+documentos del VENDEDOR que enumerará todos los planos y documentos que se presentarán para la
+revisión del CLIENTE con fechas anticipadas para su emisión.
+El listado de documentos del VENDEDOR incluirá planos adicionales que no se enumeran
+específicamente en esta especificación y documentos de referencia, pero que se consideran de valor. El
+CLIENTE asignará los números de plano y documento en el listado de documentos del VENDEDOR y este
+los reflejará durante la presentación de los planos y documentos reales.
+Todos los planos deben estar en un formato compatible con SmartPlant y copia en PDF, los documentos
+deben estar en MS word o MS excel.
+El diseño del PAQUETE integralmente se modelará en un software CAD compatible para integrarse con
+SmartPlant 3D (SP3D). Durante el envío final del PAQUETE, el VENDEDOR deberá entregar todos los
+archivos pertenecientes al modelo 3D de este, incluida la base de datos, para que pueda integrarse
+adecuadamente y sea compatible con el programa SmartPlant empleado por el CLIENTE del proyecto.
+La culminación de los requisitos de documentación a satisfacción del CLIENTE será una condición para el
+cumplimiento de la obligación del VENDEDOR en virtud del contrato.
+Todos los documentos emitidos por el VENDEDOR serán revisados y firmados por este para verificar el
+cumplimiento de los códigos y especificaciones antes de que los documentos definitivos se envíen al
+CLIENTE. Cualquier documento en el que falte la nota de verificación se considerará no presentado.
+El VENDEDOR deberá presentar todos los documentos (incluidos los planos) para su revisión por parte
+del CLIENTE. El VENDEDOR deberá enviar una copia electrónica al CLIENTE para fines de revisión.
+La revisión, comentarios o aprobación por parte del CLIENTE o cualquier falta de revisión, no eximirá al
+VENDEDOR de la responsabilidad por la exactitud, responsabilidad de producir un sistema de trabajo que
+cumpla con la intención de la solicitud, especificación y documentación adjunta para la integridad de los
+documentos de acuerdo con las buenas prácticas de ingeniería y cumpliendo con el requisito del contrato.
+El VENDEDOR deberá seguir el procedimiento de etiquetado del proyecto del CLIENTE que se lista en el
+numeral 3.",44
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 39 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Los planos de disposición general proporcionarán la siguiente información, que permitirá al CLIENTE
+revisar el diseño y realizar cualquier esfuerzo de ingeniería necesario en el equipo circundante /
+relacionado para el correcto funcionamiento del PAQUETE.
+ Vista de planta, elevación y sección del PAQUETE, con anotación ""norte de planta"", según sea
+necesario para proporcionar toda la información que se indica a continuación.
+ Detalles de todas las ubicaciones de la interfaz de interconexión VENDEDOR/CLIENTE que muestran
+las dimensiones finales, las orientaciones, los requisitos de espacio, los materiales, los detalles de
+soldadura / pernado / torque para la instalación en campo, otros detalles de instalación de campo
+requeridos (requisitos de soldadura, requisitos de aislamiento, etc.), cargas y momentos de boquilla
+permitidos, etc.
+ Detalles de todas las ubicaciones de interfaz mecánica del VENDEDOR / CLIENTE – pesos del
+PAQUETE (vacío y en operación), ubicaciones de soporte estructural / elevaciones / dimensiones,
+carga muerta, carga viva, etc. – para el soporte de este con las estructuras.
+ Detalles de los materiales de construcción para el PAQUETE tal como se suministra.
+ Detalles del alcance del suministro con respecto a la preparación de la superficie y la pintura del
+PAQUETE.
+ Detalles sobre la elevación / manipulación de equipo para su envío e instalación en el sitio.
+ Modelo 3D del PAQUETE en un formato adecuado para ser integrado en SmartPlant.
+Para la Instrumentación, el VENDEDOR considerará como mínimo los siguientes, sin limitarse a ellos:
+ Planos de cableado de la caja de conexiones.
+ Listado de instrumentos.
+ Hojas de datos de todos los instrumentos.
+ Detalles completos de los sistemas de control del VENDEDOR.
+ Guías de instalación.
+ Diagramas de conexión de instrumentos.
+ Diagramas de cableado de interconexión al sistema de control.
+ Disposición del cableado de instrumentos (dentro del patín).
+ Detalles del panel de control.
+ Diagramas de lazo.
+ Índice de cable (patín).
+ Listado de cable.
+ Diagrama de cableado de bloques.
+ Detalles de todos los requisitos de la fuente de alimentación.
+ Diagramas de cableado esquemático.
+ Filosofía de operación y control.
+ Certificados de calibración de fábrica.
+ Certificados de uso en áreas clasificadas (si aplica).
+ Certificados de cumplimiento con los requisitos de la norma RETIE (Colombia).",45
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 40 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Diagrama simplificado de causa y efecto (incluya set point de parada de los equipos)
+ Procedimientos e informes FAT.",46
+section_header,12.2,Certificados de Pruebas y Documentación de las Pruebas,,46
+paragraph,12.2,Certificados de Pruebas y Documentación de las Pruebas,"Se entregarán certificados de cada ensayo mecánico y/o de rendimiento para el PAQUETE, incluidos los
+certificados de ensayo hidrostático.
+El VENDEDOR proporcionará documentación de prueba que cubra todas las pruebas, que se realizan
+durante las etapas de implementación, instalación y puesta en marcha. El VENDEDOR suministrará todos
+los certificados de ensayo y calibración pertinentes aplicables al equipo de instrumentación.
+Todos los equipos de elevación (si se suministran) deberán estar respaldados por certificados de ensayo",46
+section_header,12.3,Certificados de Material,,46
+paragraph,12.3,Certificados de Material,"Los certificados de material deberán ser equipados para todos los componentes de acuerdo con códigos
+de diseños correspondientes y los estándares de ingeniería.
+Como mínimo, todos los componentes de retención de presión / piezas húmedas deberán ser
+suministrados con certificación de material según EN 10204 tipo 3.2 y demostrando que el material
+equipado cumple con los requerimientos de la especificación y el grado a ser suministrado.
+Para todas las piezas no presurizadas, la certificación de material deberá suministrarse según EN 10204
+tipo 2.2.
+Los requisitos específicos de identificación de materiales se ajustarán a la ficha técnica respectiva.
+Todos los componentes deberán ser totalmente trazables hasta el certificado. El VENDEDOR
+proporcionará una certificación de material que otorgue propiedades químicas y mecánicas para todos los
+componentes principales, incluidas las piezas de retención de presión, etc.",46
+section_header,12.4,Manual de Instrucciones,,46
+paragraph,12.4,Manual de Instrucciones,"13. Manual de Operación
+Este manual debe tener como mínimo y ser separados en los siguientes volúmenes
+a) Volumen 1
+Este volumen contendrá las funciones y los pasos que deban adoptarse para mantener operaciones
+seguras y fiables. Se utilizarán esquemas, planos y diagramas simplificados para apoyar las instrucciones
+escritas.",46
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 41 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Las funciones y descripciones de funcionamiento abordarán específicamente cuestiones como el arranque
+y apagado rutinarios, la supervisión y solución de problemas de rutina, así como las funciones de control
+manual y automático. Sin embargo, dará una visión general en el documento de filosofía de operación y
+control del PAQUETE.
+Las instrucciones de mantenimiento menores que normalmente se clasifican como tareas rutinarias de
+mantenimiento o supervisión formarán parte de este manual.
+b) Volumen 2
+Este volumen contendrá instrucciones y procedimientos de funcionamiento detallados relacionados
+específicamente con la puesta en marcha, el control y la supervisión del sistema de control de procesos,
+así como con las respuestas de emergencia. Se facilitarán diseños esquemáticos que muestren la
+ubicación de los dispositivos de parada de emergencia.
+c) Volumen 3
+Este volumen contendrá copias de dibujos / documentos clave a los que el personal operativo hace
+referencia comúnmente. Todos los planos deberán tener como mínimo un tamaño A3 y ser claramente
+legibles y en formato incorporado. Los siguientes planos / documentos se dan como una guía mínima y no
+constituyen totales requeridos:
+ Diagramas de tuberías e instrumentos para sistemas de procesos, servicios públicos y drenajes.
+ Condiciones límite de la batería (incluyendo presión / temperatura / caudal y composiciones).
+ Unidades detalladas de puesta en marcha, control, apagado y reinicio de esquemas / diagramas
+lógicos, arquitectura de control, diagramas de conexión.
+ Lista de equipos, hojas de datos de equipos.
+ Hojas de datos de instrumentos y cálculos de dimensionamiento.
+ Planos típicos para instalación de instrumentos, armarios eléctricos, controlador.
+ Programación de instrumentos (número de TAG, marca, número de modelo, rango de calibración, punto
+de ajuste y servicio como mínimo).
+ Planos de terminación de la caja de conexiones del instrumento y diagramas de cableado.
+ Diagramas eléctricos de una sola línea, lista de consumidores eléctricos, programación de cables, lista
+de materiales.
+ Simplificación de los esquemas generales de control del PAQUETE.
+ Cronograma de equipos y sus condiciones normales de operación y calificaciones de diseño.
+ Plot plan y distribución de equipos.
+ Planos de Disposición General de Equipos.
+ Esquemas de control, diagramas de causa y efectos, diagramas de jerarquía y mapa.",47
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 42 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Todos los planos (incluido el cableado y el bucle) / documentos relacionados con el conductor, la
+instrumentación / control y los auxiliares.
+ Alarma y lista de trips.
+ Lista de I/O de comunicación serie y lista de verificación.
+ El VENDEDOR preparará documentos en formato como parte de la estandarización.",48
+paragraph,,,"PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 43 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+14. Garantía
+El VENDEDOR deberá garantizar durante un período de doce (12) meses a partir de la puesta en marcha
+o dieciocho (18) meses a partir del despacho al CLIENTE, el correcto funcionamiento y rendimiento para
+los datos de diseño/operación, diseño/construcción mecánica, instrumentación y control, diseño eléctrico,
+integridad estructural, mano de obra y materiales de construcción usados del PAQUETE y demás
+elementos según en cumplimiento con los requerimientos establecidos en esta especificación.
+El VENDEDOR debe garantizar que todos los materiales para la fabricación de los componentes serán
+manufacturados, ensamblados y probados de conformidad con esta especificación y los otros documentos
+que se anexen a esta requisición. En caso de presentarse algún tipo de falla o se evidencie algún tipo de
+error de construcción, o falla durante el periodo de garantía establecido en las condiciones,
+El VENDEDOR se compromete a solucionar, reparar o reemplazar las partes o equipos que se requieran,
+a su entero costo y responsabilidad sin que esto signifique algún costo adicional para el CLIENTE.
+El PAQUETE debe desempeñarse satisfactoriamente bajo las condiciones de operación que se indica en
+el capítulo 5 y 7 en esta especificación y en las hojas de datos aplicables y deberán ser aptos para el fin
+previsto.
+El VENDEDOR cumplirá con los requerimientos de garantía del CLIENTE que se estipulen en la orden de
+compra.",49

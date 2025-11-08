@@ -1,0 +1,18 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 9 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Parámetros Valor
+Velocidad del Viento Prom.: 15 a 20 (millas/hora)
+Max.: 55 (millas/hora)
+NE hacia SW
+Humedad Relativa Min.: 68%
+Max.: 84%
+Prom.: 78%
+Zona Sísmica Alta (Figure A.2.3-1 – NSR-10)
+Nota Cálculos estructurales deben
+ser basados en “Wind Speed”:
+120 km/h (Figure B.6.4-1 –
+NSR-10)
+Tabla 1. Condiciones del Sitio – Fuente: “Bases de Diseño – Interdisciplinario” – FFM/F-PEI-010

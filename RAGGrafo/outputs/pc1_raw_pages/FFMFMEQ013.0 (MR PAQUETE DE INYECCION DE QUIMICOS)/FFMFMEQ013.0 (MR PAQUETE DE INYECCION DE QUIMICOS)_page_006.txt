@@ -1,0 +1,50 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+El PROVEEDOR deberá suministrar El PAQUETE como una unidad completa y funcional incluyendo todos
+los elementos necesarios para garantizar su segura y correcta instalación, arranque, puesta en marcha
+y operación
+2.2. EXCLUSIONES
+Se excluye del suministro de los equipos:
+- Obras civiles, fundaciones e instalación de pernos de anclaje.
+- Interconexiones de tubería, cableado e instrumentación fuera de los límites del PAQUETE.
+- Trabajos de cableado eléctrico y de Instrumentación fuera del PAQUETE.
+- Sistemas de iluminación exterior.
+2.3. OPCIONES DEL SUMINISTRO
+N/A
+3. RESPONSABILIDAD
+Está dentro del alcance de suministro del PROVEEDOR del PAQUETE la planeación y programación del
+diseño, fabricación de este, suministro de equipos, accesorios, recipientes, tableros de potencia y
+control, instrumentación, partes y materiales, fabricación en taller, pruebas, inspección, pintura,
+control y aseguramiento de calidad, entrega de documentación técnica y certificados,
+embalaje/empaque, almacenamiento y preparación para envío a SITIO, soporte en sitio durante el
+comisionamiento y arranque, garantías y demás, incluidos e indicados en esta requisición de materiales
+y los documentos anexos.
+4. REQUERIMIENTOS GENERALES
+4.1. GENERAL
+Los requisitos generales y alcance del suministro se indican en la especificación técnica y hoja de datos
+anexa a esta requisición de materiales (ver sección 10.3 documentos de referencia).
+4.2. PROPUESTAS ALTERNATIVAS
+El PROVEEDOR podrá presentar propuestas alternativas, siempre y cuando sean de igual o superior
+calidad que la propuesta principal. No se aceptarán como válidas alternativas que reduzcan la
+integridad mecánica o eléctrica y que no cumplan con el criterio de vida útil.
+EDP-F-046 – 20/11/2017 V-1 6/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

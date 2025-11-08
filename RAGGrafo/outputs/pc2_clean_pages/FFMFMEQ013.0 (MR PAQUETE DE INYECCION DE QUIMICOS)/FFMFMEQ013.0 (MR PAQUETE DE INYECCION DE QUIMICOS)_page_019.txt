@@ -1,0 +1,47 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Código de
+Ítem Cantidad Unidad TAG Descripción Catálogo
+ECOPETROL
+- Etiqueta metálica del equipo eléctrico de
+acuerdo con RETIE
+- Bases y soportes para cada componente del
+PAQUETE.
+- Base estructural común (skid) con techo.
+- Cabina de insonorización y/o silenciadores (si
+se requiere)
+- Inspección y pruebas
+- Tratamiento de superficies y pintura.
+- Boquillas (QUILL) para dosificación de químicos,
+incluye accesorios de acuerdo con típico y hoja
+de datos N° FFM/F-MEX-033.
+Documentación técnica del PAQUETE según lo
+1.2 1 GL --
+indicado en la sección 4.4.
+Listado de herramientas especiales para el
+1.3 1 GL ---
+montaje y puesta en marcha.
+Partes y consumibles para la instalación, pre-
+1.4 1 GL --- comisionamiento, comisionamiento y puesta en
+marcha, con listado incluyendo precios. (2)
+Lista de partes de repuesto para dos (2) años de
+1.5 1 GL ---
+operación, incluyendo precios. (1)
+Asistencia en la instalación y puesta en marcha
+1.6 1 Día --- (pre-comisionamiento y comisionamiento). Cotizar
+por aparte, por unidad de tiempo.
+Notas:
+(1) Lista de precios individual de repuestos como opcional, el CLIENTE definirá si están o no incluidos en la orden de compra.
+(2) El PROVEEDOR deberá presentar una lista de piezas sueltas sin costo donde identifique el número de parte con una descripción e
+identificación clara en el plano del equipo. El CLIENTE podría solicitar una lista con los precios, si es necesario.
+10.2. ESTÁNDARES DE REFERENCIA
+EDP-F-046 – 20/11/2017 V-1 19/20

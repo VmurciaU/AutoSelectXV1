@@ -1,0 +1,36 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 40 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Diagrama simplificado de causa y efecto (incluya set point de parada de los equipos)
+ Procedimientos e informes FAT.
+12.2. Certificados de Pruebas y Documentación de las Pruebas
+Se entregarán certificados de cada ensayo mecánico y/o de rendimiento para el PAQUETE, incluidos los
+certificados de ensayo hidrostático.
+El VENDEDOR proporcionará documentación de prueba que cubra todas las pruebas, que se realizan
+durante las etapas de implementación, instalación y puesta en marcha. El VENDEDOR suministrará todos
+los certificados de ensayo y calibración pertinentes aplicables al equipo de instrumentación.
+Todos los equipos de elevación (si se suministran) deberán estar respaldados por certificados de ensayo
+12.3. Certificados de Material
+Los certificados de material deberán ser equipados para todos los componentes de acuerdo con códigos
+de diseños correspondientes y los estándares de ingeniería.
+Como mínimo, todos los componentes de retención de presión / piezas húmedas deberán ser
+suministrados con certificación de material según EN 10204 tipo 3.2 y demostrando que el material
+equipado cumple con los requerimientos de la especificación y el grado a ser suministrado.
+Para todas las piezas no presurizadas, la certificación de material deberá suministrarse según EN 10204
+tipo 2.2.
+Los requisitos específicos de identificación de materiales se ajustarán a la ficha técnica respectiva.
+Todos los componentes deberán ser totalmente trazables hasta el certificado. El VENDEDOR
+proporcionará una certificación de material que otorgue propiedades químicas y mecánicas para todos los
+componentes principales, incluidas las piezas de retención de presión, etc.
+12.4. Manual de Instrucciones
+13. Manual de Operación
+Este manual debe tener como mínimo y ser separados en los siguientes volúmenes
+a) Volumen 1
+Este volumen contendrá las funciones y los pasos que deban adoptarse para mantener operaciones
+seguras y fiables. Se utilizarán esquemas, planos y diagramas simplificados para apoyar las instrucciones
+escritas.

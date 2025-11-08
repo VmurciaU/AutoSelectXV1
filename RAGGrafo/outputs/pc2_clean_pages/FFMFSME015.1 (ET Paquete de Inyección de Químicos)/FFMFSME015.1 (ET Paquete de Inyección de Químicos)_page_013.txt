@@ -1,0 +1,29 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 7 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Resolución 1792 Valores Límites Permisibles para la Exposición Ocupacional al Ruido
+ NTC 2050 Código Eléctrico Colombiano
+3.1.11. ECOPETROL
+Los documentos del CLIENTE que se indican a continuación son de referencia y guía, estos se emplearán
+SOLO si se indican explícitamente dentro de algún capítulo de este documento.
+ ECP-VIN-G-GEN-GT-003 Guía para la Preparación del Dossier de Manufactura y Control de Calidad
+ ECP-DHS-G-009 Guía sobre Código de Colores y Señales Industriales
+ ECP-P-013 Listado de Marcas Homologadas
+ ECP-VST-P-ELE-ET-006 Especificación Técnica Motores de Baja Tensión
+ ECP-VST-P-ELE-MT-004 Manual Técnico de Clasificación de Áreas para Instalaciones Eléctricas
+3.2. Documentos del Proyecto
+ FFM/F-PIB-007 PIPING CLASS
+ FFM/F-PRC-006 DEFINICIÓN Y DIMENSIONAMIENTO DE EQUIPOS DE
+UNIDADES PAQUETE
+ PUM/F-PCF-PU-PRE-65-552-2/2 P&ID NEW CHEMICAL PACKAGE
+ FFM/F-MEX-033 HOJA DE DATOS PAQUETE DE INYECCIÓN DE QUÍMICOS
+ FFM/F-MEU-007 CRITERIOS DE DISEÑO DE LA DISCIPLINA MECÁNICA
+ FFM/F-MEG-013 LISTADO DE EQUIPOS MECÁNICOS
+ FFM/F-PEI-010 BASES DE DISEÑO – INTERDISCIPLINARIO
+ FFD/F-PCF-MP-PIL-10-822-1/1 CUPIAGUA FACILITIES – PLOT PLAN – ZONE 5 MAIN PROCESS
+NO. 2
+Nota:
+El VENDEDOR debe incluir todos los estándares y códigos industriales aplicables dentro de su oferta en
+caso tal que no se listen en este documento.

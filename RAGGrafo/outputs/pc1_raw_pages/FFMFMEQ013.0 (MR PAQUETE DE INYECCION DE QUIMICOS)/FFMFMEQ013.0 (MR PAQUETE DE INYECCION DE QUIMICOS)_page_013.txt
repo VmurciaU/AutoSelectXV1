@@ -1,0 +1,51 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+4.13. DOCUMENTACIÓN
+La documentación mínima requerida que el PROVEEDOR debe suministrar y sus tiempos de entrega
+después de formalizada la orden de compra se encuentra indicada en numeral 4.4 de esta requisición.
+La documentación se debe entregar en español. En caso de que el PROVEEDOR de los equipos emita
+documentos y planos en inglés solo se aceptan si son documentos originales del fabricante, excepto
+para el manual de preservación, instalación, operación y mantenimiento que debe estar en español.
+La revisión o comentarios del CLIENTE a la documentación de ingeniería y fabricación del PAQUETE, no
+exime al PROVEEDOR de la responsabilidad de entregar un PAQUETE que cumpla con lo establecido en
+esta requisición y sus documentos anexos, de acuerdo con las buenas prácticas de ingeniería y los
+requerimientos de lo que sea contratado.
+La codificación y formatos para la presentación de los documentos de fabricación del PAQUETE serán el
+estándar del PROVEEDOR a menos que el CLIENTE indique otra situación en la orden de compra y
+anexos. Para las hojas de datos y planos específicos del PAQUETE, se usará el documento EGP-G-089
+“Guía para Codificación y Numeración Local de Documentos de Ingeniería y Planos” de la
+Vicepresidencia de Desarrollo y Producción Piedemonte (VPI).
+5. REQUERIMIENTOS TÉCNICOS
+5.1. REQUERIMIENTOS MECÁNICOS
+Todos los requerimientos mecánicos para el PAQUETE y el suministro de los componentes se consignan
+en las especificaciones que acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+• FFM/F-MEX-033 Hoja de datos Paquete de Inyección de químicos M156CIP-
+5503
+5.2. REQUERIMIENTOS DE TUBERÍA
+Todos los requerimientos de tubería y líneas para el PAQUETE se consignan en las especificaciones que
+acompañan esta requisición:
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos
+M156CIP-5503
+EDP-F-046 – 20/11/2017 V-1 13/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

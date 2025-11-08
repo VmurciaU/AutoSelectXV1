@@ -1,0 +1,39 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 2 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+2. Definiciones y abreviaturas
+2.1. Definiciones
+DEBE La palabra debe implica un requerimiento.
+CLIENTE ECOPETROL
+FABRICANTE Es la compañía o compañías representadas por el VENDEDOR que fabrica(n)
+los componentes del PAQUETE adquirido.
+VENDEDOR La organización seleccionada para fabricar o suministrar el PAQUETE o
+Servicios
+SUB-PROVEEDOR La organización seleccionada por el VENDEDOR para suministrar la pieza,
+equipo o servicio
+PAQUETE El conjunto de todos los equipos, instrumentos, controles, componentes
+eléctricos, tubería y todos los artículos auxiliares necesarios para el PAQUETE
+de inyección de químicos sea integrado sobre un skid estructural.
+PUEDE La palabra indica una recomendación.
+2.2. Abreviaturas
+AISC American Institute of Steel Construction
+ANSI American National Standards Institute.
+API American Petroleum Institute.
+ASCE American Society of Civil Engineers.
+ASME American Society of Mechanical Engineers.
+ASTM American Society for Testing and Materials.
+AWS American Welding Society.
+NTC Normas Técnicas Colombianas.
+PCS Process control Systems
+PSS Process Security System
+SIS Security Instrumented Systems
+CCR Central Control Room
+ESD Emergency Shut Down.
+HMI Human – Machine Interface.
+ICSS Integrated Control and Safety System.
+UCP Unit Control Panel.

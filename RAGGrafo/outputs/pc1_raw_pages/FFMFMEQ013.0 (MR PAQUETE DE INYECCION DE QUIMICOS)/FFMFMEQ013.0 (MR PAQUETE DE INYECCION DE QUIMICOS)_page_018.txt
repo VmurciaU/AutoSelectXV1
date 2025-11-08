@@ -1,0 +1,57 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+• FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de químicos M156CIP-
+5503
+10. ANEXOS
+10.1. LISTA DEL ALCANCE
+Código de
+Ítem Cantidad Unidad TAG Descripción Catálogo
+ECOPETROL
+1. Paquete de inyección de químicos
+Planeación y programación de fabricación, diseño,
+suministro de partes y materiales, fabricación en
+taller, pruebas, inspección, pintura, control y
+aseguramiento de calidad, entrega de
+documentación técnica y certificados, embalaje,
+almacenamiento y envío, partes de repuesto para
+la instalación, garantías y demás incluido e
+indicado en esta requisición y los documentos
+anexos.
+El PAQUETE de Inyección de químicos incluye
+M156CIP- como mínimo:
+5503
+1.1 (1) UN
+- Cuatro (4) bombas de inyección de químicos
+API STD 675, cada una con motor eléctrico
+acoplado.
+- Uno (1) tanque IBC bulkdrum en acero
+inoxidable.
+- Tablero de control
+- Monitor de control remoto
+- Válvulas de seguridad
+- Instrumentación
+- Tubería, válvulas y accesorios de tubería y
+soportes al interior del PAQUETE
+- Conexionado de tubería, eléctrico y de control,
+incluyendo Conduit.
+EDP-F-046 – 20/11/2017 V-1 18/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

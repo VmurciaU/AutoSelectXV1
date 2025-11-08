@@ -1,0 +1,2317 @@
+{
+  "ECOPETROL": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-0fe15792e5c99345a1663886da4b72cf",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 3,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "ECOPETROL"
+  },
+  "Fábrica": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "Fábrica"
+  },
+  "Proveedores Homologados": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "Proveedores Homologados"
+  },
+  "CLIENTE": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 11,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "CLIENTE"
+  },
+  "Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-b3490d658c4b323977d8e6122dcab76d",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a",
+      "chunk-533d4fc3cc5737956b21a1630538c46a",
+      "chunk-f2b9bce6abc51695537b621cf890ae15",
+      "chunk-d3d7496d7cca9180593ddffbed48ad39",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 19,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "Paquete de Inyección de Químicos"
+  },
+  "Reunión de Pre-Inspección": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "Reunión de Pre-Inspección"
+  },
+  "Repuestos y Consumibles": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6"
+    ],
+    "count": 1,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "Repuestos y Consumibles"
+  },
+  "EDP-F-046": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-135bec93e66ee27faf73a5d02e66fddb",
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 5,
+    "create_time": 1761330184,
+    "update_time": 1761330184,
+    "_id": "EDP-F-046"
+  },
+  "CUPIAGUA": {
+    "chunk_ids": [
+      "chunk-7261c25a5a75b374916794667c8c21b6",
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 3,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "CUPIAGUA"
+  },
+  "Proveedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 8,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "Proveedor"
+  },
+  "PAQUETE": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-c9d24ad0c977597598b361c02d6c4443",
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-f894555a75cb45c7313d502e2c83ba85",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 8,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "PAQUETE"
+  },
+  "Vendedor": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 6,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "Vendedor"
+  },
+  "Cliente": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 7,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "Cliente"
+  },
+  "Sub-Vendedores": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632"
+    ],
+    "count": 1,
+    "create_time": 1761330185,
+    "update_time": 1761330185,
+    "_id": "Sub-Vendedores"
+  },
+  "Cupiagua": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-f894555a75cb45c7313d502e2c83ba85",
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-fa242c53f105ff780f1b2e2b995f427b",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-a065d95a31864843e02e9cc853e6bb5a",
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-b3490d658c4b323977d8e6122dcab76d",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f",
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-e68304765a00e6df3e515720f091fd40",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a",
+      "chunk-135bec93e66ee27faf73a5d02e66fddb",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe",
+      "chunk-f2b9bce6abc51695537b621cf890ae15",
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 26,
+    "create_time": 1761330186,
+    "update_time": 1761330186,
+    "_id": "Cupiagua"
+  },
+  "Especificación Técnica Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-4e570fe94df6d0f6443cc8cfd90c5632",
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-b5ffcf0f874dfc440f24a665295c303d",
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-fa242c53f105ff780f1b2e2b995f427b",
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-84ce69858d594189385acced19437075",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe",
+      "chunk-d3d7496d7cca9180593ddffbed48ad39",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 15,
+    "create_time": 1761330186,
+    "update_time": 1761330186,
+    "_id": "Especificación Técnica Paquete de Inyección de Químicos"
+  },
+  "VENDEDOR": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443",
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-f894555a75cb45c7313d502e2c83ba85",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1",
+      "chunk-39e27c32a41ef7f7f7951797bca4254e",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 10,
+    "create_time": 1761330186,
+    "update_time": 1761330186,
+    "_id": "VENDEDOR"
+  },
+  "Tanques de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443",
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 2,
+    "create_time": 1761330186,
+    "update_time": 1761330186,
+    "_id": "Tanques de Almacenamiento"
+  },
+  "Válvulas de Drenaje": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330186,
+    "update_time": 1761330186,
+    "_id": "Válvulas de Drenaje"
+  },
+  "Boquilla de Inyección": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330187,
+    "update_time": 1761330187,
+    "_id": "Boquilla de Inyección"
+  },
+  "Equipo": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330187,
+    "update_time": 1761330187,
+    "_id": "Equipo"
+  },
+  "Tubería": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330188,
+    "update_time": 1761330188,
+    "_id": "Tubería"
+  },
+  "Acero Inoxidable AISI": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330188,
+    "update_time": 1761330188,
+    "_id": "Acero Inoxidable AISI"
+  },
+  "Estructurales y Civiles": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330189,
+    "update_time": 1761330189,
+    "_id": "Estructurales y Civiles"
+  },
+  "Atomizador": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330189,
+    "update_time": 1761330189,
+    "_id": "Atomizador"
+  },
+  "Interruptores de Nivel": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330190,
+    "update_time": 1761330190,
+    "_id": "Interruptores de Nivel"
+  },
+  "Indicador Local de Nivel": {
+    "chunk_ids": [
+      "chunk-c9d24ad0c977597598b361c02d6c4443"
+    ],
+    "count": 1,
+    "create_time": 1761330190,
+    "update_time": 1761330190,
+    "_id": "Indicador Local de Nivel"
+  },
+  "Manual de Instrucciones": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255",
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 2,
+    "create_time": 1761330191,
+    "update_time": 1761330191,
+    "_id": "Manual de Instrucciones"
+  },
+  "Manual de Operación": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330191,
+    "update_time": 1761330191,
+    "_id": "Manual de Operación"
+  },
+  "Volumen 1": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330191,
+    "update_time": 1761330191,
+    "_id": "Volumen 1"
+  },
+  "Volumen 2": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Volumen 2"
+  },
+  "Volumen 3": {
+    "chunk_ids": [
+      "chunk-0e35765376cebe1854bd514213f8b255"
+    ],
+    "count": 1,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Volumen 3"
+  },
+  "Ecopetrol S.A.": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-f376d1104496f43da64e604327702c35",
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-e68304765a00e6df3e515720f091fd40",
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 5,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Ecopetrol S.A."
+  },
+  "Brayan Quispe": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 2,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Brayan Quispe"
+  },
+  "Miguel Salamanca": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 2,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Miguel Salamanca"
+  },
+  "Omar Villarreal": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 2,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Omar Villarreal"
+  },
+  "Especificación Técnica": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 3,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "Especificación Técnica"
+  },
+  "FFM/F-S-ME-015": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524",
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd"
+    ],
+    "count": 3,
+    "create_time": 1761330192,
+    "update_time": 1761330192,
+    "_id": "FFM/F-S-ME-015"
+  },
+  "Acondicionamiento Estratégico": {
+    "chunk_ids": [
+      "chunk-847e93c70e80204c6c6ecd06974d5524"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Acondicionamiento Estratégico"
+  },
+  "Guía de Requerimientos Ergonómicos y de Higiene Industrial HSE-G-051": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Guía de Requerimientos Ergonómicos y de Higiene Industrial HSE-G-051"
+  },
+  "Sistema Internacional de Unidades (SI)": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Sistema Internacional de Unidades (SI)"
+  },
+  "Reglamento Técnico de Instalaciones Eléctricas (RETIE)": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Reglamento Técnico de Instalaciones Eléctricas (RETIE)"
+  },
+  "Tablero Principal de Potencia": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Tablero Principal de Potencia"
+  },
+  "Interruptores": {
+    "chunk_ids": [
+      "chunk-f894555a75cb45c7313d502e2c83ba85",
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 2,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "Interruptores"
+  },
+  "FFM/F-MEX-033": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 3,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "FFM/F-MEX-033"
+  },
+  "M156CIP-5503": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3"
+    ],
+    "count": 1,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "M156CIP-5503"
+  },
+  "PROVEEDOR": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 2,
+    "create_time": 1761330193,
+    "update_time": 1761330193,
+    "_id": "PROVEEDOR"
+  },
+  "Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-265d02adfb4b33453aabdd53cf254de3",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8",
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-135bec93e66ee27faf73a5d02e66fddb",
+      "chunk-533d4fc3cc5737956b21a1630538c46a",
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 8,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Requisición de Materiales"
+  },
+  "Paquete": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a",
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 3,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Paquete"
+  },
+  "Ingeniería Detalle Acondicionamiento Estratégico": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4",
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 2,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Ingeniería Detalle Acondicionamiento Estratégico"
+  },
+  "Contrato": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Contrato"
+  },
+  "Condiciones de operación": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Condiciones de operación"
+  },
+  "Especificación": {
+    "chunk_ids": [
+      "chunk-bfe8101527e4dbefabe2811f508249e4"
+    ],
+    "count": 1,
+    "create_time": 1761330194,
+    "update_time": 1761330194,
+    "_id": "Especificación"
+  },
+  "Ingeniería Detalle Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Ingeniería Detalle Acondicionamiento Estratégico Cupiagua"
+  },
+  "Documentación": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d",
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 4,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Documentación"
+  },
+  "Pruebas": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Pruebas"
+  },
+  "Garantía": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Garantía"
+  },
+  "Proyecto": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 3,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Proyecto"
+  },
+  "Requerimientos Técnicos": {
+    "chunk_ids": [
+      "chunk-b5ffcf0f874dfc440f24a665295c303d"
+    ],
+    "count": 1,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Requerimientos Técnicos"
+  },
+  "Norma NEMA AB-1": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330195,
+    "update_time": 1761330195,
+    "_id": "Norma NEMA AB-1"
+  },
+  "IEEE C37.13": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "IEEE C37.13"
+  },
+  "IEC 60947-2": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "IEC 60947-2"
+  },
+  "Transformadores de Control": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "Transformadores de Control"
+  },
+  "Botones Pulsadores": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "Botones Pulsadores"
+  },
+  "Motores Eléctricos": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc",
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 3,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "Motores Eléctricos"
+  },
+  "Contenido Eléctrico": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "Contenido Eléctrico"
+  },
+  "Documentos EDP-ET-335": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330196,
+    "update_time": 1761330196,
+    "_id": "Documentos EDP-ET-335"
+  },
+  "Bobinas de Contactores": {
+    "chunk_ids": [
+      "chunk-8343346c9ed8b79c52a0a7e531cb225d"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Bobinas de Contactores"
+  },
+  "Cabina de Insonorización": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 3,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Cabina de Insonorización"
+  },
+  "Silenciadores": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Silenciadores"
+  },
+  "Boquillas Quill": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Boquillas Quill"
+  },
+  "Documentación Técnica": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Documentación Técnica"
+  },
+  "Ecopetrol": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 3,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Ecopetrol"
+  },
+  "Partes y Consumibles": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Partes y Consumibles"
+  },
+  "Lista de Precios": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Lista de Precios"
+  },
+  "Hoja de Datos": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 2,
+    "create_time": 1761330197,
+    "update_time": 1761330197,
+    "_id": "Hoja de Datos"
+  },
+  "Estándares de Referencia": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "Estándares de Referencia"
+  },
+  "Formato de Requisición de Materiales": {
+    "chunk_ids": [
+      "chunk-4d747a77230d09f5885ddb7afb988a45"
+    ],
+    "count": 1,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "Formato de Requisición de Materiales"
+  },
+  "Ingeniería Detalle Acondicionamiento": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 3,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "Ingeniería Detalle Acondicionamiento"
+  },
+  "FFM/F-MEQ-013": {
+    "chunk_ids": [
+      "chunk-eb186bb3f5d4415b2c929f13be86c5cd",
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 2,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "FFM/F-MEQ-013"
+  },
+  "Fabricante": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35"
+    ],
+    "count": 1,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "Fabricante"
+  },
+  "Proyecto Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-f376d1104496f43da64e604327702c35"
+    ],
+    "count": 1,
+    "create_time": 1761330198,
+    "update_time": 1761330198,
+    "_id": "Proyecto Acondicionamiento Estratégico Cupiagua"
+  },
+  "Ecopetrol S.A": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Ecopetrol S.A"
+  },
+  "CPF Cupiagua": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "CPF Cupiagua"
+  },
+  "Ingeniería Detallada Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Ingeniería Detallada Acondicionamiento Estratégico Cupiagua"
+  },
+  "Sistema de Administración de la Calidad (QMS)": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Sistema de Administración de la Calidad (QMS)"
+  },
+  "Requerimientos de QA e Inspección": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Requerimientos de QA e Inspección"
+  },
+  "Plan de Inspección y Pruebas (ITP)": {
+    "chunk_ids": [
+      "chunk-b4bc42b7b08466e549e1641eff7ceedd"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Plan de Inspección y Pruebas (ITP)"
+  },
+  "01-11-2023": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "01-11-2023"
+  },
+  "Bombas de Inyección": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Bombas de Inyección"
+  },
+  "Etiqueta Metálica": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Etiqueta Metálica"
+  },
+  "Base Estructural Común": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Base Estructural Común"
+  },
+  "Quill": {
+    "chunk_ids": [
+      "chunk-10ab6d0a3b8646e2c51a8a89f78aa914"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Quill"
+  },
+  "Nema 4X": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Nema 4X"
+  },
+  "TEFC": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "TEFC"
+  },
+  "Panel de Control (UCP)": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330199,
+    "update_time": 1761330199,
+    "_id": "Panel de Control (UCP)"
+  },
+  "HMI Local": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "HMI Local"
+  },
+  "DCS de la Planta": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "DCS de la Planta"
+  },
+  "Clase 1, División 2": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "Clase 1, División 2"
+  },
+  "Protocolo Modbus TCP/IP": {
+    "chunk_ids": [
+      "chunk-fa242c53f105ff780f1b2e2b995f427b"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "Protocolo Modbus TCP/IP"
+  },
+  "Especificación Técnica EDP-ET-001-i": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "Especificación Técnica EDP-ET-001-i"
+  },
+  "Documentos de Inspección": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "Documentos de Inspección"
+  },
+  "EDP-G-010": {
+    "chunk_ids": [
+      "chunk-8a20d8a3de5d7e9c8bcbe19000ea95a8"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "EDP-G-010"
+  },
+  "NTC Normas Técnicas Colombianas": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "NTC Normas Técnicas Colombianas"
+  },
+  "PCS Process Control Systems": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330200,
+    "update_time": 1761330200,
+    "_id": "PCS Process Control Systems"
+  },
+  "PSS Process Security System": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "PSS Process Security System"
+  },
+  "SIS Security Instrumented Systems": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "SIS Security Instrumented Systems"
+  },
+  "CCR Central Control Room": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "CCR Central Control Room"
+  },
+  "ESD Emergency Shut Down": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "ESD Emergency Shut Down"
+  },
+  "HMI Human – Machine Interface": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "HMI Human – Machine Interface"
+  },
+  "ICSS Integrated Control and Safety System": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "ICSS Integrated Control and Safety System"
+  },
+  "UCP Unit Control Panel": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "UCP Unit Control Panel"
+  },
+  "RETIE Reglamento Técnico de Instalaciones Eléctricas": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "RETIE Reglamento Técnico de Instalaciones Eléctricas"
+  },
+  "IEC International Electrotechnical Commission": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330201,
+    "update_time": 1761330201,
+    "_id": "IEC International Electrotechnical Commission"
+  },
+  "NEMA National Electrical Manufacturer Association": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "NEMA National Electrical Manufacturer Association"
+  },
+  "ISO International Standard Organization": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "ISO International Standard Organization"
+  },
+  "IEEE Institute of Electrical and Electronics Engineers": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "IEEE Institute of Electrical and Electronics Engineers"
+  },
+  "SSPC The Society for Protective Coatings": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "SSPC The Society for Protective Coatings"
+  },
+  "API American Petroleum Institute": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "API American Petroleum Institute"
+  },
+  "ASME American Society of Mechanical Engineers": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "ASME American Society of Mechanical Engineers"
+  },
+  "ASTM American Society for Testing and Materials": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "ASTM American Society for Testing and Materials"
+  },
+  "Documentos de Referencia": {
+    "chunk_ids": [
+      "chunk-a065d95a31864843e02e9cc853e6bb5a"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "Documentos de Referencia"
+  },
+  "Fecha": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-135bec93e66ee27faf73a5d02e66fddb",
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 3,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "Fecha"
+  },
+  "Código de Catálogo": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "Código de Catálogo"
+  },
+  "MR #": {
+    "chunk_ids": [
+      "chunk-509469e6019a0138e5643fc939e23e22",
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 2,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "MR #"
+  },
+  "ISA 5.1": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "ISA 5.1"
+  },
+  "EDP-P-013": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330202,
+    "update_time": 1761330202,
+    "_id": "EDP-P-013"
+  },
+  "Transmisores de Presión": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "Transmisores de Presión"
+  },
+  "Manómetros": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "Manómetros"
+  },
+  "Válvulas de Alivio": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060",
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 2,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "Válvulas de Alivio"
+  },
+  "Hastelloy C-276": {
+    "chunk_ids": [
+      "chunk-bab0db6819121dfc5ba9486c29c6a060"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "Hastelloy C-276"
+  },
+  "Ductile Iron Pipe Flanges": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "Ductile Iron Pipe Flanges"
+  },
+  "ASME B31.3": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "ASME B31.3"
+  },
+  "ASME B36.10": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "ASME B36.10"
+  },
+  "ASME B36.19": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "ASME B36.19"
+  },
+  "ASTM E94": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "ASTM E94"
+  },
+  "ASTM A388": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330203,
+    "update_time": 1761330203,
+    "_id": "ASTM A388"
+  },
+  "ASTM A536": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "ASTM A536"
+  },
+  "ASTM A609": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "ASTM A609"
+  },
+  "ISO 3744": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "ISO 3744"
+  },
+  "Institute of Electrical and Electronic Engineers": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "Institute of Electrical and Electronic Engineers"
+  },
+  "American Welding Society": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "American Welding Society"
+  },
+  "Spanish Association for Standardization - UNE": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "Spanish Association for Standardization - UNE"
+  },
+  "ASTM A48": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "ASTM A48"
+  },
+  "ASTM A216": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330204,
+    "update_time": 1761330204,
+    "_id": "ASTM A216"
+  },
+  "ASTM 278": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ASTM 278"
+  },
+  "ASTM A436": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ASTM A436"
+  },
+  "ASTM A439": {
+    "chunk_ids": [
+      "chunk-0fe15792e5c99345a1663886da4b72cf"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ASTM A439"
+  },
+  "Documentación Requerida": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "Documentación Requerida"
+  },
+  "Diagrama de Cargas": {
+    "chunk_ids": [
+      "chunk-9bf731d395cc9387a1efc33fce1e2c07"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "Diagrama de Cargas"
+  },
+  "Certificado de Calibración": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "Certificado de Calibración"
+  },
+  "ASME": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ASME"
+  },
+  "ISO 12944": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ISO 12944"
+  },
+  "ECOPETROL S.A.": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a",
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 2,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "ECOPETROL S.A."
+  },
+  "HOJA DE DATOS N° FFM/F-MEX-033": {
+    "chunk_ids": [
+      "chunk-9ba5d3a6d64891b1cf4d00b2065d044a"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "HOJA DE DATOS N° FFM/F-MEX-033"
+  },
+  "Rodrigo Feo": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330205,
+    "update_time": 1761330205,
+    "_id": "Rodrigo Feo"
+  },
+  "Hoja de Datos Paquete de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-b3490d658c4b323977d8e6122dcab76d"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Hoja de Datos Paquete de Inyección de Químicos"
+  },
+  "Código de Colores y Señales Industriales": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Código de Colores y Señales Industriales"
+  },
+  "Marcas Homologadas": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Marcas Homologadas"
+  },
+  "Motores de Baja Tensión": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Motores de Baja Tensión"
+  },
+  "Clasificación de Áreas para Instalaciones Eléctricas": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Clasificación de Áreas para Instalaciones Eléctricas"
+  },
+  "Campo Cupiagua": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Campo Cupiagua"
+  },
+  "Casanare": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Casanare"
+  },
+  "Café de Bogotá": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Café de Bogotá"
+  },
+  "Datos Generales y Requisitos": {
+    "chunk_ids": [
+      "chunk-84ce69858d594189385acced19437075",
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 2,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Datos Generales y Requisitos"
+  },
+  "VENDEDOR/FABRICANTE": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "VENDEDOR/FABRICANTE"
+  },
+  "Fecha de fabricación": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Fecha de fabricación"
+  },
+  "Equilibrio de Calidad": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Equilibrio de Calidad"
+  },
+  "Plan de Inspección y Pruebas": {
+    "chunk_ids": [
+      "chunk-21fb96a84dbc3ea4898d0b2fc4a1472f"
+    ],
+    "count": 1,
+    "create_time": 1761330206,
+    "update_time": 1761330206,
+    "_id": "Plan de Inspección y Pruebas"
+  },
+  "Proyecto Acondicionamiento Estratégico de Cupiagua": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-e68304765a00e6df3e515720f091fd40",
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 3,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "Proyecto Acondicionamiento Estratégico de Cupiagua"
+  },
+  "API 675": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6",
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 2,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "API 675"
+  },
+  "Control de bombas": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "Control de bombas"
+  },
+  "Características Constructivas": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "Características Constructivas"
+  },
+  "PSV": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "PSV"
+  },
+  "316 SS": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "316 SS"
+  },
+  "Válvulas Dobles de Antirretorno": {
+    "chunk_ids": [
+      "chunk-b71d8983ab6d7c30f6a3c17aea7201e6"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "Válvulas Dobles de Antirretorno"
+  },
+  "Norma ISO 2151": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330207,
+    "update_time": 1761330207,
+    "_id": "Norma ISO 2151"
+  },
+  "Bombas Dosificadoras de Químico": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Bombas Dosificadoras de Químico"
+  },
+  "Vida de Servicio": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Vida de Servicio"
+  },
+  "Unidades de Medida": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Unidades de Medida"
+  },
+  "Limitación de Ruido": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Limitación de Ruido"
+  },
+  "Clasificación de Áreas Peligrosas": {
+    "chunk_ids": [
+      "chunk-0c051a21a98f7f6af66e666cb08d34bc"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Clasificación de Áreas Peligrosas"
+  },
+  "Pruebas FAT y SAT": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Pruebas FAT y SAT"
+  },
+  "Pruebas Mecánicas": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Pruebas Mecánicas"
+  },
+  "Arranque y Puesta en Marcha": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Arranque y Puesta en Marcha"
+  },
+  "Capacitación del Personal": {
+    "chunk_ids": [
+      "chunk-05e934ae1047ce7e1f92985b68cdc5e1"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Capacitación del Personal"
+  },
+  "Tanque de Almacenamiento": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40",
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 2,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Tanque de Almacenamiento"
+  },
+  "Contenedores para Exportación": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330208,
+    "update_time": 1761330208,
+    "_id": "Contenedores para Exportación"
+  },
+  "P&ID FFD/F-PCF-US-PRE-55-552-2/2": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "P&ID FFD/F-PCF-US-PRE-55-552-2/2"
+  },
+  "REQUISICIÓN FFM/F-MEQ-014": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "REQUISICIÓN FFM/F-MEQ-014"
+  },
+  "INYECCIÓN DE QUÍMICOS": {
+    "chunk_ids": [
+      "chunk-e68304765a00e6df3e515720f091fd40"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "INYECCIÓN DE QUÍMICOS"
+  },
+  "Bombas Dosificadoras": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Bombas Dosificadoras"
+  },
+  "Válvulas de Control": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Válvulas de Control"
+  },
+  "Equipo de Control": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Equipo de Control"
+  },
+  "P&ID": {
+    "chunk_ids": [
+      "chunk-2c80a42db814b79497725186920cc68a",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a",
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 3,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "P&ID"
+  },
+  "Herramientas Especiales": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Herramientas Especiales"
+  },
+  "12 meses": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "12 meses"
+  },
+  "Restricciones de Transporte": {
+    "chunk_ids": [
+      "chunk-39e27c32a41ef7f7f7951797bca4254e"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Restricciones de Transporte"
+  },
+  "Proveedores": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Proveedores"
+  },
+  "Bomba de Dosificación": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f",
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 2,
+    "create_time": 1761330209,
+    "update_time": 1761330209,
+    "_id": "Bomba de Dosificación"
+  },
+  "Válvula de Corte": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Válvula de Corte"
+  },
+  "Especificaciones Técnicas FFM/F-S-ME-015": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Especificaciones Técnicas FFM/F-S-ME-015"
+  },
+  "Diámetro de Conexión de la Bomba": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Diámetro de Conexión de la Bomba"
+  },
+  "Paquete de Dosificación de Químicos": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Paquete de Dosificación de Químicos"
+  },
+  "Nivel Máximo de Ruido": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Nivel Máximo de Ruido"
+  },
+  "Diámetros de Boquillas de Conexión": {
+    "chunk_ids": [
+      "chunk-081227ed47bc5e030c54aeadd9bc1d5f"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Diámetros de Boquillas de Conexión"
+  },
+  "Compresor de Gas de Proceso M155-K-21150": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Compresor de Gas de Proceso M155-K-21150"
+  },
+  "Contenedores del Inhibidor de Corrosión": {
+    "chunk_ids": [
+      "chunk-1b6c478d02eff452b0d1e83fbb6a806a"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Contenedores del Inhibidor de Corrosión"
+  },
+  "Químicos": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Químicos"
+  },
+  "Ingeniería": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330210,
+    "update_time": 1761330210,
+    "_id": "Ingeniería"
+  },
+  "Inspección": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "Inspección"
+  },
+  "MR # FFM/F-MEQ-013": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "MR # FFM/F-MEQ-013"
+  },
+  "Revisiones": {
+    "chunk_ids": [
+      "chunk-135bec93e66ee27faf73a5d02e66fddb"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "Revisiones"
+  },
+  "ICO CUPIAGUA": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "ICO CUPIAGUA"
+  },
+  "Documentos Prioritarios": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "Documentos Prioritarios"
+  },
+  "Número de Parte": {
+    "chunk_ids": [
+      "chunk-533d4fc3cc5737956b21a1630538c46a"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "Número de Parte"
+  },
+  "SmartPlant": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "SmartPlant"
+  },
+  "CAD": {
+    "chunk_ids": [
+      "chunk-1bc1b5fa6c37abc53e5623be1ae820fe"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "CAD"
+  },
+  "Informe de Inspección": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330211,
+    "update_time": 1761330211,
+    "_id": "Informe de Inspección"
+  },
+  "Procedimiento de Soldadura WPS, PQR": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Procedimiento de Soldadura WPS, PQR"
+  },
+  "Hoja de Datos FFM/F-MEX-033": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Hoja de Datos FFM/F-MEX-033"
+  },
+  "Certificado de Resultados Pruebas FAT": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Certificado de Resultados Pruebas FAT"
+  },
+  "Documentos y Planos": {
+    "chunk_ids": [
+      "chunk-f2b9bce6abc51695537b621cf890ae15"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Documentos y Planos"
+  },
+  "Inistrodelmismo": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Inistrodelmismo"
+  },
+  "Química": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Química"
+  },
+  "Estación CPF Cupiagua": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Estación CPF Cupiagua"
+  },
+  "Placa de Identificación": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Placa de Identificación"
+  },
+  "Bomba": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Bomba"
+  },
+  "Sistema de Inyección de Químicos": {
+    "chunk_ids": [
+      "chunk-38a86dc498228475d8ecb85bb541a622"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Sistema de Inyección de Químicos"
+  },
+  "Separador de Media Presión V-2002": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Separador de Media Presión V-2002"
+  },
+  "Separador V-2001": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Separador V-2001"
+  },
+  "Separador de Baja Presión V-2003": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330212,
+    "update_time": 1761330212,
+    "_id": "Separador de Baja Presión V-2003"
+  },
+  "Separador de Alta Presión V-2001": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Separador de Alta Presión V-2001"
+  },
+  "Bombas de Dosificación": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Bombas de Dosificación"
+  },
+  "Document Title": {
+    "chunk_ids": [
+      "chunk-d3d7496d7cca9180593ddffbed48ad39"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Document Title"
+  },
+  "Acondicionamiento Estratégico Cupiagua": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Acondicionamiento Estratégico Cupiagua"
+  },
+  "Documentación de Pruebas": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Documentación de Pruebas"
+  },
+  "Certificados de Material": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Certificados de Material"
+  },
+  "Modelo 3D del PAQUETE": {
+    "chunk_ids": [
+      "chunk-177f0c861f8e508d399fba45dc8e00e4"
+    ],
+    "count": 1,
+    "create_time": 1761330213,
+    "update_time": 1761330213,
+    "_id": "Modelo 3D del PAQUETE"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "api": "http://localhost:8777",
+  "results": [
+    {
+      "question": "¿Cuál es el caudal nominal, presión de trabajo, viscosidad y el turndown de la bomba dosificadora?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 12.013550281524658,
+          "response": "La información sobre las especificaciones de la bomba dosificadora se detalla en las especificaciones técnicas del paquete de inyección de químicos. A continuación se presentan los datos solicitados:\n\n### Especificaciones de la Bomba Dosificadora\n\n- **Caudal Nominal**:\n  - Dependiendo del modelo, los caudales nominales son:\n    - 2.0 GPD para la bomba P-5540\n    - 1.0 GPD para la bomba P-5541\n    - 0.51 GPD para la bomba P-5542\n    - 1.0 GPD para la bomba P-5543\n    - 3.0 GPD para la bomba P-5544\n    - 2.0 GPD para la bomba P-5545\n\n- **Presión de Trabajo**:\n  - Las presiones de descarga máximas para las bombas son:\n    - 75 psig para la bomba P-5540\n    - 67 psig para la bomba P-5541\n    - 137 psig para la bomba P-5542\n    - 150 psig para la bomba P-5543\n    - 80 psig para la bomba P-5544\n    - 150 psig para la bomba P-5545\n\n- **Viscosidad**:\n  - La viscosidad no se proporciona un valor concreto en la documentación, se sugiere que se determine de acuerdo con el líquido específico a ser bombeado, que en este caso es el inhibidor de corrosión.\n\n- **Turndown**:\n  - El turndown ratio de las bombas debe ser de 10:1, con una precisión de dosificación de ± 1% en el rango comprendido entre el 100% y el 10% de la capacidad nominal de la bomba.\n\nEstos datos aseguran que las bombas cumplan con las necesidades de inyección de químicos según lo establecido en las especificaciones de la API STD 675.\n\n### References\n\n- [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 5.997257947921753,
+          "response": "No tengo suficiente información para responder a la pregunta sobre el caudal nominal, presión de trabajo, viscosidad y el turndown de la bomba dosificadora.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 5.84466028213501,
+          "response": "No tengo suficiente información para responder a tu consulta sobre el caudal nominal, presión de trabajo, viscosidad y el turndown de la bomba dosificadora.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 9.244961977005005,
+          "response": "La información referente a las especificaciones de las bombas dosificadoras, incluyendo el caudal nominal, presión de trabajo, viscosidad, y el turndown ratio se describe en la **Especificación Técnica Paquete de Inyección de Químicos**, pero no se presenta de forma directa en el contexto proporcionado.\n\nSin embargo, puedo confirmarte que el **turndown ratio** de las bombas de dosificación debe ser de **10:1**, y la precisión de la dosificación de químico necesaria es de **± 1%** dentro del rango comprendido entre el 100% y el 10% de la capacidad nominal de la bomba, conforme a lo establecido en la **API STD 675**.\n\nLamentablemente, no tengo acceso a los valores exactos de caudal nominal, presión de trabajo y viscosidad para darte información detallada sobre esos parámetros. \n\nSi necesitas estos datos específicos, te recomendaría consultar el documento técnico o la especificación que contenga esta información.\n\n### References\n\n- [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "¿Qué normas aplican a FAT y cómo se vinculan con el paquete de inyección?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 1.052445411682129,
+          "response": "En el contexto del Paquete de Inyección de Químicos, las pruebas de aceptación en fábrica (FAT, por sus siglas en inglés) deben ser realizadas de acuerdo con los estándares y procedimientos establecidos en la especificación técnica. En particular, se deben abordar las siguientes normas y pautas relevantes:\n\n1. **Plan de Inspección y Pruebas (ITP)**: Este documento es fundamental y debe ser seguido rigurosamente. El VENDEDOR está obligado a realizar todas las pruebas e inspecciones pertinentes, tal como se detalla en el ITP. Esto incluye pruebas de funcionamiento, mecánicas y otras necesarias para asegurar que el paquete cumpla con las especificaciones requeridas (Document chunks related).\n\n2. **Pruebas específicas incluidas en el FAT**:\n   - Prueba de entradas y salidas.\n   - Prueba de activación de alarmas.\n   - Prueba de lógica de operación.\n   - Prueba de comunicación y visualización de variables.\n   - Pruebas FAT y SAT (de aceptación en sitio) que son esenciales para validar que el sistema opere conforme a lo especificado en el diseño.\n\n3. **Normas técnicas aplicables**: Las pruebas deben cumplir con los códigos, estándares y documentos de referencia relevantes, que abarcan tanto normas nacionales e internacionales como específicas del cliente, ECOPETROL. Se mencionan estándares como API, ASME, ASTM y los requerimientos establecidos por el CLIENTE (Document chunks related).\n\n4. **Documentación de FAT**: Al finalizar las pruebas, el VENDEDOR debe proporcionar certificaciones de las pruebas realizadas, incluidos los informes de resultados y cualquier documento pertinente que avale el cumplimiento de los requisitos establecidos (Document chunks related).\n\nEstas normas aseguran que el equipo, en este caso el Paquete de Inyección, funcione adecuadamente y sea seguro para su operación al instalarlo en sitio, cumpliendo con la calidad y los estándares establecidos por ECOPETROL y otros organismos de regulación.\n\n### References\n\n- [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 1.7815885543823242,
+          "response": "Las normas que aplican a las pruebas de aceptación FAT (Factory Acceptance Testing) están orientadas a garantizar que el Paquete de Inyección de Químicos cumpla con las especificaciones técnicas y de calidad requeridas. En este contexto, se destacan los siguientes aspectos:\n\n### Normas Aplicables a FAT\n1. **Normas de Calidad y Pruebas**:\n   - El VENDEDOR es responsable de realizar las Pruebas FAT y SAT (Site Acceptance Testing) para asegurar la operación apropiada de todos los componentes del Paquete.\n   - Se deben seguir procedimientos que se entregarán al CLIENTE para aprobación previa, permitiendo la presencia del CLIENTE durante las pruebas. Estas pruebas incluyen, pero no se limitan a, pruebas de comandos, estabilidades y rendimiento de los equipos.\n\n2. **Cumplimiento de Normas ISO**:\n   - Las pruebas de ruido del Paquete deben ser realizadas de acuerdo con la **Norma ISO 2151**, que se considera una norma relevante en este caso. Dicha norma establece los criterios para las mediciones de ruido en equipos industriales.\n\n### Vinculación con el Paquete de Inyección\n- El concepto de FAT es esencial en el contexto del Paquete de Inyección de Químicos. Estas pruebas aseguran que todos los sistemas, incluyendo bombas dosificadoras y componentes eléctricos, están funcionando de acuerdo con los estándares requeridos antes de ser enviados al sitio de instalación.\n- El Paquete incluye componentes que deben pasar por estas pruebas de FAT para validar su funcionamiento y que cumplen con los requerimientos técnicos definidos en la **Especificación Técnica Paquete de Inyección de Químicos**, específicamente el documento **FFM/F-S-ME-015**.\n\nEn resumen, las pruebas FAT forman un componente vital del proceso de validación del Paquete de Inyección de Químicos, asegurando que se cumplan tanto los estándares de calidad como los lineamientos específicos establecidos por el CLIENTE.\n\n### References\n- [1] corpus.json",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 1.4785377979278564,
+          "response": "La especificación técnica del **Paquete de Inyección de Químicos** incluye varios requerimientos y condiciones que son cruciales para las pruebas de aceptación en fábrica (FAT). Estas pruebas están destinadas a garantizar que el equipo cumpla con las especificaciones y funcione de manera efectiva antes de su instalación y operación en el sitio.\n\n### Normas Aplicables a FAT\n\n1. **Documentación de Pruebas**: El VENDEDOR debe proporcionar documentación de prueba que cubra todas las etapas de implementación, instalación y puesta en marcha. Esto incluye la presentación de certificados de todas las pruebas realizadas, como las de rendimiento y las pruebas mecánicas que aseguran la calidad del paquete.\n   \n2. **Plan de Inspección y Pruebas (ITP)**: Todas las pruebas e inspecciones pertinentes deben realizarse conforme al plan de inspección y pruebas del CLIENTE y el del VENDEDOR, quien es responsable de realizar todas las inspecciones y pruebas en todos los instrumentos según lo indicado en el ITP. Este plan establece los parámetros mínimos necesarios para la aceptación del paquete.\n\n3. **Pruebas Específicas**: Las pruebas específicas que deben llevarse a cabo como parte del proceso FAT incluyen:\n   - Pruebas de entradas y salidas.\n   - Pruebas de activación de alarmas.\n   - Pruebas de lógica de operación.\n   - Pruebas de registro de eventos y comunicaciones.\n   - Pruebas de comandos y visualización de variables.\n\n4. **Certificado de Resultados de Pruebas FAT**: Este certificado es un documento clave que valida todos los resultados de pruebas realizadas en el equipo del paquete de inyección, asegurando que responda a las especificaciones establecidas y que funcione adecuadamente.\n\n### Vinculación con el Paquete de Inyección\n\nEl cumplimiento de las pruebas FAT es fundamental para el **Paquete de Inyección de Químicos**, ya que garantiza que todos los componentes e instrumentos cumplan con los estándares de calidad requeridos. Las pruebas son realizadas antes de la entrega del paquete al CLIENTE y son una condición esencial para su operación segura y eficiente.\n\nDe acuerdo con la **Especificación Técnica Paquete de Inyección de Químicos** (documento identificado como *FFM/F-S-ME-015*), el **VEDEDOR** debe asegurarse de que el paquete cuerpo, componentes, e instrumentación asociada sean validados mediante este proceso de pruebas, lo que a su vez contribuye a su aceptación final y adecuada operación prolongada.\n\n### Conclusión\n\nLas pruebas FAT y la documentación correspondiente son requisitos críticos para asegurar que el **Paquete de Inyección de Químicos** funcione correctamente según las especificaciones y garantías de calidad, formando así parte integral del proceso de implementación y éxito del proyecto.\n\n### References\n\n- [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 2.051987648010254,
+          "response": "Para el proceso de pruebas FAT (Factory Acceptance Testing) aplican varias normas y requisitos que están relacionados con el Paquete de Inyección de Químicos:\n\n1. **Norma ISO 2151**: Esta norma debe seguirse para las pruebas de ruido del Paquete de Inyección de Químicos. Es crucial asegurar que el nivel de ruido combinado del paquete y sus equipos no sobrepase los 85 dB (A) al aire libre, lo que se realizará mediante las pruebas especificadas.\n\n2. **Documentación de Pruebas**: El VENDEDOR está encargado de proporcionar una documentación exhaustiva sobre todas las pruebas realizadas durante la implementación e instalación del PAQUETE. Esto incluye la validación del rendimiento del equipo y la obtención de certificados de ensayo mecánico y de rendimiento necesarios para cada componente del Paquete.\n\n3. **Certificado de Resultados Pruebas FAT**: Este documento es esencial para validar los resultados de las pruebas FAT que se efectúan en el equipo del Paquete de Inyección de Químicos. Es parte de la documentación que debe ser presentada al CLIENTE y asegura que los componentes cumplen con los requisitos de calidad y funcionalidad esperados.\n\n4. **Plan de Inspección y Pruebas (ITP)**: El CLIENTE tiene el derecho de revisar en cualquier momento el plan de inspección y pruebas del Paquete, asegurando así que se cumplan todos los requerimientos detallados en las especificaciones y documentos relacionados.\n\n5. **Sistema de Administración de la Calidad (QMS)**: El Paquete debe cumplir con este sistema para asegurar que todas las pruebas y procesos realizados son adecuados y efectivos, y que cumplen con las normas establecidas.\n\nEstas normas y documentos son fundamentales para garantizar que el Paquete de Inyección de Químicos funciona de acuerdo con las especificaciones, asegurando la calidad y eficacia en su operación.\n\n### References\n\n- [1] corpus.json",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Conecta Bomba Dosificadora → Prueba FAT → API 675; indica el camino y la justificación.",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 10.939963579177856,
+          "response": "Para conectar los términos \"Bomba Dosificadora\", \"Prueba FAT\" y \"API 675\", podemos seguir un camino lógico que vincula la especificación técnica de las bombas con las pruebas de aceptación que deben llevarse a cabo.\n\n### 1. Bomba Dosificadora\nLas bombas dosificadoras son un componente clave del **PAQUETE de inyección de químicos**. Según la especificación, se requiere que estas bombas funcionen de acuerdo con la norma **API STD 675**, que establece los estándares para bombas de desplazamiento positivo controladas.\n\n### 2. API 675\nLa norma **API 675** se aplica a las bombas dosificadoras, indicando que deben ser diseñadas y fabricadas para proporcionar un rendimiento confiable bajo las condiciones específicas de operación. Esta norma establece criterios sobre aspectos como:\n\n- Eficiencia en la dosificación\n- Capacidad de operación continua\n- Seguridad en la operación.\n\nLa correcta implementación de los lineamientos de esta norma es fundamental para garantizar que las bombas inyecten químicos de manera precisa y eficiente.\n\n### 3. Prueba FAT\nLa **Prueba de Aceptación en Fábrica (FAT)** se lleva a cabo para validar que la bomba dosificadora cumpla con todos los requisitos especificados antes de ser instalada en el sitio. Esta prueba incluye varios aspectos:\n\n- Comprobación del funcionamiento mecánico y desempeño de la bomba.\n- Verificación de que la bomba cumpla con las especificaciones de **API 675**.\n- Certificación de que todos los componentes funcionen dentro de los parámetros establecidos antes de la entrega e instalación.\n\nEstas pruebas son vitales para asegurar que el equipo esté listo para las exigencias del servicio, y cualquier defecto se detecte y corrija antes de la instalación.\n\n### Conexión Final\nPor lo tanto, el camino que conecta estos términos es el siguiente:\n- **Bomba Dosificadora** → diseñada de acuerdo con **API 675**, asegurando un rendimiento confiable y preciso en la inyección del químico.\n- Luego, antes de su puesta en marcha en el sitio, se lleva a cabo una **Prueba FAT** para verificar que el funcionamiento de la bomba cumpla con las especificaciones técnicas estandarizadas, incluyendo las de **API 675**.\n\nEsto establece un ciclo de validación donde el diseño y la operación de las bombas son verificados, asegurando que se cumplan los estándares necesarios para su uso en la industria.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 16.394017219543457,
+          "response": "La conexión entre **Bomba Dosificadora**, **Prueba FAT**, y **API 675** se establece de la siguiente manera:\n\n### Paso 1: Bomba Dosificadora\nLa **Bomba Dosificadora** es un componente esencial del **Paquete de Inyección de Químicos**. Este equipo se utiliza específicamente para la dosificación precisa de químicos en procesos industriales, garantizando que se suministre la cantidad correcta de producto químico en el momento adecuado. \n\n### Paso 2: Prueba FAT\nLa **Prueba FAT** (Factory Acceptance Test) es una prueba crítica que se lleva a cabo para asegurarse de que la **Bomba Dosificadora** y todos los demás componentes del paquete funcionen según lo previsto antes de su entrega e instalación en el sitio del cliente. Durante esta prueba, se evalúan todas las funcionalidades del equipo, asegurando que cumplan con los requerimientos de rendimiento y calidad especificados.\n\n### Paso 3: API 675\nLa norma **API 675** (American Petroleum Institute) proporciona los estándares para las bombas de dosificación, incluidos los requisitos de diseño y fabricación que deben cumplirse para asegurar la fiabilidad y el desempeño de la bomba en ambientes industriales. Por lo tanto, es fundamental que las **Bombas Dosificadoras** que se vayan a probar en el contexto de los FAT sigan los lineamientos establecidos en esta norma para garantizar su operatividad y seguridad.\n\n### Justificación del Camino\n1. **Bomba Dosificadora → Prueba FAT**:\n   - La relación es directa porque la prueba FAT es la evaluación definitiva que asegura el correcto funcionamiento de las bombas antes de su instalación. Es esencial para validar que todos los equipos, incluidos las bombas, funcionan correctamente dentro del sistema completo.\n\n2. **Prueba FAT → API 675**:\n   - Esta conexión es justificable porque la **Prueba FAT** debe adherirse a los estándares establecidos por **API 675**, que regula las características y requisitos para las bombas dosificadoras. Seguir esta norma durante la prueba garantiza que la bomba esté configurada y operée adecuadamente para cumplir las expectativas de rendimiento, seguridad y fiabilidad en su uso.\n\nEn conclusión, la secuencia es clara y lógica, vinculando estos elementos esenciales en el proceso de garantía de calidad para el **Paquete de Inyección de Químicos**. \n\n### Referencias\n- [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 39.423362255096436,
+          "response": "Para conectar las entidades **Bomba Dosificadora**, **Prueba FAT**, y **API 675**, podemos establecer el siguiente camino:\n\n### Camino conectado\n1. **Bomba Dosificadora**:\n   - Las bombas dosificadoras son una parte fundamental en el **Paquete de Inyección de Químicos**, diseñado para la dosificación precisa de productos químicos. Estas bombas deben ser fabricadas y operadas de acuerdo con especificaciones técnicas rigorosas, en este caso, bajo el estándar **API 675**.\n\n2. **API 675**:\n   - Es un estándar que regula la precisión de dosificación que debe cumplir el flujo en un proceso de inyección. La **Bomba Dosificadora** debe cumplir con estos requisitos específicos para asegurar que la dosificación química sea precisa y segura.\n\n3. **Prueba FAT (Factory Acceptance Test)**:\n   - Antes de la entrega de la **Bomba Dosificadora**, se llevan a cabo pruebas FAT que son procedimientos de evaluación que se realizan para determinar si cada componente del sistema, incluida la bomba, cumple con las especificaciones acordadas, incluyendo las establecidas por **API 675**. Estas pruebas garantizan que las bombas funcionen correctamente y que se adhieran a los estándares requeridos antes de ser enviadas al cliente.\n\n### Justificación\n- La conexión entre estas tres entidades resalta la importancia de los estándares en la manufactura y prueba de bombas dosificadoras, específicamente la **API 675**, que establece directrices específicas para la precisión y funcionamiento de las bombas en aplicaciones que involucran la inyección de productos químicos. Al realizar pruebas FAT, se asegura que las bombas no solo cumplen con las normas de operación sino que funcionan de acuerdo con las expectativas de rendimiento y seguridad definidas por dicho estándar.\n\n### Resumen\nLa Bomba Dosificadora está diseñada para operar bajo los parámetros de **API 675**, y su funcionalidad se valida mediante Pruebas FAT que aseguran el cumplimiento de estos estrictos estándares de calidad y seguridad.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 12.487690210342407,
+          "response": "La conexión entre **Bomba Dosificadora**, **Prueba FAT** y **API 675** puede describirse de la siguiente manera:\n\n1. **Bomba Dosificadora**: Es un componente esencial en el **Paquete de Inyección de Químicos**. Debe cumplir con normas específicas para garantizar su funcionamiento adecuado y eficiente durante la inyección de químicos, que en este caso incluyen inhibidores de corrosión.\n\n2. **API 675**: Este es un estándar (API STD 675) que regula la precisión de las bombas dosificadoras. Establece que las bombas de dosificación deben tener un turndown ratio específico y una precisión de dosificación de ± 1% dentro de un rango determinado. La bomba dosificadora en el sistema debe ser capaz de cumplir con estas especificaciones para asegurar que los líquidos se inyecten de manera precisa y efectiva.\n\n3. **Prueba FAT (Factory Acceptance Test)**: Este es un procedimiento que se realiza antes de que una bomba dosificadora se instale en el sitio del cliente. Su propósito es verificar que la bomba funciona según las especificaciones, incluida la conformidad con los requisitos establecidos por la API 675. Durante la Prueba FAT, se llevan a cabo varios ensayos para comprobar que la bomba opera de acuerdo a los estándares de rendimiento y regulación requeridos.\n\n### Justificación del camino:\nEl enlace comienza con la **Bomba Dosificadora**, que debe ser otorgada por un proveedor que cumpla con los estándares de la API 675 para asegurar su efectividad en la inyección. La **Prueba FAT** es un paso crítico en el proceso de calidad y aseguramiento para validar que la bomba dosificadora está fabricada y funciona conforme a las especificaciones del API 675, garantizando así su adecuada integración en el paquete de inyección.\n\n### Referencias\n* [1] Especificación Técnica Paquete de Inyección de Químicos",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Dame setpoint y clase del presostato asociados al equipo de dosificación (si aplica).",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 3.589756488800049,
+          "response": "No tengo suficiente información para responder a tu consulta sobre el setpoint y clase del presostato asociados al equipo de dosificación.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 6.183890104293823,
+          "response": "No tengo suficiente información para responder a tu consulta sobre los setpoints y la clase del presostato asociados al equipo de dosificación. No se menciona información específica sobre presostatos en la documentación proporcionada.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 5.174108982086182,
+          "response": "No tengo suficiente información para responder a tu pregunta sobre el setpoint y clase del presostato asociados al equipo de dosificación.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 5.956533193588257,
+          "response": "No tengo suficiente información para responder a tu consulta sobre el setpoint y la clase del presostato asociados al equipo de dosificación.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

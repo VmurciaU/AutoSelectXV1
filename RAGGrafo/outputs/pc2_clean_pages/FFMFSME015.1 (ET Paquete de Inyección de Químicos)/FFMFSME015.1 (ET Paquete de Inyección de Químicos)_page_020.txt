@@ -1,0 +1,31 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 14 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Malla puesta a tierra.
+ Iluminación exterior de áreas.
+6.4. Límites de Batería
+Se establecen los siguientes límites de suministro. El VENDEDOR deberá incluir en su propuesta cualquier
+punto terminal adicional a considerar. Si no se especifica algún particular en la hoja de datos particular del
+PAQUETE, los puntos terminales estarán a cero “0” metros del borde de este.
+6.4.1. Tubería
+Conexiones de entrada/salida principal y drenajes.
+Se deberá entregar una facilidad de conexión principal para dosificación del químico a borde de patín del
+PAQUETE de acuerdo con el tamaño, tipo de conexión y normativa aplicable que se indica en la hoja de
+datos particular del PAQUETE y/o el P&ID referenciados en el numeral 3 de esta especificación. El
+PROVEEDOR deberá garantizar y optimizar el número de conexiones al límite de batería del patín para
+minimizar interconexiones.
+El PROVEEDOR deberá incluir todos los accesorios para empalme de las conexiones con las tuberías/
+tubing de suministro, quill o boquilla de inyección, válvulas, codos entre otros que sean requeridos para la
+correcta interconexión del PAQUETE y la correcta dosificación de los químicos.
+6.4.2. Electricidad
+Los límites de batería eléctricos serán a 0 metros del tablero de alimentación eléctrica (potencia) / control
+del PAQUETE, teniendo en cuenta:
+ Alimentación eléctrica: Regletas de bornes en el equipo o caja intermedia.
+ Control e instrumentación: Regletas de bornes en el equipo o caja intermedia. Panel de terminales de
+potencia.
+ Puesta a tierra: Conexiones para el conexionado a la malla de puesta a tierra.
+6.4.3. Instrumentación y Control
+Los límites de batería de instrumentación y control serán en la caja de conexionado de cada PAQUETE,
+teniendo en cuenta lo siguiente

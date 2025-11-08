@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 23 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+De acuerdo con lo indicado en el artículo 5 del Reglamento Técnico de Instalaciones Eléctricas (RETIE),
+en las instalaciones objeto del reglamento se debe aplicar el Sistema Internacional de Unidades (SI). La
+simbología que se utilizará en los diseños estará de acuerdo con el RETIE, Artículo 6 “Simbología y
+Señalización” y con lo estipulado en las normas IEC 60617 (y actualización 1082), IEC 60750, ANSI Y32
+o IEEE 315, en cualquier caso, se debe especificar claramente por el diseñador la simbología a utilizar.
+7.6.1. Tablero de Potencia
+Será parte del alcance del VENDEDOR proveer el PAQUETE con un (1) tablero principal de potencia para
+la alimentación de las cargas que lo conforman (motores, equipos eléctricos, etc.). El tablero se alimentará
+en 480 VAC, en el caso de requerir diferentes niveles de tensión, el VENDEDOR deberá incluir los
+transformadores y/o fuentes necesarias para los niveles de tensión que se requiera. El VENDEDOR deberá
+realizar todo el cableado interno requerido para la alimentación de los diferentes equipos eléctricos que
+conformen el PAQUETE, incluyendo; cableado, tubería y todos los accesorios de montaje necesarios y
+acordes a la clasificación de áreas del sitio. El Tablero deberá cumplir con lo indicado en el documento de
+referencia: EDP-ET-335 Especificación Técnica Tableros de Baja Tensión Hasta 600V.
+7.6.2. Interruptores
+Los interruptores serán del tipo de caja moldeada y deberán cumplir con los requerimientos generales
+establecidos en la Norma NEMA AB-1 ó IEEE C37.13 ó IEC 60947-2.
+Los interruptores serán monopolares, bipolares o tripolares, según lo indiquen los planos para cada tablero
+y la posición de disparo estará indicada claramente por la perilla de operación.
+Los interruptores bipolares o tripolares serán de disparo común y serán accionados por una sola perilla de
+operación; no se permite interruptores bipolares o tripolares ensamblados con unidades monopolares.
+Los interruptores serán de protección térmica y magnética, a menos que se indique lo contrario en los
+requerimientos particulares.
+El número de circuitos y las capacidades de corriente nominal serán las indicadas en los cuadros de cargas
+o planos unifilares respectivos.
+Los interruptores serán operados manualmente mediante mecanismo de disparo mecánicamente libre.
+Dispondrán también de disparo automático, quedando en posición intermedia entre cerrado y abierto.
+En caso de requerirse operación de los interruptores en la parte exterior del tablero, esta característica
+será incluida en las observaciones de las hojas de datos particular del PAQUETE.

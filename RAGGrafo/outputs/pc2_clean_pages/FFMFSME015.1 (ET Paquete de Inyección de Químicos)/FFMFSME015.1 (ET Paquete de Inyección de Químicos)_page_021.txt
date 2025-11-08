@@ -1,0 +1,11 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 15 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Se deben proporcionar terminales en cajas de conexiones locales.
+ Las cajas de derivación se ubicarán a nivel del suelo.
+6.4.4. Civiles
+El límite de batería del PROVEEDOR es el patín del PAQUETE
+El VENDEDOR suministrará los detalles de los pernos de anclaje (instalación y suministro de estos
+elementos por otros).

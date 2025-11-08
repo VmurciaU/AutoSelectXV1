@@ -1,0 +1,22 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 43 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+14. Garantía
+El VENDEDOR deberá garantizar durante un período de doce (12) meses a partir de la puesta en marcha
+o dieciocho (18) meses a partir del despacho al CLIENTE, el correcto funcionamiento y rendimiento para
+los datos de diseño/operación, diseño/construcción mecánica, instrumentación y control, diseño eléctrico,
+integridad estructural, mano de obra y materiales de construcción usados del PAQUETE y demás
+elementos según en cumplimiento con los requerimientos establecidos en esta especificación.
+El VENDEDOR debe garantizar que todos los materiales para la fabricación de los componentes serán
+manufacturados, ensamblados y probados de conformidad con esta especificación y los otros documentos
+que se anexen a esta requisición. En caso de presentarse algún tipo de falla o se evidencie algún tipo de
+error de construcción, o falla durante el periodo de garantía establecido en las condiciones,
+El VENDEDOR se compromete a solucionar, reparar o reemplazar las partes o equipos que se requieran,
+a su entero costo y responsabilidad sin que esto signifique algún costo adicional para el CLIENTE.
+El PAQUETE debe desempeñarse satisfactoriamente bajo las condiciones de operación que se indica en
+el capítulo 5 y 7 en esta especificación y en las hojas de datos aplicables y deberán ser aptos para el fin
+previsto.
+El VENDEDOR cumplirá con los requerimientos de garantía del CLIENTE que se estipulen en la orden de
+compra.

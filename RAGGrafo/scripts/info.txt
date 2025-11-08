@@ -1,0 +1,103 @@
+
+#Se eejecutan asi los archivos
+
+python RAGGrafo/scripts/pc1_read_pdfs.py
+python RAGGrafo/scripts/pc2_clean_layout.py
+python RAGGrafo/scripts/pc3_parse_blocks.py
+python RAGGrafo/scripts/pc4_consolidate.py
+python RAGGrafo/scripts/pc5_graph_build.py
+python RAGGrafo/scripts/pc6_lightrag.py --use-core all
+python RAGGrafo/scripts/upload_graph.py
+
+python RAGGrafo/scripts/benchmark_queries.py # Test de varias preguntas
+
+
+
+#Se levanta LighrRAG con ollama **** no probado aun
+
+# modelos recomendados en CPU
+export LIGHTRAG_EMBEDDING_MODEL="BAAI/bge-m3"
+export LIGHTRAG_RERANK_MODEL="BAAI/bge-reranker-v2-m3"
+
+# arranca el server (puerto 8777)
+lightrag-server --host 0.0.0.0 --port 8777
+
+
+
+
+
+
+
+
+# Detén server anterior (Ctrl+C)
+# Exporta estas dos *además* de las que ya tienes
+export LLM_MODEL="gpt-4o-mini"
+export EMBEDDING_MODEL="text-embedding-3-large"
+
+# Arranca
+lightrag-server \
+  --host 0.0.0.0 \
+  --port 8777 \
+  --working-dir ./rag_storage \
+  --llm-binding openai \
+  --embedding-binding openai \
+  --rerank-binding null
+
+
+#Para probar los parametros
+curl -s http://localhost:8777/health | jq '.configuration | {llm_binding,llm_model,embedding_binding,embedding_model,summary_language}'
+
+
+
+export OPENAI_LLM_MODEL="gpt-4o-mini"
+export OPENAI_EMBEDDING_MODEL="text-embedding-3-large"
+
+export LIGHTRAG_LLM_BINDING="openai"
+export LIGHTRAG_EMBEDDING_BINDING="openai"
+export LIGHTRAG_LLM_MODEL="gpt-4o-mini"
+export LIGHTRAG_EMBEDDING_MODEL="text-embedding-3-large"
+
+# 👇 CLAVE: fuerza dimensión de embeddings
+export LIGHTRAG_EMBEDDING_DIM=3072
+export EMBEDDING_DIM=3072
+export NANO_VECTORDB_DIM=3072
+
+export LIGHTRAG_SUMMARY_LANGUAGE="Spanish"
+export SUMMARY_LANGUAGE="Spanish"
+
+
+
+
+
+
+
+
+
+
+
+************* IMPORTANTE
+esto lo haremos luego
+→ ⚠️ “No tengo suficiente información…”
+Eso es normal: los bloques PC-6 del corpus no incluyen tablas FAT (sólo HD, MR, ET).
+👉 Cuando generes el nuevo corpus PC-7, asegúrate de incluir las tablas tipo “Material List / BOM” exportadas por pdfplumber en CSV → JSON para que LightRAG las indexe.
+
+
+
+
+
+        args.queries = [
+            "¿La especificacion solicita bombas dosificadoras? Dame los Tags, las cantidades y cual parte del documento son solicitadas",
+            "¿Cuál es el caudal nominal, presión de trabajo, viscosidad y el turndown de la o las bombas dosificadoras?",
+            "¿Qué normas aplican a FAT y cómo se vinculan con el paquete de inyección?",
+            "Conecta Bomba Dosificadora → Prueba FAT → API 675; indica el camino y la justificación.",
+            "Dame setpoint y la instrumentacion y tipo de instrumentos requeridos para el equipo de dosificación (si aplica).",
+        ]
+
+
+
+# A) Pregunta directa (modo mix recomendado)
+curl -s -X POST http://localhost:8777/query \
+  -H "Content-Type: application/json" \
+  -d '{"query":"¿Cuál es el caudal nominal y el turndown de la bomba dosificadora?","mode":"mix"}' | jq
+
+python RAGGrafo/scripts/benchmark_queries_v2.py --modes naive local global mix --style concise --wrap 110

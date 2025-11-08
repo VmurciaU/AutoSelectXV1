@@ -1,0 +1,29 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 13 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+ Partes de repuesto y consumibles para instalación, comisionamiento, puesta en marcha y arranque del
+PAQUETE de inyección de químicos.
+ Listado de partes de repuesto para mantenimiento y dos años de operación (debe incluir (descripción
+detallada del repuesto según estándar del PROVEEDOR, cantidad por equipo según recomendado por
+el PROVEEDOR, número de parte y catálogo del repuesto y valor unitario).
+ Lista de repuestos y consumibles generales del equipo no incluidos en los anteriores listados
+(descripción detallada del repuesto según estándar del PROVEEDOR, cantidad por equipo según
+recomendado por el PROVEEDOR, número de parte y catálogo del repuesto).
+ Pruebas de aceptación en fabrica FAT.
+ Empaque, envío y descargue en sitio de instalación del PAQUETE.
+ Documentación de acuerdo con el capítulo 12 de esta especificación.
+ Asistencia técnica en sitio durante la instalación, el comisionamiento, puesta en marcha y pruebas SAT
+hasta estabilizar procesos y conseguir aprobación por escrito del CLIENTE.
+ Entrenamiento / capacitación en SITIO del personal del CLIENTE.
+ Certificaciones de fábrica.
+ Toda la documentación necesaria y suficiente para la certificación RETIE del PAQUETE.
+ Documentación As-Built, y de fabricación del PAQUETE.
+ Garantías.
+6.3. Exclusiones
+Quedan excluidos del alcance de suministro del VENDEDOR los siguientes items.
+ Tuberías, electricidad, control, válvulas, materiales que se encuentren por fuera de los límites de batería
+del PAQUETE. Para verificar los límites del PAQUETE, el PROVEEDOR debe consultar los P&ID que
+hagan referencia al proyecto referidos en el numeral 3.
+ Obras civiles (movimientos de tierra, cimentaciones, etc.).

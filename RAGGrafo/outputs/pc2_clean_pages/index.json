@@ -1,0 +1,576 @@
+{
+  "documents": [
+    {
+      "doc_id": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)",
+      "file_name": "FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS).pdf",
+      "doc_type": "HD",
+      "rev": "033.1",
+      "n_pages": 4,
+      "detected_patterns": {
+        "header": [
+          "PROYECTO Ingeniería Detallada Proyecto Acondicionamiento Estratégico de Cupiagua",
+          "CLIENTE Ecopetrol S.A.",
+          "ESTACIÓN CPF CUPIAGUA",
+          "HOJA DE DATOS PAQUETE DE"
+        ],
+        "footer": []
+      },
+      "pages": [
+        {
+          "page": 1,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+          "n_lines_before": 29,
+          "n_lines_after": 29
+        },
+        {
+          "page": 2,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+          "n_lines_before": 101,
+          "n_lines_after": 97
+        },
+        {
+          "page": 3,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+          "n_lines_before": 100,
+          "n_lines_after": 96
+        },
+        {
+          "page": 4,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+          "n_lines_before": 12,
+          "n_lines_after": 8
+        }
+      ]
+    },
+    {
+      "doc_id": "FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)",
+      "file_name": "FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS).pdf",
+      "doc_type": "MR",
+      "rev": "013.0",
+      "n_pages": 20,
+      "detected_patterns": {
+        "header": [
+          "FORMATO REQUISICIÓN DE MATERIALES COMPRAS",
+          "Paquete de Inyección de Químicos",
+          "ECOPETROL DESARROLLO DE PROYECTO",
+          "VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS",
+          "CÓDIGO Elaborado"
+        ],
+        "footer": [
+          "Documento Rector: EDP-G-009",
+          "___________________________________________________________________",
+          "Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación",
+          "puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido",
+          "digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la",
+          "regulación vigente."
+        ]
+      },
+      "pages": [
+        {
+          "page": 1,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_001.txt",
+          "n_lines_before": 42,
+          "n_lines_after": 31
+        },
+        {
+          "page": 2,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_002.txt",
+          "n_lines_before": 52,
+          "n_lines_after": 41
+        },
+        {
+          "page": 3,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_003.txt",
+          "n_lines_before": 39,
+          "n_lines_after": 28
+        },
+        {
+          "page": 4,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_004.txt",
+          "n_lines_before": 49,
+          "n_lines_after": 38
+        },
+        {
+          "page": 5,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_005.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_005.txt",
+          "n_lines_before": 49,
+          "n_lines_after": 38
+        },
+        {
+          "page": 6,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_006.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_006.txt",
+          "n_lines_before": 50,
+          "n_lines_after": 39
+        },
+        {
+          "page": 7,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_007.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_007.txt",
+          "n_lines_before": 62,
+          "n_lines_after": 51
+        },
+        {
+          "page": 8,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_008.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_008.txt",
+          "n_lines_before": 77,
+          "n_lines_after": 66
+        },
+        {
+          "page": 9,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_009.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_009.txt",
+          "n_lines_before": 61,
+          "n_lines_after": 50
+        },
+        {
+          "page": 10,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_010.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_010.txt",
+          "n_lines_before": 57,
+          "n_lines_after": 46
+        },
+        {
+          "page": 11,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_011.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_011.txt",
+          "n_lines_before": 51,
+          "n_lines_after": 40
+        },
+        {
+          "page": 12,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_012.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_012.txt",
+          "n_lines_before": 52,
+          "n_lines_after": 41
+        },
+        {
+          "page": 13,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_013.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_013.txt",
+          "n_lines_before": 51,
+          "n_lines_after": 40
+        },
+        {
+          "page": 14,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_014.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_014.txt",
+          "n_lines_before": 48,
+          "n_lines_after": 37
+        },
+        {
+          "page": 15,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_015.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_015.txt",
+          "n_lines_before": 51,
+          "n_lines_after": 40
+        },
+        {
+          "page": 16,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_016.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_016.txt",
+          "n_lines_before": 49,
+          "n_lines_after": 38
+        },
+        {
+          "page": 17,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_017.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_017.txt",
+          "n_lines_before": 52,
+          "n_lines_after": 41
+        },
+        {
+          "page": 18,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_018.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_018.txt",
+          "n_lines_before": 57,
+          "n_lines_after": 46
+        },
+        {
+          "page": 19,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_019.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_019.txt",
+          "n_lines_before": 58,
+          "n_lines_after": 47
+        },
+        {
+          "page": 20,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_020.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)/FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)_page_020.txt",
+          "n_lines_before": 59,
+          "n_lines_after": 48
+        }
+      ]
+    },
+    {
+      "doc_id": "FFMFSME015.1 (ET Paquete de Inyección de Químicos)",
+      "file_name": "FFMFSME015.1 (ET Paquete de Inyección de Químicos).pdf",
+      "doc_type": "ET",
+      "rev": "015.1",
+      "n_pages": 49,
+      "detected_patterns": {
+        "header": [
+          "Ingeniería Detalle Acondicionamiento Estratégico",
+          "Cupiagua",
+          "CLIENT DOCUMENT NUMBER DATE"
+        ],
+        "footer": []
+      },
+      "pages": [
+        {
+          "page": 1,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_001.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_001.txt",
+          "n_lines_before": 29,
+          "n_lines_after": 27
+        },
+        {
+          "page": 2,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_002.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_002.txt",
+          "n_lines_before": 16,
+          "n_lines_after": 15
+        },
+        {
+          "page": 3,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_003.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_003.txt",
+          "n_lines_before": 47,
+          "n_lines_after": 46
+        },
+        {
+          "page": 4,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_004.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_004.txt",
+          "n_lines_before": 48,
+          "n_lines_after": 47
+        },
+        {
+          "page": 5,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_005.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_005.txt",
+          "n_lines_before": 14,
+          "n_lines_after": 13
+        },
+        {
+          "page": 6,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_006.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_006.txt",
+          "n_lines_before": 18,
+          "n_lines_after": 17
+        },
+        {
+          "page": 7,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_007.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_007.txt",
+          "n_lines_before": 22,
+          "n_lines_after": 19
+        },
+        {
+          "page": 8,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_008.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_008.txt",
+          "n_lines_before": 39,
+          "n_lines_after": 36
+        },
+        {
+          "page": 9,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_009.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_009.txt",
+          "n_lines_before": 14,
+          "n_lines_after": 11
+        },
+        {
+          "page": 10,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_010.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_010.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 11,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_011.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_011.txt",
+          "n_lines_before": 40,
+          "n_lines_after": 37
+        },
+        {
+          "page": 12,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_012.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_012.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 13,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_013.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_013.txt",
+          "n_lines_before": 32,
+          "n_lines_after": 29
+        },
+        {
+          "page": 14,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_014.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_014.txt",
+          "n_lines_before": 28,
+          "n_lines_after": 25
+        },
+        {
+          "page": 15,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_015.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_015.txt",
+          "n_lines_before": 21,
+          "n_lines_after": 18
+        },
+        {
+          "page": 16,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_016.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_016.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 17,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_017.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_017.txt",
+          "n_lines_before": 22,
+          "n_lines_after": 19
+        },
+        {
+          "page": 18,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_018.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_018.txt",
+          "n_lines_before": 29,
+          "n_lines_after": 26
+        },
+        {
+          "page": 19,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_019.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_019.txt",
+          "n_lines_before": 32,
+          "n_lines_after": 29
+        },
+        {
+          "page": 20,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_020.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_020.txt",
+          "n_lines_before": 34,
+          "n_lines_after": 31
+        },
+        {
+          "page": 21,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_021.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_021.txt",
+          "n_lines_before": 14,
+          "n_lines_after": 11
+        },
+        {
+          "page": 22,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_022.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_022.txt",
+          "n_lines_before": 38,
+          "n_lines_after": 35
+        },
+        {
+          "page": 23,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_023.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_023.txt",
+          "n_lines_before": 42,
+          "n_lines_after": 39
+        },
+        {
+          "page": 24,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_024.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_024.txt",
+          "n_lines_before": 28,
+          "n_lines_after": 25
+        },
+        {
+          "page": 25,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_025.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_025.txt",
+          "n_lines_before": 41,
+          "n_lines_after": 38
+        },
+        {
+          "page": 26,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_026.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_026.txt",
+          "n_lines_before": 36,
+          "n_lines_after": 33
+        },
+        {
+          "page": 27,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_027.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_027.txt",
+          "n_lines_before": 39,
+          "n_lines_after": 36
+        },
+        {
+          "page": 28,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_028.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_028.txt",
+          "n_lines_before": 40,
+          "n_lines_after": 37
+        },
+        {
+          "page": 29,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_029.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_029.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 30,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_030.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_030.txt",
+          "n_lines_before": 35,
+          "n_lines_after": 32
+        },
+        {
+          "page": 31,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_031.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_031.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 32,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_032.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_032.txt",
+          "n_lines_before": 33,
+          "n_lines_after": 30
+        },
+        {
+          "page": 33,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_033.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_033.txt",
+          "n_lines_before": 36,
+          "n_lines_after": 33
+        },
+        {
+          "page": 34,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_034.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_034.txt",
+          "n_lines_before": 36,
+          "n_lines_after": 33
+        },
+        {
+          "page": 35,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_035.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_035.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 36,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_036.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_036.txt",
+          "n_lines_before": 39,
+          "n_lines_after": 36
+        },
+        {
+          "page": 37,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_037.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_037.txt",
+          "n_lines_before": 15,
+          "n_lines_after": 12
+        },
+        {
+          "page": 38,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_038.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_038.txt",
+          "n_lines_before": 35,
+          "n_lines_after": 32
+        },
+        {
+          "page": 39,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_039.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_039.txt",
+          "n_lines_before": 34,
+          "n_lines_after": 31
+        },
+        {
+          "page": 40,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_040.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_040.txt",
+          "n_lines_before": 24,
+          "n_lines_after": 21
+        },
+        {
+          "page": 41,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_041.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_041.txt",
+          "n_lines_before": 29,
+          "n_lines_after": 26
+        },
+        {
+          "page": 42,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_042.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_042.txt",
+          "n_lines_before": 37,
+          "n_lines_after": 34
+        },
+        {
+          "page": 43,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_043.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_043.txt",
+          "n_lines_before": 42,
+          "n_lines_after": 39
+        },
+        {
+          "page": 44,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_044.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_044.txt",
+          "n_lines_before": 39,
+          "n_lines_after": 36
+        },
+        {
+          "page": 45,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_045.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_045.txt",
+          "n_lines_before": 46,
+          "n_lines_after": 43
+        },
+        {
+          "page": 46,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_046.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_046.txt",
+          "n_lines_before": 36,
+          "n_lines_after": 33
+        },
+        {
+          "page": 47,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_047.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_047.txt",
+          "n_lines_before": 41,
+          "n_lines_after": 38
+        },
+        {
+          "page": 48,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_048.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_048.txt",
+          "n_lines_before": 13,
+          "n_lines_after": 10
+        },
+        {
+          "page": 49,
+          "clean_txt_file": "outputs/pc2_clean_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_049.txt",
+          "orig_txt_file": "outputs/pc1_raw_pages/FFMFSME015.1 (ET Paquete de Inyección de Químicos)/FFMFSME015.1 (ET Paquete de Inyección de Químicos)_page_049.txt",
+          "n_lines_before": 25,
+          "n_lines_after": 22
+        }
+      ]
+    }
+  ]
+}

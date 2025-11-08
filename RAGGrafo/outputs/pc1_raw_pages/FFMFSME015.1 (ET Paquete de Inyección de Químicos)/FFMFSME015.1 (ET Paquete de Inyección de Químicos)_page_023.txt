@@ -1,0 +1,42 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 17 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+El VENDEDOR debe ser enteramente responsable de la coordinación con todos sus SUB-VENDEDORES
+de los materiales y servicios provistos por estos. El VENDEDOR será el único responsable frente al
+CLIENTE del cumplimiento de los requisitos especificados. La lista de SUB-VENDEDORES y el resumen
+de la experiencia se proporcionarán al CLIENTE para su revisión y comentarios antes de la adjudicación
+del trabajo.
+En caso de cualquier discrepancia, deficiencia o falta de claridad en cualquier parte de esta especificación
+o documentos referenciados en el numeral 3, el VENDEDOR deberá notificar al CLIENTE con una
+propuesta alternativa o adicional y precios para cada categoría así incluida. Cualquier artículo así
+identificado después de la adjudicación de la orden de compra no constituirá un cambio y no será motivo
+de alteración de costos ni tiempos.
+El VENDEDOR se asegurará de que los equipos y las partes seleccionadas del PAQUETE (equipos
+auxiliares, tuberías, instrumentos, componentes estructurales, etc.) sean simples y seguros de operar con
+alta disponibilidad, confiabilidad, mantenibilidad y buena accesibilidad.
+El VENDEDOR deberá proporcionar el arreglo general del PAQUETE indicando la disposición de los
+equipos, tuberías y auxiliares. La distribución y arreglo general del PAQUETE ensamblado completo
+deberá garantizar un acceso fácil y seguro a los equipos para facilitar la operación, el mantenimiento y el
+ajuste de los controles. Los equipos integrados en el patín deben disponerse de modo que el centro de
+gravedad del PAQUETE completo coincida lo más cerca posible con el centro geométrico.
+El PAQUETE se ensamblará completo con todos los accesorios, válvulas, tuberías, instrumentos, placas
+y cubiertas, paneles de control local, centrales y maestros, todo el cableado y tuberías eléctricas y de
+control dentro de los límites de la batería de cada patín y todos los dispositivos necesarios para una
+instalación completa y un funcionamiento satisfactorio como unidad integrada. Las piezas sueltas del envío
+que no puedan preensamblarse deben estar claramente identificadas y marcadas físicamente y
+referenciadas en los manuales y planos de instalación.
+La operación del PAQUETE será completamente automática en la medida posible.
+El VENDEDOR deberá desarrollar los planos requeridos (ej P&ID) que indiquen los equipos, la
+instrumentación y los controles, los dispositivos de seguridad necesarios según lo requiera el PAQUETE.
+El VENDEDOR deberá suministrar todos sus componentes y equipos eléctricos asociados que cumplan
+con el “Reglamento Técnico de Instalaciones Eléctricas” RETIE y suministrar toda la documentación
+requerida para la certificación.
+7.2. Procesos
+El PAQUETE funcionará inyectando inhibidor de corrosión desde seis (6) bombas de dosificación hacía
+seis (6) corrientes asociadas a la operación del nuevo compresor de gas de proceso M155-K-21150. Cada
+punto de inyección cuenta con una bomba dedicada y una línea de suministro.

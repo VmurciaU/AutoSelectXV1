@@ -1,0 +1,52 @@
+FORMATO REQUISICIÓN DE MATERIALES COMPRAS
+MAYORES
+Paquete de Inyección de Químicos
+ECOPETROL DESARROLLO DE PROYECTO
+VICEPRESIDENCIA DE INGENIERÍA Y PROYECTOS
+CÓDIGO Elaborado
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+Para el alistamiento y puesta en marcha, el PROVEEDOR deberá tener aprobados por el CLIENTE todos
+los documentos que hacen parte del suministro, incluyendo los planos de ensamble e instalación, los
+procedimientos, protocolos de puesta en marcha y los manuales de operación y mantenimiento al igual
+que todos los documentos que sean solicitados en esta requisición.
+4.10. ENTRENAMIENTO
+El PROVEEDOR deberá ofertar el entrenamiento para arranque y operación del sistema por separado,
+teniendo en cuenta que dichas labores podrán ser realizadas por el CLIENTE en conjunto con el
+personal técnico de este o su contratista. El entrenamiento debe cubrir como mínimo aspectos
+relacionados con las características de los equipos, condiciones de operación, precauciones de
+seguridad y la operación y mantenimiento del PAQUETE.
+4.11. REPUESTOS
+El PROVEEDOR deberá suministrar todas las partes de repuesto y consumibles necesarios para el
+precomisionamiento, comisionamiento y puesta en marcha del PAQUETE. El PROVEEDOR deberá
+presentar en la oferta por separado la lista con las partes de repuesto y consumibles requeridos para el
+comisionamiento y arranque incluyendo precios.
+El PROVEEDOR deberá presentar una lista con los repuestos y consumibles necesarios para la correcta
+operación del PAQUETE durante el arranque y 2 años de operación, según considere y aplique.
+Para el listado de repuestos se debe suministrar como mínimo la siguiente información:
+- Descripción de partes de repuesto con al menos tres características técnicas, por ejemplo: (para
+un rodamiento: tipo de rodamiento, diámetro interno, material, tipo de sello).
+- Número de parte.
+- Cantidad.
+- Listado de precios unitarios.
+- En caso de especificar “kits” dentro del listado de repuestos, se debe detallar las partes que lo
+componen.
+4.12. HERRAMIENTAS ESPECIALES
+El PROVEEDOR debe indicar o suministrar como parte del suministro las herramientas especiales para
+el comisionamiento, puesta en marcha, operación y mantenimiento del PAQUETE. Si aplica, se debe
+incluir una lista de herramientas especiales (como un ítem separado en la oferta).
+EDP-F-046 – 20/11/2017 V-1 12/20
+Documento Rector: EDP-G-009
+___________________________________________________________________
+Todos los derechos reservados para Ecopetrol S.A. Ninguna reproducción externa copia o transmisión digital de esta publicación
+puede ser hecha sin permiso escrito. Ningún párrafo de esta publicación puede ser reproducido, copiado o transmitido
+digitalmente sin un consentimiento escrito o de acuerdo con las leyes que regulan los derechos de autor y con base en la
+regulación vigente.

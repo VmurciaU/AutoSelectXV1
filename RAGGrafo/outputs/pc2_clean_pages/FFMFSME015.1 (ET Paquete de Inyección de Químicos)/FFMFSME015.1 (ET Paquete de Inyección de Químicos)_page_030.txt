@@ -1,0 +1,32 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 24 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7.6.3. Contactores
+Se utilizarán contactores para sistema de control de potencia si son requeridos.
+Las bobinas de los contactores deberán estar diseñadas para operación continua sin exceder los límites
+de temperatura permitidos con una temperatura ambiente de 40°C.
+Los contactores deberán operar correctamente con variaciones de voltaje de + 10% -15% del voltaje
+nominal y frecuencia de ±5% del valor nominal (60 Hz). La capacidad de los contactores deberá ser
+seleccionada según el 125 % de la potencia nominal de la carga.
+7.6.4. Botones pulsadores
+Los botones pulsadores, se suministrarán con contactos para trabajo pesado, de retorno automático a la
+posición normal. Todos los botones pulsadores deberán ser adecuados para operación continua a 600V.
+Cada botón pulsador será suministrado con una placa de identificación. El tamaño de los caracteres deberá
+ser como mínimo 5mm.
+El texto será aprobado por el CLIENTE. El VENDEDOR suministrará una propuesta de las leyendas para
+cada botón pulsador.
+7.6.5. Transformadores de Control
+La capacidad de los transformadores de control deberá ser definida teniendo en cuenta el 130% de la
+potencia al cierre que requiere la bobina del contactor, lámparas de indicación, relés auxiliares, fuentes y
+demás dispositivos de control incorporados.
+El primario de los transformadores de control estará protegido con minibreakers siempre que las corrientes
+de corto circuito del circuito al que se conectan así lo permitan. En caso contrario serán aceptables fusibles
+montados en base extraíble, el secundario deberá estar protegido con minibreakers.
+En el lado de 120 V se deberá instalar un supresor de sobretensiones (varistor) para proteger los circuitos
+de control.
+7.6.6. Lámparas de Señalización
+Todas las lámparas de señalización deberán ser del tipo larga vida o multiled adecuados para operación
+permanente con alimentación de 120 VAC y variaciones de voltaje de ± 15 %. Los lentes y filtros de color
+que suministre el VENDEDOR serán resistentes a los efectos de la iluminación permanente de la lámpara.

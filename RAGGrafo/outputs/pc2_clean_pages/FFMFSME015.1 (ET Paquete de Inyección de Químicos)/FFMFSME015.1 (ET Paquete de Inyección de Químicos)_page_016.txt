@@ -1,0 +1,34 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 10 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+5. Datos Generales y Requisitos
+5.1. Vida de servicio
+Todos los equipos suministrados para el PAQUETE de inyección de químicos deben estar diseñados y
+fabricados para una vida útil de diseño por lo menos de 20 años y mínimo 3 años de operación continua.
+5.2. Unidades de medida
+Todas las unidades de medida serán del sistema inglés (US), a menos que se especifique de otros
+sistemas de unidades en la documentación contractual.
+5.3. Lenguaje
+El lenguaje para esta especificación está en español, pero los documentos relacionados a este proyecto
+podrán estar en inglés, excepto el manual de operación y mantenimiento el cual deberá estar impreso en
+idioma español.
+5.4. Limitación de Ruido
+El nivel de ruido combinado del nuevo PAQUETE y sus equipos asociados no deberán sobrepasar los 85
+dB (A) al aire libre, cuando se realicen mediciones a un (1) metro de distancia de la fuente de ruido en
+todas las direcciones.
+Si para cumplir el requerimiento de nivel de ruido, el VENDEDOR deberá disponer de una cabina de
+insonorización del PAQUETE, el VENDEDOR deberá incluirla dentro de su alcance y su diseño debe
+permitir el acceso fácil al equipo para realizar labores de inspección, limpieza, reemplazo de piezas y
+mantenimiento y deberá dejar accesibles las facilidades para izado del equipo para su manipulación y
+transporte. Las pruebas de ruido del PAQUETE y a cargo del VENDEDOR se deben realizar de acuerdo
+con la norma ISO 2151 o similar que aplique.
+5.5. Clasificación de Áreas Peligrosas
+La clasificación de áreas peligrosas en el área donde será instalado el equipo se encuentra defina como
+Clase I División 2 Grupo D según lo indicado en las hojas de datos y el documento FFM/F-PCF-GN-ELF-
+00-001-1/4 “Planimetría de Clasificación de Áreas Respaldo DEMAG”.
+5.6. Suministro de Energía
+El suministro de energía eléctrica será proporcionado por el CLIENTE hasta la caja de conexiones del
+PAQUETE a borde del patín. La energía suministrada por el VENDEDOR con los siguientes voltajes de
+acuerdo con RETIE (2013) ítem 12 y EDP-ET-344 ítem 4.4.1:

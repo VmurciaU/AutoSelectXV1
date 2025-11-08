@@ -1,0 +1,27 @@
+CLIENT
+CONTRACTOR
+PROJECT
+Aprobado para construcción – Actualización según donde se
+1 20-11-2023
+indique
+Brayan Quispe Miguel Salamanca Omar Villarreal
+(BQS) (MSC) (OVG)
+Brayan Quispe Miguel Salamanca Omar Villarreal
+0 30-10-2023 Aprobado para construcción
+(BQS) (MSC) (OVG)
+Miguel Salamanca Omar Villarreal Omar Carrillo
+A1 02-09-2022 Emitido para comentarios del cliente
+(MSC) (OVM) (OCA)
+Miguel Salamanca Omar Villarreal Omar Carrillo
+P 03-05-2022 Emitido para comentarios internos
+(MSC) (OVM) (OCA)
+REV DATE DESCRIPTION Author Checked by Approved by
+FOR PURCHASING
+S FOR INFORMATION
+U
+T FOR CONSTRUCTION
+A FOR APPROVAL/COMMENTS
+T
+S FOR DESIGN AS BUILT
+DOCUMENT NUMBER DOCUMENT TITLE
+FFM/F-S-ME-015 Especificación Técnica Paquete de Inyección de Químicos

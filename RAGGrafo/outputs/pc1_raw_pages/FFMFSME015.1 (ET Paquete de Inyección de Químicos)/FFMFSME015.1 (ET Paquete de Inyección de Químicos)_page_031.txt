@@ -1,0 +1,37 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 25 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+7.6.7. Cableado y Conexionado
+El cableado y conexionado de los equipos eléctricos estará definido dentro de los lineamientos del
+documento EDP-ET-335 Especificación Técnica Tableros de Baja Tensión Hasta 600V.
+7.6.8. Motores Eléctricos
+Se deberán especificar motores eléctricos de inducción jaula de ardilla de las bombas. Los motores
+eléctricos para potencias desde 1/3 HP en adelante deben ser trifásicos y se alimentarán en baja tensión
+a 480 VCA, 3F, 4H, 60 Hz.
+Los motores deben ser completamente cerrados, tipo TEFC según NEMA o IP55 según IEC, cerramiento
+Nema 4X, refrigerados por ventilador, para instalación en área clasificada como Clase 1, División 2, Grupo
+D, incorporando materiales especiales resistentes a la corrosión, aptos para instalación a la intemperie.
+Los motores para instalar en áreas clasificadas clase 1, división 2 grupo C y D deberán ser TEFC y a
+prueba de explosión (XP o similar).
+Todo motor estará diseñado para arranque directo sin importar la potencia o el voltaje de conexión, excepto
+donde se indique lo contrario.
+ Cumplimiento del estándar NEMA MG-1
+ Voltaje del Motor 460 Vac para un voltaje del sistema de 480 Vac
+ Factor de Servicio = 1 (según IEEE 84)
+ Descarga TEFC para áreas no clasificadas y clasificación Clase I División II Áreas clasificadas Clase I
+División 2, los motores serán a prueba de explosión (XP)
+ Aislamiento Clase F
+ Diseño de torque normal NEMA B
+7.7. Instrumentación y Control
+El PAQUETE se entregará con un Panel de Control (UCP) patentado ubicado sobre un patín, que inluya
+un controlador y su respectiva HMI Local.
+El panel de control de la unidad (UCP) encenderá/apagará el equipo y deberá garantizar el control continuo
+de inyección de químico.
+El DCS de la planta monitoreará el PAQUETE a través de señales cableadas en duro y por comunicaciones
+usando el protocolo Modbus TCP/IP.
+El Proveedor deberá instalar en el panel de control local de la unidad

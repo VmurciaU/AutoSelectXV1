@@ -1,0 +1,33 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 26 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+n conversor de Fibra optica (FO tipo Multimodo, para comunicación Modbus Ethernet TCP/IP- para
+conexión a puerto 1000 Mbit/s with LC connector) para la comunicación hacia el DCS de planta con el fin
+de monitorear remotamente las variables y alarmas del proceso.
+Las siguientes son las señales cableadas en duro requeridas entre el sistema de control del paquete y los
+controladores DCS/SIS de la planta:
+M156-XLR-5540 – Señal de "runing" de bomba P-5540 a DCS (Contacto seco)
+M156-XLR-5541 – Señal de "runing" de bomba P-5541 a DCS (Contacto seco)
+M156-XLR-5542 – Señal de "runing" de bomba P-5542 a DCS (Contacto seco)
+M156-XLR-5543 – Señal de "runing" de bomba P-5543 a DCS (Contacto seco)
+M156-XLR-5544 – Señal de "runing" de bomba P-5544 a DCS (Contacto seco)
+M158-XSE-5540 – Señal de apagado desde SIS interlock 3TA(Contacto Seco)
+M158-XSE-5541 – Señal de apagado desde SIS interlock 3TB(Contacto Seco)
+M158-XSE-5542 – Señal de apagado desde SIS interlock 3TC(Contacto Seco)
+El PAQUETE debe disponer de interruptores para arrancar o parar las bombas. También deben incluir
+interruptores para posición local o remota de las bombas y alarmas que indican la posición en que se
+encuentra cada bomba.
+El VENDEDOR debe entregar las válvulas de seguridad (PSV), indicadores de presión (PI), medidores de
+nivel (LG), medidores de flujo (FI), protección por alta alta presión panel de control, señal de estatus,
+parada por interlock, tubing, tubería y demás accesorios necesarios asociados al PAQUETE.
+La instrumentación y actuadores deben ser suministrados completamente instalados y conectados, con
+todos los accesorios requeridos para la conexión a proceso tales como tubing y conectores, soportes y
+accesorios de montaje y todos los accesorios necesarios para la conexión eléctrica tales como cables de
+instrumentación, conduits, accesorios y cajas de conexionado.
+Las cajas de conexionado deberán ser suministradas precableadas con los cables de instrumentación
+desde los instrumentos y actuadores hasta las cajas, segregados por tipo de señal y ubicación.

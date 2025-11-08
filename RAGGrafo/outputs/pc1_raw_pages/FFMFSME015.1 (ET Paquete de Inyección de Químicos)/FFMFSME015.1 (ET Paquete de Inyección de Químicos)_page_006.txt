@@ -1,0 +1,18 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento
+Estratégico Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page iv / iv
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Índice de Tablas
+Tabla 1. Condiciones del Sitio – Fuente: “Bases de Diseño – Interdisciplinario” – FFM/F-PEI-010 9
+Tabla 2. Suministro de Energía Eléctrica .................................................................................... 11
+Tabla 3. Lista de conexiones de salida del PAQUETE. .............................................................. 18
+Tabla 4. Especificaciones técnicas de las bombas del PAQUETE de inyección de químicos. .. 20
+Tabla 5. Restricciones de Transporte - Fuente: "Resolución 4959 de 2006" ............................. 36
+Índice de Figuras
+Figura 1. Localización geográfica del campo Cupiagua ............................................................... 8
+Figura 2. Área disponible para el PAQUETE. (ver FFD/F-PCF-MP-PIL-10-822-1/1) ................. 11
+Figura 3. P&ID Paquete de inyección de químicos. Tomado de PUM/F-PCF-PU-PRE-55-552-2/2 18

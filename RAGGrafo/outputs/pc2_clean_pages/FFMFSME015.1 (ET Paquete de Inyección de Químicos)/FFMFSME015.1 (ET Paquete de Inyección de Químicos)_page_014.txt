@@ -1,0 +1,25 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 8 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+4. Ubicación y Condiciones Ambientales del Sitio
+4.1. Ubicación
+El Campo Cupiagua, de la Gerencia de Operaciones de Desarrollo y Producción Piedemonte, está
+localizado a 175 km, respectivamente, al noreste de Bogotá y al occidente de los municipios de Yopal y
+Aguazul, en el departamento de Casanare.
+Figura 1. Localización geográfica del campo Cupiagua
+4.2. Condiciones del Sitio
+Parámetros Valor
+Altitud CPF 396 m.a.s.l.
+Presión Barométrica 14.05 psia
+Temperatura Ambiente Promedio Mín. 70.8⁰ F (21.6⁰ C)
+Máx. 88.8⁰ F (31.5⁰C)
+Temperatura Ambiente Mín. 69.8⁰ F (21⁰ C)
+Máx. 92.5⁰ F (33.6⁰C)
+Temporada de Lluvias De abril a octubre
+Precipitación Promedio 80”-170” /año (203-432cm/año)
+Precipitación Máxima por Dia 9” /24h (228mm/24h)
+Brillo Solar Min.: 3.9 (hora/día)
+Max.: 7.4 (hora/día)
+Prom.: 5.4 (hora/día)

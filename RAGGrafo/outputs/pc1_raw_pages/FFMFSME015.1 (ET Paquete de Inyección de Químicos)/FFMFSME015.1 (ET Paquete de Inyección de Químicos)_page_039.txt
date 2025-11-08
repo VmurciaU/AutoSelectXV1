@@ -1,0 +1,34 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 33 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+• Prueba de comandos.
+• Prueba de visualización de variable y estados.
+• Prueba de los puntos de ajuste de operación de los equipos.
+• Prueba de operación del panel de control local.
+• Prueba de interlock entre otros.
+• Pruebas FAT y SAT
+Pruebas mecánicas y de funcionamiento del PAQUETE deberá ser realizada para asegurar la operación
+apropiada de todos los componentes y dispositivos instalados. El VENDEDOR deberá suministrar los
+procedimientos de pruebas al CLIENTE para aprobación con anticipación de dos (2) semanas. Los
+procedimientos deberán incluir formatos de registro de datos específicamente preparados para las pruebas
+correspondientes. El CLIENTE se reserva el derecho de presenciar estas pruebas.
+Todos los instrumentos y dispositivos eléctricos deberán ser calibrados antes del alistamiento para pruebas
+de funcionamiento mecánico y de desempeño.
+Durante el arranque y estabilización de los equipos intervenidos el VENDEDOR deberá prestar servicio de
+apoyo y acompañamiento durante el tiempo que el CLIENTE considere necesario.
+La aceptación del desempeño, funcionamiento mecánico, pruebas de funcionamiento o inspecciones no
+liberan al VENDEDOR de la responsabilidad de cumplir las condiciones de operación especificadas
+8.3. Inspección no Destructiva
+8.3.1. Pruebas de presión
+Los ensayos de presión se llevarán a cabo en conformidad con las especificaciones pertinentes del
+proyecto, las fichas técnicas, los códigos y las normas a que se refiere en el capítulo 3 de la presente
+especificación.
+No se realizarán reparaciones después de las pruebas hidrostáticas.
+8.3.2. FAT
+La prueba de rendimiento se llevará a cabo de acuerdo con las normas asociadas y los procedimientos
+propios del VENDEDOR en las instalaciones de este.

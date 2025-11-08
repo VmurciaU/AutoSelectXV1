@@ -1,0 +1,36 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 21 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+La boquilla de inyección de químico deberá incluir un atomizador del líquido que permita el mínimo tamaño
+de gota posible de tal manera que la superficie de contacto entre gas/líquido sea máxima al momento de
+la inyección para optimizar la interacción química. La elección del tipo de boquilla de atomización está
+abierta a la recomendación del PROVEEDOR de acuerdo con los criterios propios de fabricante. Por su
+parte, el atomizador, boquilla de inyección, las válvulas de corte y cheques es responsabilidad del
+proveedor del paquete y deberán estar incluidos dentro de su alcance de suministro tal como se indica
+dentro del límite de batería en la hoja de datos y los diagramas de tubería e instrumentación (P&IDs)
+referenciados en el capítulo 3 de esta especificación.
+7.4. Tubería
+El VENDEDOR deberá suministrar la tubería de interconexión y accesorios requeridos entre cada uno de
+los equipos y en los límites del PAQUETE. Toda la tubería y sus componentes deberán estar conforme a
+lo dispuesto en ASME B31.3 sección materiales por los documentos referenciados en el capitulo 3 de esta
+especificación.
+Deberán estar de acuerdo con el Piping Class del proyecto FFM/F-PIB-016 para la clase A0G1.
+El mínimo diámetro nominal de la tubería debe ser de ¾”. Los tubos conductores “tubing” de acero
+inoxidable deben ser usados cuando se requieren líneas de diámetro pequeño. No se debe usar tuberías
+de diámetros nominales de 1¼”, 2 ½”, 3 ½”, 5” y 7”.
+Se deben mantener al mínimo las conexiones roscadas y en caso de hacerse, deben ser en tuberías no
+mayores a 1 ½”. Esta tubería roscada debe estar conforme al código ANSI B2.1 “Tubería Delgada
+Roscada”.
+Toda la tubería debe ser soportada adecuadamente para minimizar los esfuerzos por vibración.
+Se cuenta con el área disponible suficiente para la instalación del PAQUETE. Sin embargo, el VENDEDOR
+deberá realizar una distribución óptima y arreglo de los equipos pertenecientes al PAQUETE en el mínimo
+espacio posible que se tiene, indicado en el numeral 5.7 teniendo en cuenta su experiencia y
+recomendaciones para facilitar la accesibilidad a instalación, mantenimiento e inspeccion a este.
+El VENDEDOR debe suministrar todas las válvulas, ciegos, figuras en ocho y accesorios al interior del
+PAQUETE que considere de acuerdo con las buenas prácticas de aislamiento seguro de los equipos
+componentes de este y deben ser indicadas en la propuesta.
+7.5. Estructurales y Civiles
+Todos los equipos que componen el PAQUETE deben estar montados sobre un patín estructural fabricado
+en acero estructural y capaz de soportar el movimiento de este durante el izaje.

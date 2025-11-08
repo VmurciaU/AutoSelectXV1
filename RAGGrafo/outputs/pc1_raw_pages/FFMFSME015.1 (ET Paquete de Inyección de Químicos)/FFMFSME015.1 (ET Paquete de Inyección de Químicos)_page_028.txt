@@ -1,0 +1,40 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 22 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Todas las estructuras como pasarelas, escaleras, plataformas, columnas, vigas, cubierta y soportes de
+estos, necesarios para el PAQUETE serán proporcionados por el VENDEDOR.
+La disposición del patín del PAQUETE debe ser tal que permita el acceso para el mantenimiento y la
+operación de todos los equipos. La placa base del patín debe ser adecuada para el grouting.
+El diseño del patín (skid) debe seguir las recomendaciones de la (Guía de Requerimientos Ergonómicos y
+de Higiene Industrial HSE-G-051), con el propósito de asegurar condiciones cómodas y seguras para la
+operación.
+El patín (skid) deberá ser de construcción robusta y estar diseñado para soportar todo el conjunto de
+equipos y componentes del PAQUETE. Este debe estar diseñado para resistir, sin desalineación de los
+equipos, las cargas térmicas o mecánicas que puedan imponerse al patín durante la instalación y el
+funcionamiento normal. Este patín también debe tener un piso en lamina antideslizante con un rodapié de
+tal manera que el fluido de operación se pueda recuperar y disponer adecuadamente mediante un drenaje
+a borde de patín.
+Ninguna parte de algún equipo, tubería, instrumentación, etc. deberá sobresalir del borde del patín del
+PAQUETE.
+Los planos necesarios relacionados con la disposición del PAQUETE, equipos, la disposición de las
+tuberías, las huellas (incluida la información de los pernos de anclaje) y los planos de soporte, los planos
+estructurales (incluidas las plataformas de acceso y las escaleras), la ubicación de los pernos de anclaje
+y las placas de nivelación, etc. para el PAQUETE deberán ser proporcionados por el VENDEDOR.
+El patín tendrá orejas de izaje en los puntos apropiados, las soldaduras de las orejas de izaje deben ser
+100% inspeccionadas por ensayos no destructivos, también deberá contar con terminales para la conexión
+a la malla a tierra, orificios para pernos de anclaje, orificios para aplicación de mortero de nivelación,
+orificios para venteo, tornillos de nivelación y alineación de los equipos, un sistema de contención de
+líquidos producidos en la operación, adema, se proveerá drenaje para el patín.
+El VENDEDOR deberá indicar los pesos y dimensiones de los componentes y equipos del PAQUETE, el
+centro de gravedad y los planos generales de este y sus complementos principales.
+7.6. Electricidad
+Los equipos y componentes eléctricos que conforman el PAQUETE deberán ser entregados en su totalidad
+instalados de manera adecuada, cableados, conectados y probados.
+El VENDEDOR deberá entregar los diagramas unifilares, de conexionado y de control respectivos. Así
+como la información de conexionado de las señales de arranque, parada, estados y selector local/remoto,
+para el respectivo sistema de control.

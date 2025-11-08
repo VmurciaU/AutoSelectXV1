@@ -1,0 +1,66 @@
+MAYORES
+Versión: 1
+EDP-F-046 20/11/2017
+INGENIERÍA DETALLE ACONDICIONAMIENTO
+MR #: FFM/F-MEQ-013 REV: 0
+ESTRATEGICO CUPIAGUA
+Documento:
+Requisición de materiales
+Especialidad Mecánica FECHA: 01-11-2023
+Paquete de Inyección de
+Químicos
+PRIMERA EMISIÓN DESPUES DE LA EMISIÓN FINAL
+ORDEN DE COMPRA (5)
+CON LA FECHA
+DESCRIPCIÓN CANTIDAD CANTIDAD
+OFERTA DE PROPÓSITO
+TIPO TIPO
+EMISIÓN (3)
+(4) (4)
+(2)
+Diagrama de cargas para fundaciones y planos de
++4Sem IFR E E
+localización de pernos de anclaje.
+Lista de cargas y momentos admisibles en
++3Sem IFR E E
+conexiones.
+Hoja de datos FFM/F-MEX-033 del PAQUETE
+X +2Sem IFR E E
+completamente diligenciadas por el PROVEEDOR (*)
+Hojas de datos de instrumentos (si aplica)
++2Sem IFR E E
+Reporte y curvas de desempeño de las bombas de
+dosificación, incluyendo el consumo de potencia a lo
++4Sem IFR E E
+largo la curva.
+Diagrama de terminales para conexionado de control
++4Sem IFR E E
+Lista de instrumentos del PAQUETE (incluye
++6Sem IFR E E
+instrumentos suministrados sueltos
+Plan de inspección y pruebas (siglas en inglés ITP)
+X +6Sem IFR E E
+del PAQUETE
+Lógica narrativa +6Sem IFR E E
+Diagrama de tubería e instrumentación (P&ID)
++6Sem IFR E E
+Lista de documentos y planos del PROVEEDOR X +3Sem IFR E -
+Lista de repuestos Y consumibles para la instalación,
+comisionamiento y puesta en marcha (incluyendo
+X +4Sem IFR - E
+precios) **
+Lista de repuestos y consumibles para dos (2) años
+X +4Sem IFR E E
+de operación (incluyendo precios)
+Lista de herramientas especiales para montaje
+X +4Sem IFR - E
+(incluyendo precios)
+Lista de requerimientos y consumo de servicios
++4Sem IFR E E
+auxiliares
+Procedimiento de pruebas en taller
++4Sem IFR E E
+Procedimiento de soldadura WPS, PQR, etc
++2Sem IFR E E
+Procedimiento de ensayos no destructivos +2Sem IFR E E
+EDP-F-046 – 20/11/2017 V-1 8/20

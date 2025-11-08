@@ -1,0 +1,28 @@
+PROJECT CONTRACTOR
+Ingeniería Detalle Acondicionamiento Estratégico
+Cupiagua
+CLIENT DOCUMENT NUMBER DATE
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 18 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+Figura 3. P&ID Paquete de inyección de químicos. Tomado de PUM/F-PCF-PU-PRE-55-552-2/2
+Nota: se debe pedir la última versión del P&ID para este paquete.
+En la parte izquierda de la Figura 3 se muestran los contenedores del inhibidor de corrosión que se acoplan
+de manera discontinua en el manifold de succión. Estos contenedores hacen parte del alcance de este
+PAQUETE al igual que las líneas que tendrán los acoples rápidos para la conexión del químico a los
+manifold de succión de las bombas de dosificación.
+7.2.1. Conexiones a Procesos
+Para el PAQUETE de inyección de químicos se cuentan con dos conexiones bridadas en la entrada, una
+alimentará inhibidor de corrosión para la fase liquida del proceso y la otra para fase gaseosa del proceso.
+Se contarán con seis (6) salidas bridadas a los puntos de inyección establecidos. (ver PUM/F-PCF-PU-
+PRE-55-552-2/2 P&ID NEW CHEMICAL PACKAGE)
+CONEXIÓN DIÁMETRO DE CONEXIÓN
+Salida de agua del separador de media presión V-2002 ¾”
+Entrada de líquidos del separador V-2001 / Glycol still columna CT-3301 salida ¾”
+gas
+Salida de gas del separador de baja presión V-2003 – línea 12”-PG-21130 ¾”
+Salida de gas del separador de alta presión V-2001 ¾”
+Salida de gas del separador de media presión V-2002 ¾”
+Bomba en spare ¾”
+Tabla 3. Lista de conexiones de salida del PAQUETE.

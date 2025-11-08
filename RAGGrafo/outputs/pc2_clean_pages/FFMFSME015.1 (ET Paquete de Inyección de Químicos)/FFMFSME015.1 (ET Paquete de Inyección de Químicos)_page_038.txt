@@ -1,0 +1,32 @@
+PROJECT CONTRACTOR
+FFM/F-S-ME-015 20/11/2023
+DOCUMENT TITLE Page 32 / 43
+Especificación Técnica Paquete de Inyección de Químicos
+Rev. 1
+8. Aseguramiento de la Calidad, Inspección y Ensayos
+El vendedor deberá cumplir con los parámetros establecidos por el CLIENTE en el documento EDP-ET-
+001-i.
+8.1. Requerimientos de trazabilidad de los materiales
+El VENDEDOR debe cumplir con los requerimientos específicos indicados en esta especificación y los
+documentos anexos, así como con los estándares internacionales y prácticas de revisión, identificación y
+marcado efectivo de materiales para su buena trazabilidad.
+8.2. Pruebas
+El VENDEDOR deberá realizar todas las pruebas e inspecciones pertinentes como mínimo como está
+establecido en el plan de inspección y pruebas (siglas en inglés ITP: Inspection and Test) de la requisición
+de materiales del PAQUETE referenciada en el capítulo 3 de esta especificación y los códigos relevantes,
+previo al envío de estos.
+El plan de inspección y pruebas del CLIENTE es para referencia y guía con lo mínimo exigido para la
+entrega del PAQUETE por lo tanto no reemplaza el plan de inspección y pruebas del VENDEDOR quien
+es el total responsable de este.
+El VENDEDOR deberá realizar todas las inspecciones y pruebas en todos los instrumentos o como esté
+indicado en el plan de inspección y pruebas (ITP) suministrado por el CLIENTE.
+El VENDEDOR debe presentar los certificados de pruebas y reportes de estas como lo requiera el plan
+de inspección y pruebas suministrado por el CLIENTE. Los certificados deben ser válidos por el CLIENTE.
+Las actividades de inspecciones y pruebas operativas de los PAQUETES estarán incluidas dentro del
+alcance del suministro del VENDEDOR serán de acuerdo con los procedimientos del CLIENTE. Dentro de
+las pruebas a realizar estarán sin limitarse a estas:
+• Prueba de entradas y salidas.
+• Prueba de activación de alarmas.
+• Prueba de lógica de operación.
+• Prueba de registro de eventos.
+• Prueba de comunicaciones.
