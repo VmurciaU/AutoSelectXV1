@@ -1,0 +1,126 @@
+{
+  "api": "http://localhost:8777",
+  "style": "concise",
+  "results": [
+    {
+      "question": "¿Cuál es el caudal nominal, presion de trabajo, viscosidad y el turndown de la o las bomba dosificadora y sus Tag?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 1.2590339183807373,
+          "response": "Sorry, I'm not able to provide an answer to that question.[no-context]",
+          "references": []
+        },
+        {
+          "mode": "local",
+          "elapsed": 1.3292417526245117,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "global",
+          "elapsed": 1.2949211597442627,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "mix",
+          "elapsed": 0.47512173652648926,
+          "response": "No relevant context found for the query.",
+          "references": []
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "¿Qué Test o pruebas, acorde al API-675 son solicitadas para las bombas y sus Tags?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 0.2691473960876465,
+          "response": "Sorry, I'm not able to provide an answer to that question.[no-context]",
+          "references": []
+        },
+        {
+          "mode": "local",
+          "elapsed": 0.7125916481018066,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "global",
+          "elapsed": 0.6744480133056641,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "mix",
+          "elapsed": 0.6321814060211182,
+          "response": "No relevant context found for the query.",
+          "references": []
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Dame los instrumentos o instrumentacion solicitada asociada a las bombas y a los sistemas de inyeccion",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 0.26250624656677246,
+          "response": "Sorry, I'm not able to provide an answer to that question.[no-context]",
+          "references": []
+        },
+        {
+          "mode": "local",
+          "elapsed": 1.4920039176940918,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "global",
+          "elapsed": 0.5932846069335938,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "mix",
+          "elapsed": 0.4880504608154297,
+          "response": "No relevant context found for the query.",
+          "references": []
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Conecta Bomba Dosificadora -> Prueba FAT -> API 675 (camino y justificación).",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 0.306743860244751,
+          "response": "Sorry, I'm not able to provide an answer to that question.[no-context]",
+          "references": []
+        },
+        {
+          "mode": "local",
+          "elapsed": 0.5622854232788086,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "global",
+          "elapsed": 0.5603616237640381,
+          "response": "No relevant context found for the query.",
+          "references": []
+        },
+        {
+          "mode": "mix",
+          "elapsed": 0.46889209747314453,
+          "response": "No relevant context found for the query.",
+          "references": []
+        }
+      ],
+      "style": "concise"
+    }
+  ]
+}

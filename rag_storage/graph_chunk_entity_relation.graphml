@@ -2533,6 +2533,33 @@ Además, la Requisición de Materiales detalla los materiales imprescindibles pa
   <data key="d4">manual_creation</data>
   <data key="d5">1761332140</data>
 </node>
+<node id="Bomba Dosificadora">
+  <data key="d0">Bomba Dosificadora</data>
+  <data key="d1">artifact</data>
+  <data key="d2">La bomba dosificadora es un dispositivo que debe cumplir con la norma API-675 y tiene un turndown de 10:1.</data>
+  <data key="d3">chunk-f14e4f526df92e26659d083b6065cb07</data>
+  <data key="d4">diag_turndown.txt</data>
+  <data key="d5">1762624436</data>
+  <data key="d6"></data>
+</node>
+<node id="API-675">
+  <data key="d0">API-675</data>
+  <data key="d1">concept</data>
+  <data key="d2">API-675 es una norma que define los requisitos para bombas dosificadoras.</data>
+  <data key="d3">chunk-f14e4f526df92e26659d083b6065cb07</data>
+  <data key="d4">diag_turndown.txt</data>
+  <data key="d5">1762624436</data>
+  <data key="d6"></data>
+</node>
+<node id="Caudal Nominal">
+  <data key="d0">Caudal Nominal</data>
+  <data key="d1">data</data>
+  <data key="d2">El caudal nominal de la bomba dosificadora depende de la hoja de datos asociada.</data>
+  <data key="d3">chunk-f14e4f526df92e26659d083b6065cb07</data>
+  <data key="d4">diag_turndown.txt</data>
+  <data key="d5">1762624436</data>
+  <data key="d6"></data>
+</node>
 <edge source="ECOPETROL" target="Proveedores Homologados">
   <data key="d7">1.0</data>
   <data key="d8">ECOPETROL establece criterios para la homologación de Proveedores Homologados.</data>
@@ -4673,6 +4700,24 @@ Además, la Requisición de Materiales detalla los materiales imprescindibles pa
   <data key="d10">chunk-b3490d658c4b323977d8e6122dcab76d</data>
   <data key="d11">corpus.json</data>
   <data key="d12">1761330241</data>
+  <data key="d13"></data>
+</edge>
+<edge source="Bomba Dosificadora" target="API-675">
+  <data key="d7">1.0</data>
+  <data key="d8">La bomba dosificadora debe cumplir con los requisitos establecidos por la norma API-675.</data>
+  <data key="d9">cumplimiento,norma</data>
+  <data key="d10">chunk-f14e4f526df92e26659d083b6065cb07</data>
+  <data key="d11">diag_turndown.txt</data>
+  <data key="d12">1762624438</data>
+  <data key="d13"></data>
+</edge>
+<edge source="Bomba Dosificadora" target="Caudal Nominal">
+  <data key="d7">1.0</data>
+  <data key="d8">El caudal nominal de la bomba dosificadora está determinado por la hoja de datos.</data>
+  <data key="d9">dependencia,especificación</data>
+  <data key="d10">chunk-f14e4f526df92e26659d083b6065cb07</data>
+  <data key="d11">diag_turndown.txt</data>
+  <data key="d12">1762624439</data>
   <data key="d13"></data>
 </edge>
 </graph></graphml>

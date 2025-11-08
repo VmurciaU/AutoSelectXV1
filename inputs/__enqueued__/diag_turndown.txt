@@ -1,0 +1,1 @@
+La bomba dosificadora debe cumplir API-675. Turndown 10:1; el caudal nominal depende de la hoja de datos.

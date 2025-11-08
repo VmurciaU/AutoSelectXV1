@@ -49,28 +49,49 @@ curl -s http://localhost:8777/health | jq '.configuration | {llm_binding,llm_mod
 
 
 
-export OPENAI_LLM_MODEL="gpt-4o-mini"
-export OPENAI_EMBEDDING_MODEL="text-embedding-3-large"
+# Exportacion previo arranque*************************
+# Clave (cámbiala/rota tu clave: la publicaste en consola)
+export OPENAI_API_KEY="sk-...."
 
-export LIGHTRAG_LLM_BINDING="openai"
-export LIGHTRAG_EMBEDDING_BINDING="openai"
-export LIGHTRAG_LLM_MODEL="gpt-4o-mini"
-export LIGHTRAG_EMBEDDING_MODEL="text-embedding-3-large"
+# Binding
+export LIGHTRAG_LLM_BINDING=openai
+export LIGHTRAG_EMBEDDING_BINDING=openai
 
-# 👇 CLAVE: fuerza dimensión de embeddings
-export LIGHTRAG_EMBEDDING_DIM=3072
+# NOMBRES QUE SÍ LEE primero:
+export LLM_MODEL=gpt-4o-mini
+export EMBEDDING_MODEL=text-embedding-3-large
 export EMBEDDING_DIM=3072
+
+# (Opcionales; útiles, pero no garantizados según versión)
+export LIGHTRAG_LLM_MODEL=gpt-4o-mini
+export LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-large
+export LIGHTRAG_EMBEDDING_DIM=3072
 export NANO_VECTORDB_DIM=3072
 
-export LIGHTRAG_SUMMARY_LANGUAGE="Spanish"
-export SUMMARY_LANGUAGE="Spanish"
+# Idioma
+export LIGHTRAG_SUMMARY_LANGUAGE=Spanish
+
+
+#Arrancar servidor
+lightrag-server \
+  --host 0.0.0.0 \
+  --port 8777 \
+  --working-dir ./rag_storage \
+  --llm-binding openai \
+  --embedding-binding openai \
+  --rerank-binding null
 
 
 
+#En otro terminar se consoltan los parametros
+curl -s http://localhost:8777/health | jq '.configuration | {llm_model, embedding_model}'
+# => gpt-4o-mini / text-embedding-3-large
 
-
-
-
+#En otro terminal. Subida y prueb de recuperacion
+curl -s -X POST http://localhost:8777/documents/upload -F "file=@/ruta/a/archivo.ext" | jq
+curl -s -X POST http://localhost:8777/query/data \
+  -H "Content-Type: application/json" \
+  -d '{"query":"tu consulta","mode":"naive","top_k":10}' | jq
 
 
 

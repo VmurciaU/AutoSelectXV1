@@ -55,5 +55,22 @@
       "processing_start_time": 1761329901,
       "processing_end_time": 1761330259
     }
+  },
+  "doc-f14e4f526df92e26659d083b6065cb07": {
+    "status": "processed",
+    "chunks_count": 1,
+    "chunks_list": [
+      "chunk-f14e4f526df92e26659d083b6065cb07"
+    ],
+    "content_summary": "La bomba dosificadora debe cumplir API-675. Turndown 10:1; el caudal nominal depende de la hoja de datos.",
+    "content_length": 105,
+    "created_at": "2025-11-08T17:53:46.975184+00:00",
+    "updated_at": "2025-11-08T17:54:00.096935+00:00",
+    "file_path": "diag_turndown.txt",
+    "track_id": "upload_20251108_125346_e6ac6e5f",
+    "metadata": {
+      "processing_start_time": 1762624426,
+      "processing_end_time": 1762624440
+    }
   }
 }

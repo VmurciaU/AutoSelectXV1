@@ -1,0 +1,262 @@
+{
+  "api": "http://localhost:8777",
+  "style": "concise",
+  "results": [
+    {
+      "question": "¿Cuál es el caudal nominal, presion de trabajo, viscosidad y el turndown de la o las bomba dosificadora y sus Tag?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 2.8086161613464355,
+          "response": "- **Caudal nominal**:\n  - **TAG P-5540**: 0.1 - 2.0 GPD\n  - **TAG P-5541**: 0.1 - 1.0 GPD\n  - **TAG P-5542**: 0.01 - 0.51 GPD\n  - **TAG P-5543**: 0.1 - 1.0 GPD\n  - **TAG P-5544**: 0.3 - 3.0 GPD\n  - **TAG P-5545**: 0.1 - 2.0 GPD\n\n- **Presión de trabajo** (máxima):\n  - **TAG P-5540**: 75 psig\n  - **TAG P-5541**: 67 psig\n  - **TAG P-5542**: 137 psig\n  - **TAG P-5543**: 150 psig\n  - **TAG P-5544**: 80 psig\n  - **TAG P-5545**: 150 psig\n\n- **Viscosidad**: no especificado.\n\n- **Turndown**: Relación de 10:1 con precisión de dosificación de ± 1% dentro del rango de 10% - 100% de la capacidad nominal, conforme a API STD 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 4.581010341644287,
+          "response": "- **Caudal nominal**: Valores de caudal no especificados para las bombas dosificadoras.\n- **Presión de trabajo**: 50 PSIG por encima de la presión del punto de inyección.\n- **Viscosidad**: No especificado.\n- **Turndown**: 10:1, con una precisión de ± 1% de acuerdo con API 675.\n- **Etiquetas (Tag)**: No especificadas.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 2.7325546741485596,
+          "response": "- **Caudal Nominal**: \n  - P-5540: Mínimo 0.1 GPD, Máximo 2.0 GPD\n  - P-5541: Mínimo 0.1 GPD, Máximo 1.0 GPD\n  - P-5542: Mínimo 0.01 GPD, Máximo 0.51 GPD\n  - P-5543: Mínimo 0.1 GPD, Máximo 1.0 GPD\n  - P-5544: Mínimo 0.3 GPD, Máximo 3.0 GPD\n  - P-5545: Mínimo 0.1 GPD, Máximo 2.0 GPD\n\n- **Presión de Trabajo**: \n  - P-5540: Máxima 75 psig\n  - P-5541: Máxima 67 psig\n  - P-5542: Máxima 137 psig\n  - P-5543: Máxima 150 psig\n  - P-5544: Máxima 80 psig\n  - P-5545: Máxima 150 psig\n\n- **Viscosidad**: No especificado.\n\n- **Turndown Ratio**: 10:1, con una precisión del ±1% del caudal según API STD 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 3.1439058780670166,
+          "response": "- **Caudal nominal**: \n  - P-5540 - 2.0 GPD\n  - P-5541 - 1.0 GPD\n  - P-5542 - 0.51 GPD\n  - P-5543 - 1.0 GPD\n  - P-5544 - 3.0 GPD\n  - P-5545 - 2.0 GPD\n\n- **Presión de trabajo**: \n  - P-5540 - 75 psig\n  - P-5541 - 67 psig\n  - P-5542 - 137 psig\n  - P-5543 - 150 psig\n  - P-5544 - 80 psig\n  - P-5545 - 150 psig\n\n- **Turndown ratio**: 10:1 (según API 675).\n\n- **Viscosidad**: No especificado.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "¿Qué Test o pruebas, acorde al API-675 son solicitadas para las bombas y sus Tags?",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 2.446932315826416,
+          "response": "- **Pruebas de Aceptación en Fábrica (FAT)**: Se realizarán según normas asociadas y procedimientos del VENDEDOR.\n- **Pruebas Hidrostáticas**: Cumplir con especificaciones pertinentes sin reparaciones posteriores a las pruebas.\n- **Calibración de Instrumentos**: Certificados de calibración de cada instrumento antes del alistamiento para pruebas mecánicas y de desempeño.\n- **Pruebas de Mantenimiento**: Las pruebas para asegurar la operación adecuada de todos los componentes serán realizadas por el VENDEDOR.\n- **Pruebas de Funcionamiento**: Se realizarán pruebas de entradas y salidas, comandos, activación de alarmas, y visualización de variables.\n- **Pruebas de Operación del Panel de Control Local**: Confirmación de la funcionalidad del panel de control de la bomba según especificaciones.\n- **Historial de Pruebas**: Registro de datos específicamente preparados para las pruebas correspondientes.\n- **Desviación de Cero**: Exigencia de una desviación de cero después de un año de operación.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 2.3947112560272217,
+          "response": "- **Pruebas FAT**: Las pruebas de aceptación en fábrica son requeridas según la norma API 675 para asegurar que las bombas de dosificación cumplen con las especificaciones de rendimiento.\n  \n- **Pruebas de Hidrostáticas**: Se realizan para validar la integridad del sistema bajo condiciones de presión especificadas, conforme a los criterios de API 675.\n\n- **Pruebas de Precisión**: Se requieren para garantizar que la bomba alcanza los caudales y presiones especificados durante su operación.\n\n- **Pruebas de Repetibilidad**: Validan que la bomba pueda funcionar consistentemente dentro de los parámetros designados. \n\n- **Pruebas de Linealidad**: Aseguran que la bomba opera de manera lineal a diferentes condiciones de operación.\n\n- **Etiquetas (Tags)**: Cada bomba debe estar identificada con un TAG correspondiente para el seguimiento y validación de pruebas.\n\n- **Calibración**: Todos los instrumentos asociados a la bomba deben ser calibrados y documentados antes de la realización de las pruebas.\n\n- **Requerimientos de Documentación**: El vendedor debe presentar certificados de pruebas y resultados para cada ensayo realizado por cada bomba.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 1.6422138214111328,
+          "response": "- **Pruebas Hidrostáticas:** La presión de prueba de las bombas debe ser especificada por el proveedor, conforme a los requerimientos del API STD 675.\n\n- **Certificados de Material:** Todos los componentes deben incluir certificados de materiales de acuerdo con la norma EN 10204 tipo 3.2.\n\n- **Inspección utilizando lista de comprobación de API 675:** Se debe realizar una inspección conforme a la lista de verificación definida en la API 675.\n\n- **Prueba de Calibración:** Cada medidor de flujo debe tener al menos tres puntos de calibración en el rango de operación especificado.\n\n- **Tests de rendimiento:** Las pruebas de rendimiento se llevarán a cabo de acuerdo con las normas asociadas y procedimientos del proveedor en sus instalaciones.\n\n- **Pruebas de presión:** Las pruebas de presión deben seguir las especificaciones del proyecto y los códigos relevantes establecidos en el capítulo 3 de la documentación.\n\n- **Pruebas mecánicas y de funcionamiento:** Deben realizarse para asegurar la operación adecuada de todos los componentes instalados. \n\n- **Pruebas FAT (Factory Acceptance Testing):** Se realizarán pruebas de aceptación en fábrica antes del envío del paquete.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 1.8724820613861084,
+          "response": "- **Pruebas Mecánicas (M156CIP-5503, API 675)**: Se requieren pruebas específicas de aceptación para validar la operación de las bombas.\n  \n- **Certificado de Calibración**: Se debe proporcionar un certificado que confirme la calibración de las bombas dentro del rango de operación requerido.\n\n- **Pruebas de Precisión del Caudal**: La precisión de la dosificación de la bomba debe ser de ± 1% dentro del rango entre el 100% y 10% de la capacidad nominal de la bomba (Turndown ratio 10:1).\n\n- **Prueba Hidrostática**: Cada bomba debe someterse a pruebas hidrostáticas para garantizar la integridad del sistema.\n\n- **Inspección Usando Lista de Comprobación de API 675**: Debe realizarse según aplique para las bombas dosificadoras.\n\n- **Certificados de Materiales**: Todos los componentes de retención de presión deben tener certificación según EN 10204 tipo 3.2.\n\n- **Pruebas FAT y SAT**: Certificaciones de resultados de estas pruebas son requeridas para validar la calidad del equipo.\n\n- **Tags de Bombas**: Cada bomba (ejemplo P-5540, P-5541, etc.) debe estar identificada conforme a las especificaciones en los documentos.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Dame los instrumentos o instrumentacion solicitada asociada a las bombas y a los sistemas de inyeccion",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 1.0254249572753906,
+          "response": "- **Bombas de Dosificación**: Seis (6) bombas de desplazamiento positivo tipo dosificación según **API STD 675**.\n- **Transmisores de Presión**: Deben incluirse transmisores con salida de 4 a 20 mA y protocolo de comunicación HART a 24 VDC.\n- **Indicadores de Presión**: Manómetros con conexión ½\" NPT-M, con exactitud de 0.5% de la escala (Grado 2A según **ASME B40.100**).\n- **Válvulas de Seguridad (PSV)**: Requeridas y deben cumplir con los códigos **ASME sección VIII, Div. I, API RP-520, 526 y 527**.\n- **Medidores de Flujo**: Cuantificados pero no especificados en el documento.\n- **Medidores de Nivel**: Indicadores de nivel local en tanques de almacenamiento.\n- **Válvulas de Corte**: Se proporcionarán válvulas de corte en la succión y descarga de las bombas, junto con válvulas de chequeo en la descarga.\n- **Boquillas de Inyección (Quill)**: Seis (6) boquillas de inyección con atomizador ajustable para optimización.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 1.7311286926269531,
+          "response": "- **Manómetros**:  \n  - Conexión: 1/2\" NPT-M.  \n  - Tipo: Rellenos de líquido para servicios con vibración.  \n  - Exactitud: 0.5% de la escala (Grado 2A según ASME B40.100).  \n  - Rango de operación: -40°F a 220°F.  \n\n- **Transmisores de Presión**:  \n  - Salida: 4 a 20mA, tipo smart.  \n  - Exactitud: ±0.075% del span.  \n  - Material del diafragma: Hastelloy C-276 para partes húmedas.  \n  - Soportan 1.3 veces la máxima presión de operación.  \n\n- **Bombas Dosificadoras**:  \n  - Tipo: Desplazamiento positivo según API STD 675.  \n  - Turndown ratio: 10:1.  \n  - Precisión del caudal: ±1% (entre 100% - 10% de capacidad nominal).  \n  - Operación continua requerida: 24 horas.  \n\n- **Válvulas de Alivio**:  \n  - Tipo: Convencional, balanceado o pilotadas.  \n  - Cumplimiento: Requisitos del código ASME sección VIII, Div. I, API RP-520, 526 y 527.  \n\n- **Boquillas de inyección**:  \n  - Seis (6) unidades requeridas.  \n  - Deben garantizar conexiones rápidas para inyección.  \n\n- **Válvula de Corte**:  \n  - Necesaria en la succión y descarga de la bomba.  \n\n- **Interruptores de Nivel**:  \n  - Usados en Tanques de Almacenamiento para monitoreo de niveles de líquido.  \n\n- **Sensor de presión**:  \n  - Debe incluir alarmas y protección contra altas/bajas presiones para las bombas.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 1.6049127578735352,
+          "response": "- **Bombas dosificadoras**: Seis (6) bombas de dosificación de químico de acuerdo con *API STD 675*, capaces de suministrar inhibidor de corrosión.\n- **Motores eléctricos**: Seis (6) motores eléctricos de las bombas.\n- **Tanques de almacenamiento**: Tres (3) tanques IBC metálicos con capacidad de 1325 litros (350 gal).\n- **Válvulas de seguridad**: Incluidas en el PAQUETE, su tamaño y capacidad serán definidos por el VENDEDOR según los requerimientos.\n- **Indicadores locales de nivel**: Para los tanques de almacenamiento; proporcionan la visualización del nivel de líquido.\n- **Transmisores de presión**: Deberán ser tipo smart, con salida 4 a 20 mA; deben soportar un 1.3 veces la máxima presión de operación.\n- **Manómetros**: Indicadores de presión que deben ser resistentes a sobrepresiones de hasta 1.3 veces la máxima presión de la escala de medición.\n- **Boquillas de inyección (quill)**: Seis (6) boquillas con atomizadores deben ser suministradas, optimizando la interacción entre gas y líquido.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 3.6770479679107666,
+          "response": "- **Bombas Dosificadoras**: Se requieren seis (6) bombas de desplazamiento positivo tipo dosificación, según **API STD 675**, con turndown ratio de 10:1 y precisión de dosificación de ±1% en el rango de 100-10% de la capacidad nominal.\n  \n- **Transmisores de Presión**: Los transmisores deben ser tipo \"smart\", con salida 4 a 20 mA, capacidad de operar en un rango de -40°F a 220°F, y deben estar fabricados con diafragmas de Hastelloy C-276 para las partes húmedas.\n\n- **Manómetros**: Se especifican manómetros con un rango de indicación entre el 40% y 70% de la escala nominal, con exactitud de 0.5% de la escala. Material mínimo del elemento: acero inoxidable 316.\n\n- **Válvulas de Alivio (PSV)**: Las válvulas de alivio se deben diseñar conforme a los códigos ASME Sección VIII y cumplir con los requerimientos de presión y temperatura especificados por **API RP-520**.\n\n- **Medidores de Calibración**: Cada bomba debe incluir un medidor de calibración para comprobar los caudales de inyección, aunque las especificaciones exactas no están detalladas.\n\n- **Instrumentación de Control**: Se debe incluir un Panel de Control (UCP) que facilite el encendido/apagado del equipo y el monitoreo continuo de la inyección de químicos.\n\n- **Certificado de Calibración**: Todos los instrumentos deben incluir certificados de calibración, indicando cumplimiento de la norma y puntos de calibración, aunque los valores exactos no están especificados. \n\n- **Componentes Electromecánicos**: Todos los equipos deben tener protección adecuada para la clasificación del área eléctrica según la Hoja de Datos (no especificado).",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    },
+    {
+      "question": "Conecta Bomba Dosificadora -> Prueba FAT -> API 675 (camino y justificación).",
+      "modes": [
+        {
+          "mode": "naive",
+          "elapsed": 1.814413070678711,
+          "response": "- **Bomba Dosificadora**: Seis (6) bombas dosificadoras de químico, de acuerdo con API STD 675, diseñadas para la inyección de inhibidor de corrosión.\n\n- **Prueba FAT (Factory Acceptance Test)**: Las pruebas mecánicas y de funcionamiento del PAQUETE deberán ser realizadas para asegurar la operación adecuada de todos los componentes y dispositivos instalados, como parte integral del proceso de verificación previo a la entrega.\n\n- **Conformidad con API 675**: Las bombas y su diseño, incluyendo el cabeza hidráulica, deben cumplir con los lineamientos de API STD 675, que estipula especificaciones para bombas de desplazamiento positivo y control de volumen.\n\n- **Rango de Caudal**: La precisión de la dosificación de químico deberá ser de ± 1% dentro del rango comprendido entre el 100% y el 10% de la capacidad nominal de la bomba (turndown ratio 10:1).\n\n- **Certificación y Documentación**: La documentación de pruebas, incluidos los certificados de prueba FAT, debe ser suministrada por el VENDEDOR y deberá contener resultados válidos por el CLIENTE.\n\n- **Condiciones de Prueba**: No se realizarán reparaciones después de las pruebas hidrostáticas, y el VENDEDOR deberá asegurar que cada bomba pase estas pruebas conforme a las normativas aplicables.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "local",
+          "elapsed": 1.5572221279144287,
+          "response": "- La **Bomba Dosificadora** debe cumplir con la norma **API STD 675**, que establece requisitos para bombas de desplazamiento positivo, asegurando su efectividad en la dosificación de químicos.\n\n- Las **Pruebas FAT (Factory Acceptance Tests)** son obligatorias para validar que la bomba funcione conforme a las especificaciones antes de su entrega al cliente.\n\n- Durante la **Prueba FAT**, se verificará el funcionamiento de la bomba bajo condiciones de operación especificadas, garantizando que cumple con los requisitos de diseño establecidos por la norma API 675.\n\n- Se requiere que todos los aspectos de operación de la bomba, tales como el caudal y presión, sean probados y así asegurar la **trazabilidad** y el cumplimiento de las normas de calidad.\n\n- Todas las pruebas realizadas deben ser documentadas y certificadas, formando parte integral del **dossier del PAQUETE** que el proveedor debe presentar al cliente, tal como se indica en el apartado de **inspección y pruebas** en la especificación técnica.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            }
+          ]
+        },
+        {
+          "mode": "global",
+          "elapsed": 1.7102017402648926,
+          "response": "- **Bomba Dosificadora**: Equipo diseñado para suministrar químico con precisión de dosificación, cumpliendo con las especificaciones del **API STD 675**.\n  \n- **Prueba FAT (Factory Acceptance Test)**: Proceso de validación realizado para asegurar que la Bomba Dosificadora se opere según las especificaciones antes del envío.\n\n- **Conexión**: La Bomba Dosificadora debe someterse a pruebas de rendimiento y funcionamiento (FAT) para verificar que cumple con la **API 675** referente a la precisión del caudal de dosificación.\n\n- **Requisitos de API 675**: Establece un rango de precisión de ± 1% dentro del turndown ratio de 10:1, asegurando la correcta funcionalidad de la bomba durante la FAT.\n\n- **Demostración en la FAT**: La prueba FAT incluirá la verificación de caudales de inyección, funcionando en condiciones específicas tal como se indica en la API 675.\n\n- **Durabilidad y confiabilidad**: La Bomba Dosificadora deberá estar diseñada para una vida útil mínima de 20 años y operación continua de 3 años según especificaciones generales.\n\n- **Instrumentación**: La Bomba deberá incluir instrumentación adecuada para monitorear y garantizar el cumplimiento de los estándares durante la FAT.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        },
+        {
+          "mode": "mix",
+          "elapsed": 2.995791435241699,
+          "response": "- **Bomba Dosificadora**: Se requiere que cumpla con el estándar API STD 675, que define las especificaciones para bombas de desplazamiento positivo diseñadas para controles de volumen.\n  \n- **Turndown Ratio**: La bomba debe tener un turndown ratio de 10:1, con una precisión de dosificación de ± 1% dentro del rango del 100% - 10% de su capacidad nominal, según lo estipulado en API 675.\n\n- **Prueba FAT (Factory Acceptance Test)**: Se realizarán pruebas FAT para validar el rendimiento de la bomba antes de la entrega, asegurando que cumpla con los criterios definidos.\n\n- **Condiciones de Prueba**: Las pruebas FAT implicarán verificar caudales de inyección de la bomba que deben ser confirmados por el proveedor, asegurando las capacidades de operación especificadas.\n\n- **Especificaciones de Pruebas**: La documentación de pruebas debe incluir certificados de ensayo mecánico y de rendimiento aplicables exigidos para asegurar la calidad del Paquete de Inyección de Químicos, de acuerdo con normativas pertinentes.\n\n- **Interconexiones**: La bomba estará interconectada adecuadamente con válvulas de alivio y presión para asegurar el manejo seguro de los químicos, conforme a los requisitos de operación de API 675.",
+          "references": [
+            {
+              "reference_id": "1",
+              "file_path": "corpus.json"
+            },
+            {
+              "reference_id": "2",
+              "file_path": "diag_turndown.txt"
+            }
+          ]
+        }
+      ],
+      "style": "concise"
+    }
+  ]
+}

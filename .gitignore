@@ -36,3 +36,7 @@ dist/
 #Tiene la Key 
 RAGGrafo/scripts/key.txt
 
+#Arranque del server LightRag
+env.sh
+start_server.sh
+

@@ -2180,5 +2180,23 @@
     "create_time": 1761330259,
     "update_time": 1761330259,
     "_id": "Certificados de Material<SEP>Paquete de Inyección de Químicos"
+  },
+  "API-675<SEP>Bomba Dosificadora": {
+    "chunk_ids": [
+      "chunk-f14e4f526df92e26659d083b6065cb07"
+    ],
+    "count": 1,
+    "create_time": 1762624438,
+    "update_time": 1762624438,
+    "_id": "API-675<SEP>Bomba Dosificadora"
+  },
+  "Bomba Dosificadora<SEP>Caudal Nominal": {
+    "chunk_ids": [
+      "chunk-f14e4f526df92e26659d083b6065cb07"
+    ],
+    "count": 1,
+    "create_time": 1762624439,
+    "update_time": 1762624439,
+    "_id": "Bomba Dosificadora<SEP>Caudal Nominal"
   }
 }
