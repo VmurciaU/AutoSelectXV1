@@ -1,0 +1,2 @@
+# (si vas a usar OpenAI para generar)
+export OPENAI_API_KEY="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"
