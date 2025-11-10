@@ -23,3 +23,4 @@ def create_cases_table():
 
 if __name__ == "__main__":
     create_cases_table()
+

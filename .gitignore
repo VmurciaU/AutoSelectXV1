@@ -34,7 +34,7 @@ dist/
 # Backups o pruebas
 
 #Tiene la Key 
-RAGGrafo/scripts/key.txt
+lightrag/pipelines/key.txt
 
 #Arranque del server LightRag
 env.sh
