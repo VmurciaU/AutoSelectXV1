@@ -1,167 +1,263 @@
-{% extends "base.html" %}
-{% block title %}Casos - AutoSelect-X{% endblock %}
+from __future__ import annotations
 
-{% block content %}
-<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
-  <div class="max-w-6xl mx-auto space-y-6">
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
 
-    <!-- Header + Crear -->
-    <div class="bg-gray-800 rounded-lg p-5 shadow">
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-semibold text-teal-300">Mis Casos</h2>
-        <form method="POST" action="/cases/new" class="flex gap-2">
-          <input
-            type="text" name="name" placeholder="Nombre del caso"
-            class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none"
-            required />
-          <input
-            type="text" name="notes" placeholder="Notas (opcional)"
-            class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none" />
-          <button
-            type="submit"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm">
-            + Crear caso
-          </button>
-        </form>
-      </div>
-    </div>
+from fastapi import APIRouter, Request, Depends, Form, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from starlette.templating import Jinja2Templates
 
-    <!-- Tabla -->
-    <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
-      <table class="min-w-full text-sm">
-        <thead class="bg-gray-700 text-gray-200">
-          <tr>
-            <th class="text-left px-4 py-2">ID</th>
-            <th class="text-left px-4 py-2">Nombre</th>
-            <th class="text-left px-4 py-2">Estado</th>
-            {% if user_rol == "admin" %}
-              <th class="text-left px-4 py-2">Propietario</th>
-            {% endif %}
-            <th class="text-left px-4 py-2">Docs</th>
-            <th class="text-left px-4 py-2">Actualizado</th>
-            <th class="text-left px-4 py-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
+from sqlalchemy import select, func, desc
+from sqlalchemy.orm import Session, joinedload
 
-          {# --- Ruta principal: usar 'rows' preparados en el router (con badges y permisos) --- #}
-          {% if rows and rows|length > 0 %}
-            {% for r in rows %}
-            <tr class="border-t border-gray-700 hover:bg-gray-750">
-              <td class="px-4 py-2">{{ r.id }}</td>
+from app.database.conection import SessionLocal
+from app.utils.auth import get_current_user_id
 
-              <td class="px-4 py-2">
-                <div class="font-medium">{{ r.title }}</div>
-                {% if r.description %}
-                  <div class="text-xs text-gray-400 line-clamp-1">{{ r.description }}</div>
-                {% endif %}
-              </td>
+from app.models.user import User
+from app.models.cases import Case
+from app.models.documents import Document
 
-              <td class="px-4 py-2">
-                <span class="px-2 py-0.5 rounded {{ r.status_badge.bg }} {{ r.status_badge.color }}">
-                  {{ r.status_badge.text }}
-                </span>
-              </td>
+import os
+import shutil
 
-              {% if user_rol == "admin" %}
-                <td class="px-4 py-2 text-gray-300">
-                  {{ r.owner_display or '-' }}
-                </td>
-              {% endif %}
+router = APIRouter()
+templates = Jinja2Templates(directory="app/templates")
 
-              <td class="px-4 py-2">
-                {{ r.doc_count if r.doc_count is defined else 0 }}
-              </td>
+# --- Directorios base (.env con defaults) ---
+FILES_BASE_DIR = Path(os.getenv("FILES_BASE_DIR", "./shared_data")).resolve()
+INBOX_DIR      = Path(os.getenv("INBOX_DIR", str(FILES_BASE_DIR / "inbox"))).resolve()
+INDEX_DIR      = Path(os.getenv("INDEX_DIR", str(FILES_BASE_DIR / "index"))).resolve()
 
-              <td class="px-4 py-2">
-                {# r.updated puede venir como datetime o string #}
-                {% if r.updated %}
-                  {% if r.updated.strftime is defined %}
-                    {{ r.updated.strftime("%Y-%m-%d %H:%M") }}
-                  {% else %}
-                    {{ r.updated }}
-                  {% endif %}
-                {% else %}
-                  -
-                {% endif %}
-              </td>
+# --- DB session ---
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-              <td class="px-4 py-2">
-                <div class="flex flex-wrap gap-2">
-                  <a href="/cases/{{ r.id }}/view"
-                     class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
-                  <a href="/cases/{{ r.id }}/upload"
-                     class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
+# ---------- Helpers ----------
+def _is_admin(role: str | None) -> bool:
+    return (role or "").lower() == "admin"
 
-                  {% if r.can_edit %}
-                    <a href="/cases/{{ r.id }}/edit"
-                       class="bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded text-xs">Editar</a>
-                  {% else %}
-                    <button class="bg-gray-700 px-3 py-1 rounded text-xs opacity-50 cursor-not-allowed" title="Sin permiso">
-                      Editar
-                    </button>
-                  {% endif %}
+def _safe_remove_path(path: Path) -> None:
+    try:
+        if path.is_file():
+            path.unlink(missing_ok=True)
+        elif path.is_dir():
+            shutil.rmtree(path, ignore_errors=True)
+    except Exception:
+        pass
 
-                  {% if r.can_delete %}
-                    <form method="post" action="/cases/{{ r.id }}/delete" onsubmit="return confirm('¿Eliminar este caso?');">
-                      <button class="bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded text-xs">Eliminar</button>
-                    </form>
-                  {% else %}
-                    <button class="bg-gray-700 px-3 py-1 rounded text-xs opacity-50 cursor-not-allowed" title="Sin permiso">
-                      Eliminar
-                    </button>
-                  {% endif %}
-                </div>
-              </td>
-            </tr>
-            {% endfor %}
+def _recount_docs(db: Session, case_id: int) -> int:
+    cnt = (
+        db.query(func.count(Document.id))
+        .filter(Document.case_id == case_id, Document.status != "deleted")
+        .scalar()
+    )
+    return int(cnt or 0)
 
-          {# --- Fallback: compatibilidad con 'cases' crudos (sin badges ni permisos) --- #}
-          {% elif cases and cases|length > 0 %}
-            {% for c in cases %}
-            <tr class="border-t border-gray-700 hover:bg-gray-750">
-              <td class="px-4 py-2">{{ c.id }}</td>
-              <td class="px-4 py-2">{{ c.name or '-' }}</td>
-              <td class="px-4 py-2">
-                <span class="px-2 py-0.5 rounded bg-gray-700 text-gray-200">
-                  {{ c.status }}
-                </span>
-              </td>
-              {% if user_rol == "admin" %}
-                <td class="px-4 py-2 text-gray-300">-</td>
-              {% endif %}
-              <td class="px-4 py-2">{{ c.doc_count or 0 }}</td>
-              <td class="px-4 py-2">
-                {% if c.updated_at %}
-                  {{ c.updated_at.strftime("%Y-%m-%d %H:%M") }}
-                {% elif c.created_at %}
-                  {{ c.created_at.strftime("%Y-%m-%d %H:%M") }}
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td class="px-4 py-2">
-                <div class="flex gap-2">
-                  <a href="/cases/{{ c.id }}/view"
-                     class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
-                  <a href="/cases/{{ c.id }}/upload"
-                     class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
-                </div>
-              </td>
-            </tr>
-            {% endfor %}
+# ===============================
+# ==========  VISTAS  ===========
+# ===============================
 
-          {% else %}
-            <tr>
-              <td colspan="7" class="px-4 py-6 text-center text-gray-300">
-                No tienes casos aún. Crea el primero con el botón <em>+ Crear caso</em>.
-              </td>
-            </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
+@router.get("/cases", response_class=HTMLResponse)
+def list_cases_html(
+    request: Request,
+    q: Optional[str] = None,
+    notes_q: Optional[str] = None,
+    db: Session = Depends(get_db),
+):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=302)
 
-  </div>
-</div>
-{% endblock %}
+    current_user = db.query(User).filter(User.id == user_id).first()
+    user_name = getattr(current_user, "nombre", None) or getattr(current_user, "username", None) or "Invitado"
+    is_admin = _is_admin(getattr(current_user, "rol", None))
+
+    # Base: si no es admin, solo sus casos
+    query = db.query(Case).options(joinedload(Case.user))
+    if not is_admin:
+        query = query.filter(Case.user_id == user_id)
+
+    # Filtros de texto (opcionales)
+    if q:
+        query = query.filter(Case.name.ilike(f"%{q}%"))
+    if notes_q:
+        # si tu modelo tiene "notes"
+        query = query.filter(Case.notes.ilike(f"%{notes_q}%"))
+
+    # Subquery para contar docs (no 'deleted')
+    docs_count_sq = (
+        select(func.count(Document.id))
+        .where(Document.case_id == Case.id, Document.status != "deleted")
+        .correlate(Case)
+        .scalar_subquery()
+    )
+
+    rows = (
+        db.query(Case, docs_count_sq.label("docs_count"))
+        .order_by(desc(Case.id))
+        .all()
+    )
+
+    # Armamos payload para el template (incluye notes ya normalizado y owner_name)
+    cases_payload = []
+    for case, docs_count in rows:
+        owner = getattr(case, "user", None)
+        owner_name = None
+        if owner is not None:
+            owner_name = getattr(owner, "nombre", None) or getattr(owner, "username", None)
+
+        # Normalizamos notas (string o None)
+        notes_val = getattr(case, "notes", None)
+        if notes_val is not None:
+            try:
+                # Evitar que queden notas con solo espacios/saltos de línea
+                notes_val = str(notes_val).strip()
+            except Exception:
+                pass
+            if notes_val == "":
+                notes_val = None
+
+        # Fecha de actualización: si no existe, cae a created_at
+        updated_val = getattr(case, "updated_at", None) or getattr(case, "created_at", None)
+
+        cases_payload.append({
+            "id": case.id,
+            "name": case.name,
+            "status": case.status,
+            "owner": case.user_id,
+            "owner_name": owner_name,
+            "docs_count": int(docs_count or 0),
+            "notes": notes_val,
+            "updated_at": updated_val,
+        })
+
+    return templates.TemplateResponse(
+        "cases_list.html",
+        {
+            "request": request,
+            "cases": cases_payload,
+            "is_admin": is_admin,
+            "user_name": user_name,
+        },
+    )
+
+@router.post("/cases/create")
+def create_case(
+    request: Request,
+    name: str = Form("Caso Demo"),
+    notes: str = Form("creado desde /cases"),
+    db: Session = Depends(get_db),
+):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=302)
+
+    case_obj = Case(
+        user_id=user_id,
+        customer_id=None,
+        name=name[:200] if name else None,
+        status="queued",
+        input_dir="",
+        index_dir="",
+        rag_version=None,
+        doc_count=0,
+        notes=notes,
+        # si tu modelo tiene created_at / updated_at, se setean; si no, no pasa nada
+        **({ "created_at": datetime.utcnow(), "updated_at": datetime.utcnow() }
+           if hasattr(Case, "created_at") and hasattr(Case, "updated_at") else {})
+    )
+    db.add(case_obj)
+    db.flush()
+
+    input_dir = INBOX_DIR / str(case_obj.id)
+    index_dir = INDEX_DIR / str(case_obj.id)
+    (input_dir / "original").mkdir(parents=True, exist_ok=True)
+    index_dir.mkdir(parents=True, exist_ok=True)
+
+    case_obj.input_dir = str(input_dir)
+    case_obj.index_dir = str(index_dir)
+    db.add(case_obj)
+    db.commit()
+
+    return RedirectResponse(url="/cases", status_code=302)
+
+@router.post("/cases/{case_id}/delete")
+def delete_case(
+    request: Request,
+    case_id: int,
+    delete_files: bool = Form(True),
+    db: Session = Depends(get_db),
+):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=302)
+
+    case_obj = db.query(Case).filter(Case.id == case_id).first()
+    if not case_obj:
+        raise HTTPException(status_code=404, detail="Case no encontrado")
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not (_is_admin(getattr(user, "rol", None)) or case_obj.user_id == user_id):
+        raise HTTPException(status_code=403, detail="No autorizado")
+
+    db.delete(case_obj)
+    db.commit()
+
+    if delete_files:
+        if getattr(case_obj, "input_dir", None):
+            _safe_remove_path(Path(case_obj.input_dir))
+        if getattr(case_obj, "index_dir", None):
+            _safe_remove_path(Path(case_obj.index_dir))
+
+    return RedirectResponse(url="/cases", status_code=302)
+
+@router.get("/cases/{case_id}")
+def case_detail(
+    request: Request,
+    case_id: int,
+    db: Session = Depends(get_db),
+):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=302)
+
+    case_obj = db.query(Case).filter(Case.id == case_id).first()
+    if not case_obj:
+        raise HTTPException(status_code=404, detail="Case no encontrado")
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not (_is_admin(getattr(user, "rol", None)) or case_obj.user_id == user_id):
+        raise HTTPException(status_code=403, detail="No autorizado")
+
+    docs_count = _recount_docs(db, case_id)
+    if hasattr(case_obj, "doc_count") and case_obj.doc_count != docs_count:
+        case_obj.doc_count = docs_count
+        if hasattr(case_obj, "updated_at"):
+            setattr(case_obj, "updated_at", datetime.utcnow())
+        db.add(case_obj)
+        db.commit()
+
+    return JSONResponse(
+        {
+            "id": case_obj.id,
+            "name": case_obj.name,
+            "status": case_obj.status,
+            "doc_count": getattr(case_obj, "doc_count", docs_count),
+            "input_dir": getattr(case_obj, "input_dir", None),
+            "index_dir": getattr(case_obj, "index_dir", None),
+            "notes": getattr(case_obj, "notes", None),
+            "updated_at": (
+                getattr(case_obj, "updated_at", None).isoformat()
+                if getattr(case_obj, "updated_at", None) else None
+            ),
+        }
+    )
+
+@router.get("/cases/{case_id}/upload")
+def open_upload_for_case(case_id: int):
+    return RedirectResponse(url=f"/upload?selected_case_id={case_id}", status_code=302)

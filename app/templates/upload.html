@@ -7,10 +7,18 @@
     <!-- Sección de descripción -->
     <div class="md:col-span-2 space-y-6">
       <div class="bg-gray-800 p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold text-teal-300">Acerca de AutoSelect-X</h2>
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold text-teal-300">Acerca de AutoSelect-X</h2>
+          {% if selected_case_id %}
+            <span class="text-xs bg-gray-700 px-2 py-1 rounded">
+              Caso activo: #{{ selected_case_id }}
+            </span>
+          {% endif %}
+        </div>
         <p class="text-sm text-gray-300 mt-2">
-          Esta aplicación inteligente te permite cargar documentos técnicos (Hojas de Datos y Manuales de Requisitos) para extraer automáticamente información clave.
-          Sube tus archivos PDF y luego podrás realizar búsquedas y consultas sobre los requisitos técnicos directamente.
+          Esta aplicación inteligente te permite cargar documentos técnicos (Hojas de Datos y Manuales de Requisitos)
+          para extraer automáticamente información clave. Sube tus archivos PDF y luego podrás realizar búsquedas
+          y consultas sobre los requisitos técnicos directamente.
         </p>
       </div>
 
@@ -28,10 +36,15 @@
 
       <!-- Formulario de carga -->
       <form method="POST" action="/upload" enctype="multipart/form-data" class="space-y-4">
+        <!-- MUY IMPORTANTE: mantener el caso activo -->
+        <input type="hidden" name="case_id" value="{{ selected_case_id }}">
         <div>
           <label for="file" class="block text-sm font-medium mb-1">Seleccionar documento</label>
-          <input type="file" id="file" name="file" accept=".pdf"
-                 class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <input
+            type="file" id="file" name="file" accept=".pdf"
+            class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
         </div>
         <button type="submit"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
@@ -40,10 +53,9 @@
       </form>
 
       <!-- Botón de procesamiento -->
-      <form method="POST" action="/procesar">
-        <input type="hidden" name="procesar" value="true">
+      <form method="POST" action="/procesar" class="mt-2">
         <button type="submit"
-                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-4">
           Procesar Documentos
         </button>
       </form>
@@ -65,34 +77,36 @@
           fetch('/progress')
             .then(res => res.json())
             .then(data => {
-              const progreso = data.progress;
-              console.log("📡 Progreso recibido:", progreso); // 👈 esto ayuda a verificar
-      
+              // Backend puede devolver {progress: 0} o {progress:{percent:<num>}}
+              let progreso = 0;
+              if (data && typeof data.progress === 'number') {
+                progreso = data.progress;
+              } else if (data && data.progress && typeof data.progress.percent === 'number') {
+                progreso = data.progress.percent;
+              }
+
               const barra = document.getElementById('barra-progreso');
               const mensaje = document.getElementById('mensaje-progreso');
-      
+
               barra.style.width = progreso + '%';
-      
+
               if (progreso >= 100) {
                 mensaje.textContent = '✅ Procesamiento completado. Redirigiendo...';
                 setTimeout(() => {
-                  window.location.href = '/upload?processing_status=done';
+                  window.location.href = '/upload?processing_status=done{% if selected_case_id %}&selected_case_id={{ selected_case_id }}{% endif %}';
                 }, 1500);
               } else {
                 setTimeout(actualizarProgreso, 1000);
               }
             })
-            .catch(err => {
-              console.error("Error al consultar progreso:", err);
+            .catch(() => {
               setTimeout(actualizarProgreso, 2000); // reintenta tras error
             });
         }
-      
-        window.addEventListener('load', () => {
-          actualizarProgreso();
-        });
+
+        window.addEventListener('load', actualizarProgreso);
       </script>
-      
+
       {% elif processing_status == 'done' %}
       <div class="mt-6">
         <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
@@ -114,24 +128,47 @@
       </form>
     </div>
 
-    <!-- Lista de archivos subidos -->
+    <!-- Lista de archivos subidos (desde DB) -->
     <div class="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
       <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
         📄 Documentos Cargados
       </h3>
       <hr class="border-gray-600 mb-4">
-      {% if files %}
+
+      {% if docs and docs|length > 0 %}
       <ul class="space-y-2">
-        {% for file in files %}
-        <li class="bg-gray-700 px-3 py-2 rounded text-gray-200 text-sm flex justify-between items-center">
-          <span class="break-words w-4/5">{{ file }}</span>
-          <form method="POST" action="/delete-file" class="ml-2">
-            <input type="hidden" name="filename" value="{{ file }}">
-            <button type="submit"
-                    class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
-              Eliminar
-            </button>
-          </form>
+        {% for d in docs %}
+        <li class="bg-gray-700 px-3 py-2 rounded text-gray-200 text-sm">
+          <div class="flex justify-between items-start gap-3">
+            <div class="w-4/5">
+              <div class="font-medium break-words">{{ d.filename }}</div>
+              <div class="text-xs text-gray-400 mt-1">
+                {% if d.pages %}{{ d.pages }} pág.{% else %}pág. n/d{% endif %}
+                ·
+                {% if d.size_bytes %}
+                  {{ (d.size_bytes / 1024)|round(1) }} KB
+                {% else %}
+                  tamaño n/d
+                {% endif %}
+                ·
+                {% if d.created_at %}
+                  {{ d.created_at.strftime('%Y-%m-%d %H:%M') }}
+                {% else %}
+                  fecha n/d
+                {% endif %}
+              </div>
+            </div>
+
+            <form method="POST" action="/delete-file" class="ml-2">
+              <!-- Mantener el caso activo al eliminar -->
+              <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+              <input type="hidden" name="doc_id" value="{{ d.id }}">
+              <button type="submit"
+                      class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
+                Eliminar
+              </button>
+            </form>
+          </div>
         </li>
         {% endfor %}
       </ul>

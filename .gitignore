@@ -40,3 +40,5 @@ lightrag/pipelines/key.txt
 env.sh
 start_server.sh
 
+#Solo requerido DB para WSL Local
+compose/

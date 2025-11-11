@@ -1,20 +1,25 @@
 # app/routers/upload_routes.py
 from __future__ import annotations
 
-from fastapi import APIRouter, Request, UploadFile, File, Form, status, BackgroundTasks, Depends, HTTPException
+from fastapi import (
+    APIRouter, Request, UploadFile, File, Form, status,
+    BackgroundTasks, Depends, HTTPException
+)
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from starlette.templating import Jinja2Templates
+
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
-import os, shutil, io
+from sqlalchemy import desc, func
+
 from pathlib import Path
 from datetime import datetime
 from typing import List, Optional
+import os, io
 
 from app.utils.auth import get_current_user_id
 from app.database.conection import SessionLocal
 
-# === MODELOS (plural, tal como en tu repo) ===
+# Modelos
 from app.models.user import User
 from app.models.cases import Case
 from app.models.documents import Document
@@ -22,12 +27,13 @@ from app.models.documents import Document
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-# --- Directorios base desde .env (con defaults) ---
+# --- Directorios base (.env con defaults) ---
 FILES_BASE_DIR = Path(os.getenv("FILES_BASE_DIR", "./shared_data")).resolve()
 INBOX_DIR      = Path(os.getenv("INBOX_DIR", str(FILES_BASE_DIR / "inbox"))).resolve()
 INDEX_DIR      = Path(os.getenv("INDEX_DIR", str(FILES_BASE_DIR / "index"))).resolve()
 RAG_VERSION    = os.getenv("RAG_VERSION", "pc1-6@2025.11.09")
 
+# --- DB session ---
 def get_db():
     db = SessionLocal()
     try:
@@ -45,7 +51,7 @@ def _ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 def _count_pdf_pages(data: bytes) -> Optional[int]:
-    """Intenta contar páginas con pdfplumber si está instalado; si falla, devuelve None."""
+    """Intenta contar páginas con pdfplumber si está disponible; si falla => None."""
     try:
         import pdfplumber  # type: ignore
     except Exception:
@@ -57,15 +63,30 @@ def _count_pdf_pages(data: bytes) -> Optional[int]:
         return None
 
 def _latest_case_for_user(db: Session, user_id: int) -> Optional[Case]:
-    return db.query(Case).filter(Case.user_id == user_id).order_by(desc(Case.id)).first()
+    return (
+        db.query(Case)
+        .filter(Case.user_id == user_id)
+        .order_by(desc(Case.id))
+        .first()
+    )
 
-# ---------- Vistas ----------
+def _is_admin(role: str | None) -> bool:
+    return (role or "").lower() == "admin"
+
+def _load_case(db: Session, case_id: int | None) -> Optional[Case]:
+    if not case_id:
+        return None
+    return db.query(Case).filter(Case.id == case_id).first()
+
+# ===============================
+# ==========  VISTAS  ===========
+# ===============================
 @router.get("/upload", response_class=HTMLResponse)
 def show_upload_form(
     request: Request,
-    processing_status: str = None,
-    selected_case_id: int | None = None,  # 👈 permite llegar con ?selected_case_id=#
-    db: Session = Depends(get_db)
+    processing_status: str | None = None,
+    selected_case_id: int | None = None,  # ?selected_case_id=#
+    db: Session = Depends(get_db),
 ):
     user_id = get_current_user_id(request)
     if not user_id:
@@ -73,9 +94,9 @@ def show_upload_form(
 
     user = db.query(User).filter(User.id == user_id).first()
     user_name = getattr(user, "nombre", None)
-    user_rol  = getattr(user, "rol", None)
+    user_role = getattr(user, "rol", None)
 
-    # 👉 Traer lista de cases del usuario (últimos primero)
+    # Casos del usuario (propios)
     cases_list = (
         db.query(Case)
         .filter(Case.user_id == user_id)
@@ -83,108 +104,158 @@ def show_upload_form(
         .all()
     )
 
-    # Determinar case seleccionado: parámetro > último case
+    # Caso seleccionado: la query manda; si no viene, último caso del usuario
+    sel_case = None
     if selected_case_id:
         sel_case = next((c for c in cases_list if c.id == selected_case_id), None)
-    else:
-        sel_case = cases_list[0] if cases_list else None
+    if not sel_case and cases_list:
+        sel_case = cases_list[0]
 
-    files = []
-    base_folder: Path
-    if sel_case and sel_case.input_dir:
-        base_folder = Path(sel_case.input_dir)
-    else:
-        base_folder = INBOX_DIR / str(user_id)  # fallback histórico
+    # Documentos desde DB (no eliminados)
+    docs = []
+    if sel_case:
+        docs = (
+            db.query(Document)
+            .filter(Document.case_id == sel_case.id, Document.status != "deleted")
+            .order_by(Document.id.asc())
+            .all()
+        )
 
-    if base_folder.exists():
-        for f in sorted(base_folder.rglob("*.pdf")):
-            if f.is_file():
-                # mostrar relativo al input_dir del case
-                if sel_case and sel_case.input_dir and f.is_relative_to(base_folder):
-                    files.append(str(f.relative_to(base_folder)))
-                else:
-                    files.append(f.name)
+    return templates.TemplateResponse(
+        "carga.html",   # <-- tu plantilla existente
+        {
+            "request": request,
+            "docs": [
+                {
+                    "id": d.id,
+                    "filename": d.filename,
+                    "stored_path": d.stored_path,
+                    "size_bytes": d.size_bytes,
+                    "pages": d.pages,
+                    "status": d.status,
+                    "created_at": d.created_at,
+                }
+                for d in docs
+            ],
+            "cases_list": [
+                {
+                    "id": c.id,
+                    "name": getattr(c, "name", None),
+                    "status": getattr(c, "status", None),
+                    "doc_count": getattr(c, "doc_count", 0),
+                    # ¡Ojo! campos opcionales: usar getattr para no romper
+                    "notes": getattr(c, "notes", None),
+                    "updated_at": getattr(c, "updated_at", None),
+                }
+                for c in cases_list
+            ],
+            "selected_case_id": sel_case.id if sel_case else None,
+            "processing_status": processing_status,
+            "user_name": user_name,
+            "user_rol": user_role,
+        },
+    )
 
-    return templates.TemplateResponse("upload.html", {
-        "request": request,
-        "files": files,
-        "user_name": user_name,
-        "user_rol": user_rol,
-        "processing_status": processing_status,
-        "cases_list": [{"id": c.id, "name": c.name, "status": c.status, "doc_count": c.doc_count} for c in cases_list],
-        "selected_case_id": sel_case.id if sel_case else None,
-    })
-
-
-@router.post("/upload")
+@router.post("/upload", response_class=HTMLResponse)
 async def handle_upload(
     request: Request,
     file: UploadFile | None = File(None),
     files: List[UploadFile] | None = File(None),
-    case_id: int | None = Form(None),       # 👈 nuevo
+    case_id: int | None = Form(None),             # hidden del form
     case_name: str = Form("Caso Demo"),
     notes: str = Form("creado desde /upload"),
     db: Session = Depends(get_db),
 ):
+    """
+    Si llega case_id (o selected_case_id en la query), se usa ese CASE EXISTENTE.
+    Si no llega, se crea un caso NUEVO (manteniendo compatibilidad).
+    """
     user_id = get_current_user_id(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=302)
 
-    upload_list = []
+    # Unificar fuente de case_id: form > querystring
+    if case_id is None:
+        q_case = request.query_params.get("selected_case_id")
+        if q_case and str(q_case).isdigit():
+            case_id = int(q_case)
+
+    # Normalizar lista de archivos
+    upload_list: List[UploadFile] = []
     if file is not None:
         upload_list.append(file)
     if files:
-        upload_list.extend(files)
-    upload_list = [f for f in upload_list if f is not None]
-
+        upload_list.extend([f for f in files if f is not None])
     if not upload_list:
         return JSONResponse({"error": "No se recibió ningún archivo."}, status_code=400)
 
-    # 👉 Si viene case_id, lo usamos; si no, creamos uno nuevo
+    # --- Cargar/crear el caso ---
     if case_id:
-        new_case = db.query(Case).filter(Case.id == case_id, Case.user_id == user_id).first()
-        if not new_case:
-            return JSONResponse({"error": "Case inválido o no pertenece al usuario."}, status_code=403)
-        # aseguramos rutas
-        input_dir = Path(new_case.input_dir) if new_case.input_dir else (INBOX_DIR / str(new_case.id) / "original")
-        index_dir = Path(new_case.index_dir) if new_case.index_dir else (INDEX_DIR / str(new_case.id))
-        _ensure_dir(input_dir)
+        # Usar caso existente
+        case_obj = _load_case(db, case_id)
+        if not case_obj:
+            return JSONResponse({"error": "Case no existe."}, status_code=404)
+
+        # Seguridad: dueño o admin
+        user = db.query(User).filter(User.id == user_id).first()
+        if not (_is_admin(getattr(user, "rol", None)) or getattr(case_obj, "user_id", None) == user_id):
+            return JSONResponse({"error": "No autorizado para este case."}, status_code=403)
+
+        # Asegurar rutas del caso (estándar por CASE_ID)
+        input_dir = Path(getattr(case_obj, "input_dir", "") or (INBOX_DIR / str(case_obj.id)))
+        index_dir = Path(getattr(case_obj, "index_dir", "") or (INDEX_DIR / str(case_obj.id)))
+        original_dir = input_dir / "original"
+        _ensure_dir(original_dir)
         _ensure_dir(index_dir)
-        new_case.input_dir = str(input_dir)
-        new_case.index_dir = str(index_dir)
+
+        case_obj.input_dir = str(input_dir)
+        case_obj.index_dir = str(index_dir)
+
     else:
-        new_case = Case(
+        # Crear NUEVO caso SOLO si no vino case_id
+        case_obj = Case(
             user_id=user_id,
             customer_id=None,
-            name=case_name[:200],
+            name=(case_name or "Caso").strip()[:200],
             status="queued",
             input_dir="",
             index_dir="",
-            rag_version=RAG_VERSION,
-            doc_count=0,
-            notes=notes,
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow(),
+            # Campos opcionales: si el modelo no los tiene no pasa nada
+            **({"rag_version": RAG_VERSION} if hasattr(Case, "rag_version") else {}),
+            **({"doc_count": 0} if hasattr(Case, "doc_count") else {}),
+            **({"notes": notes} if hasattr(Case, "notes") else {}),
+            **({"created_at": datetime.utcnow()} if hasattr(Case, "created_at") else {}),
+            **({"updated_at": datetime.utcnow()} if hasattr(Case, "updated_at") else {}),
         )
-        db.add(new_case)
-        db.flush()
-        input_dir = INBOX_DIR / str(new_case.id) / "original"
-        index_dir = INDEX_DIR / str(new_case.id)
-        _ensure_dir(input_dir)
-        _ensure_dir(index_dir)
-        new_case.input_dir = str(input_dir)
-        new_case.index_dir = str(index_dir)
+        db.add(case_obj)
+        db.flush()  # obtiene id
 
-    # Guardar PDFs como antes
+        # Estándar por CASE_ID
+        input_dir = INBOX_DIR / str(case_obj.id)
+        index_dir = INDEX_DIR / str(case_obj.id)
+        original_dir = input_dir / "original"
+        _ensure_dir(input_dir)
+        _ensure_dir(original_dir)
+        _ensure_dir(index_dir)
+
+        case_obj.input_dir = str(input_dir)
+        case_obj.index_dir = str(index_dir)
+
+    # --- Guardar archivos en disco + registrar en DB ---
     added = 0
     for f in upload_list:
-        filename = _safe_filename(Path(f.filename).name)
-        if not filename.lower().endswith(".pdf"):
+        filename = _safe_filename(Path(f.filename or "").name)
+        if not filename or not filename.lower().endswith(".pdf"):
             db.rollback()
-            return JSONResponse({"error": f"Solo PDF. Archivo inválido: {filename}"}, status_code=400)
+            return JSONResponse(
+                {"error": f"Solo PDF. Archivo inválido: {filename or '(sin nombre)'}"},
+                status_code=400,
+            )
 
         file_bytes = await f.read()
-        stored_path = input_dir / filename
+        stored_path = Path(case_obj.input_dir) / "original" / filename
+        _ensure_dir(stored_path.parent)
+
         with open(stored_path, "wb") as buffer:
             buffer.write(file_bytes)
 
@@ -193,77 +264,120 @@ async def handle_upload(
         size_bytes = len(file_bytes) if file_bytes is not None else None
 
         doc = Document(
-            case_id=new_case.id,
+            case_id=case_obj.id,
             user_id=user_id,
-            filename=filename,
-            original_path=str(stored_path),
-            stored_path=str(stored_path),
+            filename=filename,                # basename en DB
+            original_path=str(stored_path),   # ruta completa (puede ser igual a stored_path)
+            stored_path=str(stored_path),     # ruta completa
             mime_type=mime_type,
             size_bytes=size_bytes,
             pages=pages,
             status="uploaded",
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow(),
+            **({"created_at": datetime.utcnow()} if hasattr(Document, "created_at") else {}),
+            **({"updated_at": datetime.utcnow()} if hasattr(Document, "updated_at") else {}),
         )
         db.add(doc)
         added += 1
 
-    new_case.doc_count = (new_case.doc_count or 0) + added
-    new_case.touch()
+    # Actualizar contadores/timestamps si existen
+    if hasattr(case_obj, "doc_count"):
+        case_obj.doc_count = int(getattr(case_obj, "doc_count", 0) or 0) + added
+    if hasattr(case_obj, "updated_at"):
+        case_obj.updated_at = datetime.utcnow()
+
     db.commit()
 
-    # 👈 vuelve a /upload con el case seleccionado
+    # Volver a la misma pantalla del case seleccionado
     return RedirectResponse(
-        url=f"/upload?selected_case_id={new_case.id}",
-        status_code=status.HTTP_302_FOUND
+        url=f"/upload?selected_case_id={case_obj.id}",
+        status_code=status.HTTP_302_FOUND,
     )
 
 @router.post("/delete-file")
 def delete_file(
     request: Request,
-    filename: str = Form(...),
-    case_id: int | None = Form(None),            # 👈 nuevo
-    db: Session = Depends(get_db)
+    doc_id: Optional[int] = Form(None),      # preferido
+    filename: Optional[str] = Form(None),    # fallback legado
+    case_id: int | None = Form(None),
+    db: Session = Depends(get_db),
 ):
     user_id = get_current_user_id(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=302)
 
-    # Prioriza el case recibido; si no, último case del usuario
+    # Resolver el case (form > último del usuario)
     sel_case = None
     if case_id:
-        sel_case = db.query(Case).filter(Case.id == case_id, Case.user_id == user_id).first()
+        sel_case = db.query(Case).filter(Case.id == case_id).first()
     if not sel_case:
         sel_case = _latest_case_for_user(db, user_id)
+    if not sel_case:
+        return RedirectResponse(url="/upload", status_code=302)
 
-    base_folder = Path(sel_case.input_dir) if (sel_case and sel_case.input_dir) else (INBOX_DIR / str(user_id))
-    file_path = base_folder / filename
-    if file_path.exists():
-        file_path.unlink()
+    # Permisos: dueño o admin
+    user = db.query(User).filter(User.id == user_id).first()
+    if not (_is_admin(getattr(user, "rol", None)) or getattr(sel_case, "user_id", None) == user_id):
+        return RedirectResponse(url="/cases", status_code=302)
 
-    if sel_case:
-        doc = db.query(Document).filter(
-            Document.case_id == sel_case.id,
-            Document.filename == filename
-        ).first()
-        if doc:
-            doc.status = "deleted"
-            doc.touch()
-            db.commit()
+    # --- Localizar doc ---
+    doc: Optional[Document] = None
+    if doc_id:
+        doc = (
+            db.query(Document)
+            .filter(Document.id == doc_id, Document.case_id == sel_case.id)
+            .first()
+        )
+    elif filename:
+        # modo legado por nombre (en el caso activo)
+        basename = Path(filename).name
+        doc = (
+            db.query(Document)
+            .filter(Document.case_id == sel_case.id, Document.filename == basename)
+            .first()
+        )
 
-    # Mantener el case seleccionado en la vista
-    redirect_url = "/upload"
-    if sel_case:
-        redirect_url += f"?selected_case_id={sel_case.id}"
-    return RedirectResponse(url=redirect_url, status_code=302)
+    if not doc:
+        return RedirectResponse(url=f"/upload?selected_case_id={sel_case.id}", status_code=302)
 
+    # Borrar físico si existe
+    try:
+        p = Path(doc.stored_path) if getattr(doc, "stored_path", None) else None
+        if p and p.exists():
+            p.unlink()
+    except Exception:
+        pass
 
-# ---- Procesamiento (placeholder: luego disparará LightRAG /index) ----
+    # Soft delete en DB
+    doc.status = "deleted"
+    if hasattr(doc, "updated_at"):
+        doc.updated_at = datetime.utcnow()
+    db.add(doc)
+
+    # Recalcular conteo real (solo no-deleted)
+    remaining = (
+        db.query(func.count(Document.id))
+        .filter(Document.case_id == sel_case.id, Document.status != "deleted")
+        .scalar()
+    )
+    if hasattr(sel_case, "doc_count"):
+        sel_case.doc_count = int(remaining or 0)
+    if hasattr(sel_case, "updated_at"):
+        sel_case.updated_at = datetime.utcnow()
+    db.add(sel_case)
+
+    db.commit()
+
+    return RedirectResponse(
+        url=f"/upload?selected_case_id={sel_case.id}",
+        status_code=302,
+    )
+
+# ---- Procesamiento (placeholder para indexación) ----
 @router.post("/procesar")
 def procesar_archivos(
     request: Request,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     user_id = get_current_user_id(request)
     if not user_id:
@@ -273,55 +387,20 @@ def procesar_archivos(
     if not last_case:
         return RedirectResponse(url="/upload?processing_status=no_case", status_code=302)
 
-    # Ejemplo futuro:
-    # background_tasks.add_task(llamar_lightrag_index, last_case.input_dir, last_case.index_dir, last_case.id)
-
+    # Aquí iría la tarea asíncrona real
     last_case.status = "processing"
-    last_case.touch()
+    if hasattr(last_case, "updated_at"):
+        last_case.updated_at = datetime.utcnow()
+    db.add(last_case)
     db.commit()
+
     return RedirectResponse(url="/upload?processing_status=in_progress", status_code=302)
 
-# ---- Progreso (placeholder) ----
+# ---- Progreso (mock sencillo) ----
 @router.get("/progress")
 def consultar_progreso(request: Request):
     user_id = get_current_user_id(request)
     if not user_id:
         return JSONResponse({"error": "No autenticado"}, status_code=401)
-
-    progreso = {"percent": 0, "status": "pending"}
-    return JSONResponse(content={"progress": progreso})
-
-# ---- API extra: listar documentos por case (JSON) ----
-@router.get("/cases/{case_id}/documents")
-def list_documents_by_case(
-    request: Request,
-    case_id: int,
-    db: Session = Depends(get_db)
-):
-    user_id = get_current_user_id(request)
-    if not user_id:
-        return JSONResponse({"error": "No autenticado"}, status_code=401)
-
-    case_obj = db.query(Case).filter(Case.id == case_id).first()
-    if not case_obj:
-        raise HTTPException(status_code=404, detail="Case no encontrado")
-
-    if getattr(case_obj, "user_id", None) != user_id:
-        raise HTTPException(status_code=403, detail="No autorizado para este Case")
-
-    docs = db.query(Document).filter(Document.case_id == case_id).order_by(Document.id.asc()).all()
-    return [
-        {
-            "id": d.id,
-            "case_id": d.case_id,
-            "filename": d.filename,
-            "original_path": d.original_path,
-            "stored_path": d.stored_path,
-            "mime_type": d.mime_type,
-            "size_bytes": d.size_bytes,
-            "status": d.status,
-            "pages": d.pages,
-            "created_at": d.created_at.isoformat() if d.created_at else None,
-        }
-        for d in docs
-    ]
+    # Placeholder simple
+    return JSONResponse(content={"progress": {"percent": 0}})
