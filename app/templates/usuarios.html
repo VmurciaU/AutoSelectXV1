@@ -1,60 +1,111 @@
 {% extends "base.html" %}
+{% block title %}Usuarios - AutoSelect-X{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-900 text-white py-16 px-4 sm:px-8">
-  <div class="max-w-7xl mx-auto">
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
+  <div class="max-w-7xl mx-auto space-y-6">
 
-    <h2 class="text-2xl font-semibold text-teal-400 mb-6">
-      👥 Gestión de Usuarios
-    </h2>
+    <!-- Header + Filtros -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h2 class="text-xl font-semibold text-teal-300 flex items-center gap-2">
+          👥 Gestión de Usuarios
+        </h2>
 
-    <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-md p-4">
-      {% if usuarios %}
-      <table class="min-w-full text-sm text-gray-300">
-        <thead>
-          <tr class="border-b border-gray-700 text-left">
-            <th class="py-2 px-4">Nombre</th>
-            <th class="py-2 px-4">Correo</th>
-            <th class="py-2 px-4">Rol</th>
-            <th class="py-2 px-4">Estado</th>
-            <th class="py-2 px-4">Acciones</th>
+        <form method="GET" action="/admin/users" class="w-full md:w-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+            <!-- Búsqueda -->
+            <input
+              type="text" name="q" placeholder="Buscar nombre o correo"
+              value="{{ q or '' }}"
+              class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:outline-none col-span-2 sm:col-span-2" />
+
+            <!-- Rol -->
+            <select name="role"
+              class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:outline-none">
+              <option value="">Todos los roles</option>
+              <option value="admin"   {% if role=='admin' %}selected{% endif %}>Admin</option>
+              <option value="usuario" {% if role=='usuario' %}selected{% endif %}>Usuario</option>
+            </select>
+
+            <!-- Estado -->
+            <select name="estado"
+              class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:outline-none">
+              <option value="">Todos los estados</option>
+              <option value="activo"   {% if estado=='activo' %}selected{% endif %}>Activo</option>
+              <option value="inactivo" {% if estado=='inactivo' %}selected{% endif %}>Inactivo</option>
+            </select>
+          </div>
+
+          <div class="mt-3 flex gap-2">
+            <button type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded text-sm">
+              Filtrar
+            </button>
+            <a href="/admin/users"
+              class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1.5 rounded text-sm">
+              Limpiar
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
+      {% if usuarios and usuarios|length > 0 %}
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-700 text-gray-200">
+          <tr>
+            <th class="text-left px-4 py-2">Nombre</th>
+            <th class="text-left px-4 py-2">Correo</th>
+            <th class="text-left px-4 py-2">Rol</th>
+            <th class="text-left px-4 py-2">Estado</th>
+            <th class="text-left px-4 py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {% for usuario in usuarios %}
-          <tr class="hover:bg-gray-700 transition duration-150">
-            <td class="py-2 px-4">{{ usuario.nombre }}</td>
-            <td class="py-2 px-4">{{ usuario.email }}</td>
-            <td class="py-2 px-4 capitalize">{{ usuario.rol }}</td>
-            <td class="py-2 px-4">
-              {% if usuario.activo %}
-                <span class="text-green-400 font-medium">Activo</span>
+          {% for u in usuarios %}
+          <tr class="border-t border-gray-700 hover:bg-gray-750">
+            <td class="px-4 py-2">{{ u.nombre }}</td>
+            <td class="px-4 py-2">{{ u.email }}</td>
+            <td class="px-4 py-2 capitalize">
+              <span class="px-2 py-0.5 rounded bg-gray-700 text-gray-200">{{ u.rol }}</span>
+            </td>
+            <td class="px-4 py-2">
+              {% if u.activo %}
+                <span class="px-2 py-0.5 rounded bg-green-700 text-green-200">Activo</span>
               {% else %}
-                <span class="text-red-400 font-medium">Inactivo</span>
+                <span class="px-2 py-0.5 rounded bg-red-700 text-red-200">Inactivo</span>
               {% endif %}
             </td>
-            <td class="py-2 px-4 flex flex-wrap gap-2">
-              <form method="POST" action="/usuarios/estado/{{ usuario.id }}">
-                <button type="submit"
-                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs">
-                  {% if usuario.activo %} Desactivar {% else %} Activar {% endif %}
-                </button>
-              </form>
-              <form method="POST" action="/usuarios/rol/{{ usuario.id }}">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
-                  Cambiar Rol
-                </button>
-              </form>
+            <td class="px-4 py-2">
+              <div class="flex flex-wrap gap-2">
+                <form method="POST" action="/usuarios/estado/{{ u.id }}">
+                  <button type="submit"
+                    class="w-28 inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs">
+                    {% if u.activo %} Desactivar {% else %} Activar {% endif %}
+                  </button>
+                </form>
+                <form method="POST" action="/usuarios/rol/{{ u.id }}">
+                  <button type="submit"
+                    class="w-28 inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
+                    Cambiar Rol
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
       {% else %}
-      <p class="text-gray-400">No hay usuarios registrados.</p>
+      <div class="p-6 text-center text-gray-300">
+        No se encontraron usuarios con esos filtros.
+      </div>
       {% endif %}
     </div>
+
   </div>
 </div>
 {% endblock %}

@@ -1,0 +1,20 @@
+🧩 Estados finales aprobados
+🟦 Casos (Case.status)
+Código	    Etiqueta visible	    Comentario técnico
+new	        Nuevo	                Recién creado, sin documentos. Ideal para “Crear Caso”.
+queued	    Pendiente de procesar	Ya tiene documentos cargados, pero aún no se ejecutó el pipeline.
+processing	Procesando	            Algún servicio (PDF parser, embeddings, etc.) está corriendo.
+ready	    Listo para cotizar	    Todo el pipeline terminó bien, ya puede iniciar cotización.
+quoted	    En cotización	        Proceso activo de cotización (edición).
+closed	    Cerrado	Cotización      finalizada, bloquea modificaciones.
+error	    Con error	            Fallo general, debe ser revisado.
+
+💡 Sugerencia opcional:
+Puedes mostrar "Cerrado" como "Cotizado" si quote_id o quote_total están definidos, para reflejar mejor el flujo comercial.
+
+🟩 Documentos (Document.status)
+Código	    Etiqueta visible	Comentario técnico
+uploaded	Cargado	            Guardado en disco correctamente.
+processed	Procesado	        Limpieza y tokenización completadas sin error.
+error	    Con error	        Falló al leer, limpiar o parsear.
+deleted	    Eliminado	        Retirado por el usuario o por pipeline.

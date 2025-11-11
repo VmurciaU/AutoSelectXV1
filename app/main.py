@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import os
 
-from app.routers import user_routes, upload_routes, admin_routes
+from app.routers import user_routes, upload_routes, admin_routes, nav_routes
 # ⬇️ importa los routers nuevos
 from app.routers import cases_routes, documents_routes
 
@@ -23,6 +23,8 @@ app.include_router(admin_routes.router)
 # ⬇️ Routers nuevos (MVP casos + documentos)
 app.include_router(cases_routes.router)
 app.include_router(documents_routes.router)
+
+app.include_router(nav_routes.router)
 
 # Static y templates
 app.mount("/static", StaticFiles(directory="app/static"), name="static")

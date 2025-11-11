@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Casos - AutoSelect-X{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Header + Crear -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-teal-300">Mis Casos</h2>
+        <form method="POST" action="/cases/new" class="flex gap-2">
+          <input
+            type="text" name="name" placeholder="Nombre del caso"
+            class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none"
+            required />
+          <input
+            type="text" name="notes" placeholder="Notas (opcional)"
+            class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none" />
+          <button
+            type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm">
+            + Crear caso
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-700 text-gray-200">
+          <tr>
+            <th class="text-left px-4 py-2">ID</th>
+            <th class="text-left px-4 py-2">Nombre</th>
+            <th class="text-left px-4 py-2">Estado</th>
+            {% if user_rol == "admin" %}
+              <th class="text-left px-4 py-2">Propietario</th>
+            {% endif %}
+            <th class="text-left px-4 py-2">Docs</th>
+            <th class="text-left px-4 py-2">Actualizado</th>
+            <th class="text-left px-4 py-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {# --- Ruta principal: usar 'rows' preparados en el router (con badges y permisos) --- #}
+          {% if rows and rows|length > 0 %}
+            {% for r in rows %}
+            <tr class="border-t border-gray-700 hover:bg-gray-750">
+              <td class="px-4 py-2">{{ r.id }}</td>
+
+              <td class="px-4 py-2">
+                <div class="font-medium">{{ r.title }}</div>
+                {% if r.description %}
+                  <div class="text-xs text-gray-400 line-clamp-1">{{ r.description }}</div>
+                {% endif %}
+              </td>
+
+              <td class="px-4 py-2">
+                <span class="px-2 py-0.5 rounded {{ r.status_badge.bg }} {{ r.status_badge.color }}">
+                  {{ r.status_badge.text }}
+                </span>
+              </td>
+
+              {% if user_rol == "admin" %}
+                <td class="px-4 py-2 text-gray-300">
+                  {{ r.owner_display or '-' }}
+                </td>
+              {% endif %}
+
+              <td class="px-4 py-2">
+                {{ r.doc_count if r.doc_count is defined else 0 }}
+              </td>
+
+              <td class="px-4 py-2">
+                {# r.updated puede venir como datetime o string #}
+                {% if r.updated %}
+                  {% if r.updated.strftime is defined %}
+                    {{ r.updated.strftime("%Y-%m-%d %H:%M") }}
+                  {% else %}
+                    {{ r.updated }}
+                  {% endif %}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+
+              <td class="px-4 py-2">
+                <div class="flex flex-wrap gap-2">
+                  <a href="/cases/{{ r.id }}/view"
+                     class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
+                  <a href="/cases/{{ r.id }}/upload"
+                     class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
+
+                  {% if r.can_edit %}
+                    <a href="/cases/{{ r.id }}/edit"
+                       class="bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded text-xs">Editar</a>
+                  {% else %}
+                    <button class="bg-gray-700 px-3 py-1 rounded text-xs opacity-50 cursor-not-allowed" title="Sin permiso">
+                      Editar
+                    </button>
+                  {% endif %}
+
+                  {% if r.can_delete %}
+                    <form method="post" action="/cases/{{ r.id }}/delete" onsubmit="return confirm('¿Eliminar este caso?');">
+                      <button class="bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded text-xs">Eliminar</button>
+                    </form>
+                  {% else %}
+                    <button class="bg-gray-700 px-3 py-1 rounded text-xs opacity-50 cursor-not-allowed" title="Sin permiso">
+                      Eliminar
+                    </button>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+
+          {# --- Fallback: compatibilidad con 'cases' crudos (sin badges ni permisos) --- #}
+          {% elif cases and cases|length > 0 %}
+            {% for c in cases %}
+            <tr class="border-t border-gray-700 hover:bg-gray-750">
+              <td class="px-4 py-2">{{ c.id }}</td>
+              <td class="px-4 py-2">{{ c.name or '-' }}</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-0.5 rounded bg-gray-700 text-gray-200">
+                  {{ c.status }}
+                </span>
+              </td>
+              {% if user_rol == "admin" %}
+                <td class="px-4 py-2 text-gray-300">-</td>
+              {% endif %}
+              <td class="px-4 py-2">{{ c.doc_count or 0 }}</td>
+              <td class="px-4 py-2">
+                {% if c.updated_at %}
+                  {{ c.updated_at.strftime("%Y-%m-%d %H:%M") }}
+                {% elif c.created_at %}
+                  {{ c.created_at.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td class="px-4 py-2">
+                <div class="flex gap-2">
+                  <a href="/cases/{{ c.id }}/view"
+                     class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
+                  <a href="/cases/{{ c.id }}/upload"
+                     class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+
+          {% else %}
+            <tr>
+              <td colspan="7" class="px-4 py-6 text-center text-gray-300">
+                No tienes casos aún. Crea el primero con el botón <em>+ Crear caso</em>.
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

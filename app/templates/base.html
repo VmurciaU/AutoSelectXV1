@@ -20,23 +20,31 @@
   <header class="bg-gray-800 bg-opacity-90 fixed w-full z-50">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-xl font-bold">AutoSelect-X</h1>
-      <nav class="space-x-4">
+      <nav class="space-x-4 flex items-center">
         <a href="/" class="hover:underline">Inicio</a>
-        <a href="/caracteristicas" class="hover:underline">Características</a>
-
+        <a href="/features" class="hover:underline">Características</a>
+      
         {% if user_name %}
-          <a href="/upload" class="hover:underline">Carga</a>
-
-          {% if user_rol == "admin" %}
-            <a href="/usuarios" class="hover:underline">Gestión</a>
-          {% endif %}
-
-          <span class="text-white">👤 {{ user_name }}</span>
-          <a href="/logout" class="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-900 transition">Cerrar sesión</a>
+        <!-- Menú principal para usuario logueado -->
+        <a href="/cases" class="hover:underline">Casos</a>
+        <a href="/quotes" class="hover:underline">Cotizaciones</a>
+        <a href="/products" class="hover:underline">Productos</a>
+        <a href="/customers" class="hover:underline">Clientes</a>
+        <a href="/delivery-terms" class="hover:underline">Términos</a>
+      
+        {% if user_rol == "admin" %}
+        <a href="/admin/users" class="hover:underline">Usuarios</a>
+        {% endif %}
+      
+        <span class="text-white ml-2">👤 {{ user_name }}</span>
+        <a href="/logout"
+          class="ml-2 border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-900 transition">Cerrar sesión</a>
         {% else %}
-          <a href="/login" class="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-900 transition">Iniciar Sesión</a>
+        <a href="/login" class="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-900 transition">Iniciar
+          Sesión</a>
         {% endif %}
       </nav>
+
     </div>
   </header>
 

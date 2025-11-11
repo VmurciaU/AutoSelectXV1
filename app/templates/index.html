@@ -1,30 +1,32 @@
 {% extends "base.html" %}
-
 {% block title %}AutoSelect-X - Inicio{% endblock %}
 
 {% block content %}
-  <!-- Hero -->
-  <section id="inicio" class="hero h-[850px] pt-44 px-4">
-    <div class="bg-black bg-opacity-60 px-10 py-10 rounded-lg shadow-lg max-w-3xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-white mt-[60px] leading-tight">
-        Sistema Inteligente para la Cotización Automática de Bombas
-      </h2>
-      <p class="text-lg text-gray-200 mt-8 mb-4">
-        Nuestra herramienta automatizada analiza documentos técnicos para brindarle las mejores opciones.
-      </p>
-      {% if not user_name %}
+<section id="inicio" class="hero h-[850px] pt-44 px-4">
+  <div class="bg-black bg-opacity-60 px-10 py-10 rounded-lg shadow-lg max-w-3xl mx-auto text-center">
+    <h2 class="text-4xl md:text-5xl font-bold text-white mt-[60px] leading-tight">
+      Sistema Inteligente para la Cotización Automática de Bombas
+    </h2>
+    <p class="text-lg text-gray-200 mt-8 mb-4">
+      Nuestra herramienta automatizada analiza documentos técnicos para brindarle las mejores opciones.
+    </p>
+
+    {% if not user_name %}
       <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded mt-6 inline-block">
         Iniciar Sesión
       </a>
-      {% endif %}
-    </div>
-  </section>
+    {% else %}
+      <a href="/cases" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded mt-6 inline-block">
+        Ir a mis Casos
+      </a>
+    {% endif %}
+  </div>
+</section>
 
-  <!-- Características -->
-  <section id="caracteristicas" class="bg-white text-gray-900 py-16 px-6 text-center">
-    <h3 class="text-3xl font-bold mb-6">Características</h3>
-    <p class="text-lg max-w-2xl mx-auto">
-      AutoSelect-X permite cargar documentos técnicos (HD, MR, ET) y extraer automáticamente información clave para la selección de bombas de inyección y generación de cotizaciones en tiempo real.
-    </p>
-  </section>
+<section id="caracteristicas" class="bg-white text-gray-900 py-16 px-6 text-center">
+  <h3 class="text-3xl font-bold mb-6">Características</h3>
+  <p class="text-lg max-w-2xl mx-auto">
+    AutoSelect-X permite cargar documentos técnicos (HD, MR, ET) y extraer automáticamente información clave para la selección de bombas y generación de cotizaciones.
+  </p>
+</section>
 {% endblock %}

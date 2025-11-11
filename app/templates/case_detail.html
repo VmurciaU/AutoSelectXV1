@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Caso #{{ (row.id if row is defined else case.id) }} - AutoSelect-X{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+
+    <!-- Encabezado -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-teal-300">
+            Caso #{{ (row.id if row is defined else case.id) }} — {{ (row.title if row is defined else (case.name or 'Sin nombre')) }}
+          </h2>
+
+          {% if row is defined %}
+            <p class="text-gray-300 text-sm mt-1 flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded {{ row.status_badge.bg }} {{ row.status_badge.color }}">
+                {{ row.status_badge.text }}
+              </span>
+              <span>· Docs: {{ row.doc_count if row.doc_count is defined else (case.doc_count or 0) }}</span>
+              <span>· Versión RAG: {{ case.rag_version or '-' }}</span>
+            </p>
+          {% else %}
+            <p class="text-gray-300 text-sm mt-1">
+              Estado:
+              <span class="px-2 py-0.5 rounded bg-gray-700">{{ case.status }}</span>
+              · Docs: {{ case.doc_count or 0 }}
+              · Versión RAG: {{ case.rag_version or '-' }}
+            </p>
+          {% endif %}
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <a href="/cases"
+             class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-sm">← Volver</a>
+          <a href="/cases/{{ (row.id if row is defined else case.id) }}/upload"
+             class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">Abrir Carga</a>
+
+          {# Botón Editar (según permisos si row existe) #}
+          {% if row is defined and row.can_edit %}
+            <a href="/cases/{{ row.id }}/edit"
+               class="bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded text-sm">Editar</a>
+          {% elif row is defined %}
+            <button class="bg-gray-700 px-3 py-1 rounded text-sm opacity-50 cursor-not-allowed" title="Sin permiso">
+              Editar
+            </button>
+          {% endif %}
+
+          {# Botón Eliminar (según permisos si row existe) #}
+          {% if row is defined and row.can_delete %}
+            <form method="post" action="/cases/{{ row.id }}/delete" onsubmit="return confirm('¿Eliminar este caso?');">
+              <button class="bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded text-sm">Eliminar</button>
+            </form>
+          {% elif row is defined %}
+            <button class="bg-gray-700 px-3 py-1 rounded text-sm opacity-50 cursor-not-allowed" title="Sin permiso">
+              Eliminar
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Rutas / Metadatos -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow">
+      <h3 class="text-lg font-semibold mb-3">Rutas del caso</h3>
+      <div class="text-sm text-gray-200 space-y-1">
+        <div><span class="text-gray-400">Input dir:</span> {{ case.input_dir }}</div>
+        <div><span class="text-gray-400">Index dir:</span> {{ case.index_dir }}</div>
+        <div><span class="text-gray-400">Notas:</span> {{ (row.description if row is defined and row.description else case.notes) or '-' }}</div>
+      </div>
+    </div>
+
+    <!-- Timestamps -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow">
+      <h3 class="text-lg font-semibold mb-3">Tiempos</h3>
+      <div class="text-sm text-gray-300 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div>
+          <span class="text-gray-400">Creado:</span>
+          {% if case.created_at %}
+            {{ case.created_at.strftime("%Y-%m-%d %H:%M") }}
+          {% else %}-{% endif %}
+        </div>
+        <div>
+          <span class="text-gray-400">Actualizado:</span>
+          {% if case.updated_at %}
+            {{ case.updated_at.strftime("%Y-%m-%d %H:%M") }}
+          {% else %}-{% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
