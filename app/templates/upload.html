@@ -19,8 +19,13 @@
         <h3 class="text-lg font-semibold text-teal-300 mb-2">Instrucciones</h3>
         <p class="text-sm text-gray-300 mb-2">
           Bienvenido a la sección de carga de documentos. Por favor, sube los archivos PDF correspondientes a HD o MR.
-        </p>
-        <ul class="text-sm text-gray-400 list-disc list-inside">
+          </p>
+
+          <p class="text-sm text-gray-400 mt-2">
+            Caso activo: {{ selected_case_id if selected_case_id is not none else '— (ninguno)' }}
+          </p>   
+
+          <ul class="text-sm text-gray-400 list-disc list-inside">
           <li><strong>Tipos de archivos aceptados:</strong> .pdf</li>
           <li><strong>Consideraciones:</strong> Asegúrate de que los documentos sean legibles y estén en formato estándar.</li>
         </ul>
@@ -33,6 +38,9 @@
           <input type="file" id="file" name="file" accept=".pdf"
                  class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
+        
+        <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+        
         <button type="submit"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
           Cargar Documento
@@ -42,6 +50,9 @@
       <!-- Botón de procesamiento -->
       <form method="POST" action="/procesar">
         <input type="hidden" name="procesar" value="true">
+
+        <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+
         <button type="submit"
                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
           Procesar Documentos
@@ -127,6 +138,9 @@
           <span class="break-words w-4/5">{{ file }}</span>
           <form method="POST" action="/delete-file" class="ml-2">
             <input type="hidden" name="filename" value="{{ file }}">
+
+            <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+
             <button type="submit"
                     class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
               Eliminar

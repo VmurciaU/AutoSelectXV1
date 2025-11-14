@@ -90,6 +90,30 @@ def show_upload_form(
         sel_case = cases_list[0] if cases_list else None
 
     files = []
+    
+
+
+    if sel_case:
+        # 1) Determinar carpeta del caso
+        if sel_case.input_dir:
+            base_folder = Path(sel_case.input_dir)
+        else:
+            base_folder = INBOX_DIR / str(sel_case.id) / "original"
+            _ensure_dir(base_folder)
+            sel_case.input_dir = str(base_folder)
+            db.commit()
+
+        # 2) Listar PDFs solo de ESA carpeta
+        if base_folder.exists():
+            for f in sorted(base_folder.rglob("*.pdf")):
+                if f.is_file():
+                    files.append(str(f.relative_to(base_folder)))
+    else:
+        base_folder = None
+        files = []
+
+    
+    """
     base_folder: Path
     if sel_case and sel_case.input_dir:
         base_folder = Path(sel_case.input_dir)
@@ -104,6 +128,7 @@ def show_upload_form(
                     files.append(str(f.relative_to(base_folder)))
                 else:
                     files.append(f.name)
+    """
 
     return templates.TemplateResponse("upload.html", {
         "request": request,
