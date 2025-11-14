@@ -19,15 +19,24 @@
         <h3 class="text-lg font-semibold text-teal-300 mb-2">Instrucciones</h3>
         <p class="text-sm text-gray-300 mb-2">
           Bienvenido a la sección de carga de documentos. Por favor, sube los archivos PDF correspondientes a HD o MR.
-          </p>
-
-          <p class="text-sm text-gray-400 mt-2">
-            Caso activo: {{ selected_case_id if selected_case_id is not none else '— (ninguno)' }}
-          </p>   
-
-          <ul class="text-sm text-gray-400 list-disc list-inside">
+        </p>
+        
+        {% set active_case = cases_list | selectattr('id', 'equalto', selected_case_id) | list | first %}
+        <p class="text-sm text-gray-400 mt-2">
+          {% if selected_case_id %}
+          Caso activo: {{ selected_case_id }}
+          {% if active_case %}
+          – <span class="text-teal-300">{{ active_case.name }}</span>
+          {% endif %}
+          {% else %}
+          Caso activo: — (ninguno)
+          {% endif %}
+        </p>
+        
+        <ul class="text-sm text-gray-400 list-disc list-inside">
           <li><strong>Tipos de archivos aceptados:</strong> .pdf</li>
-          <li><strong>Consideraciones:</strong> Asegúrate de que los documentos sean legibles y estén en formato estándar.</li>
+          <li>
+            <strong>Consideraciones:</strong> Asegúrate de que los documentos sean legibles y estén en formato estándar.</li>
         </ul>
       </div>
 
@@ -39,7 +48,8 @@
                  class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
         
-        <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+        <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+
         
         <button type="submit"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
@@ -51,7 +61,8 @@
       <form method="POST" action="/procesar">
         <input type="hidden" name="procesar" value="true">
 
-        <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+        <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+
 
         <button type="submit"
                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
@@ -127,9 +138,20 @@
 
     <!-- Lista de archivos subidos -->
     <div class="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
-      <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-        📄 Documentos Cargados
-      </h3>
+
+      {% set active_case = cases_list | selectattr('id', 'equalto', selected_case_id) | list | first %}    
+      <div class="flex flex-col mb-4">
+        <h3 class="text-xl font-semibold text-white flex items-center gap-2">
+          📄 Documentos Cargados
+        </h3>    
+        {% if active_case %}
+        <p class="text-xl font-semibold text-white flex items-center gap-2">
+          Caso: <span class="font-semibold">{{ active_case.name }}</span>
+        </p>
+        {% endif %}
+      </div>
+    
+          
       <hr class="border-gray-600 mb-4">
       {% if files %}
       <ul class="space-y-2">
@@ -139,7 +161,8 @@
           <form method="POST" action="/delete-file" class="ml-2">
             <input type="hidden" name="filename" value="{{ file }}">
 
-            <input type="hidden" name="case_id" value="{{ selected_case_id }}">
+            <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+
 
             <button type="submit"
                     class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
