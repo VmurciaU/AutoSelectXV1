@@ -1,14 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-Pipeline HD (Hoja de Datos)
+PC-3 — Bloques, tablas HD y P&ID embebido
+-----------------------------------------
 - Mantiene la lógica funcional original (HD_master_clean + HD_tidy).
-- Ajustes:
-  A) PRUEBAS: si 1a celda es numérica y la 2a tiene texto -> usar 2a como nombre.
-  B) Filtrado de ruido en "checks" (ignora líneas tipo "a x", tokens mínimos sin contexto).
-  C) Detección de páginas con posible P&ID embebido (poco texto, sin tablas HD válidas o con tablas muy pequeñas).
-  D) Placeholders PID por página detectada (CSV por página) y registro en summary.json.
+- Ajustes de arquitectura:
+  * Parametrización de rutas para integrarlo por case_id:
+      - pc1_dir: base de PC-1 (pc1_raw_pages) para este caso
+      - pc2_dir: base de PC-2 (pc2_clean_pages) para este caso
+      - input_pdf_dir: carpeta donde están los PDFs originales de este caso
+      - out_base_dir: carpeta base de salida para PC-3 de este caso
+  * Se conserva compatibilidad con la ejecución "global" anterior
+    usando PC1_DIR, PC2_DIR, DATA_DIR, OUT_DIR por defecto.
+
+Estructura típica por caso:
+  input_pdf_dir  -> inbox/<case_id>/original
+  pc1_dir        -> index/<case_id>/tmp/pc1_raw_pages
+  pc2_dir        -> index/<case_id>/tmp/pc2_clean_pages
+  out_base_dir   -> index/<case_id>/tmp/pc3_blocks
 """
 
+import argparse
 import csv
 import json
 import re
@@ -17,12 +28,12 @@ from typing import List, Dict, Any, Iterable, Tuple, Optional
 
 import pdfplumber  # requerido por extract_tables_from_pdf
 
-# --- Paths (mismos que el resto) ---
-ROOT = (
-    Path(__file__).resolve().parent.parent
-    if (Path(__file__).resolve().parent.name == "scripts")
-    else Path(__file__).resolve().parent
-)
+# --- Paths por defecto (modo "global" anterior) ---
+_ROOT_PARENT = Path(__file__).resolve().parent
+if _ROOT_PARENT.name in {"scripts", "pipelines"}:
+    ROOT = _ROOT_PARENT.parent
+else:
+    ROOT = _ROOT_PARENT
 PC1_DIR = ROOT / "outputs" / "pc1_raw_pages"
 PC2_DIR = ROOT / "outputs" / "pc2_clean_pages"
 OUT_DIR = ROOT / "outputs" / "pc3_blocks"
@@ -185,11 +196,17 @@ def detect_test_type(s: str) -> str:
             return ttype
     return ""
 
-def read_clean_page(doc_id: str, page_num: int) -> str:
-    p = PC2_DIR / doc_id / f"{doc_id}_page_{page_num:03d}.txt"
-    if p.exists():
-        return p.read_text(encoding="utf-8", errors="ignore")
-    p1 = PC1_DIR / doc_id / f"{doc_id}_page_{page_num:03d}.txt"
+# --- Lectura de páginas limpias (parametrizada) ---
+def read_clean_page(doc_id: str, page_num: int, pc1_dir: Path, pc2_dir: Path) -> str:
+    """
+    Busca primero en PC-2 (texto limpio) y si no existe,
+    hace fallback a PC-1 (texto crudo de página).
+    Ambas rutas son específicas del caso.
+    """
+    p2 = pc2_dir / doc_id / f"{doc_id}_page_{page_num:03d}.txt"
+    if p2.exists():
+        return p2.read_text(encoding="utf-8", errors="ignore")
+    p1 = pc1_dir / doc_id / f"{doc_id}_page_{page_num:03d}.txt"
     if p1.exists():
         return p1.read_text(encoding="utf-8", errors="ignore")
     return ""
@@ -504,22 +521,36 @@ def build_hd_tidy(master_csv: Path, tidy_csv: Path) -> Dict[str, Any]:
     }
 
 # --- Proceso por documento (base HD + mejoras) ---
-def process_document(manifest: Dict[str, Any]) -> Dict[str, Any]:
+def process_document(
+    manifest: Dict[str, Any],
+    pc1_dir: Path,
+    pc2_dir: Path,
+    input_pdf_dir: Path,
+    out_base_dir: Path,
+) -> Dict[str, Any]:
+    """
+    Procesa un documento (HD/otros) usando rutas parametrizadas:
+
+      pc1_dir        -> base PC-1 (pc1_raw_pages) de este caso
+      pc2_dir        -> base PC-2 (pc2_clean_pages) de este caso
+      input_pdf_dir  -> PDFs originales del caso
+      out_base_dir   -> base salida PC-3 (se crea subcarpeta por doc_id)
+    """
     doc_id = manifest["doc_id"]
     file_name = manifest["file_name"]
     doc_type = manifest.get("doc_type")
     n_pages = int(manifest.get("n_pages", 0))
 
-    out_dir = OUT_DIR / doc_id
+    out_dir = out_base_dir / doc_id
     out_dir.mkdir(parents=True, exist_ok=True)
     tables_dir = out_dir / "tables"
     tables_dir.mkdir(parents=True, exist_ok=True)
     clean_tables_dir = out_dir / "tables_clean"
     clean_tables_dir.mkdir(parents=True, exist_ok=True)
 
-    pdf_path = DATA_DIR / file_name
+    pdf_path = input_pdf_dir / file_name
     if not pdf_path.exists():
-        print(f"[WARN] PDF no encontrado en data/: {file_name}. Se omite extracción de tablas.")
+        print(f"[WARN] PDF no encontrado en {input_pdf_dir}: {file_name}. Se omite extracción de tablas.")
 
     jsonl_path = out_dir / "blocks.jsonl"
     fout = jsonl_path.open("w", encoding="utf-8")
@@ -537,7 +568,7 @@ def process_document(manifest: Dict[str, Any]) -> Dict[str, Any]:
 
     for page in range(1, n_pages + 1):
         # --- BLOQUES de texto ya limpiados (PC-2/PC-1) ---
-        text = read_clean_page(doc_id, page)
+        text = read_clean_page(doc_id, page, pc1_dir=pc1_dir, pc2_dir=pc2_dir)
         text_chars = len((text or "").strip())
 
         if text.strip():
@@ -665,7 +696,7 @@ def process_document(manifest: Dict[str, Any]) -> Dict[str, Any]:
     if (manifest.get("doc_type") or "").upper() == "HD":
         # Fallback si el pool quedó vacío
         if not hd_clean_tables:
-            for csv_path in sorted((OUT_DIR / doc_id / "tables_clean").glob("page_*_clean.csv")):
+            for csv_path in sorted((out_dir / "tables_clean").glob("page_*_clean.csv")):
                 try:
                     rows = []
                     with csv_path.open("r", encoding="utf-8", newline="") as cf:
@@ -704,8 +735,8 @@ def process_document(manifest: Dict[str, Any]) -> Dict[str, Any]:
         "total_tables": total_tables,
         "notes_checks_found": len(tests_detected),
         "examples_checks": tests_detected[:10],
-        "blocks_jsonl": str((OUT_DIR / doc_id / "blocks.jsonl").relative_to(ROOT)),
-        "tables_dir": str((OUT_DIR / doc_id / "tables").relative_to(ROOT)),
+        "blocks_jsonl": str((out_dir / "blocks.jsonl").relative_to(ROOT)),
+        "tables_dir": str((out_dir / "tables").relative_to(ROOT)),
         "embedded_pid_pages": embedded_pid_pages,
         "embedded_pid_outputs": embedded_pid_outputs,
     }
@@ -717,12 +748,82 @@ def process_document(manifest: Dict[str, Any]) -> Dict[str, Any]:
         if tidy_summary:
             summary["hd_tidy_summary"] = tidy_summary
 
-    (OUT_DIR / doc_id / "summary.json").write_text(
+    (out_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return summary
 
-# --- Wrapper para el dispatcher ---
-def run_pipeline(manifest: Dict[str, Any], out_dir: Path) -> Dict[str, Any]:
-    """Wrapper mínimo para mantener compatibilidad con el dispatcher."""
-    return process_document(manifest)
+# --- Wrapper para el dispatcher / run_case_pipeline ---
+def run_pipeline(
+    manifest: Dict[str, Any],
+    pc1_dir: Path | None = None,
+    pc2_dir: Path | None = None,
+    input_pdf_dir: Path | None = None,
+    out_base_dir: Path | None = None,
+) -> Dict[str, Any]:
+    """
+    Wrapper mínimo:
+      - Si no se pasan rutas, usa los defaults "globales" (modo antiguo).
+      - Si se pasan rutas, se comporta por caso (case_id).
+    """
+    pc1_dir = pc1_dir or PC1_DIR
+    pc2_dir = pc2_dir or PC2_DIR
+    input_pdf_dir = input_pdf_dir or DATA_DIR
+    out_base_dir = out_base_dir or OUT_DIR
+
+    out_base_dir.mkdir(parents=True, exist_ok=True)
+    return process_document(
+        manifest=manifest,
+        pc1_dir=pc1_dir,
+        pc2_dir=pc2_dir,
+        input_pdf_dir=input_pdf_dir,
+        out_base_dir=out_base_dir,
+    )
+
+# --- main() para ejecución manual tipo "vieja escuela" ---
+def main():
+    parser = argparse.ArgumentParser(description="PC-3 — Bloques y tablas HD/PID")
+    parser.add_argument(
+        "--pc1-index",
+        type=str,
+        default=None,
+        help="Ruta alternativa a outputs/pc1_raw_pages/index.json",
+    )
+    args = parser.parse_args()
+
+    index_path = Path(args.pc1_index) if args.pc1_index else (PC1_DIR / "index.json")
+    if not index_path.exists():
+        raise SystemExit(f"No se encontró el índice de PC-1: {index_path}")
+
+    index_data = json.loads(index_path.read_text(encoding="utf-8"))
+    manifests = index_data.get("documents", [])
+    if not manifests:
+        raise SystemExit("No hay documentos en el índice de PC-1.")
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    results = []
+    for mf in manifests:
+        print(f"[PC-3] Procesando doc_id={mf.get('doc_id')} file={mf.get('file_name')}")
+        res = run_pipeline(
+            manifest=mf,
+            pc1_dir=PC1_DIR,
+            pc2_dir=PC2_DIR,
+            input_pdf_dir=DATA_DIR,
+            out_base_dir=OUT_DIR,
+        )
+        results.append(res)
+
+    # Opcional: índice global de summaries
+    summaries_index = OUT_DIR / "index.json"
+    summaries_index.write_text(
+        json.dumps({"documents": results}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    print("\n✅ PC-3 completado.")
+    print(f"• Salidas por documento en: {OUT_DIR}/<doc_id>/")
+    print(f"• Índice de summaries: {summaries_index}")
+
+if __name__ == "__main__":
+    main()

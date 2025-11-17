@@ -1,11 +1,18 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Pipeline PID (Planos P&ID)
+PC-3 PID — Pipeline para planos P&ID
 ------------------------------------------------------------
-Versión integrada con pc3_parse_blocks y compatible con ejecución por lote.
-- Modo página: process_page(input_pdf, outdir, page_idx1) -> {"tables_emitted": N}
-- Modo lote:   run_pipeline(manifest, out_dir, ocr=False)  -> dict (summary PID)
-  (mantiene tu firma original para no romper llamadas existentes)
+Versión integrada con:
+- PC-1 (pc1_raw_pages / manifest.json)
+- PC-3 (pc3_parse_blocks dispatcher pid_like)
+
+Modos de uso:
+- Modo página (llamado desde PC-3):
+    process_page(input_pdf, outdir, page_idx1) -> {"tables_emitted": N}
+
+- Modo lote (compatibilidad con tu firma original):
+    run_pipeline(manifest, out_dir, ocr=False) -> dict (summary PID)
 
 Comportamiento:
 - Extrae tablas de la(s) página(s) objetivo y guarda en:
@@ -18,21 +25,22 @@ Comportamiento:
 
 Notas:
 - No hace OCR aún (hook ocr=True reservado). Más adelante se integra Tesseract o DocAI.
-- No altera estructura externa (outputs/pc3_blocks/...), el caller define outdir.
+- No altera la estructura externa (outputs/pc3_blocks/...), el caller define outdir.
 """
 
 from __future__ import annotations
+
 import csv
 import json
 from pathlib import Path
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Tuple
 
 import pandas as pd
 import pdfplumber
 
 
 # =========================
-# Utilidades
+# Utilidades genéricas
 # =========================
 
 def _ensure_dir(p: Path) -> None:
@@ -54,10 +62,13 @@ def _clean_and_save(src_csv: Path, dst_csv: Path) -> Tuple[int, int]:
     """
     df = pd.read_csv(src_csv, header=None, dtype=str, keep_default_na=False)
     df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
     # drop filas completamente vacías
     df = df[~(df.apply(lambda r: all((str(x) == "" for x in r)), axis=1))]
-    # drop cols completamente vacías
+
+    # drop columnas completamente vacías
     df = df.loc[:, ~(df.apply(lambda c: all((str(x) == "" for x in c)), axis=0))]
+
     _ensure_dir(dst_csv.parent)
     df.to_csv(dst_csv, index=False, header=False, encoding="utf-8")
     return df.shape[0], df.shape[1]
@@ -96,8 +107,19 @@ def _emit_pid_placeholders(pid_dir: Path, page_idx1: int) -> None:
             csv_path.write_text("", encoding="utf-8")
 
 
+def _resolve_root() -> Path:
+    """
+    Calcula ROOT de la misma forma que PC-1 y PC-3:
+      - Si el archivo está dentro de scripts/, ROOT = parent.parent
+      - Si no, ROOT = parent
+    """
+    this_file = Path(__file__).resolve()
+    parent = this_file.parent
+    return parent.parent if parent.name == "scripts" else parent
+
+
 # =========================
-# Interfaz por página (dispatcher)
+# Interfaz por página (dispatcher PC-3)
 # =========================
 
 def process_page(input_pdf: Path, outdir: Path, page_idx1: int) -> Dict[str, Any]:
@@ -130,7 +152,7 @@ def process_page(input_pdf: Path, outdir: Path, page_idx1: int) -> Dict[str, Any
     # Emitir placeholders específicos PID (por página)
     _emit_pid_placeholders(pid_dir, page_idx1)
 
-    # Guardar un resumen mínimo de PID por página para trazabilidad (opcional)
+    # Guardar un resumen mínimo de PID por página para trazabilidad
     summary_pid = {
         "page": page_idx1,
         "pid_outputs": [
@@ -141,24 +163,27 @@ def process_page(input_pdf: Path, outdir: Path, page_idx1: int) -> Dict[str, Any
         "tables_emitted": emitted,
     }
     (pid_dir / f"page_{page_idx1:03d}_pid_summary.json").write_text(
-        json.dumps(summary_pid, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(summary_pid, ensure_ascii=False, indent=2),
+        encoding="utf-8",
     )
 
     return {"tables_emitted": emitted}
 
 
 # =========================
-# Interfaz por lote (compatibilidad)
+# Interfaz por lote (compatibilidad con PC-1)
 # =========================
 
 def run_pipeline(manifest: dict, out_dir: Path, ocr: bool = False) -> dict:
     """
     Mantiene compatibilidad con tu firma original (lote).
-    Espera en manifest:
+    Espera en manifest (PC-1):
       - doc_id
       - file_name
-      - n_pages (opcional; si no, infiere del PDF)
-    Escribe un summary PID general + placeholders globales (si quieres).
+      - abs_path (opcional, pero preferido)
+      - n_pages (opcional; si no, se infiere del PDF)
+
+    Escribe un summary PID general + placeholders globales.
     """
     doc_id = manifest["doc_id"]
     file_name = manifest["file_name"]
@@ -168,24 +193,41 @@ def run_pipeline(manifest: dict, out_dir: Path, ocr: bool = False) -> dict:
     pid_dir = out_dir / "pid_context"
     _ensure_dir(pid_dir)
 
-    # Ubica PDF (mantén tu layout “data/” como fuente por lote)
-    root = Path(__file__).resolve().parent.parent if (Path(__file__).resolve().parent.name == "scripts") else Path(__file__).resolve().parent
-    pdf_path = (root / "data" / file_name)
+    # 1) Preferimos usar abs_path del manifest de PC-1 si existe y es válido
+    pdf_path: Path | None = None
+    abs_path = manifest.get("abs_path")
+    if abs_path:
+        candidate = Path(abs_path)
+        if candidate.exists():
+            pdf_path = candidate
 
-    if not pdf_path.exists():
-        # Summary mínimo informando que no hubo procesamiento por falta de PDF
+    # 2) Fallback: usamos ROOT/data/<file_name> (modo clásico stand-alone)
+    if pdf_path is None:
+        root = _resolve_root()
+        candidate = root / "data" / file_name
+        if candidate.exists():
+            pdf_path = candidate
+
+    # 3) Si aún no tenemos pdf_path válido, devolvemos un summary mínimo
+    if pdf_path is None:
         summary = {
             "doc_id": doc_id,
             "file_name": file_name,
             "doc_type_detected": "PID",
             "pid_outputs": [],
             "ocr_used": bool(ocr),
-            "warning": f"PDF no encontrado en: {pdf_path}",
+            "warning": (
+                "PDF no encontrado. Se intentó manifest['abs_path'] "
+                "y ROOT/data/<file_name>."
+            ),
         }
-        (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+        (out_dir / "summary.json").write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
         return summary
 
-    # Si n_pages no está en manifest, infiérelo
+    # Si n_pages no está o es 0, lo inferimos del PDF
     if n_pages <= 0:
         try:
             with pdfplumber.open(str(pdf_path)) as pdf:
@@ -208,7 +250,7 @@ def run_pipeline(manifest: dict, out_dir: Path, ocr: bool = False) -> dict:
         "doc_id": doc_id,
         "file_name": file_name,
         "doc_type_detected": "PID",
-        "pid_outputs": [  # a nivel global puedes apuntar a una convención fija
+        "pid_outputs": [
             str((pid_dir / "PID_titleblock.csv").relative_to(out_dir)),
             str((pid_dir / "PID_tags.csv").relative_to(out_dir)),
             str((pid_dir / "PID_linelist.csv").relative_to(out_dir)),
@@ -224,7 +266,8 @@ def run_pipeline(manifest: dict, out_dir: Path, ocr: bool = False) -> dict:
         if not g.exists():
             g.write_text("", encoding="utf-8")
 
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out_dir / "summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     return summary
-
-

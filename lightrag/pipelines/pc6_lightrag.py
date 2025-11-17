@@ -52,7 +52,11 @@ except Exception:
     _LIGHTRAG_AVAILABLE = False
 
 # ---------- Rutas ----------
-ROOT = Path(__file__).resolve().parent.parent if (Path(__file__).resolve().parent.name == "scripts") else Path(__file__).resolve().parent
+_ROOT_PARENT = Path(__file__).resolve().parent
+if _ROOT_PARENT.name in {"scripts", "pipelines"}:
+    ROOT = _ROOT_PARENT.parent
+else:
+    ROOT = _ROOT_PARENT
 PC2_DIR = ROOT / "outputs" / "pc2_clean_pages"
 PC4_DIR = ROOT / "outputs" / "pc4_consolidated"
 PC5_DIR = ROOT / "outputs" / "pc5_graph"
@@ -66,6 +70,7 @@ PC6_OUT_QUERIES = ROOT / "outputs" / "pc6_queries"
 def _hash_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
+
 def _read_txt(p: Path) -> str:
     try:
         return p.read_text(encoding="utf-8", errors="ignore")
@@ -75,9 +80,11 @@ def _read_txt(p: Path) -> str:
         except Exception:
             return ""
 
+
 def _ensure_dirs(*paths: Path):
     for p in paths:
         p.mkdir(parents=True, exist_ok=True)
+
 
 def _safe_read_csv(path: Path) -> pd.DataFrame:
     try:
@@ -87,28 +94,34 @@ def _safe_read_csv(path: Path) -> pd.DataFrame:
         print(f"[WARN] No se pudo leer CSV: {path} ({e})")
     return pd.DataFrame()
 
+
 def _gather_pc2_docs(pc2_dir: Path) -> Dict[str, List[Tuple[int, Path]]]:
     """
     Devuelve: { doc_id: [ (page, path_txt), ... ] }
+
     Soporta:
-      A) pc2_dir/<doc_id>/page_*.txt
-      B) pc2_dir/<doc_id>/*.txt (enumera 1..N)
-      C) pc2_dir/*.txt (doc único, page=1)
+      A) pc2_dir/<doc_id>/*_page_XXX.txt   (formato actual: {doc_id}_page_001.txt)
+      B) pc2_dir/<doc_id>/*.txt            (enumera 1..N)
+      C) pc2_dir/*.txt                     (doc único, page=1)
     """
     mapping: Dict[str, List[Tuple[int, Path]]] = {}
     if not pc2_dir.exists():
         return mapping
 
+    # C) TXT sueltos en la raíz de PC2_DIR
     loose = sorted(pc2_dir.glob("*.txt"))
     if loose:
         for p in loose:
             mapping[p.stem] = [(1, p)]
         return mapping
 
+    # A/B) Subcarpetas por doc_id
     for doc_dir in sorted(pc2_dir.iterdir()):
         if not doc_dir.is_dir():
             continue
-        page_files = list(doc_dir.glob("page_*.txt"))
+
+        # A) Archivos tipo algo_page_XXX.txt (ej: <doc_id>_page_001.txt)
+        page_files = list(doc_dir.glob("*_page_*.txt"))
         if page_files:
             pages: List[Tuple[int, Path]] = []
             for p in page_files:
@@ -119,6 +132,7 @@ def _gather_pc2_docs(pc2_dir: Path) -> Dict[str, List[Tuple[int, Path]]]:
             mapping[doc_dir.name] = pages
             continue
 
+        # B) Cualquier *.txt → enumerar
         any_txts = sorted(doc_dir.glob("*.txt"))
         if any_txts:
             mapping[doc_dir.name] = [(i + 1, p) for i, p in enumerate(any_txts)]
@@ -134,7 +148,7 @@ def _make_rag(storage_dir: Path):
         lambda: _LR(storage_path=str(storage_dir)),
         lambda: _LR(storage_dir=str(storage_dir)),
         lambda: _LR(str(storage_dir)),
-        ):
+    ):
         try:
             return style()
         except Exception:
@@ -149,16 +163,23 @@ def _make_rag(storage_dir: Path):
                 pass
     return rag
 
+
 async def _core_initialize(rag) -> None:
-    if hasattr(rag, "initialize_storages") and callable(getattr(rag, "initialize_storages")):
+    if hasattr(rag, "initialize_storages") and callable(
+        getattr(rag, "initialize_storages")
+    ):
         await rag.initialize_storages()
-    if hasattr(rag, "initialize_pipeline_status") and callable(getattr(rag, "initialize_pipeline_status")):
+    if hasattr(rag, "initialize_pipeline_status") and callable(
+        getattr(rag, "initialize_pipeline_status")
+    ):
         await rag.initialize_pipeline_status()
+
 
 async def _core_ingest_documents(corpus: List[Dict], storage_dir: Path) -> None:
     rag = _make_rag(storage_dir)
     await _core_initialize(rag)
-    for rec in (tqdm(corpus, desc="Ingestando (Core)") if tqdm else corpus):
+    it = tqdm(corpus, desc="Ingestando (Core)") if tqdm else corpus
+    for rec in it:
         text = rec.get("text", "")
         metadata = rec.get("metadata", {})
         try:
@@ -172,6 +193,7 @@ async def _core_ingest_documents(corpus: List[Dict], storage_dir: Path) -> None:
                 print("[WARN] LightRAG Core no expone método de ingesta.")
         except Exception as e:
             print(f"[WARN] Falló ingesta de {metadata.get('doc_id')} (Core): {e}")
+
 
 async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
     if not pc5_jsonl:
@@ -192,27 +214,44 @@ async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
         except Exception as e:
             print(f"[pushkg] add_graph falló, intento nodos/aristas: {e}")
 
-    nodes = [r for r in pc5_jsonl if (r.get("type") or "").lower() in ("node", "entity")]
-    edges = [r for r in pc5_jsonl if (r.get("type") or "").lower() in ("edge", "relation", "rel")]
+    nodes = [
+        r
+        for r in pc5_jsonl
+        if (r.get("type") or "").lower() in ("node", "entity")
+    ]
+    edges = [
+        r
+        for r in pc5_jsonl
+        if (r.get("type") or "").lower() in ("edge", "relation", "rel")
+    ]
 
     if add_entity:
-        for n in (tqdm(nodes, desc="Nodos (Core)") if tqdm else nodes):
+        it = tqdm(nodes, desc="Nodos (Core)") if tqdm else nodes
+        for n in it:
             try:
                 await add_entity(n)
             except Exception as e:
-                print(f"[WARN] Nodo no publicado {n.get('id') or n.get('name')}: {e}")
+                print(
+                    f"[WARN] Nodo no publicado {n.get('id') or n.get('name')}: {e}"
+                )
 
     if add_relation:
-        for e in (tqdm(edges, desc="Aristas (Core)") if tqdm else edges):
+        it2 = tqdm(edges, desc="Aristas (Core)") if tqdm else edges
+        for e in it2:
             try:
                 await add_relation(e)
             except Exception as ex:
-                print(f"[WARN] Arista no publicada {e.get('src') or e.get('source')}->{e.get('dst') or e.get('target')}: {ex}")
+                print(
+                    f"[WARN] Arista no publicada "
+                    f"{e.get('src') or e.get('source')}->{e.get('dst') or e.get('target')}: {ex}"
+                )
 
 # =========================================================
-# API helpers (válidos para tu server)
+# API helpers (válidos para tu servidor)
 # =========================================================
-def _api_texts_batch(api_url: str, batch: List[Dict], api_key: Optional[str]) -> Tuple[bool, str]:
+def _api_texts_batch(
+    api_url: str, batch: List[Dict], api_key: Optional[str]
+) -> Tuple[bool, str]:
     """Envía un lote a /documents/texts probando ambos formatos (array plano y {"texts":[...]}).
        Devuelve (ok, mensaje). Sin excepciones hacia arriba.
     """
@@ -230,7 +269,12 @@ def _api_texts_batch(api_url: str, batch: List[Dict], api_key: Optional[str]) ->
 
     for payload in payloads:
         try:
-            r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=600)
+            r = requests.post(
+                url,
+                headers=headers,
+                data=json.dumps(payload),
+                timeout=600,
+            )
             if r.status_code < 300:
                 return True, f"OK {url}"
             errors.append(f"{r.status_code}: {r.text[:300]}")
@@ -242,7 +286,10 @@ def _api_texts_batch(api_url: str, batch: List[Dict], api_key: Optional[str]) ->
     joined = " | ".join(errors) if errors else f"último error: {last_err}"
     return False, f"{url} falló → {joined}"
 
-def _api_text_single(api_url: str, item: Dict, api_key: Optional[str]) -> Tuple[bool, str]:
+
+def _api_text_single(
+    api_url: str, item: Dict, api_key: Optional[str]
+) -> Tuple[bool, str]:
     """POST /documents/text para un solo item {text, metadata}."""
     if not requests:
         return False, "requests no disponible"
@@ -251,14 +298,19 @@ def _api_text_single(api_url: str, item: Dict, api_key: Optional[str]) -> Tuple[
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
     try:
-        r = requests.post(url, headers=headers, data=json.dumps(item), timeout=120)
+        r = requests.post(
+            url, headers=headers, data=json.dumps(item), timeout=120
+        )
         if r.status_code < 300:
             return True, "OK /documents/text"
         return False, f"{r.status_code}: {r.text[:300]}"
     except Exception as e:
         return False, f"excepción: {e}"
 
-def _api_upload_and_scan(api_url: str, file_path: Path, api_key: Optional[str]) -> Tuple[bool, str]:
+
+def _api_upload_and_scan(
+    api_url: str, file_path: Path, api_key: Optional[str]
+) -> Tuple[bool, str]:
     if not requests:
         return False, "requests no disponible"
     headers = {}
@@ -268,32 +320,53 @@ def _api_upload_and_scan(api_url: str, file_path: Path, api_key: Optional[str]) 
     try:
         with file_path.open("rb") as fh:
             files = {"file": (file_path.name, fh)}
-            r = requests.post(api_url.rstrip("/") + "/documents/upload", headers=headers, files=files, timeout=600)
+            r = requests.post(
+                api_url.rstrip("/") + "/documents/upload",
+                headers=headers,
+                files=files,
+                timeout=600,
+            )
         if r.status_code >= 300:
-            return False, f"/documents/upload → {r.status_code}: {r.text[:300]}"
+            return (
+                False,
+                f"/documents/upload → {r.status_code}: {r.text[:300]}",
+            )
     except Exception as e:
         return False, f"/documents/upload excepción: {e}"
     # /documents/scan
     try:
-        r2 = requests.post(api_url.rstrip("/") + "/documents/scan", headers=headers, timeout=120)
+        r2 = requests.post(
+            api_url.rstrip("/") + "/documents/scan",
+            headers=headers,
+            timeout=120,
+        )
         if r2.status_code >= 300:
-            return False, f"/documents/scan → {r2.status_code}: {r2.text[:300]}"
+            return (
+                False,
+                f"/documents/scan → {r2.status_code}: {r2.text[:300]}",
+            )
     except Exception as e:
         return False, f"/documents/scan excepción: {e}"
     return True, "OK upload+scan"
+
 
 def _api_status_counts(api_url: str) -> Optional[Dict]:
     if not requests:
         return None
     try:
-        r = requests.get(api_url.rstrip("/") + "/documents/status_counts", timeout=60)
+        r = requests.get(
+            api_url.rstrip("/") + "/documents/status_counts", timeout=60
+        )
         if r.status_code < 300:
             return r.json()
     except Exception:
         pass
     return None
 
-def _api_query(api_url: str, question: str, mode: str = "mix", api_key: Optional[str] = None) -> Dict:
+
+def _api_query(
+    api_url: str, question: str, mode: str = "mix", api_key: Optional[str] = None
+) -> Dict:
     if not requests:
         return {"error": "requests no disponible"}
     headers = {"Content-Type": "application/json"}
@@ -302,14 +375,22 @@ def _api_query(api_url: str, question: str, mode: str = "mix", api_key: Optional
     payload = {"query": question, "mode": mode}
     for ep in ("/query", "/api/query"):
         try:
-            r = requests.post(api_url.rstrip("/") + ep, headers=headers, data=json.dumps(payload), timeout=180)
+            r = requests.post(
+                api_url.rstrip("/") + ep,
+                headers=headers,
+                data=json.dumps(payload),
+                timeout=180,
+            )
             if r.status_code < 300:
                 return r.json()
         except Exception:
             pass
     return {"error": "No se pudo consultar API /query"}
 
-def _api_push_kg_records(api_url: str, records: List[Dict], api_key: Optional[str]) -> None:
+
+def _api_push_kg_records(
+    api_url: str, records: List[Dict], api_key: Optional[str]
+) -> None:
     """Empuja entidades y relaciones por API granular. Idempotente-ish por nombre."""
     if not requests or not records:
         return
@@ -322,22 +403,47 @@ def _api_push_kg_records(api_url: str, records: List[Dict], api_key: Optional[st
     for rec in records:
         t = (rec.get("type") or rec.get("_type") or "").lower()
         if t in ("entity", "node"):
-            name = rec.get("entity_name") or rec.get("name") or rec.get("label")
+            name = (
+                rec.get("entity_name")
+                or rec.get("name")
+                or rec.get("label")
+            )
             data = rec.get("entity_data") or rec.get("data") or {}
             if name:
                 ents.append({"entity_name": name, "entity_data": data})
         elif t in ("relation", "edge", "rel"):
-            src = rec.get("source_entity") or rec.get("src") or rec.get("source") or rec.get("from")
-            tgt = rec.get("target_entity") or rec.get("tgt") or rec.get("target") or rec.get("to")
+            src = (
+                rec.get("source_entity")
+                or rec.get("src")
+                or rec.get("source")
+                or rec.get("from")
+            )
+            tgt = (
+                rec.get("target_entity")
+                or rec.get("tgt")
+                or rec.get("target")
+                or rec.get("to")
+            )
             data = rec.get("relation_data") or rec.get("data") or {}
             if src and tgt:
-                rels.append({"source_entity": src, "target_entity": tgt, "relation_data": data})
+                rels.append(
+                    {
+                        "source_entity": src,
+                        "relation_data": data,
+                        "target_entity": tgt,
+                    }
+                )
 
     # ENTIDADES
     it = tqdm(ents, desc="KG entidades") if tqdm else ents
     for e in it:
         try:
-            r = requests.post(api_url.rstrip("/") + "/graph/entity/create", headers=headers, data=json.dumps(e), timeout=60)
+            r = requests.post(
+                api_url.rstrip("/") + "/graph/entity/create",
+                headers=headers,
+                data=json.dumps(e),
+                timeout=60,
+            )
             print(f"[kg] entity {e['entity_name'][:40]}… → {r.status_code}")
         except Exception as ex:
             print(f"[kg] entity error: {ex}")
@@ -347,8 +453,15 @@ def _api_push_kg_records(api_url: str, records: List[Dict], api_key: Optional[st
     it2 = tqdm(rels, desc="KG relaciones") if tqdm else rels
     for rj in it2:
         try:
-            r = requests.post(api_url.rstrip("/") + "/graph/relation/create", headers=headers, data=json.dumps(rj), timeout=60)
-            print(f"[kg] rel {rj['source_entity'][:20]}->{rj['target_entity'][:20]} → {r.status_code}")
+            r = requests.post(
+                api_url.rstrip("/") + "/graph/relation/create",
+                headers=headers,
+                data=json.dumps(rj),
+                timeout=60,
+            )
+            print(
+                f"[kg] rel {rj['source_entity'][:20]}->{rj['target_entity'][:20]} → {r.status_code}"
+            )
         except Exception as ex:
             print(f"[kg] relation error: {ex}")
         time.sleep(0.02)
@@ -356,15 +469,32 @@ def _api_push_kg_records(api_url: str, records: List[Dict], api_key: Optional[st
 # =========================================================
 # Corpus & pipelines
 # =========================================================
-def _augment_with_pc4_text(doc_id: str, page_texts: Dict[int, str],
-                           pc4_sections: pd.DataFrame, pc4_tables: pd.DataFrame) -> Dict[int, str]:
+def _augment_with_pc4_text(
+    doc_id: str,
+    page_texts: Dict[int, str],
+    pc4_sections: pd.DataFrame,
+    pc4_tables: pd.DataFrame,
+) -> Dict[int, str]:
+    """
+    Inyecta contexto de PC-4 en los textos por página:
+      - Sección cercana (section_number, section_title)
+      - Caption de tabla y cabeceras (TABLE_CAPTION / TABLE_HEADERS)
+    """
     if pc4_sections is None:
         pc4_sections = pd.DataFrame()
     if pc4_tables is None:
         pc4_tables = pd.DataFrame()
 
-    sec = pc4_sections[pc4_sections["doc_id"].astype(str) == str(doc_id)] if not pc4_sections.empty else pd.DataFrame()
-    tab = pc4_tables[pc4_tables["doc_id"].astype(str) == str(doc_id)] if not pc4_tables.empty else pd.DataFrame()
+    sec = (
+        pc4_sections[pc4_sections["doc_id"].astype(str) == str(doc_id)]
+        if not pc4_sections.empty and "doc_id" in pc4_sections.columns
+        else pd.DataFrame()
+    )
+    tab = (
+        pc4_tables[pc4_tables["doc_id"].astype(str) == str(doc_id)]
+        if not pc4_tables.empty and "doc_id" in pc4_tables.columns
+        else pd.DataFrame()
+    )
 
     for c in ["page", "section_number", "section_title"]:
         if c not in sec.columns:
@@ -373,20 +503,27 @@ def _augment_with_pc4_text(doc_id: str, page_texts: Dict[int, str],
         if c not in tab.columns:
             tab[c] = ""
 
+    # Map table_uid -> lista de cabeceras limpias
     headers_by_uid: Dict[str, List[str]] = {}
     if not tab.empty:
         if "table_uid" not in tab.columns:
             if "_table_idx" not in tab.columns:
                 tab["_table_idx"] = 0
             tab["table_uid"] = tab.apply(
-                lambda r: f"{doc_id}::p{int(r.get('_page',0)):03d}::t{int(r.get('_table_idx',0)):02d}", axis=1)
+                lambda r: f"{doc_id}::p{int(r.get('_page', 0)):03d}::t{int(r.get('_table_idx', 0)):02d}",
+                axis=1,
+            )
 
         value_cols = [c for c in tab.columns if c.startswith("c")]
         if value_cols:
             if "_row" in tab.columns:
                 hdr = tab[tab["_row"] == 1][["table_uid"] + value_cols]
             else:
-                hdr = tab.sort_values(by=["table_uid"]).groupby("table_uid").head(1)[["table_uid"] + value_cols]
+                hdr = (
+                    tab.sort_values(by=["table_uid"])
+                    .groupby("table_uid")
+                    .head(1)[["table_uid"] + value_cols]
+                )
             for _, r in hdr.iterrows():
                 vals = []
                 for c in value_cols:
@@ -395,48 +532,72 @@ def _augment_with_pc4_text(doc_id: str, page_texts: Dict[int, str],
                         vals.append(v)
                 headers_by_uid[str(r["table_uid"])] = vals
 
+    # Enriquecer cada página
     for pg in list(page_texts.keys()):
-        pack = []
-        near_sec = sec[sec["page"] == pg] if not sec.empty else pd.DataFrame()
+        pack: List[str] = []
+
+        near_sec = (
+            sec[sec["page"] == pg] if not sec.empty else pd.DataFrame()
+        )
         if not near_sec.empty:
             s_num = str(near_sec.iloc[0].get("section_number", "") or "")
             s_title = str(near_sec.iloc[0].get("section_title", "") or "")
             if s_num or s_title:
-                pack.append(f"[NEAR_SECTION] {s_num} {s_title}".strip())
+                pack.append(
+                    f"[NEAR_SECTION] {s_num} {s_title}".strip()
+                )
 
         if not tab.empty:
             tabs_pg = tab[tab["_page"] == pg]
             if not tabs_pg.empty:
-                for _, tr in tabs_pg.drop_duplicates(subset=["table_uid"]).iterrows():
+                for _, tr in tabs_pg.drop_duplicates(
+                    subset=["table_uid"]
+                ).iterrows():
                     cap = str(tr.get("caption_near", "") or "")
                     tu = str(tr.get("table_uid", "") or "")
                     if cap:
                         pack.append(f"[TABLE_CAPTION] {cap}")
                     hdr_vals = headers_by_uid.get(tu, [])
                     if hdr_vals:
-                        pack.append(f"[TABLE_HEADERS] " + " | ".join(hdr_vals))
+                        pack.append(
+                            "[TABLE_HEADERS] " + " | ".join(hdr_vals)
+                        )
 
         if pack:
-            page_texts[pg] = (page_texts[pg] + "\n\n" + "\n".join(pack)).strip()
+            page_texts[pg] = (
+                page_texts[pg] + "\n\n" + "\n".join(pack)
+            ).strip()
+
     return page_texts
 
-def _concat_pages_to_corpus(doc_id: str, pages: List[Tuple[int, Path]],
-                            pc4_sections: pd.DataFrame, pc4_tables: pd.DataFrame) -> Tuple[str, Dict[str, int]]:
+
+def _concat_pages_to_corpus(
+    doc_id: str,
+    pages: List[Tuple[int, Path]],
+    pc4_sections: pd.DataFrame,
+    pc4_tables: pd.DataFrame,
+) -> Tuple[str, Dict[str, int]]:
     page_texts: Dict[int, str] = {}
     for pg, p in pages:
         page_texts[pg] = _read_txt(p)
-    page_texts = _augment_with_pc4_text(doc_id, page_texts, pc4_sections, pc4_tables)
+
+    page_texts = _augment_with_pc4_text(
+        doc_id, page_texts, pc4_sections, pc4_tables
+    )
 
     chunks = []
     for pg in sorted(page_texts.keys()):
         t = page_texts[pg].strip()
         if t:
             chunks.append(f"[PAGE {pg}]\n{t}")
-    full_text = ("\n\n" + "-"*80 + "\n\n").join(chunks)
+    full_text = ("\n\n" + "-" * 80 + "\n\n").join(chunks)
     meta = {"doc_id": doc_id, "pages": len(page_texts), "chars": len(full_text)}
     return full_text, meta
 
-def _export_corpus_jsonl_and_json(corpus: List[Dict], out_dir: Path) -> Tuple[Path, Path]:
+
+def _export_corpus_jsonl_and_json(
+    corpus: List[Dict], out_dir: Path
+) -> Tuple[Path, Path]:
     out_jsonl = out_dir / "corpus.jsonl"
     out_json = out_dir / "corpus.json"
     with out_jsonl.open("w", encoding="utf-8") as f:
@@ -446,7 +607,10 @@ def _export_corpus_jsonl_and_json(corpus: List[Dict], out_dir: Path) -> Tuple[Pa
         json.dump(corpus, f, ensure_ascii=False, indent=2)
     return out_jsonl, out_json
 
-def _load_pc5_graph(pc5_dir: Path) -> Tuple[pd.DataFrame, pd.DataFrame, List[Dict]]:
+
+def _load_pc5_graph(
+    pc5_dir: Path,
+) -> Tuple[pd.DataFrame, pd.DataFrame, List[Dict]]:
     nodes = _safe_read_csv(pc5_dir / "graph_nodes.csv")
     edges = _safe_read_csv(pc5_dir / "graph_edges.csv")
     jsonl_path = pc5_dir / "graph.jsonl"
@@ -463,7 +627,10 @@ def _load_pc5_graph(pc5_dir: Path) -> Tuple[pd.DataFrame, pd.DataFrame, List[Dic
                     pass
     return nodes, edges, jsonl_recs
 
-def _export_graph_jsonl_and_json(records: List[Dict], out_dir: Path) -> Tuple[Path, Path]:
+
+def _export_graph_jsonl_and_json(
+    records: List[Dict], out_dir: Path
+) -> Tuple[Path, Path]:
     out_jsonl = out_dir / "graph.jsonl"
     out_json = out_dir / "graph.json"
     with out_jsonl.open("w", encoding="utf-8") as f:
@@ -476,10 +643,16 @@ def _export_graph_jsonl_and_json(records: List[Dict], out_dir: Path) -> Tuple[Pa
 # =========================================================
 # Pipelines
 # =========================================================
-def pipeline_ingest(pc2_dir: Path, pc4_dir: Path, export_dir: Path,
-                    storage_dir: Path, use_core: bool,
-                    api_url: Optional[str], api_key: Optional[str],
-                    batch_size: int = 800) -> Tuple[Path, Path]:
+def pipeline_ingest(
+    pc2_dir: Path,
+    pc4_dir: Path,
+    export_dir: Path,
+    storage_dir: Path,
+    use_core: bool,
+    api_url: Optional[str],
+    api_key: Optional[str],
+    batch_size: int = 800,
+) -> Tuple[Path, Path]:
     _ensure_dirs(export_dir, storage_dir)
 
     sec = _safe_read_csv(pc4_dir / "master_sections.csv")
@@ -491,15 +664,26 @@ def pipeline_ingest(pc2_dir: Path, pc4_dir: Path, export_dir: Path,
         return export_dir / "corpus.jsonl", export_dir / "corpus.json"
 
     corpus: List[Dict] = []
-    for doc_id, pages in (tqdm(doc_pages.items(), desc="Preparando corpus") if tqdm else doc_pages.items()):
+    it = (
+        tqdm(doc_pages.items(), desc="Preparando corpus")
+        if tqdm
+        else doc_pages.items()
+    )
+    for doc_id, pages in it:
         full_text, meta = _concat_pages_to_corpus(doc_id, pages, sec, tab)
         if not full_text.strip():
             continue
-        corpus.append({
-            "text": full_text,
-            "metadata": {"doc_id": doc_id, "pages": meta["pages"], "chars": meta["chars"]},
-            "hash": _hash_bytes(full_text.encode("utf-8"))
-        })
+        corpus.append(
+            {
+                "text": full_text,
+                "metadata": {
+                    "doc_id": doc_id,
+                    "pages": meta["pages"],
+                    "chars": meta["chars"],
+                },
+                "hash": _hash_bytes(full_text.encode("utf-8")),
+            }
+        )
 
     out_jsonl, out_json = _export_corpus_jsonl_and_json(corpus, export_dir)
     print(f"[ingest] Export JSONL → {out_jsonl} (docs={len(corpus)})")
@@ -508,26 +692,39 @@ def pipeline_ingest(pc2_dir: Path, pc4_dir: Path, export_dir: Path,
     pushed = False
     if api_url and requests:
         # 1) Intento preferente: /documents/texts (en lotes)
-        print(f"[ingest] Subiendo {len(corpus)} docs vía API /documents/texts (batch={batch_size})…")
+        print(
+            f"[ingest] Subiendo {len(corpus)} docs vía API /documents/texts (batch={batch_size})…"
+        )
         for i in range(0, len(corpus), batch_size):
-            batch_src = corpus[i:i+batch_size]
-            batch = [{"text": r.get("text",""), "metadata": r.get("metadata",{})} for r in batch_src]
+            batch_src = corpus[i : i + batch_size]
+            batch = [
+                {"text": r.get("text", ""), "metadata": r.get("metadata", {})}
+                for r in batch_src
+            ]
             ok, msg = _api_texts_batch(api_url, batch, api_key)
-            print(f"[API] batch {i//batch_size+1} → {msg}")
+            print(f"[API] batch {i // batch_size + 1} → {msg}")
             pushed = pushed or ok
 
         # 2) Si ningún lote entró, intentar por-doc con /documents/text
         if not pushed:
-            print("[ingest] Intentando fallback individual: /documents/text …")
+            print(
+                "[ingest] Intentando fallback individual: /documents/text …"
+            )
             for idx, rec in enumerate(corpus, 1):
-                ok1, m1 = _api_text_single(api_url, {"text": rec["text"], "metadata": rec.get("metadata", {})}, api_key)
+                ok1, m1 = _api_text_single(
+                    api_url,
+                    {"text": rec["text"], "metadata": rec.get("metadata", {})},
+                    api_key,
+                )
                 if idx <= 5:
                     print(f"[API] doc {idx}/{len(corpus)} → {m1}")
                 pushed = pushed or ok1
 
         # 3) Si todavía nada, respaldo: upload+scan con corpus.json
         if not pushed:
-            print("[ingest] Intentando respaldo: /documents/upload + /documents/scan con corpus.json …")
+            print(
+                "[ingest] Intentando respaldo: /documents/upload + /documents/scan con corpus.json …"
+            )
             ok2, m2 = _api_upload_and_scan(api_url, out_json, api_key)
             print(f"[API] upload+scan → {m2}")
             pushed = pushed or ok2
@@ -535,7 +732,9 @@ def pipeline_ingest(pc2_dir: Path, pc4_dir: Path, export_dir: Path,
         # 4) Mostrar status_counts si es posible
         sc = _api_status_counts(api_url)
         if sc:
-            print(f"[ingest] status_counts: {json.dumps(sc, ensure_ascii=False)}")
+            print(
+                f"[ingest] status_counts: {json.dumps(sc, ensure_ascii=False)}"
+            )
 
     # Fallback Core local
     if (not pushed) and use_core and _LIGHTRAG_AVAILABLE:
@@ -544,16 +743,27 @@ def pipeline_ingest(pc2_dir: Path, pc4_dir: Path, export_dir: Path,
             asyncio.run(_core_ingest_documents(corpus, storage_dir))
             print("[ingest] ✅ Ingesta Core finalizada.")
         except Exception as e:
-            print(f"[ingest] ⚠️ Core falló ({e}). Usa la WebUI del server con corpus.json.")
+            print(
+                f"[ingest] ⚠️ Core falló ({e}). Usa la WebUI del server con corpus.json."
+            )
 
     if not api_url and not use_core:
-        print("[ingest] (Modo export) Sube corpus.json en la WebUI (Documents → Upload) o usa /documents/texts.")
+        print(
+            "[ingest] (Modo export) Sube corpus.json en la WebUI (Documents → Upload) o usa /documents/texts."
+        )
 
     return out_jsonl, out_json
 
-def pipeline_pushkg(pc5_dir: Path, export_dir: Path, storage_dir: Path,
-                    use_core: bool, api_url: Optional[str], api_key: Optional[str],
-                    push_kg_api: bool = False) -> Tuple[Path, Path]:
+
+def pipeline_pushkg(
+    pc5_dir: Path,
+    export_dir: Path,
+    storage_dir: Path,
+    use_core: bool,
+    api_url: Optional[str],
+    api_key: Optional[str],
+    push_kg_api: bool = False,
+) -> Tuple[Path, Path]:
     _ensure_dirs(export_dir, storage_dir)
     nodes, edges, jsonl = _load_pc5_graph(pc5_dir)
 
@@ -561,10 +771,20 @@ def pipeline_pushkg(pc5_dir: Path, export_dir: Path, storage_dir: Path,
         combined: List[Dict] = []
         if not nodes.empty:
             for _, r in nodes.iterrows():
-                combined.append({"type": "node", **{k: (None if pd.isna(v) else v) for k, v in r.to_dict().items()}})
+                combined.append(
+                    {
+                        "type": "node",
+                        **{k: (None if pd.isna(v) else v) for k, v in r.to_dict().items()},
+                    }
+                )
         if not edges.empty:
             for _, r in edges.iterrows():
-                combined.append({"type": "edge", **{k: (None if pd.isna(v) else v) for k, v in r.to_dict().items()}})
+                combined.append(
+                    {
+                        "type": "edge",
+                        **{k: (None if pd.isna(v) else v) for k, v in r.to_dict().items()},
+                    }
+                )
         jsonl = combined
 
     out_jsonl, out_json = _export_graph_jsonl_and_json(jsonl, export_dir)
@@ -572,7 +792,9 @@ def pipeline_pushkg(pc5_dir: Path, export_dir: Path, storage_dir: Path,
     print(f"[pushkg] Export JSON  → {out_json}")
 
     if push_kg_api and api_url and requests and jsonl:
-        print("[pushkg] Empujando KG por API (entity/create + relation/create)…")
+        print(
+            "[pushkg] Empujando KG por API (entity/create + relation/create)…"
+        )
         _api_push_kg_records(api_url, jsonl, api_key)
     else:
         print("\n[pushkg] ℹ️ Importar por WebUI:")
@@ -581,7 +803,9 @@ def pipeline_pushkg(pc5_dir: Path, export_dir: Path, storage_dir: Path,
         print("   - Luego verifica nodos/aristas.")
 
     if use_core and _LIGHTRAG_AVAILABLE and jsonl:
-        print("[pushkg] Intentando publicar KG con LightRAG Core (best-effort)…")
+        print(
+            "[pushkg] Intentando publicar KG con LightRAG Core (best-effort)…"
+        )
         try:
             asyncio.run(_core_push_graph(jsonl, storage_dir))
             print("[pushkg] ✅ Custom KG publicado en Core.")
@@ -590,8 +814,14 @@ def pipeline_pushkg(pc5_dir: Path, export_dir: Path, storage_dir: Path,
 
     return out_jsonl, out_json
 
-def pipeline_query(questions: List[str], api_url: Optional[str], mode: str,
-                   out_dir: Path, api_key: Optional[str] = None):
+
+def pipeline_query(
+    questions: List[str],
+    api_url: Optional[str],
+    mode: str,
+    out_dir: Path,
+    api_key: Optional[str] = None,
+):
     _ensure_dirs(out_dir)
     out_path = out_dir / "results.jsonl"
     if not questions:
@@ -601,13 +831,16 @@ def pipeline_query(questions: List[str], api_url: Optional[str], mode: str,
     results = []
     if api_url:
         print(f"[query] Consultando vía API: {api_url} (mode={mode})")
-        for q in (tqdm(questions, desc="Consultas") if tqdm else questions):
+        it = tqdm(questions, desc="Consultas") if tqdm else questions
+        for q in it:
             resp = _api_query(api_url, q, mode=mode, api_key=api_key)
             results.append({"q": q, "resp": resp})
     else:
         print("[query] Sin API URL. Exporto preguntas para WebUI.")
         for q in questions:
-            results.append({"q": q, "note": "Sin API; usar WebUI o indicar --api-url"})
+            results.append(
+                {"q": q, "note": "Sin API; usar WebUI o indicar --api-url"}
+            )
 
     with out_path.open("w", encoding="utf-8") as f:
         for r in results:
@@ -619,33 +852,67 @@ def pipeline_query(questions: List[str], api_url: Optional[str], mode: str,
 # CLI
 # =========================================================
 def main():
-    ap = argparse.ArgumentParser(description="PC-6 LightRAG — ingest/pushkg/query/all")
+    ap = argparse.ArgumentParser(
+        description="PC-6 LightRAG — ingest/pushkg/query/all"
+    )
     ap.add_argument("--pc2-dir", default=str(PC2_DIR))
     ap.add_argument("--pc4-dir", default=str(PC4_DIR))
     ap.add_argument("--pc5-dir", default=str(PC5_DIR))
     ap.add_argument("--export-dir", default=str(PC6_EXPORT_DIR))
     ap.add_argument("--storage-dir", default=str(RAG_STORAGE_DIR))
-    ap.add_argument("--use-core", action="store_true", help="Usa LightRAG Core si está disponible (best-effort)")
-    ap.add_argument("--api-url", default=os.environ.get("LIGHTRAG_API_URL", ""), help="URL del LightRAG Server (ej. http://localhost:8777)")
-    ap.add_argument("--api-key", default=os.environ.get("LIGHTRAG_API_KEY", ""), help="API Key (si aplica)")
-    ap.add_argument("--mode", default="mix", help="Modo de consulta: naive|local|global|mix|hybrid")
-    ap.add_argument("--batch-size", type=int, default=800, help="Tamaño de lote para /documents/texts")
-    ap.add_argument("--push-kg-api", action="store_true", help="Empuja el KG por API (entity/create + relation/create)")
+    ap.add_argument(
+        "--use-core",
+        action="store_true",
+        help="Usa LightRAG Core si está disponible (best-effort)",
+    )
+    ap.add_argument(
+        "--api-url",
+        default=os.environ.get("LIGHTRAG_API_URL", ""),
+        help="URL del LightRAG Server (ej. http://localhost:8777)",
+    )
+    ap.add_argument(
+        "--api-key",
+        default=os.environ.get("LIGHTRAG_API_KEY", ""),
+        help="API Key (si aplica)",
+    )
+    ap.add_argument(
+        "--mode",
+        default="mix",
+        help="Modo de consulta: naive|local|global|mix|hybrid",
+    )
+    ap.add_argument(
+        "--batch-size",
+        type=int,
+        default=800,
+        help="Tamaño de lote para /documents/texts",
+    )
+    ap.add_argument(
+        "--push-kg-api",
+        action="store_true",
+        help="Empuja el KG por API (entity/create + relation/create)",
+    )
 
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("ingest", help="Ingesta corpus (PC-2/PC-4) → API")
-    sub.add_parser("pushkg", help="Exporta KG (PC-5) a JSONL/JSON; opcional push por API")
+    sub.add_parser(
+        "pushkg",
+        help="Exporta KG (PC-5) a JSONL/JSON; opcional push por API",
+    )
     sub.add_parser("all", help="Ingest + PushKG")
 
     ap_q = sub.add_parser("query", help="Ejecuta preguntas de prueba")
-    ap_q.add_argument("--questions", nargs="*", default=[
-        "¿Cuál es el caudal nominal y el rango turndown de la bomba dosificadora especificada?",
-        "Muéstrame la tabla de materiales (BOM) asociada a la sección de pruebas FAT.",
-        "¿En qué página está el P&ID y qué referencia de línea o tag se menciona?",
-        "Listado de parámetros extraídos como cabeceras de las tablas de HD.",
-        "¿Qué ensayo NDT se pide y con qué norma de aceptación?",
-        "Dame el setpoint y la clase del presostato, si aplica."
-    ])
+    ap_q.add_argument(
+        "--questions",
+        nargs="*",
+        default=[
+            "¿Cuál es el caudal nominal y el rango turndown de la bomba dosificadora especificada?",
+            "Muéstrame la tabla de materiales (BOM) asociada a la sección de pruebas FAT.",
+            "¿En qué página está el P&ID y qué referencia de línea o tag se menciona?",
+            "Listado de parámetros extraídos como cabeceras de las tablas de HD.",
+            "¿Qué ensayo NDT se pide y con qué norma de aceptación?",
+            "Dame el setpoint y la clase del presostato, si aplica.",
+        ],
+    )
 
     args = ap.parse_args()
 
@@ -658,17 +925,37 @@ def main():
     api_key = (args.api_key or "").strip() or None
 
     if args.cmd in ("ingest", "all"):
-        pipeline_ingest(pc2_dir, pc4_dir, export_dir, storage_dir,
-                        use_core=args.use_core, api_url=api_url, api_key=api_key,
-                        batch_size=args.batch_size)
+        pipeline_ingest(
+            pc2_dir,
+            pc4_dir,
+            export_dir,
+            storage_dir,
+            use_core=args.use_core,
+            api_url=api_url,
+            api_key=api_key,
+            batch_size=args.batch_size,
+        )
 
     if args.cmd in ("pushkg", "all"):
-        pipeline_pushkg(pc5_dir, export_dir, storage_dir,
-                        use_core=args.use_core, api_url=api_url, api_key=api_key,
-                        push_kg_api=args.push_kg_api)
+        pipeline_pushkg(
+            pc5_dir,
+            export_dir,
+            storage_dir,
+            use_core=args.use_core,
+            api_url=api_url,
+            api_key=api_key,
+            push_kg_api=args.push_kg_api,
+        )
 
     if args.cmd == "query":
-        pipeline_query(args.questions, api_url, args.mode, PC6_OUT_QUERIES, api_key=api_key)
+        pipeline_query(
+            args.questions,
+            api_url,
+            args.mode,
+            PC6_OUT_QUERIES,
+            api_key=api_key,
+        )
+
 
 if __name__ == "__main__":
     main()

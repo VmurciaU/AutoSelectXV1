@@ -28,6 +28,7 @@ Uso:
 """
 
 from __future__ import annotations
+
 import argparse
 import json
 import re
@@ -38,9 +39,13 @@ import pandas as pd
 
 
 # --- Paths base ---
-ROOT = Path(__file__).resolve().parent.parent if (Path(__file__).resolve().parent.name == "scripts") else Path(__file__).resolve().parent
+_ROOT_PARENT = Path(__file__).resolve().parent
+if _ROOT_PARENT.name in {"scripts", "pipelines"}:
+    ROOT = _ROOT_PARENT.parent
+else:
+    ROOT = _ROOT_PARENT
 DEFAULT_PC3_DIR = ROOT / "outputs" / "pc3_blocks"
-DEFAULT_OUTDIR  = ROOT / "outputs" / "pc4_consolidated"
+DEFAULT_OUTDIR = ROOT / "outputs" / "pc4_consolidated"
 
 
 # --- Utilitarios ---
@@ -58,7 +63,13 @@ def collect_doc_dirs(pc3_dir: Path) -> List[Path]:
     """Lista los subdirectorios que contienen summary.json (una unidad por documento)."""
     if not pc3_dir.exists():
         return []
-    return sorted([p for p in pc3_dir.iterdir() if p.is_dir() and (p / "summary.json").exists()])
+    return sorted(
+        [
+            p
+            for p in pc3_dir.iterdir()
+            if p.is_dir() and (p / "summary.json").exists()
+        ]
+    )
 
 
 def load_summary(doc_dir: Path) -> Dict:
@@ -68,44 +79,89 @@ def load_summary(doc_dir: Path) -> Dict:
 # --- Secciones ---
 def sections_from_blocks(doc_dir: Path) -> pd.DataFrame:
     """
-    Backup si no existe TEXT_sections.csv: derivar secciones y párrafos desde blocks.json.
-    Excluye bloques marcados como pid_like.
-    """
-    blocks_path = doc_dir / "blocks.json"
-    if not blocks_path.exists():
-        return pd.DataFrame(columns=["doc_id","doc_type","file_name","page","type","section_number","section_title","text"])
+    Backup si no existe TEXT_sections.csv.
+    Intenta derivar secciones/párrafos desde:
+      1) blocks.jsonl (modo lote de pc3_text_tables_pipeline antiguo)
+      2) blocks.json  (si existiera y tuviera esos campos)
 
+    Excluye bloques marcados como pid_like si la info está disponible.
+    """
     meta = load_summary(doc_dir)
-    doc_id  = meta.get("doc_id", doc_dir.name)
-    doc_type= meta.get("doc_type")
+    doc_id = meta.get("doc_id", doc_dir.name)
+    doc_type = meta.get("doc_type")
     file_name = meta.get("file_name")
 
-    rows = []
-    blocks = json.loads(blocks_path.read_text(encoding="utf-8"))
-    for b in blocks:
-        if b.get("pid_like"):
-            continue
-        btype = b.get("type")
-        if btype in ("section_header", "paragraph"):
-            rows.append({
-                "doc_id": doc_id,
-                "doc_type": doc_type,
-                "file_name": file_name,
-                "page": b.get("page"),
-                "type": btype,
-                "section_number": b.get("section_number"),
-                "section_title": b.get("section_title"),
-                "text": b.get("text", "")
-            })
+    rows: List[Dict] = []
+
+    # 1) Preferido: blocks.jsonl (json por línea, con campo source.page)
+    jsonl_path = doc_dir / "blocks.jsonl"
+    if jsonl_path.exists():
+        with jsonl_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                try:
+                    b = json.loads(line)
+                except Exception:
+                    continue
+                btype = b.get("type")
+                if btype not in ("section_header", "paragraph"):
+                    continue
+                src = b.get("source") or {}
+                page = src.get("page")
+                rows.append(
+                    {
+                        "doc_id": doc_id,
+                        "doc_type": doc_type,
+                        "file_name": file_name,
+                        "page": page,
+                        "type": btype,
+                        "section_number": b.get("section_number"),
+                        "section_title": b.get("section_title"),
+                        "text": b.get("text", ""),
+                    }
+                )
+
+        return pd.DataFrame(rows)
+
+    # 2) Fallback: blocks.json (lista en memoria)
+    blocks_path = doc_dir / "blocks.json"
+    if blocks_path.exists():
+        try:
+            blocks = json.loads(blocks_path.read_text(encoding="utf-8"))
+        except Exception:
+            blocks = []
+
+        for b in blocks or []:
+            # En el flujo nuevo de PC-3, blocks.json es más de metadatos de página,
+            # sin 'type'/'text'; este fallback solo será útil si hay ese formato.
+            if b.get("pid_like"):
+                continue
+            btype = b.get("type")
+            if btype not in ("section_header", "paragraph"):
+                continue
+            rows.append(
+                {
+                    "doc_id": doc_id,
+                    "doc_type": doc_type,
+                    "file_name": file_name,
+                    "page": b.get("page"),
+                    "type": btype,
+                    "section_number": b.get("section_number"),
+                    "section_title": b.get("section_title"),
+                    "text": b.get("text", ""),
+                }
+            )
+
     return pd.DataFrame(rows)
 
 
 def build_master_sections(doc_dir: Path) -> pd.DataFrame:
-    """Carga TEXT_sections.csv si existe; si no, fallback a blocks.json."""
+    """
+    Carga TEXT_sections.csv si existe; si no, fallback a blocks.jsonl/blocks.json.
+    """
     meta = load_summary(doc_dir)
-    doc_id   = meta.get("doc_id", doc_dir.name)
+    doc_id = meta.get("doc_id", doc_dir.name)
     doc_type = meta.get("doc_type")
-    file_name= meta.get("file_name")
+    file_name = meta.get("file_name")
 
     sec_csv = doc_dir / "TEXT_sections.csv"
     df = safe_read_csv(sec_csv)
@@ -113,13 +169,24 @@ def build_master_sections(doc_dir: Path) -> pd.DataFrame:
         df = sections_from_blocks(doc_dir)
     else:
         # Asegurar columnas mínimas
-        for c in ["type","section_number","section_title","text","page"]:
+        for c in ["type", "section_number", "section_title", "text", "page"]:
             if c not in df.columns:
                 df[c] = None
         df.insert(0, "file_name", file_name)
-        df.insert(0, "doc_type",  doc_type)
-        df.insert(0, "doc_id",    doc_id)
-        df = df[["doc_id","doc_type","file_name","page","type","section_number","section_title","text"]]
+        df.insert(0, "doc_type", doc_type)
+        df.insert(0, "doc_id", doc_id)
+        df = df[
+            [
+                "doc_id",
+                "doc_type",
+                "file_name",
+                "page",
+                "type",
+                "section_number",
+                "section_title",
+                "text",
+            ]
+        ]
     return df
 
 
@@ -131,9 +198,9 @@ def build_master_tables(doc_dir: Path) -> pd.DataFrame:
     Siempre genera table_uid estable.
     """
     meta = load_summary(doc_dir)
-    doc_id   = meta.get("doc_id", doc_dir.name)
+    doc_id = meta.get("doc_id", doc_dir.name)
     doc_type = meta.get("doc_type")
-    file_name= meta.get("file_name")
+    file_name = meta.get("file_name")
 
     tt = doc_dir / "TEXT_tables_all.csv"
     df = safe_read_csv(tt)
@@ -144,9 +211,12 @@ def build_master_tables(doc_dir: Path) -> pd.DataFrame:
         if "_table_idx" not in df.columns:
             df["_table_idx"] = df.groupby("_page").cumcount() + 1
         df.insert(0, "file_name", file_name)
-        df.insert(0, "doc_type",  doc_type)
-        df.insert(0, "doc_id",    doc_id)
-        df["table_uid"] = df.apply(lambda r: f"{r['doc_id']}::p{int(r['_page']):03d}::t{int(r['_table_idx']):02d}", axis=1)
+        df.insert(0, "doc_type", doc_type)
+        df.insert(0, "doc_id", doc_id)
+        df["table_uid"] = df.apply(
+            lambda r: f"{r['doc_id']}::p{int(r['_page']):03d}::t{int(r['_table_idx']):02d}",
+            axis=1,
+        )
         return df
 
     # Fallback: leer tables individuales
@@ -166,25 +236,35 @@ def build_master_tables(doc_dir: Path) -> pd.DataFrame:
             continue
         for r_i, row in dfp.iterrows():
             vals = [str(v) if pd.notna(v) else "" for v in row.tolist()]
-            rows.append({
-                "doc_id": doc_id,
-                "doc_type": doc_type,
-                "file_name": file_name,
-                "_page": page,
-                "_table_idx": idx,
-                "_row": r_i + 1,
-                **{f"c{i+1}": vals[i] if i < len(vals) else "" for i in range(max(50, len(vals)))}
-            })
+            rows.append(
+                {
+                    "doc_id": doc_id,
+                    "doc_type": doc_type,
+                    "file_name": file_name,
+                    "_page": page,
+                    "_table_idx": idx,
+                    "_row": r_i + 1,
+                    **{
+                        f"c{i+1}": vals[i] if i < len(vals) else ""
+                        for i in range(max(50, len(vals)))
+                    },
+                }
+            )
     df = pd.DataFrame(rows)
     if not df.empty:
         df["_page"] = df["_page"].fillna(0).astype(int)
         df["_table_idx"] = df["_table_idx"].fillna(0).astype(int)
-        df["table_uid"] = df.apply(lambda r: f"{r['doc_id']}::p{int(r['_page']):03d}::t{int(r['_table_idx']):02d}", axis=1)
+        df["table_uid"] = df.apply(
+            lambda r: f"{r['doc_id']}::p{int(r['_page']):03d}::t{int(r['_table_idx']):02d}",
+            axis=1,
+        )
     return df
 
 
 # --- Contexto de tabla (numeral/caption cercanos) ---
-def enrich_table_context(df_tables: pd.DataFrame, df_sections: pd.DataFrame) -> pd.DataFrame:
+def enrich_table_context(
+    df_tables: pd.DataFrame, df_sections: pd.DataFrame
+) -> pd.DataFrame:
     """
     Agrega a cada fila de tabla:
       - section_number_near: último numeral en la misma página (o página previa), patrón ^\d+(\.\d+)*$.
@@ -203,20 +283,31 @@ def enrich_table_context(df_tables: pd.DataFrame, df_sections: pd.DataFrame) -> 
     sec = df_sections.dropna(subset=["page"]).copy()
     sec["page"] = sec["page"].fillna(0).astype(int)
     # Normalizar columnas de texto
-    if "section_title" not in sec.columns: sec["section_title"] = ""
-    if "text" not in sec.columns: sec["text"] = ""
+    if "section_title" not in sec.columns:
+        sec["section_title"] = ""
+    if "text" not in sec.columns:
+        sec["text"] = ""
     sec["section_title"] = sec["section_title"].fillna("").astype(str)
     sec["text"] = sec["text"].fillna("").astype(str)
 
     # Numeral tipo 4.4.2
     numeral_pat = re.compile(r"^\d+(?:\.\d+)*$")
-    sec_num = sec[sec["section_number"].fillna("").astype(str).str.match(numeral_pat, na=False)].copy()
+    sec_num = sec[
+        sec["section_number"].fillna("").astype(str).str.match(
+            numeral_pat, na=False
+        )
+    ].copy()
 
     # Para cada página, tomar la última sección numerada (más cercana “hacia atrás”)
-    sec_map_df = (sec_num.sort_values(["page"])
-                  .groupby("page")
-                  .tail(1)[["page","section_number","section_title"]])
-    page_to_sec = {int(r.page):(str(r.section_number), str(r.section_title)) for _, r in sec_map_df.iterrows()}
+    sec_map_df = (
+        sec_num.sort_values(["page"])
+        .groupby("page")
+        .tail(1)[["page", "section_number", "section_title"]]
+    )
+    page_to_sec = {
+        int(r.page): (str(r.section_number), str(r.section_title))
+        for _, r in sec_map_df.iterrows()
+    }
 
     # Captions tipo "Tabla X ..." o "Table X ..." (primer match por página)
     cap_pat = re.compile(r"(?i)^\s*(tabla|table)\s+\d+\.?\s+.+")
@@ -238,12 +329,14 @@ def enrich_table_context(df_tables: pd.DataFrame, df_sections: pd.DataFrame) -> 
         elif (p - 1) in page_to_sec:
             near_num, near_title = page_to_sec[p - 1]
         caption = cap_map.get(p, "")
-        enriched_rows.append({
-            **r.to_dict(),
-            "section_number_near": near_num,
-            "section_title_near": near_title,
-            "caption_near": caption,
-        })
+        enriched_rows.append(
+            {
+                **r.to_dict(),
+                "section_number_near": near_num,
+                "section_title_near": near_title,
+                "caption_near": caption,
+            }
+        )
     out = pd.DataFrame(enriched_rows)
     out["table_order_in_page"] = out.groupby("_page").cumcount() + 1
     return out
@@ -251,11 +344,16 @@ def enrich_table_context(df_tables: pd.DataFrame, df_sections: pd.DataFrame) -> 
 
 # --- P&ID ---
 def build_pid_index(doc_dir: Path) -> pd.DataFrame:
-    """Concatena page_*_pid_context.csv, asegurando columnas base y metadatos de documento."""
+    """
+    Concatena page_*_pid_context.csv, asegurando columnas base y metadatos de documento.
+    En el flujo nuevo, estos CSV suelen tener:
+      - page, pid_like, pid_reference, pid_note, evidence
+    La columna 'rule' se rellena si existe; de lo contrario queda en None.
+    """
     meta = load_summary(doc_dir)
-    doc_id   = meta.get("doc_id", doc_dir.name)
+    doc_id = meta.get("doc_id", doc_dir.name)
     doc_type = meta.get("doc_type")
-    file_name= meta.get("file_name")
+    file_name = meta.get("file_name")
 
     pid_dir = doc_dir / "pid_context"
     if not pid_dir.exists():
@@ -266,12 +364,19 @@ def build_pid_index(doc_dir: Path) -> pd.DataFrame:
         df = safe_read_csv(f)
         if df is None or df.empty:
             continue
-        for c in ["page","pid_like","pid_reference","pid_note","rule","evidence"]:
+        for c in [
+            "page",
+            "pid_like",
+            "pid_reference",
+            "pid_note",
+            "rule",
+            "evidence",
+        ]:
             if c not in df.columns:
                 df[c] = None
         df.insert(0, "file_name", file_name)
-        df.insert(0, "doc_type",  doc_type)
-        df.insert(0, "doc_id",    doc_id)
+        df.insert(0, "doc_type", doc_type)
+        df.insert(0, "doc_id", doc_id)
         rows.append(df)
 
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
@@ -279,13 +384,21 @@ def build_pid_index(doc_dir: Path) -> pd.DataFrame:
 
 # --- MAIN ---
 def main():
-    ap = argparse.ArgumentParser(description="PC-4 — Consolidación cross-documento (extendida)")
-    ap.add_argument("--pc3-dir", default=str(DEFAULT_PC3_DIR), help="Directorio base de salidas PC-3")
-    ap.add_argument("--outdir",  default=str(DEFAULT_OUTDIR),  help="Salida de PC-4")
+    ap = argparse.ArgumentParser(
+        description="PC-4 — Consolidación cross-documento (extendida)"
+    )
+    ap.add_argument(
+        "--pc3-dir",
+        default=str(DEFAULT_PC3_DIR),
+        help="Directorio base de salidas PC-3",
+    )
+    ap.add_argument(
+        "--outdir", default=str(DEFAULT_OUTDIR), help="Salida de PC-4"
+    )
     args = ap.parse_args()
 
     pc3_dir = Path(args.pc3_dir)
-    outdir  = Path(args.outdir)
+    outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 
     doc_dirs = collect_doc_dirs(pc3_dir)
@@ -321,9 +434,17 @@ def main():
                 all_pids.append(df_pid)
 
             # 4) Métricas por documento
-            summary["sections_count"] = int(df_sec.shape[0]) if not df_sec.empty else 0
-            summary["tables_count"]   = int(df_tab["table_uid"].nunique()) if not df_tab.empty else 0
-            summary["pid_pages"]      = sorted(df_pid["page"].dropna().unique().tolist()) if not df_pid.empty else []
+            summary["sections_count"] = (
+                int(df_sec.shape[0]) if not df_sec.empty else 0
+            )
+            summary["tables_count"] = (
+                int(df_tab["table_uid"].nunique()) if not df_tab.empty else 0
+            )
+            summary["pid_pages"] = (
+                sorted(df_pid["page"].dropna().unique().tolist())
+                if not df_pid.empty and "page" in df_pid.columns
+                else []
+            )
 
             merged_summary["documents"].append(summary)
             print(" listo.")
@@ -331,12 +452,21 @@ def main():
             print(f" ERROR: {e}")
 
     # --- Escritura de salidas ---
-    (outdir / "merged_summary.json").write_text(json.dumps(merged_summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (outdir / "merged_summary.json").write_text(
+        json.dumps(merged_summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
     if all_sections:
-        pd.concat(all_sections, ignore_index=True).to_csv(outdir / "master_sections.csv", index=False, encoding="utf-8")
+        pd.concat(all_sections, ignore_index=True).to_csv(
+            outdir / "master_sections.csv",
+            index=False,
+            encoding="utf-8",
+        )
     else:
-        (outdir / "master_sections.csv").write_text("", encoding="utf-8")
+        (outdir / "master_sections.csv").write_text(
+            "", encoding="utf-8"
+        )
 
     if all_tables:
         mt = pd.concat(all_tables, ignore_index=True)
@@ -346,17 +476,35 @@ def main():
             if c not in mt.columns:
                 mt[c] = ""
         cols = [
-            "doc_id","doc_type","file_name",
-            "_page","_table_idx","_row","table_uid",
-            "section_number_near","section_title_near","caption_near","table_order_in_page",
+            "doc_id",
+            "doc_type",
+            "file_name",
+            "_page",
+            "_table_idx",
+            "_row",
+            "table_uid",
+            "section_number_near",
+            "section_title_near",
+            "caption_near",
+            "table_order_in_page",
         ] + [f"c{i}" for i in range(1, 51)]
         mt = mt[[c for c in cols if c in mt.columns]]
-        mt.to_csv(outdir / "master_tables.csv", index=False, encoding="utf-8")
+        mt.to_csv(
+            outdir / "master_tables.csv",
+            index=False,
+            encoding="utf-8",
+        )
     else:
-        (outdir / "master_tables.csv").write_text("", encoding="utf-8")
+        (outdir / "master_tables.csv").write_text(
+            "", encoding="utf-8"
+        )
 
     if all_pids:
-        pd.concat(all_pids, ignore_index=True).to_csv(outdir / "pid_index.csv", index=False, encoding="utf-8")
+        pd.concat(all_pids, ignore_index=True).to_csv(
+            outdir / "pid_index.csv",
+            index=False,
+            encoding="utf-8",
+        )
     else:
         (outdir / "pid_index.csv").write_text("", encoding="utf-8")
 

@@ -19,11 +19,12 @@ Salidas:
 """
 
 from __future__ import annotations
+
 import csv
 import json
 import re
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Iterable, Optional
+from typing import List, Dict, Any, Tuple
 
 import pdfplumber
 import pandas as pd
@@ -33,11 +34,11 @@ import pandas as pd
 # Rutas base (para modo lote)
 # =========================
 
-ROOT = (
-    Path(__file__).resolve().parent.parent
-    if (Path(__file__).resolve().parent.name == "scripts")
-    else Path(__file__).resolve().parent
-)
+_ROOT_PARENT = Path(__file__).resolve().parent
+if _ROOT_PARENT.name in {"scripts", "pipelines"}:
+    ROOT = _ROOT_PARENT.parent
+else:
+    ROOT = _ROOT_PARENT
 PC1_DIR = ROOT / "outputs" / "pc1_raw_pages"
 PC2_DIR = ROOT / "outputs" / "pc2_clean_pages"
 OUT_DIR = ROOT / "outputs" / "pc3_blocks"
@@ -50,10 +51,15 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 # =========================
 
 SEC_HEADER_RE = re.compile(r"^\s*(\d+(?:\.\d+)+\.?)\s+(.+)$")
-SECTION_TITLE_STOPWORDS = {"de", "del", "la", "el", "los", "las", "y", "o", "u", "en", "por", "para", "con", "veces"}
+SECTION_TITLE_STOPWORDS = {
+    "de", "del", "la", "el", "los", "las", "y", "o", "u",
+    "en", "por", "para", "con", "veces",
+}
+
 
 def normalize_ws(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
+
 
 def _fix_ocr_spaced_words(txt: str) -> str:
     patterns = [
@@ -66,6 +72,7 @@ def _fix_ocr_spaced_words(txt: str) -> str:
         txt = re.sub(pat, rep, txt, flags=re.I)
     return txt
 
+
 def normalize_cell(s: Any) -> str:
     if s is None:
         return ""
@@ -76,7 +83,11 @@ def normalize_cell(s: Any) -> str:
     txt = _fix_ocr_spaced_words(txt)
     return txt.strip()
 
+
 def read_clean_page(doc_id: str, page_num: int) -> str:
+    """
+    Prefiere PC-2; si no existe, cae a PC-1.
+    """
     p = PC2_DIR / doc_id / f"{doc_id}_page_{page_num:03d}.txt"
     if p.exists():
         return p.read_text(encoding="utf-8", errors="ignore")
@@ -84,6 +95,7 @@ def read_clean_page(doc_id: str, page_num: int) -> str:
     if p1.exists():
         return p1.read_text(encoding="utf-8", errors="ignore")
     return ""
+
 
 def looks_like_title(s: str) -> bool:
     s = s.strip()
@@ -98,9 +110,15 @@ def looks_like_title(s: str) -> bool:
         return False
     return True
 
+
 def segment_sections(lines: List[str]) -> List[Dict[str, Any]]:
-    blocks = []
-    current_section = None
+    """
+    Segmenta líneas en:
+      - section_header (1.2.3 Título)
+      - paragraph (texto asociado a la sección actual)
+    """
+    blocks: List[Dict[str, Any]] = []
+    current_section: Dict[str, Any] | None = None
     current_buffer: List[str] = []
 
     def flush_paragraph():
@@ -111,8 +129,12 @@ def segment_sections(lines: List[str]) -> List[Dict[str, Any]]:
                 blocks.append(
                     {
                         "type": "paragraph",
-                        "section_number": current_section["section_number"] if current_section else None,
-                        "section_title": current_section["section_title"] if current_section else None,
+                        "section_number": current_section["section_number"]
+                        if current_section
+                        else None,
+                        "section_title": current_section["section_title"]
+                        if current_section
+                        else None,
                         "text": text,
                     }
                 )
@@ -144,6 +166,7 @@ def segment_sections(lines: List[str]) -> List[Dict[str, Any]]:
 MIN_TOTAL_CELLS = 4
 MAX_EMPTY_RATIO = 0.95
 
+
 def _filter_table(t: List[List[str]]) -> bool:
     """
     Regla permisiva: descartar solo ruido extremo.
@@ -153,7 +176,9 @@ def _filter_table(t: List[List[str]]) -> bool:
     total_cells = sum(len(r) for r in t)
     if total_cells < MIN_TOTAL_CELLS:
         return False
-    empty_cells = sum(1 for r in t for c in r if not c or not str(c).strip())
+    empty_cells = sum(
+        1 for r in t for c in r if not c or not str(c).strip()
+    )
     if (empty_cells / max(total_cells, 1)) > MAX_EMPTY_RATIO:
         return False
     return True
@@ -164,6 +189,10 @@ def _filter_table(t: List[List[str]]) -> bool:
 # =========================
 
 def _extract_tables_for_page(input_pdf: Path, page_idx1: int) -> List[List[List[str]]]:
+    """
+    Extrae tablas útiles de una página (1-based).
+    Ignora portadas / índices obvios.
+    """
     tables: List[List[List[str]]] = []
     with pdfplumber.open(str(input_pdf)) as pdf:
         idx0 = page_idx1 - 1
@@ -171,8 +200,14 @@ def _extract_tables_for_page(input_pdf: Path, page_idx1: int) -> List[List[List[
             return tables
         page = pdf.pages[idx0]
         text_page_up = (page.extract_text() or "").upper()
-        if any(x in text_page_up for x in ["TABLA DE CONTENIDO", "CONTENTS", "INTRODUCCIÓN", "PORTADA"]):
+
+        # Heurística: saltar tablas en índice/portada
+        if any(
+            x in text_page_up
+            for x in ["TABLA DE CONTENIDO", "CONTENTS", "INTRODUCCIÓN", "PORTADA"]
+        ):
             return tables
+
         extracted = page.extract_tables() or []
         for t in extracted:
             if not t:
@@ -195,7 +230,9 @@ def _write_csv_rows(path: Path, rows: List[List[str]]) -> None:
 def _clean_and_save(src_csv: Path, dst_csv: Path) -> Tuple[int, int]:
     df = pd.read_csv(src_csv, header=None, dtype=str, keep_default_na=False)
     df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    # eliminar filas vacías
     df = df[~(df.apply(lambda r: all((str(x) == "" for x in r)), axis=1))]
+    # eliminar columnas vacías
     df = df.loc[:, ~(df.apply(lambda c: all((str(x) == "" for x in c)), axis=0))]
     dst_csv.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(dst_csv, index=False, header=False, encoding="utf-8")
@@ -203,7 +240,7 @@ def _clean_and_save(src_csv: Path, dst_csv: Path) -> Tuple[int, int]:
 
 
 # =========================
-# Interfaz por página (dispatcher)
+# Interfaz por página (dispatcher PC-3)
 # =========================
 
 def process_page(input_pdf: Path, outdir: Path, page_idx1: int) -> Dict[str, Any]:
@@ -224,24 +261,30 @@ def process_page(input_pdf: Path, outdir: Path, page_idx1: int) -> Dict[str, Any
             tcount += 1
             raw_csv = tables_dir / f"page_{page_idx1:03d}_table{tcount:02d}.csv"
             _write_csv_rows(raw_csv, t)
-            clean_csv = tables_clean_dir / f"page_{page_idx1:03d}_table{tcount:02d}_clean.csv"
+            clean_csv = (
+                tables_clean_dir
+                / f"page_{page_idx1:03d}_table{tcount:02d}_clean.csv"
+            )
             _clean_and_save(raw_csv, clean_csv)
             emitted += 1
     except Exception as e:
-        return {"tables_emitted": emitted, "__warning__": f"extract error p{page_idx1}: {e}"}
+        return {
+            "tables_emitted": emitted,
+            "__warning__": f"extract error p{page_idx1}: {e}",
+        }
 
     return {"tables_emitted": emitted}
 
 
 # =========================
-# Interfaz por lote (compatibilidad)
+# Interfaz por lote (compatibilidad PC-1/PC-2)
 # =========================
 
 def run_pipeline(manifest: dict, out_dir: Path) -> dict:
     """
     Modo lote (mantiene tu firma original).
     - Lee texto de PC-2/PC-1 y segmenta a blocks.jsonl
-    - Extrae tablas por página y guarda RAW CSV
+    - Extrae tablas por página (usando abs_path de PC-1 si está disponible)
     - Consolida:
         TEXT_sections.csv
         TEXT_tables_all.csv
@@ -255,7 +298,18 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
     tables_dir = out_dir / "tables"
     tables_dir.mkdir(parents=True, exist_ok=True)
 
-    pdf_path = DATA_DIR / file_name
+    # Resolver PDF: primero abs_path (PC-1), luego DATA_DIR/file_name
+    pdf_path: Path | None = None
+    abs_path = manifest.get("abs_path")
+    if abs_path:
+        candidate = Path(abs_path)
+        if candidate.exists():
+            pdf_path = candidate
+    if pdf_path is None:
+        candidate = DATA_DIR / file_name
+        if candidate.exists():
+            pdf_path = candidate
+
     jsonl_path = out_dir / "blocks.jsonl"
     fout = jsonl_path.open("w", encoding="utf-8")
 
@@ -269,20 +323,28 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
             lines = [ln for ln in text.splitlines() if ln.strip()]
             sec_blocks = segment_sections(lines)
             for b in sec_blocks:
-                b["source"] = {"doc_id": doc_id, "file_name": file_name, "page": page}
+                b["source"] = {
+                    "doc_id": doc_id,
+                    "file_name": file_name,
+                    "page": page,
+                }
                 fout.write(json.dumps(b, ensure_ascii=False) + "\n")
             total_blocks += len(sec_blocks)
 
         # 2) TABLAS
-        if pdf_path.exists():
+        if pdf_path and pdf_path.exists():
             try:
                 page_tables = _extract_tables_for_page(pdf_path, page)
             except Exception as e:
                 page_tables = []
-                print(f"[WARN] Error al extraer tablas {pdf_path.name} p.{page}: {e}")
+                print(
+                    f"[WARN] Error al extraer tablas {pdf_path.name} p.{page}: {e}"
+                )
             if page_tables:
                 for idx, table in enumerate(page_tables, start=1):
-                    raw_csv_path = tables_dir / f"page_{page:03d}_table{idx:02d}.csv"
+                    raw_csv_path = (
+                        tables_dir / f"page_{page:03d}_table{idx:02d}.csv"
+                    )
                     _write_csv_rows(raw_csv_path, table)
                     total_tables += 1
                     fout.write(
@@ -291,8 +353,14 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
                                 "type": "table",
                                 "page": page,
                                 "table_index": idx,
-                                "csv_file": str(raw_csv_path.relative_to(ROOT)),
-                                "source": {"doc_id": doc_id, "file_name": file_name, "page": page},
+                                "csv_file": str(
+                                    raw_csv_path.relative_to(ROOT)
+                                ),
+                                "source": {
+                                    "doc_id": doc_id,
+                                    "file_name": file_name,
+                                    "page": page,
+                                },
                             },
                             ensure_ascii=False,
                         )
@@ -304,26 +372,37 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
 
     # 3) CONSOLIDADOS
     # Secciones → TEXT_sections.csv
-    sections = []
+    sections: List[Dict[str, Any]] = []
     with (out_dir / "blocks.jsonl").open("r", encoding="utf-8") as f:
         for line in f:
             try:
                 b = json.loads(line)
                 if b.get("type") in {"section_header", "paragraph"}:
                     src = b.get("source") or {}
-                    sections.append({
-                        "type": b.get("type"),
-                        "section_number": b.get("section_number"),
-                        "section_title": b.get("section_title"),
-                        "text": b.get("text", ""),
-                        "page": src.get("page"),
-                    })
+                    sections.append(
+                        {
+                            "type": b.get("type"),
+                            "section_number": b.get("section_number"),
+                            "section_title": b.get("section_title"),
+                            "text": b.get("text", ""),
+                            "page": src.get("page"),
+                        }
+                    )
             except Exception:
                 pass
 
     sec_csv = out_dir / "TEXT_sections.csv"
     with sec_csv.open("w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=["type", "section_number", "section_title", "text", "page"])
+        w = csv.DictWriter(
+            f,
+            fieldnames=[
+                "type",
+                "section_number",
+                "section_title",
+                "text",
+                "page",
+            ],
+        )
         w.writeheader()
         for r in sections:
             w.writerow(r)
@@ -333,11 +412,16 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
     wrote_any = False
     with text_tables_csv.open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["_page", "_table_idx", "_row"] + [f"c{i}" for i in range(1, 51)])
+        w.writerow(
+            ["_page", "_table_idx", "_row"]
+            + [f"c{i}" for i in range(1, 51)]
+        )
         if tables_dir.exists():
             for csvf in sorted(tables_dir.glob("*.csv")):
                 page, t_idx = None, None
-                m = re.search(r"page_(\d{3})_table(\d{2})", csvf.stem)
+                m = re.search(
+                    r"page_(\d{3})_table(\d{2})", csvf.stem
+                )
                 if m:
                     page = int(m.group(1))
                     t_idx = int(m.group(2))
@@ -362,14 +446,19 @@ def run_pipeline(manifest: dict, out_dir: Path) -> dict:
         "total_tables": total_tables,
         "blocks_jsonl": str((out_dir / "blocks.jsonl").relative_to(ROOT)),
         "text_sections_csv": str(sec_csv.relative_to(ROOT)),
-        "text_tables_csv": str(text_tables_csv.relative_to(ROOT)) if text_tables_csv else None,
+        "text_tables_csv": str(text_tables_csv.relative_to(ROOT))
+        if text_tables_csv
+        else None,
     }
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out_dir / "summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     return summary
 
 
 # =========================
-# Hook final para el modo dispatcher
+# Hook final para el modo dispatcher (PC-3)
 # =========================
 
 def finalize(out_dir: Path, doc_meta: Dict[str, Any]) -> None:
@@ -393,21 +482,31 @@ def finalize(out_dir: Path, doc_meta: Dict[str, Any]) -> None:
         text = p.read_text(encoding="utf-8", errors="ignore")
         lines = [ln for ln in text.splitlines() if ln.strip()]
         for b in segment_sections(lines):
-            sec_rows.append({
-                "type": b.get("type"),
-                "section_number": b.get("section_number"),
-                "section_title": b.get("section_title"),
-                "text": b.get("text", ""),
-                "page": page_num,
-            })
+            sec_rows.append(
+                {
+                    "type": b.get("type"),
+                    "section_number": b.get("section_number"),
+                    "section_title": b.get("section_title"),
+                    "text": b.get("text", ""),
+                    "page": page_num,
+                }
+            )
+
     # siempre escribir (aunque quede vacío)
     pd.DataFrame(
-        sec_rows, columns=["type", "section_number", "section_title", "text", "page"]
+        sec_rows,
+        columns=[
+            "type",
+            "section_number",
+            "section_title",
+            "text",
+            "page",
+        ],
     ).to_csv(out_dir / "TEXT_sections.csv", index=False, encoding="utf-8")
 
     # ---- 2) Tablas consolidadas desde tables/*.csv ----
     tdir = out_dir / "tables"
-    all_rows = []
+    all_rows: List[List[Any]] = []
     if tdir.exists():
         for csvf in sorted(tdir.glob("*.csv")):
             m = re.search(r"page_(\d{3})_table(\d{2})", csvf.stem)
@@ -417,14 +516,17 @@ def finalize(out_dir: Path, doc_meta: Dict[str, Any]) -> None:
             except Exception:
                 continue
             for r_i, row in df.iterrows():
-                vals = [str(v).strip() if pd.notna(v) else "" for v in row.tolist()]
+                vals = [
+                    str(v).strip() if pd.notna(v) else ""
+                    for v in row.tolist()
+                ]
                 all_rows.append([page, t_idx, r_i + 1] + vals[:50])
 
     if all_rows:
         pd.DataFrame(
             all_rows,
-            columns=["_page", "_table_idx", "_row"] + [f"c{i}" for i in range(1, 51)]
+            columns=["_page", "_table_idx", "_row"]
+            + [f"c{i}" for i in range(1, 51)],
         ).to_csv(out_dir / "TEXT_tables_all.csv", index=False, encoding="utf-8")
     else:
         (out_dir / "TEXT_tables_all.csv").write_text("", encoding="utf-8")
-

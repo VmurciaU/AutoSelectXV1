@@ -43,3 +43,7 @@ start_server.sh
 
 #Conexion a DB desde WSL
 /compose
+
+#Salidas de pruebas de corpus PDF
+lightrag/outputs/
+lightrag/tests/

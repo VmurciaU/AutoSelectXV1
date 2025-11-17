@@ -2,11 +2,16 @@
 """
 PC-1 — Lectura e ingesta de PDFs
 --------------------------------
-Lee todos los PDFs en ./data, extrae texto por página y metadatos mínimos,
-y guarda resultados en ./outputs/pc1_raw_pages/<doc_id>/.
+Lee todos los PDFs en una carpeta de entrada, extrae texto por página y
+metadatos mínimos, y guarda resultados en una carpeta de salida.
 
-- Por ahora NO hacemos limpieza de headers/footers ni parsing semántico.
-- Esta etapa deja todo listo para PC-2/PC-3.
+Modo clásico (standalone):
+- Entrada por defecto:  ROOT/data
+- Salida por defecto:   ROOT/outputs/pc1_raw_pages/<doc_id>/
+
+Modo parametrizado (para run_case_pipeline):
+- Puedes pasar input_dir y out_dir explícitos, por ejemplo:
+  inbox/<case_id>/original  ->  index/<case_id>/tmp/pc1_raw_pages
 
 Requisitos: pdfplumber, pypdf, python-dotenv (opcional)
 """
@@ -21,12 +26,19 @@ from typing import Dict, Any, List, Optional
 import pdfplumber
 
 # ---------------------------
-# Configuración de rutas
+# Configuración de rutas por defecto (modo standalone)
 # ---------------------------
-ROOT = Path(__file__).resolve().parent.parent if (Path(__file__).resolve().parent.name == "scripts") else Path(__file__).resolve().parent
-DATA_DIR = ROOT / "data"
-OUT_DIR = ROOT / "outputs" / "pc1_raw_pages"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+THIS_FILE = Path(__file__).resolve()
+PARENT = THIS_FILE.parent
+# Permite ejecutar desde lightrag/scripts/, lightrag/pipelines/ o desde el paquete raíz
+if PARENT.name in {"scripts", "pipelines"}:
+    ROOT = PARENT.parent
+else:
+    ROOT = PARENT
+
+DATA_DIR_DEFAULT = ROOT / "data"
+OUT_DIR_DEFAULT = ROOT / "outputs" / "pc1_raw_pages"
+OUT_DIR_DEFAULT.mkdir(parents=True, exist_ok=True)
 
 
 # ---------------------------
@@ -38,6 +50,7 @@ DOC_TYPE_HINTS = {
     "MR": [" MR ", "Manual de Requisitos", "Requisición", "Requisición de Materiales", "MR "],
     "PID": ["P&ID", "P & ID", "DIAGRAMA DE TUBERÍAS", "Piping and Instrumentation Diagram"],
 }
+
 
 def detect_doc_type(filename: str, first_page_text: str) -> str:
     """Heurística sencilla basada en nombre y primera página."""
@@ -89,13 +102,19 @@ def page_text(page) -> str:
         return page.extract_text() or ""
 
 
-def process_pdf(pdf_path: Path) -> Dict[str, Any]:
+def process_pdf(pdf_path: Path, out_dir: Path | None = None) -> Dict[str, Any]:
     """
     Procesa un PDF: extrae texto por página y escribe a disco.
     Devuelve un manifiesto con metadatos.
+
+    - pdf_path: ruta absoluta del PDF a procesar.
+    - out_dir: carpeta base donde crear <doc_id>/... (si None, usa OUT_DIR_DEFAULT).
     """
+    base_out = out_dir if out_dir is not None else OUT_DIR_DEFAULT
+    base_out.mkdir(parents=True, exist_ok=True)
+
     doc_id = slugify_doc_id(pdf_path.stem)
-    target_dir = OUT_DIR / doc_id
+    target_dir = base_out / doc_id
     target_dir.mkdir(parents=True, exist_ok=True)
 
     manifest: Dict[str, Any] = {
@@ -138,37 +157,80 @@ def process_pdf(pdf_path: Path) -> Dict[str, Any]:
             })
 
     # Escribe manifest.json dentro de la carpeta del doc
-    (target_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    (target_dir / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
     return manifest
 
 
-def main(data_dir: str = None):
-    base = Path(data_dir) if data_dir else DATA_DIR
-    if not base.exists():
-        raise SystemExit(f"No existe la carpeta de datos: {base}")
+def run_pc1(input_dir: Path, out_dir: Path | None = None) -> List[Dict[str, Any]]:
+    """
+    Ejecuta PC-1 sobre todos los PDFs de input_dir y escribe resultados en out_dir.
 
-    pdfs = sorted([p for p in base.glob("*.pdf")])
+    - input_dir: carpeta que contiene los PDFs.
+    - out_dir: carpeta base donde se crearán las subcarpetas <doc_id>/.
+               Si es None, se usa OUT_DIR_DEFAULT.
+
+    Devuelve la lista de manifests de todos los PDFs procesados.
+    """
+    base = input_dir
+    if not base.exists():
+        raise SystemExit(f"[PC-1] No existe la carpeta de datos: {base}")
+
+    pdfs = sorted(p for p in base.glob("*.pdf"))
     if not pdfs:
-        raise SystemExit(f"No se encontraron PDFs en {base}")
+        raise SystemExit(f"[PC-1] No se encontraron PDFs en {base}")
+
+    base_out = out_dir if out_dir is not None else OUT_DIR_DEFAULT
+    base_out.mkdir(parents=True, exist_ok=True)
 
     all_manifests: List[Dict[str, Any]] = []
     for pdf in pdfs:
         print(f"[PC-1] Procesando: {pdf.name}")
-        manifest = process_pdf(pdf)
+        manifest = process_pdf(pdf, out_dir=base_out)
         all_manifests.append(manifest)
 
     # índice global
-    index_path = OUT_DIR / "index.json"
+    index_path = base_out / "index.json"
     index = {"documents": all_manifests}
-    index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
+    index_path.write_text(
+        json.dumps(index, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
 
     print("\n✅ PC-1 completado.")
-    print(f"• Manifiestos por documento en: {OUT_DIR}\\<doc_id>\\manifest.json")
+    print(f"• Manifiestos por documento en: {base_out}/<doc_id>/manifest.json")
     print(f"• Índice global: {index_path}")
+
+    return all_manifests
+
+
+def main(data_dir: str | None = None, out_dir: str | None = None):
+    """
+    Punto de entrada CLI (uso manual):
+
+    - data_dir: carpeta de entrada con PDFs (por defecto DATA_DIR_DEFAULT).
+    - out_dir: carpeta de salida base (por defecto OUT_DIR_DEFAULT).
+    """
+    base_in = Path(data_dir) if data_dir else DATA_DIR_DEFAULT
+    base_out = Path(out_dir) if out_dir else OUT_DIR_DEFAULT
+    run_pc1(base_in, base_out)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PC-1 — Lectura e ingesta de PDFs")
-    parser.add_argument("--data", type=str, default=None, help="Ruta alternativa de la carpeta data/")
+    parser.add_argument(
+        "--data",
+        type=str,
+        default=None,
+        help="Ruta alternativa de la carpeta data/ (entrada de PDFs)",
+    )
+    parser.add_argument(
+        "--out",
+        type=str,
+        default=None,
+        help="Ruta alternativa de salida para pc1_raw_pages",
+    )
     args = parser.parse_args()
-    main(args.data)
+    main(args.data, args.out)

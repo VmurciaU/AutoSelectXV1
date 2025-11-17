@@ -1,5 +1,5 @@
 
-#Se eejecutan asi los archivos
+#Se ejecutan asi los archivos
 
 python RAGGrafo/scripts/pc1_read_pdfs.py
 python RAGGrafo/scripts/pc2_clean_layout.py
