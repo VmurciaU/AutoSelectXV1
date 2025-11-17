@@ -13,6 +13,17 @@ Modo parametrizado (para run_case_pipeline):
 - Puedes pasar input_dir y out_dir explícitos, por ejemplo:
   inbox/<case_id>/original  ->  index/<case_id>/tmp/pc1_raw_pages
 
+CLI:
+- Ejemplo standalone:
+    python -m lightrag.pipelines.pc1_read_pdfs \
+        --data lightrag/data \
+        --out  lightrag/outputs/pc1_raw_pages
+
+- Ejemplo integrado con pipeline (alias nuevos):
+    python -m lightrag.pipelines.pc1_read_pdfs \
+        --input-dir shared_data/inbox/14/original \
+        --out-dir   lightrag/outputs/cases/14/pc1_raw_pages
+
 Requisitos: pdfplumber, pypdf, python-dotenv (opcional)
 """
 
@@ -220,17 +231,22 @@ def main(data_dir: str | None = None, out_dir: str | None = None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PC-1 — Lectura e ingesta de PDFs")
+
+    # Soportar interfaz vieja (--data / --out) y nueva (--input-dir / --out-dir)
     parser.add_argument(
-        "--data",
+        "--data", "--input-dir",
+        dest="data",
         type=str,
         default=None,
-        help="Ruta alternativa de la carpeta data/ (entrada de PDFs)",
+        help="Carpeta de entrada con PDFs (alias: --data, --input-dir)",
     )
     parser.add_argument(
-        "--out",
+        "--out", "--out-dir",
+        dest="out",
         type=str,
         default=None,
-        help="Ruta alternativa de salida para pc1_raw_pages",
+        help="Carpeta base de salida para pc1_raw_pages (alias: --out, --out-dir)",
     )
+
     args = parser.parse_args()
     main(args.data, args.out)
