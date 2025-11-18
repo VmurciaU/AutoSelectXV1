@@ -143,62 +143,182 @@ def _gather_pc2_docs(pc2_dir: Path) -> Dict[str, List[Tuple[int, Path]]]:
 # LightRAG Core helpers (best-effort; usualmente NO se usan)
 # =========================================================
 def _make_rag(storage_dir: Path):
-    from lightrag import LightRAG as _LR  # import tardío
-    for style in (
-        lambda: _LR(storage_path=str(storage_dir)),
-        lambda: _LR(storage_dir=str(storage_dir)),
-        lambda: _LR(str(storage_dir)),
-    ):
-        try:
-            return style()
-        except Exception:
-            pass
-    rag = _LR()
-    for attr in ("storage_dir", "storage_path", "data_dir"):
-        if hasattr(rag, attr):
+    """Crea una instancia de LightRAG Core usando la configuración oficial
+    con OpenAI (gpt-4o-mini + text-embedding-3-large) si está disponible.
+
+    - Respeta la forma recomendada en la documentación:
+        LightRAG(
+            working_dir=...,
+            embedding_func=openai_embed,
+            llm_model_func=gpt_4o_mini_complete
+        )
+
+    - Si por algún motivo los imports de openai fallan, cae a la lógica
+      anterior de instanciación best-effort para no romper el pipeline.
+    """
+    try:
+        # Import estilo ejemplo oficial
+        from lightrag import LightRAG as _LR
+        from lightrag.llm.openai import gpt_4o_mini_complete, openai_embed
+        # working_dir es el nombre usado en la doc para el folder de trabajo
+        rag = _LR(
+            working_dir=str(storage_dir),
+            embedding_func=openai_embed,
+            llm_model_func=gpt_4o_mini_complete,
+        )
+        return rag
+    except Exception as e:
+        print(f"[Core] ⚠️ No se pudo inicializar LightRAG con OpenAI bindings ({e}).")
+        # Fallback: intentar los constructores anteriores para no romper nada
+        from lightrag import LightRAG as _LR  # type: ignore[redefined-builtin]
+        for style in (
+            lambda: _LR(storage_path=str(storage_dir)),
+            lambda: _LR(storage_dir=str(storage_dir)),
+            lambda: _LR(str(storage_dir)),
+        ):
             try:
-                setattr(rag, attr, str(storage_dir))
-                break
+                return style()
             except Exception:
                 pass
-    return rag
+        rag = _LR()
+        for attr in ("storage_dir", "storage_path", "data_dir", "working_dir"):
+            if hasattr(rag, attr):
+                try:
+                    setattr(rag, attr, str(storage_dir))
+                    break
+                except Exception:
+                    pass
+        return rag
 
 
 async def _core_initialize(rag) -> None:
+    """Inicializa storages y el pipeline de LightRAG Core.
+
+    Sigue el patrón oficial (initialize_storages + initialize_pipeline_status).
+    Si initialize_pipeline_status viene de shared_storage, lo usamos; si en
+    algún release futuro lo exponen como método del objeto, también lo
+    aprovechamos.
+    """
+    # 1) Storages internos
     if hasattr(rag, "initialize_storages") and callable(
         getattr(rag, "initialize_storages")
     ):
         await rag.initialize_storages()
-    if hasattr(rag, "initialize_pipeline_status") and callable(
-        getattr(rag, "initialize_pipeline_status")
-    ):
-        await rag.initialize_pipeline_status()
+
+    # 2) Pipeline status: preferir la función global del paquete
+    try:
+        from lightrag.kg.shared_storage import initialize_pipeline_status
+    except Exception:
+        initialize_pipeline_status = None  # type: ignore
+
+    if initialize_pipeline_status is not None:
+        try:
+            # Según la doc actual, se llama sin argumentos
+            await initialize_pipeline_status()
+        except TypeError:
+            # Por si en alguna versión esperan el rag como parámetro
+            try:
+                await initialize_pipeline_status(rag)  # type: ignore[arg-type]
+            except Exception as e:
+                print(f"[Core] ⚠️ initialize_pipeline_status(rag) falló: {e}")
+        except Exception as e:
+            print(f"[Core] ⚠️ initialize_pipeline_status() falló: {e}")
+    else:
+        # Fallback ultra-defensivo por si en el futuro lo ponen como método
+        if hasattr(rag, "initialize_pipeline_status") and callable(
+            getattr(rag, "initialize_pipeline_status")
+        ):
+            try:
+                await rag.initialize_pipeline_status()
+            except Exception as e:
+                print(f"[Core] ⚠️ rag.initialize_pipeline_status() falló: {e}")
+
+
+async def _core_insert_one(rag, text: str, metadata: Dict) -> None:
+    """Inserta un solo documento en LightRAG Core.
+
+    Como LightRAG Core NO acepta metadata= en ainsert()/insert(),
+    incrustamos el metadata crítico como cabecera textual dentro del string:
+
+        [META]{...json...}
+
+    De esta forma:
+      - El LLM ve doc_id, páginas, etc. como contexto.
+      - Seguimos teniendo metadata estructurado en corpus.json / graph.json.
+    """
+    enriched = text
+    try:
+        if metadata:
+            meta_str = json.dumps(metadata, ensure_ascii=False)
+            enriched = f"[META]{meta_str}\n\n{text}"
+    except Exception:
+        enriched = text
+
+    # Preferir API async moderna
+    if hasattr(rag, "ainsert"):
+        try:
+            await rag.ainsert(enriched)
+            return
+        except Exception as e:
+            print(f"[Core] ⚠️ ainsert(enriched) falló: {e}")
+
+    # Fallback sync
+    if hasattr(rag, "insert"):
+        try:
+            rag.insert(enriched)
+            return
+        except Exception as e:
+            print(f"[Core] ⚠️ insert(enriched) falló: {e}")
+
+    # Legacy best-effort
+    for meth_name in ("add_document", "ingest", "index"):
+        if hasattr(rag, meth_name):
+            m = getattr(rag, meth_name)
+            try:
+                if asyncio.iscoroutinefunction(m):
+                    await m(enriched)
+                else:
+                    m(enriched)
+                return
+            except Exception as e:
+                print(f"[Core] ⚠️ {meth_name}(enriched) falló: {e}")
+
+    print("[WARN] LightRAG Core no expone método de ingesta compatible (ainsert/insert/add_document/ingest/index).")
 
 
 async def _core_ingest_documents(corpus: List[Dict], storage_dir: Path) -> None:
+    """Ingesta corpus en LightRAG Core usando la API oficial o rutas legacy.
+
+    - Preferimos ainsert/insert (tal como en los ejemplos de la doc).
+    - Incrustamos metadata en el texto (cabecera [META]{...json...}),
+      porque LightRAG Core no acepta metadata= como parámetro.
+    """
     rag = _make_rag(storage_dir)
     await _core_initialize(rag)
+
     it = tqdm(corpus, desc="Ingestando (Core)") if tqdm else corpus
     for rec in it:
         text = rec.get("text", "")
         metadata = rec.get("metadata", {})
+        if not text.strip():
+            continue
         try:
-            if hasattr(rag, "add_document"):
-                await rag.add_document(text=text, metadata=metadata)
-            elif hasattr(rag, "ingest"):
-                await rag.ingest(text=text, metadata=metadata)
-            elif hasattr(rag, "index"):
-                await rag.index(text=text, metadata=metadata)
-            else:
-                print("[WARN] LightRAG Core no expone método de ingesta.")
+            await _core_insert_one(rag, text, metadata)
         except Exception as e:
             print(f"[WARN] Falló ingesta de {metadata.get('doc_id')} (Core): {e}")
 
 
 async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
+    """Best-effort para publicar un KG custom en LightRAG Core.
+
+    Hoy LightRAG construye su propio grafo internamente. Este helper intenta
+    reusar cualquier API de alto nivel disponible (add_graph/add_entity/
+    add_relation). Si en tu versión no existe, simplemente loguea y sigue.
+    """
     if not pc5_jsonl:
         print("[pushkg] No hay graph.jsonl, omitiendo.")
         return
+
     rag = _make_rag(storage_dir)
     await _core_initialize(rag)
 
@@ -206,7 +326,8 @@ async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
     add_relation = getattr(rag, "add_relation", None)
     add_graph = getattr(rag, "add_graph", None)
 
-    if add_graph:
+    # 1) API agregada de grafo completo si existe
+    if callable(add_graph):
         try:
             await add_graph(pc5_jsonl)
             print("[pushkg] add_graph() OK (Core).")
@@ -214,6 +335,7 @@ async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
         except Exception as e:
             print(f"[pushkg] add_graph falló, intento nodos/aristas: {e}")
 
+    # 2) Fallback nodos/aristas individuales
     nodes = [
         r
         for r in pc5_jsonl
@@ -225,7 +347,7 @@ async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
         if (r.get("type") or "").lower() in ("edge", "relation", "rel")
     ]
 
-    if add_entity:
+    if callable(add_entity):
         it = tqdm(nodes, desc="Nodos (Core)") if tqdm else nodes
         for n in it:
             try:
@@ -235,7 +357,7 @@ async def _core_push_graph(pc5_jsonl: List[Dict], storage_dir: Path) -> None:
                     f"[WARN] Nodo no publicado {n.get('id') or n.get('name')}: {e}"
                 )
 
-    if add_relation:
+    if callable(add_relation):
         it2 = tqdm(edges, desc="Aristas (Core)") if tqdm else edges
         for e in it2:
             try:

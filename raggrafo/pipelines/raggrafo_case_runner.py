@@ -1,4 +1,4 @@
-# lightrag/pipelines/raggrafo_case_runner.py
+# raggrafo/pipelines/raggrafo_case_runner.py
 # -*- coding: utf-8 -*-
 
 from __future__ import annotations
@@ -102,7 +102,7 @@ def run_raggrafo_for_case(
     return corpus_jsonl, corpus_json, kg_jsonl, kg_json
 
 
-# Pequeño CLI para probar desde consola: python -m lightrag.pipelines.raggrafo_case_runner ...
+# Pequeño CLI para probar desde consola: python -m raggrafo.pipelines.raggrafo_case_runner ...
 if __name__ == "__main__":
     import argparse
 

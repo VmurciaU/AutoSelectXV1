@@ -1,0 +1,90 @@
+{
+  "doc-8ccf53263c7db882213453fedcb5c0b1": {
+    "status": "processed",
+    "chunks_count": 12,
+    "chunks_list": [
+      "chunk-4a05fd409757e56b24221efa6492f277",
+      "chunk-f2c5e20947e8fb244a510847cbb87a9c",
+      "chunk-cb69d0b355642374bf610d72bdd2be67",
+      "chunk-d3abd7a72b8499246b791f4538eb108c",
+      "chunk-5a0ef965823ed80f199c1daa19a67e17",
+      "chunk-df5c67a0f957af4d718ba59d9f4390e5",
+      "chunk-c662844e5f53028fea2a197d76e83f79",
+      "chunk-8f7bd8ed9046cc98ab1bcc0c47cc0dd5",
+      "chunk-3c47f142b3eb324e9cf84e5d09cb495e",
+      "chunk-ef5864c8accd616701328ef00d004ac9",
+      "chunk-595bf530b9108c24b224601626445b7b",
+      "chunk-d6479332bfd937b730880ede28d7d948"
+    ],
+    "content_summary": "[META]{\"doc_id\": \"FFMFMEQ013.0 (MR PAQUETE DE INYECCION DE QUIMICOS)\", \"pages\": 20, \"chars\": 49144}\n\n[PAGE 1]\nMAYORES\nVersión: 1\nEDP-F-046 20/11/2017\nINGENIERÍA DETALLE ACONDICIONAMIENTO\nMR #: FFM/F-MEQ-013 REV: 0\nESTRATEGICO CUPIAGUA\nDocumento:\nRequ...",
+    "content_length": 49245,
+    "created_at": "2025-11-18T01:37:26.027454+00:00",
+    "updated_at": "2025-11-18T01:56:46.273746+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20251117_203726_3c99fc1a",
+    "metadata": {
+      "processing_start_time": 1763430839,
+      "processing_end_time": 1763431006
+    }
+  },
+  "doc-239670dc4ab3d651f0c48530cd130981": {
+    "status": "processed",
+    "chunks_count": 5,
+    "chunks_list": [
+      "chunk-7b25365fe27b2d7e2bfae49b4d39e29e",
+      "chunk-67d5dd173016c03c5176086bedfd08f2",
+      "chunk-87942975bf9a6336ed6ceeb55acfccd4",
+      "chunk-de842e1bfc69526b880cfd9a56a7b35e",
+      "chunk-7375bf85874c49ad2409b8d3782f200c"
+    ],
+    "content_summary": "[META]{\"doc_id\": \"FFMFMEX033.1 (HD PAQUETE DE INYECCION DE QUIMICOS)\", \"pages\": 4, \"chars\": 14741}\n\n[PAGE 1]\nCLIENT\nCONTRACTOR\n20/11/2023\nPROJECT\nIngeniería Detallada Proyecto Acondicionamiento\nEstratégico de Cupiagua\nBrayan Quispe Miguel Salamanca O...",
+    "content_length": 14841,
+    "created_at": "2025-11-18T01:37:27.041050+00:00",
+    "updated_at": "2025-11-18T01:55:12.092654+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20251117_203727_099bf0b4",
+    "metadata": {
+      "processing_start_time": 1763430839,
+      "processing_end_time": 1763430912
+    }
+  },
+  "doc-43a42550e824750ba46875cf44d16afd": {
+    "status": "processed",
+    "chunks_count": 23,
+    "chunks_list": [
+      "chunk-1b1634e254b06d07128011227d8d7198",
+      "chunk-3f6aa189088a82d114bd46fca358592e",
+      "chunk-e6d681dcefdf48e0eaee20190a6701c3",
+      "chunk-bf47a03b531d951079ffe72edc045234",
+      "chunk-8edc8e4f9a8e36117724c7c0b28600b2",
+      "chunk-53c7e80edcbbac50f89b51bd3620e16b",
+      "chunk-a3e68c9d5ad611737366bcd55e89cae3",
+      "chunk-d9e0c997e88258ee8389f9c3cb06aba7",
+      "chunk-f97d6127043779a31bab8eac8bb0152a",
+      "chunk-57d726f33417979c7147e16c69b48efc",
+      "chunk-c710b6a6fa93867765a00a95a0590465",
+      "chunk-e57bc723aa48e6ffcdd5497c57fc28d6",
+      "chunk-16597b25c71f737c9daa4a9aa0cee115",
+      "chunk-90f28ef6b2af6b4b94a4872f453a0aa4",
+      "chunk-6c5ef2486f61a18cd268f8230bc3ad7e",
+      "chunk-6fe341253aae72bd54524a9dd78eab4f",
+      "chunk-4cdef129bd8b8fffc28ca356f70386ca",
+      "chunk-a5882344797745606e87908a73a6bce6",
+      "chunk-506e108a9d6a630f71bb55a27c0d5044",
+      "chunk-ef5c1b5733c5c77732c8127157466aa3",
+      "chunk-db3a9e5bda9057182f8d98e01e2aa1e8",
+      "chunk-f13b310f72ab3ce2e0957b6c425a495a",
+      "chunk-0797ccf665ea0ae514c36f9760d4584b"
+    ],
+    "content_summary": "[META]{\"doc_id\": \"FFMFSME015.1 (ET Paquete de Inyección de Químicos)\", \"pages\": 49, \"chars\": 105115}\n\n[PAGE 1]\nCLIENT\nCONTRACTOR\nPROJECT\nAprobado para construcción – Actualización según donde se\n1 20-11-2023\nindique\nBrayan Quispe Miguel Salamanca Oma...",
+    "content_length": 105217,
+    "created_at": "2025-11-18T01:37:27.892086+00:00",
+    "updated_at": "2025-11-18T01:58:50.351374+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20251117_203727_ce68e08a",
+    "metadata": {
+      "processing_start_time": 1763430912,
+      "processing_end_time": 1763431130
+    }
+  }
+}

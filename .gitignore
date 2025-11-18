@@ -34,7 +34,7 @@ dist/
 # Backups o pruebas
 
 #Tiene la Key 
-lightrag/pipelines/key.txt
+raggrafo/pipelines/key.txt
 
 #Arranque del server LightRag
 env.sh
@@ -45,5 +45,5 @@ start_server.sh
 /compose
 
 #Salidas de pruebas de corpus PDF
-lightrag/outputs/
-lightrag/tests/
+raggrafo/outputs/
+raggrafo/tests/

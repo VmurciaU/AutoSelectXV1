@@ -26,7 +26,7 @@ from typing import List, Dict, Any
 # --- Rutas por defecto (compatibilidad con uso clásico) ---
 THIS_FILE = Path(__file__).resolve()
 PARENT = THIS_FILE.parent
-# Permite ejecutar desde lightrag/scripts/, lightrag/pipelines/ o desde el paquete raíz
+# Permite ejecutar desde raggrafo/scripts/, raggrafo/pipelines/ o desde el paquete raíz
 if PARENT.name in {"scripts", "pipelines"}:
     ROOT = PARENT.parent
 else:

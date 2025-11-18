@@ -1,4 +1,4 @@
-# lightrag/scripts/ask_case_cli.py
+# raggrafo/scripts/ask_case_cli.py
 # -*- coding: utf-8 -*-
 
 """
@@ -6,12 +6,12 @@ CLI para hacer preguntas al RAG de un caso.
 
 Uso:
 
-  python -m lightrag.scripts.ask_case_cli --case-id 14 \
+  python -m raggrafo.scripts.ask_case_cli --case-id 14 \
       --question "¿Cuáles son las condiciones de diseño del paquete de inyección de químicos?"
 
 O modo interactivo:
 
-  python -m lightrag.scripts.ask_case_cli --case-id 14
+  python -m raggrafo.scripts.ask_case_cli --case-id 14
   (luego te pide que escribas la pregunta)
 """
 
@@ -20,8 +20,8 @@ from __future__ import annotations
 import argparse
 from typing import List
 
-# Import correcto: el módulo está en lightrag/pipelines/rag_case_query.py
-from lightrag.pipelines.rag_case_query import ask_rag
+# Import correcto: el módulo está en raggrafo/pipelines/rag_case_query.py
+from raggrafo.pipelines.rag_case_query import ask_rag
 
 
 def main(argv: List[str] | None = None) -> None:

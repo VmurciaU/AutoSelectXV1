@@ -14,9 +14,9 @@ Orquestador de la cadena PC1–PC6 para 1..N PDFs.
 
 Uso típico (desde la raíz del repo AutoSelectX):
 
-  python lightrag/scripts/run_raggrafo_pipeline.py \
-      --input-dir lightrag/tests/input \
-      --out-root  lightrag/tests/output \
+  python raggrafo/scripts/run_raggrafo_pipeline.py \
+      --input-dir raggrafo/tests/input \
+      --out-root  raggrafo/tests/output \
       --with-pc6
 
 Si no pasas parámetros, toma esos mismos defaults.
@@ -33,7 +33,7 @@ from typing import List, Dict, Any
 # Preparar sys.path para poder importar pipelines.* desde scripts/
 # --------------------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-ROOT = THIS_FILE.parent.parent  # carpeta lightrag/
+ROOT = THIS_FILE.parent.parent  # carpeta raggrafo/
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -266,7 +266,7 @@ def main():
         "--input-dir",
         type=str,
         default=str(ROOT / "tests" / "input"),
-        help="Carpeta con PDFs de entrada (default: lightrag/tests/input)",
+        help="Carpeta con PDFs de entrada (default: raggrafo/tests/input)",
     )
     parser.add_argument(
         "--out-root",

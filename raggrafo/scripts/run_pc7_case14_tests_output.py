@@ -1,4 +1,4 @@
-# lightrag/scripts/run_pc7_case14_tests_output.py
+# raggrafo/scripts/run_pc7_case14_tests_output.py
 # -*- coding: utf-8 -*-
 
 from __future__ import annotations
@@ -11,13 +11,13 @@ from pipelines.raggrafo_case_runner import run_raggrafo_for_case
 def main() -> None:
     """
     Prueba PC7 (run_raggrafo_for_case) usando las salidas
-    del pipeline de pruebas en lightrag/tests/output.
+    del pipeline de pruebas en raggrafo/tests/output.
     """
     case_id = 14
 
     # Ojo: usamos tests/output porque el run_raggrafo_pipeline.py
     # que acabas de correr escribe allí, no en outputs/.
-    root = Path(__file__).resolve().parents[1]  # .../lightrag
+    root = Path(__file__).resolve().parents[1]  # .../raggrafo
     pc2_dir = root / "tests" / "output" / "pc2_clean_pages"
     pc4_dir = root / "tests" / "output" / "pc4_consolidated"
     pc5_dir = root / "tests" / "output" / "pc5_graph"

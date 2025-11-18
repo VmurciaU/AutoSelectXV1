@@ -15,14 +15,14 @@ Modo parametrizado (para run_case_pipeline):
 
 CLI:
 - Ejemplo standalone:
-    python -m lightrag.pipelines.pc1_read_pdfs \
-        --data lightrag/data \
-        --out  lightrag/outputs/pc1_raw_pages
+    python -m raggrafo.pipelines.pc1_read_pdfs \
+        --data raggrafo/data \
+        --out  raggrafo/outputs/pc1_raw_pages
 
 - Ejemplo integrado con pipeline (alias nuevos):
-    python -m lightrag.pipelines.pc1_read_pdfs \
+    python -m raggrafo.pipelines.pc1_read_pdfs \
         --input-dir shared_data/inbox/14/original \
-        --out-dir   lightrag/outputs/cases/14/pc1_raw_pages
+        --out-dir   raggrafo/outputs/cases/14/pc1_raw_pages
 
 Requisitos: pdfplumber, pypdf, python-dotenv (opcional)
 """
@@ -41,7 +41,7 @@ import pdfplumber
 # ---------------------------
 THIS_FILE = Path(__file__).resolve()
 PARENT = THIS_FILE.parent
-# Permite ejecutar desde lightrag/scripts/, lightrag/pipelines/ o desde el paquete raíz
+# Permite ejecutar desde raggrafo/scripts/, raggrafo/pipelines/ o desde el paquete raíz
 if PARENT.name in {"scripts", "pipelines"}:
     ROOT = PARENT.parent
 else:

@@ -1,4 +1,4 @@
-# lightrag/scripts/run_pipeline_for_case.py
+# raggrafo/scripts/run_pipeline_for_case.py
 # -*- coding: utf-8 -*-
 
 from __future__ import annotations
@@ -9,12 +9,12 @@ import subprocess
 import sys
 import json
 
-from lightrag.pipelines.raggrafo_case_runner import run_raggrafo_for_case
-from lightrag.pipelines import pc3_hd_pipeline
+from raggrafo.pipelines.raggrafo_case_runner import run_raggrafo_for_case
+from raggrafo.pipelines import pc3_hd_pipeline
 
 
 # Raíces
-ROOT = Path(__file__).resolve().parents[1]      # .../lightrag
+ROOT = Path(__file__).resolve().parents[1]      # .../raggrafo
 PROJECT_ROOT = ROOT.parent                      # raíz del repo AutoSelectX
 
 
@@ -30,7 +30,7 @@ def run_pc1_to_pc5_for_case(case_id: int):
         shared_data/inbox/<case_id>/original/
 
     Salidas a:
-        lightrag/outputs/cases/<case_id>/...
+        raggrafo/outputs/cases/<case_id>/...
     """
     case_id_str = str(case_id)
 
@@ -69,7 +69,7 @@ def run_pc1_to_pc5_for_case(case_id: int):
     # === PC1 ===
     #OJO: aquí dejamos los flags tal como ya te funciona (--input-dir / --out-dir)
     _run([
-        py, "-m", "lightrag.pipelines.pc1_read_pdfs",
+        py, "-m", "raggrafo.pipelines.pc1_read_pdfs",
         "--input-dir", str(input_dir),
         "--out-dir", str(pc1_dir),
     ])
@@ -77,7 +77,7 @@ def run_pc1_to_pc5_for_case(case_id: int):
     # === PC2 ===
     # pc2_clean_layout.py espera: --pc1 y --out (no --pc1-dir / --out-dir)
     _run([
-        py, "-m", "lightrag.pipelines.pc2_clean_layout",
+        py, "-m", "raggrafo.pipelines.pc2_clean_layout",
         "--pc1", str(pc1_dir),
         "--out", str(pc2_dir),
     ])
@@ -123,7 +123,7 @@ def run_pc1_to_pc5_for_case(case_id: int):
     # === PC4 ===
     # pc4_consolidate.py usa: --pc3-dir y --outdir (no --out-dir)
     _run([
-        py, "-m", "lightrag.pipelines.pc4_consolidate",
+        py, "-m", "raggrafo.pipelines.pc4_consolidate",
         "--pc3-dir", str(pc3_dir),
         "--outdir", str(pc4_dir),
     ])
@@ -131,7 +131,7 @@ def run_pc1_to_pc5_for_case(case_id: int):
     # === PC5 ===
     # pc5_graph_build.py usa: --pc4-dir y --outdir (no --out-dir)
     _run([
-        py, "-m", "lightrag.pipelines.pc5_graph_build",
+        py, "-m", "raggrafo.pipelines.pc5_graph_build",
         "--pc4-dir", str(pc4_dir),
         "--outdir", str(pc5_dir),
     ])

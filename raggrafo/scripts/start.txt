@@ -1,0 +1,2 @@
+source venv/bin/activate
+bash raggrafo/scripts/start_server.sh
