@@ -47,3 +47,5 @@ start_server.sh
 #Salidas de pruebas de corpus PDF
 raggrafo/outputs/
 raggrafo/tests/
+raggrafo/rag_storage/
+shared_data/

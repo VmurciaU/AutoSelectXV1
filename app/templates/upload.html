@@ -1,169 +1,302 @@
 {% extends "base.html" %}
+{% block title %}Carga de documentos - AutoSelect-X{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-900 text-white py-20 px-8">
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    <!-- Sección de descripción -->
+    {# ================== COLUMNA IZQUIERDA – DESCRIPCIÓN + CARGA ================== #}
     <div class="md:col-span-2 space-y-6">
+
+      <!-- Acerca de -->
       <div class="bg-gray-800 p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold text-teal-300">Acerca de AutoSelect-X</h2>
         <p class="text-sm text-gray-300 mt-2">
-          Esta aplicación inteligente te permite cargar documentos técnicos (Hojas de Datos y Manuales de Requisitos) para extraer automáticamente información clave.
-          Sube tus archivos PDF y luego podrás realizar búsquedas y consultas sobre los requisitos técnicos directamente.
+          Sube tus documentos técnicos (HD / MR / P&ID). La plataforma procesará y generará contexto inteligente
+          para búsqueda y selección asistida de equipos en tu caso.
         </p>
       </div>
 
-      <!-- Instrucciones -->
-      <div class="bg-gray-800 p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-teal-300 mb-2">Instrucciones</h3>
-        <p class="text-sm text-gray-300 mb-2">
-          Bienvenido a la sección de carga de documentos. Por favor, sube los archivos PDF correspondientes a HD o MR.
-        </p>
-        
-        {% set active_case = cases_list | selectattr('id', 'equalto', selected_case_id) | list | first %}
-        <p class="text-sm text-gray-400 mt-2">
-          {% if selected_case_id %}
-          Caso activo: {{ selected_case_id }}
+      {# Precalcular el caso activo para reutilizar abajo #}
+      {% set active_case = cases_list | selectattr('id', 'equalto', selected_case_id) | list | first %}
+
+      <!-- Instrucciones + Estado del caso -->
+      <div class="bg-gray-800 p-6 rounded-lg shadow-md space-y-3">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <h3 class="text-lg font-semibold text-teal-300">Instrucciones</h3>
+
           {% if active_case %}
-          – <span class="text-teal-300">{{ active_case.name }}</span>
-          {% endif %}
+          <div class="text-right text-sm">
+            <div class="text-gray-400">
+              Caso activo:
+              <span class="text-teal-300 font-semibold">
+                #{{ active_case.id }} – {{ active_case.name }}
+              </span>
+            </div>
+            {% set st = active_case.status %}
+            <span class="inline-block mt-1 text-xs px-2 py-1 rounded-full
+              {% if st in ['done','quoted','archived'] %}
+                bg-green-600 text-white
+              {% elif st in ['indexing','queued'] %}
+                bg-yellow-600 text-white
+              {% elif st == 'error' %}
+                bg-red-600 text-white
+              {% else %}
+                bg-gray-600 text-white
+              {% endif %}
+            ">
+              {% if st == "queued" %}En espera
+              {% elif st == "indexing" %}Procesando
+              {% elif st == "done" %}Completado
+              {% elif st == "quoted" %}Cotizado
+              {% elif st == "archived" %}Archivado
+              {% elif st == "error" %}Error
+              {% else %}Desconocido
+              {% endif %}
+            </span>
+          </div>
           {% else %}
-          Caso activo: — (ninguno)
+          <div class="text-sm text-red-300">
+            Caso activo: — (ninguno). Regresa a <a href="/cases" class="text-teal-300 underline">Mis Casos</a> y abre
+            la carga para un caso específico.
+          </div>
           {% endif %}
-        </p>
-        
-        <ul class="text-sm text-gray-400 list-disc list-inside">
-          <li><strong>Tipos de archivos aceptados:</strong> .pdf</li>
-          <li>
-            <strong>Consideraciones:</strong> Asegúrate de que los documentos sean legibles y estén en formato estándar.</li>
+        </div>
+
+        <ul class="text-sm text-gray-400 list-disc list-inside mt-2">
+          <li><strong>Tipos de archivo:</strong> solo PDF.</li>
+          <li>Verifica que tus documentos sean legibles y completos.</li>
+          <li>Procura subir máximo 8–9 PDFs por caso.</li>
         </ul>
       </div>
 
-      <!-- Formulario de carga -->
-      <form method="POST" action="/upload" enctype="multipart/form-data" class="space-y-4">
-        <div>
-          <label for="file" class="block text-sm font-medium mb-1">Seleccionar documento</label>
-          <input type="file" id="file" name="file" accept=".pdf"
-                 class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      {# ================== FORMULARIO DE CARGA ================== #}
+      <div class="bg-gray-800 p-6 rounded-lg shadow-md space-y-4">
+        <h3 class="text-md font-semibold text-white mb-1">Cargar documentos al caso</h3>
+
+        {% if not active_case %}
+          <p class="text-sm text-red-300">
+            No hay un caso activo. Debes seleccionar un caso desde <a href="/cases" class="text-teal-300 underline">Mis Casos</a>.
+          </p>
+        {% else %}
+          {# OJO: volvemos a usar /upload (router existente) #}
+          <form method="POST"
+                action="/upload"
+                enctype="multipart/form-data"
+                class="space-y-4">
+            <div>
+              <label for="file" class="block text-sm font-medium mb-1">Seleccionar documento</label>
+              <input type="file"
+                     id="file"
+                     name="file"
+                     accept=".pdf"
+                     class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                     required>
+            </div>
+
+            <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
+              Cargar Documento
+            </button>
+          </form>
+
+          <!-- BOTÓN: procesar documentos del caso (ruta existente /procesar) -->
+          <form method="POST"
+                action="/procesar">
+            <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+            <button type="submit"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-4">
+              Procesar documentos del caso
+            </button>
+          </form>
+
+          <!-- BOTÓN: ir al asistente / chat del caso -->
+          <form action="/cases/{{ selected_case_id }}/assistant" method="GET">
+            <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded transition mt-4">
+              Ir al asistente del caso
+            </button>
+          </form>
+        {% endif %}
+      </div>
+
+      {# ================== PROGRESO – barra + cronómetro ================== #}
+      {% if processing_status == 'in_progress' and active_case %}
+      <div id="progress-container"
+           class="mt-4 bg-gray-800 p-4 rounded-lg shadow-md"
+           data-case-id="{{ selected_case_id or '' }}">
+
+        <div class="text-sm font-medium text-white mb-2">
+          Procesando documentos del caso #{{ active_case.id }}…
         </div>
-        
-        <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
 
-        
-        <button type="submit"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
-          Cargar Documento
-        </button>
-      </form>
-
-      <!-- Botón de procesamiento -->
-      <form method="POST" action="/procesar">
-        <input type="hidden" name="procesar" value="true">
-
-        <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
-
-
-        <button type="submit"
-                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
-          Procesar Documentos
-        </button>
-      </form>
-
-      <!-- Barra de progreso dinámica -->
-      {% if processing_status == 'in_progress' %}
-      <div class="mt-6">
-        <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
-        <div class="w-full bg-gray-700 rounded-full h-4">
-          <div id="barra-progreso" class="bg-yellow-400 h-4 rounded-full transition-all duration-300 ease-in-out" style="width: 0%;"></div>
+        <!-- Barra simbólica -->
+        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+          <div id="barra-progreso"
+               class="bg-yellow-400 h-4 transition-all duration-500 ease-in-out"
+               style="width: 5%;"></div>
         </div>
+
+        <!-- Cronómetro -->
+        <p id="cronometro" class="text-xs mt-2 text-gray-300">⏳ 0m 00s</p>
+
+        <!-- Mensaje -->
         <p id="mensaje-progreso" class="text-xs mt-2 text-gray-300">
-          ⏳ Procesando documentos, por favor espera...
+          Procesando documentos, por favor espera...
         </p>
+
+        <!-- Error visible solo si ocurre -->
+        <p id="mensaje-error" class="hidden text-red-400 text-xs mt-2 font-semibold"></p>
       </div>
 
       <script>
+        const barra = document.getElementById("barra-progreso");
+        const mensaje = document.getElementById("mensaje-progreso");
+        const errorBox = document.getElementById("mensaje-error");
+        const cronometro = document.getElementById("cronometro");
+        const cont = document.getElementById("progress-container");
+        const caseId = cont.dataset.caseId;
+
+        let cronometroInterval = null;
+        let barraTimeout = null;
+        let progressTimeout = null;
+
+        function detenerMonitoreo() {
+          if (cronometroInterval) {
+            clearInterval(cronometroInterval);
+            cronometroInterval = null;
+          }
+          if (barraTimeout) {
+            clearTimeout(barraTimeout);
+            barraTimeout = null;
+          }
+          if (progressTimeout) {
+            clearTimeout(progressTimeout);
+            progressTimeout = null;
+          }
+        }
+
+        const storageKey = "case_" + caseId + "_start";
+        let inicioStr = localStorage.getItem(storageKey);
+        let inicio = inicioStr ? parseInt(inicioStr, 10) : NaN;
+        if (isNaN(inicio)) {
+          inicio = Date.now();
+          localStorage.setItem(storageKey, String(inicio));
+        }
+
+        function actualizarCronometro() {
+          const ahora = Date.now();
+          const diff = Math.floor((ahora - inicio) / 1000);
+          const m = Math.floor(diff / 60);
+          const s = diff % 60;
+          cronometro.textContent = `⏳ ${m}m ${s.toString().padStart(2, '0')}s`;
+        }
+
+        cronometroInterval = setInterval(actualizarCronometro, 1000);
+        actualizarCronometro();
+
+        let progresoSimbolico = 5;
+        function avanzarBarra() {
+          if (progresoSimbolico < 90) {
+            progresoSimbolico += Math.random() * 3;
+            barra.style.width = progresoSimbolico + "%";
+          }
+          barraTimeout = setTimeout(avanzarBarra, 1200);
+        }
+        avanzarBarra();
+
         function actualizarProgreso() {
-          fetch('/progress')
-            .then(res => res.json())
+          // OJO: volvemos al endpoint existente /progress?case_id=
+          fetch(`/progress?case_id=${caseId}`)
+            .then(r => r.json())
             .then(data => {
-              const progreso = data.progress;
-              console.log("📡 Progreso recibido:", progreso); // 👈 esto ayuda a verificar
-      
-              const barra = document.getElementById('barra-progreso');
-              const mensaje = document.getElementById('mensaje-progreso');
-      
-              barra.style.width = progreso + '%';
-      
-              if (progreso >= 100) {
-                mensaje.textContent = '✅ Procesamiento completado. Redirigiendo...';
-                setTimeout(() => {
-                  window.location.href = '/upload?processing_status=done';
-                }, 1500);
-              } else {
-                setTimeout(actualizarProgreso, 1000);
+              if (data.status === "error") {
+                detenerMonitoreo();
+
+                mensaje.textContent = "❌ Error durante el procesamiento.";
+                errorBox.textContent = data.error_message || "Ocurrió un problema.";
+                errorBox.classList.remove("hidden");
+
+                barra.style.width = "100%";
+                barra.classList.remove("bg-yellow-400", "bg-green-500");
+                barra.classList.add("bg-red-600");
+                return;
               }
+
+              if (["done","quoted","archived"].includes(data.status)) {
+                detenerMonitoreo();
+
+                barra.style.width = "100%";
+                barra.classList.remove("bg-yellow-400", "bg-red-600");
+                barra.classList.add("bg-green-500");
+
+                mensaje.textContent = "✔ Procesamiento completado.";
+                errorBox.classList.add("hidden");
+
+                localStorage.removeItem(storageKey);
+
+                setTimeout(() => {
+                  window.location.href = `/upload?selected_case_id=${caseId}&processing_status=done`;
+                }, 1200);
+                return;
+              }
+
+              // Estado intermedio: seguir monitoreando
+              progressTimeout = setTimeout(actualizarProgreso, 1000);
             })
-            .catch(err => {
-              console.error("Error al consultar progreso:", err);
-              setTimeout(actualizarProgreso, 2000); // reintenta tras error
+            .catch(() => {
+              // Reintento suave si hay error de red
+              progressTimeout = setTimeout(actualizarProgreso, 2000);
             });
         }
-      
-        window.addEventListener('load', () => {
-          actualizarProgreso();
-        });
+
+        actualizarProgreso();
       </script>
-      
-      {% elif processing_status == 'done' %}
-      <div class="mt-6">
-        <div class="text-sm font-medium text-white mb-2">Estado del procesamiento</div>
+
+      {% elif processing_status == 'done' and active_case %}
+      <div class="mt-4 bg-gray-800 p-4 rounded-lg shadow-md">
+        <div class="text-sm font-medium text-white mb-2">
+          Procesamiento finalizado para el caso #{{ active_case.id }}
+        </div>
         <div class="w-full bg-gray-700 rounded-full h-4">
           <div class="bg-green-500 h-4 rounded-full w-full"></div>
         </div>
         <p class="text-xs mt-2 text-gray-300">
-          ✅ Procesamiento completado. Puedes continuar con las búsquedas.
+          ✔ Los documentos están listos para consulta en el asistente del caso.
         </p>
       </div>
       {% endif %}
 
-      <!-- Botón buscar -->
-      <form action="/buscar" method="GET">
-        <button type="submit"
-                class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded transition mt-6">
-          Buscar
-        </button>
-      </form>
     </div>
 
-    <!-- Lista de archivos subidos -->
+    {# ================== COLUMNA DERECHA – LISTA DE ARCHIVOS ================== #}
     <div class="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
-
-      {% set active_case = cases_list | selectattr('id', 'equalto', selected_case_id) | list | first %}    
       <div class="flex flex-col mb-4">
         <h3 class="text-xl font-semibold text-white flex items-center gap-2">
-          📄 Documentos Cargados
-        </h3>    
+          📄 Documentos cargados del caso
+        </h3>
         {% if active_case %}
-        <p class="text-xl font-semibold text-white flex items-center gap-2">
-          Caso: <span class="font-semibold">{{ active_case.name }}</span>
+        <p class="text-sm text-gray-300">
+          Caso: <span class="font-semibold text-teal-300">#{{ active_case.id }} – {{ active_case.name }}</span>
         </p>
         {% endif %}
       </div>
-    
-          
+
       <hr class="border-gray-600 mb-4">
+
       {% if files %}
       <ul class="space-y-2">
         {% for file in files %}
         <li class="bg-gray-700 px-3 py-2 rounded text-gray-200 text-sm flex justify-between items-center">
           <span class="break-words w-4/5">{{ file }}</span>
-          <form method="POST" action="/delete-file" class="ml-2">
+          {# Volvemos a /delete-file (router existente) #}
+          <form method="POST"
+                action="/delete-file"
+                class="ml-2">
             <input type="hidden" name="filename" value="{{ file }}">
-
             <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
-
-
             <button type="submit"
                     class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
               Eliminar
@@ -173,7 +306,9 @@
         {% endfor %}
       </ul>
       {% else %}
-      <p class="text-sm text-gray-400">No se han subido archivos aún.</p>
+      <p class="text-sm text-gray-400">
+        No se han subido archivos aún para este caso.
+      </p>
       {% endif %}
     </div>
 

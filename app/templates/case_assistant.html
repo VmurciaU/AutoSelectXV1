@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+{% block title %}Asistente del caso - AutoSelect-X{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Encabezado del caso -->
+    <div class="bg-gray-800 rounded-lg p-5 shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-semibold">
+          Asistente del caso
+          {% if case %}
+            – {{ case.name or ("Caso #" ~ case.id) }}
+          {% endif %}
+        </h1>
+        <p class="text-sm text-gray-300 mt-1">
+          Chatea con los documentos procesados de este caso, extrae requisitos y prepara la cotización.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 text-sm">
+        {% if case %}
+          {# Mapear estados del case a badges visuales #}
+          {% set st = case.status|default("desconocido") %}
+          <span class="px-3 py-1 rounded-full text-xs font-medium
+                       {% if st in ['done','quoted','archived','ready_for_chat'] %}
+                         bg-emerald-500/20 text-emerald-300 border border-emerald-400/50
+                       {% elif st in ['processing','indexing','queued'] %}
+                         bg-yellow-500/10 text-yellow-300 border border-yellow-400/40
+                       {% elif st == 'error' %}
+                         bg-red-500/10 text-red-300 border border-red-400/50
+                       {% else %}
+                         bg-gray-700 text-gray-200 border border-gray-500/50
+                       {% endif %}">
+            Estado: {{ st }}
+          </span>
+        {% endif %}
+
+        {% if pipeline_summary %}
+          <span class="px-3 py-1 rounded-full text-xs bg-gray-700 border border-gray-600 text-gray-200">
+            PC1–PC6: {{ pipeline_summary }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Layout principal: Chat + Banner lateral -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Columna de Chat (2/3 en pantallas grandes) -->
+      <div class="lg:col-span-2 bg-gray-800 rounded-lg shadow flex flex-col h-[75vh]">
+        <!-- Header del chat -->
+        <div class="border-b border-gray-700 px-5 py-3 flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-semibold">Chat técnico del caso</h2>
+            <p class="text-xs text-gray-300">
+              Haz preguntas sobre HD, MR, ET, P&ID y, más adelante, pide la extracción de requisitos.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-300">
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-700 border border-gray-600">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              RAG listo (modo demo)
+            </span>
+          </div>
+        </div>
+
+        <!-- Área de mensajes con scroll -->
+        <div id="chat-messages"
+             class="flex-1 px-5 py-4 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+          {% if chat_messages and chat_messages|length > 0 %}
+            {% for msg in chat_messages %}
+              {% set is_user = (msg.role == 'user') %}
+              <div class="flex {% if is_user %}justify-end{% else %}justify-start{% endif %}">
+                <div class="max-w-[80%]">
+                  <div class="text-xs mb-1 text-gray-400 flex items-center gap-1
+                              {% if is_user %}justify-end{% else %}justify-start{% endif %}">
+                    {% if is_user %}
+                      <span>Usuario</span>
+                    {% else %}
+                      <span>Asistente</span>
+                    {% endif %}
+                    <span>•</span>
+                    <span>{{ msg.timestamp|default("") }}</span>
+                  </div>
+
+                  <div class="rounded-2xl px-4 py-3 text-sm leading-relaxed
+                              {% if is_user %}
+                                bg-blue-600 text-white rounded-br-none
+                              {% else %}
+                                bg-gray-700 text-gray-100 rounded-bl-none
+                              {% endif %}">
+                    {{ msg.content|safe }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <!-- Mensaje inicial cuando no hay historial (fallback) -->
+            <div class="text-center text-sm text-gray-400 mt-10 space-y-2">
+              <p>⚙️ El asistente está listo para trabajar con los documentos de este caso (modo demo).</p>
+              <p>Empieza con algo como:</p>
+              <p class="italic text-gray-300">
+                “Resume los requisitos principales de caudal y presión que aparecen en la Hoja de Datos.”
+              </p>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Área de input -->
+        <div class="border-t border-gray-700 px-5 py-3">
+          <form method="post" class="space-y-2">
+            <!-- Historial serializado -->
+            {% if chat_history_serialized %}
+              <input type="hidden" name="history" value="{{ chat_history_serialized }}">
+            {% endif %}
+
+            <label for="user_message" class="sr-only">Mensaje</label>
+            <textarea
+              id="user_message"
+              name="user_message"
+              rows="2"
+              class="w-full rounded-xl bg-gray-900 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm text-gray-100 px-3 py-2 resize-none"
+              placeholder="Escribe tu pregunta o pide: 'Extrae los requisitos para la bomba principal de inyección'..."></textarea>
+
+            <div class="flex items-center justify-between gap-3 text-xs text-gray-400">
+              <div class="flex flex-wrap items-center gap-2">
+                <span>Comandos sugeridos:</span>
+                <span class="px-2 py-1 rounded-full bg-gray-700 border border-gray-600">
+                  @extraer_requisitos_item_1
+                </span>
+                <span class="px-2 py-1 rounded-full bg-gray-700 border border-gray-600">
+                  @resumen_hd
+                </span>
+              </div>
+
+              <button
+                type="submit"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition">
+                <span>Enviar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Columna de Banner lateral (1/3) -->
+      <div class="bg-gray-800 rounded-lg shadow p-4 flex flex-col gap-3 h-[75vh]">
+        <h2 class="text-sm font-semibold mb-1">Panel de cotización del caso</h2>
+
+        <div class="flex-1 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+
+          <!-- Sección: Requisitos técnicos -->
+          <details class="bg-gray-900 rounded-lg border border-gray-700" open>
+            <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <span>Requisitos técnicos (Items)</span>
+              <span class="text-gray-400 text-[11px]">
+                {% if requirements and requirements|length > 0 %}
+                  {{ requirements|length }} items
+                {% else %}
+                  sin definir
+                {% endif %}
+              </span>
+            </summary>
+            <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+              {% if requirements and requirements|length > 0 %}
+                {% for item in requirements %}
+                  <div class="bg-gray-800 rounded-md border border-gray-700 p-2 space-y-1">
+                    <div class="flex justify-between items-center">
+                      <span class="font-semibold">Item {{ loop.index }} – {{ item.tag or "Sin tag" }}</span>
+                      <span class="text-[10px] text-gray-400">
+                        {{ item.estado|default("borrador") }}
+                      </span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-2 gap-y-1">
+                      <span>Q: {{ item.caudal|default("—") }}</span>
+                      <span>P: {{ item.presion|default("—") }}</span>
+                      <span>Fluido: {{ item.fluido|default("—") }}</span>
+                      <span>Visc.: {{ item.viscosidad|default("—") }}</span>
+                      <span>Mats.: {{ item.materiales|default("—") }}</span>
+                      <span>Bombas: {{ item.cantidad_bombas|default("—") }}</span>
+                    </div>
+                    {% if item.notas %}
+                      <p class="mt-1 text-[11px] text-gray-400">Notas: {{ item.notas }}</p>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p class="text-[11px] text-gray-400">
+                  Aún no hay requisitos técnicos. Usa el chat para extraerlos (por ejemplo, con
+                  <span class="font-mono">@extraer_requisitos_item_1</span>) y luego los enviaremos aquí.
+                </p>
+              {% endif %}
+            </div>
+          </details>
+
+          <!-- Sección: Ítems de bombas seleccionadas -->
+          <details class="bg-gray-900 rounded-lg border border-gray-700">
+            <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <span>Ítems de bomba seleccionados</span>
+              <span class="text-gray-400 text-[11px]">
+                {% if quote_items and quote_items|length > 0 %}
+                  {{ quote_items|length }} ítems
+                {% else %}
+                  ninguno
+                {% endif %}
+              </span>
+            </summary>
+            <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+              {% if quote_items and quote_items|length > 0 %}
+                {% for qi in quote_items %}
+                  <div class="bg-gray-800 rounded-md border border-gray-700 p-2 space-y-1">
+                    <div class="flex justify-between items-center">
+                      <span class="font-semibold">
+                        Item {{ loop.index }} – {{ qi.product_code or "P/N" }}
+                      </span>
+                      <span class="text-[10px] text-gray-400">
+                        Cant.: {{ qi.cantidad|default(1) }}
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-gray-300">
+                      {{ qi.descripcion|default("Descripción técnica/comercial de la bomba seleccionada.") }}
+                    </p>
+                    {% if qi.precio_unitario %}
+                      <p class="text-[11px] text-gray-400">
+                        Precio unitario: {{ qi.precio_unitario }}
+                      </p>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p class="text-[11px] text-gray-400">
+                  Cuando selecciones una bomba para cada Item, aparecerán aquí como ítems de cotización.
+                </p>
+              {% endif %}
+              <div class="mt-2">
+                <button type="button"
+                        class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+                  Buscar bomba para un Item
+                </button>
+              </div>
+            </div>
+          </details>
+
+          <!-- Sección: Cliente -->
+          <details class="bg-gray-900 rounded-lg border border-gray-700">
+            <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <span>Cliente</span>
+              <span class="text-gray-400 text-[11px]">
+                {% if selected_client %}
+                  {{ selected_client.nombre }}
+                {% else %}
+                  sin asignar
+                {% endif %}
+              </span>
+            </summary>
+            <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+              {% if selected_client %}
+                <p class="text-[11px] text-gray-300">
+                  {{ selected_client.nombre }}<br>
+                  {{ selected_client.ciudad|default("") }}
+                </p>
+              {% else %}
+                <p class="text-[11px] text-gray-400">
+                  Asigna un cliente para esta cotización.
+                </p>
+              {% endif %}
+              <button type="button"
+                      class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+                Seleccionar / crear cliente
+              </button>
+            </div>
+          </details>
+
+          <!-- Sección: Términos -->
+          <details class="bg-gray-900 rounded-lg border border-gray-700">
+            <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <span>Términos comerciales</span>
+              <span class="text-gray-400 text-[11px]">
+                {% if selected_terms %}
+                  {{ selected_terms.nombre }}
+                {% else %}
+                  estándar
+                {% endif %}
+              </span>
+            </summary>
+            <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+              {% if selected_terms %}
+                <p class="text-[11px] text-gray-300 whitespace-pre-line">
+                  {{ selected_terms.texto }}
+                </p>
+              {% else %}
+                <p class="text-[11px] text-gray-400">
+                  Se usarán términos estándar hasta que selecciones una plantilla específica.
+                </p>
+              {% endif %}
+              <button type="button"
+                      class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+                Seleccionar / editar términos
+              </button>
+            </div>
+          </details>
+
+          <!-- Sección: Notas -->
+          <details class="bg-gray-900 rounded-lg border border-gray-700">
+            <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <span>Notas de la cotización</span>
+            </summary>
+            <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+              <textarea
+                name="quote_notes"
+                rows="3"
+                class="w-full rounded-md bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-[11px] text-gray-100 px-2 py-1.5 resize-none"
+                placeholder="Notas técnicas o comerciales relevantes para esta oferta.">{{ quote_notes|default("") }}</textarea>
+            </div>
+          </details>
+
+        </div>
+
+        <!-- Botones finales de cotización -->
+        <div class="pt-2 border-t border-gray-700 flex flex-col gap-2">
+          <button type="button"
+                  class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-gray-700 hover:bg-gray-600 border border-gray-500">
+            Ver preview de cotización
+          </button>
+          <button type="button"
+                  class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500">
+            Guardar cotización
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

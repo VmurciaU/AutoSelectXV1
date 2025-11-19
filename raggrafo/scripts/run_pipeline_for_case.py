@@ -8,20 +8,80 @@ import argparse
 import subprocess
 import sys
 import json
+import os
 
 from raggrafo.pipelines.raggrafo_case_runner import run_raggrafo_for_case
 from raggrafo.pipelines import pc3_hd_pipeline
 
+# Intentamos importar el cliente nuevo de OpenAI
+try:
+    from openai import OpenAI
+    from openai import AuthenticationError as OpenAIAuthError
+except Exception:  # si no está instalado, dejamos marcadores nulos
+    OpenAI = None
+    OpenAIAuthError = Exception
 
 # Raíces
 ROOT = Path(__file__).resolve().parents[1]      # .../raggrafo
-PROJECT_ROOT = ROOT.parent                      # raíz del repo AutoSelectX
+PROJECT_ROOT = ROOT.parent                      # raíz del repo AutoSelectXV1
 
 
 def _run(cmd: list[str]) -> None:
-    """Wrapper pequeño para ejecutar comandos y mostrar lo que se corre."""
+    """
+    Wrapper pequeño para ejecutar comandos y mostrar lo que se corre.
+    Levanta CalledProcessError si el proceso hijo sale con código != 0.
+    """
     print(f"[CMD] {' '.join(cmd)}")
     subprocess.run(cmd, check=True)
+
+
+def _check_embeddings_key() -> None:
+    """
+    Verifica que la API key de embeddings de OpenAI sea válida ANTES de PC7.
+    Si hay error de autenticación (401) -> se lanza excepción y este script
+    terminará con exit code 1, que es lo que necesita el backend.
+    """
+    binding = os.getenv("LIGHTRAG_EMBEDDING_BINDING", "openai").lower()
+    if binding != "openai":
+        # Para otros bindings (local, ollama, etc.) no hacemos chequeo.
+        print(f"[PC7] LIGHTRAG_EMBEDDING_BINDING={binding}, no se valida OpenAI.", file=sys.stderr)
+        return
+
+    if OpenAI is None:
+        # No está instalado el cliente nuevo; no podemos validar aquí.
+        print("[PC7] Cliente OpenAI no disponible; no se pudo validar la API key.", file=sys.stderr)
+        return
+
+    # Modelo de embeddings a validar
+    model = (
+        os.getenv("EMBEDDING_MODEL")
+        or os.getenv("LIGHTRAG_EMBEDDING_MODEL")
+        or "text-embedding-3-large"
+    )
+
+    print(f"[PC7] Validando API key de OpenAI embeddings con modelo '{model}'...")
+
+    client = OpenAI()
+
+    try:
+        # Llamada mínima para validar la key
+        client.embeddings.create(
+            model=model,
+            input="ping-autoselectx-check",
+        )
+        print("[PC7] ✅ API key de OpenAI válida para embeddings.")
+    except OpenAIAuthError as e:
+        # Error típico 401: invalid_api_key
+        print(
+            "[PC7] ❌ Error de autenticación con OpenAI embeddings "
+            "(revisa OPENAI_API_KEY / EMBEDDING_MODEL).",
+            file=sys.stderr,
+        )
+        raise
+    except Exception as e:
+        # Cualquier otro error también lo consideramos fatal para el pipeline
+        print(f"[PC7] ❌ Error al validar embeddings: {e}", file=sys.stderr)
+        raise
 
 
 def run_pc1_to_pc5_for_case(case_id: int):
@@ -67,7 +127,6 @@ def run_pc1_to_pc5_for_case(case_id: int):
     py = sys.executable  # python del venv actual
 
     # === PC1 ===
-    #OJO: aquí dejamos los flags tal como ya te funciona (--input-dir / --out-dir)
     _run([
         py, "-m", "raggrafo.pipelines.pc1_read_pdfs",
         "--input-dir", str(input_dir),
@@ -75,7 +134,6 @@ def run_pc1_to_pc5_for_case(case_id: int):
     ])
 
     # === PC2 ===
-    # pc2_clean_layout.py espera: --pc1 y --out (no --pc1-dir / --out-dir)
     _run([
         py, "-m", "raggrafo.pipelines.pc2_clean_layout",
         "--pc1", str(pc1_dir),
@@ -83,8 +141,6 @@ def run_pc1_to_pc5_for_case(case_id: int):
     ])
 
     # === PC3 ===
-    # En lugar de llamar por CLI a pc3_text_tables_pipeline (no tiene main),
-    # usamos directamente pc3_hd_pipeline.run_pipeline() por cada documento
     index_path = pc1_dir / "index.json"
     if not index_path.exists():
         raise FileNotFoundError(
@@ -121,7 +177,6 @@ def run_pc1_to_pc5_for_case(case_id: int):
     print("[CASE PIPELINE] ✅ PC3 completado.")
 
     # === PC4 ===
-    # pc4_consolidate.py usa: --pc3-dir y --outdir (no --out-dir)
     _run([
         py, "-m", "raggrafo.pipelines.pc4_consolidate",
         "--pc3-dir", str(pc3_dir),
@@ -129,7 +184,6 @@ def run_pc1_to_pc5_for_case(case_id: int):
     ])
 
     # === PC5 ===
-    # pc5_graph_build.py usa: --pc4-dir y --outdir (no --out-dir)
     _run([
         py, "-m", "raggrafo.pipelines.pc5_graph_build",
         "--pc4-dir", str(pc4_dir),
@@ -149,40 +203,54 @@ def main():
         "--case-id",
         type=int,
         required=True,
-        help="ID del caso (ej. 14)."
+        help="ID del caso (ej. 14).",
     )
     parser.add_argument(
         "--use-core",
         action="store_true",
-        help="Usar LightRAG Core en PC7."
+        help="Usar LightRAG Core en PC7.",
     )
 
     args = parser.parse_args()
     case_id = args.case_id
 
-    # Ejecutar PC1–PC5
-    pc2_dir, pc4_dir, pc5_dir = run_pc1_to_pc5_for_case(case_id)
+    try:
+        # 1) PC1–PC5
+        pc2_dir, pc4_dir, pc5_dir = run_pc1_to_pc5_for_case(case_id)
 
-    print("[CASE PIPELINE] ▶️ Ejecutando PC7 (RAG + KG)...")
+        # 2) Validar API key de OpenAI antes de levantar LightRAG Core
+        _check_embeddings_key()
 
-    corpus_jsonl, corpus_json, kg_jsonl, kg_json = run_raggrafo_for_case(
-        case_id=case_id,
-        pc2_dir=pc2_dir,
-        pc4_dir=pc4_dir,
-        pc5_dir=pc5_dir,
-        use_core=args.use_core,
-        api_url=None,
-        api_key=None,
-        push_kg_api=False,
-    )
+        # 3) PC7 – RAG + KG
+        print("[CASE PIPELINE] ▶️ Ejecutando PC7 (RAG + KG)...")
 
-    print("==============================================================")
-    print(f"[CASE PIPELINE] ✅ RAG listo para el caso {case_id}")
-    print(f" corpus_jsonl : {corpus_jsonl}")
-    print(f" corpus_json  : {corpus_json}")
-    print(f" kg_jsonl     : {kg_jsonl}")
-    print(f" kg_json      : {kg_json}")
-    print("==============================================================")
+        corpus_jsonl, corpus_json, kg_jsonl, kg_json = run_raggrafo_for_case(
+            case_id=case_id,
+            pc2_dir=pc2_dir,
+            pc4_dir=pc4_dir,
+            pc5_dir=pc5_dir,
+            use_core=args.use_core,
+            api_url=None,
+            api_key=None,
+            push_kg_api=False,
+        )
+
+        print("==============================================================")
+        print(f"[CASE PIPELINE] ✅ RAG listo para el caso {case_id}")
+        print(f" corpus_jsonl : {corpus_jsonl}")
+        print(f" corpus_json  : {corpus_json}")
+        print(f" kg_jsonl     : {kg_jsonl}")
+        print(f" kg_json      : {kg_json}")
+        print("==============================================================")
+
+    except Exception as e:
+        # Cualquier error (PC1–PC7 o _check_embeddings_key) hace que
+        # este script termine con exit code 1.
+        print(
+            f"[CASE PIPELINE] ❌ Error general en case_id={case_id}: {e}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

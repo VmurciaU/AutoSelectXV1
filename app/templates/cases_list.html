@@ -2,15 +2,16 @@
 {% block title %}Casos - AutoSelect-X{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-900 text-white px-6">
+<div class="min-h-screen bg-gray-900 text-white pt-24 px-6">
 
   <div class="max-w-6xl mx-auto space-y-6">
 
     <!-- Header + Crear -->
     <div class="bg-gray-800 rounded-lg p-5 shadow">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 class="text-xl font-semibold text-teal-300">Mis Casos</h2>
-        <form method="POST" action="/cases/new" class="flex gap-2">
+
+        <form method="POST" action="/cases/new" class="flex flex-wrap gap-2">
           <input
             type="text" name="name" placeholder="Nombre del caso"
             class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none"
@@ -24,40 +25,40 @@
             + Crear caso
           </button>
         </form>
-        </div>
-        </div>
-        
-        <!-- Filtros -->
-        <div class="bg-gray-800 rounded-lg p-4 shadow flex flex-wrap gap-4 items-end">
-          <form method="GET" action="/cases" class="flex flex-wrap gap-4 items-end">
-        
-            <div class="flex flex-col">
-              <label class="text-sm text-gray-300">ID del caso</label>
-              <input type="number" name="q_id" value="{{ q_id or '' }}" placeholder="Ej: 12"
-                class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-32">
-            </div>
-        
-            <div class="flex flex-col">
-              <label class="text-sm text-gray-300">Nombre contiene</label>
-              <input type="text" name="q_name" value="{{ q_name or '' }}" placeholder="Buscar por nombre"
-                class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-48">
-            </div>
-        
-            <div class="flex flex-col">
-              <label class="text-sm text-gray-300">Notas contienen</label>
-              <input type="text" name="q_notes" value="{{ q_notes or '' }}" placeholder="Buscar por notas"
-                class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-48">
-            </div>
-            <button type="submit" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm">
-              Buscar
-            </button>
-            <a href="/cases" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm">
-              Limpiar
-            </a>
+      </div>
+    </div>
 
-          </form>
+    <!-- Filtros -->
+    <div class="bg-gray-800 rounded-lg p-4 shadow flex flex-wrap gap-4 items-end">
+      <form method="GET" action="/cases" class="flex flex-wrap gap-4 items-end">
+
+        <div class="flex flex-col">
+          <label class="text-sm text-gray-300">ID del caso</label>
+          <input type="number" name="q_id" value="{{ q_id or '' }}" placeholder="Ej: 12"
+                 class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-32">
         </div>
 
+        <div class="flex flex-col">
+          <label class="text-sm text-gray-300">Nombre contiene</label>
+          <input type="text" name="q_name" value="{{ q_name or '' }}" placeholder="Buscar por nombre"
+                 class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-48">
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm text-gray-300">Notas contienen</label>
+          <input type="text" name="q_notes" value="{{ q_notes or '' }}" placeholder="Buscar por notas"
+                 class="bg-gray-700 border border-gray-600 rounded px-3 py-1 text-sm text-white w-48">
+        </div>
+
+        <button type="submit" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm">
+          Buscar
+        </button>
+        <a href="/cases" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm">
+          Limpiar
+        </a>
+
+      </form>
+    </div>
 
     <!-- Tabla -->
     <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
@@ -123,8 +124,14 @@
                 <div class="flex flex-wrap gap-2">
                   <a href="/cases/{{ r.id }}/view"
                      class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
+
                   <a href="/cases/{{ r.id }}/upload"
                      class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
+
+                  <a href="/cases/{{ r.id }}/assistant"
+                     class="bg-teal-600 hover:bg-teal-700 px-3 py-1 rounded text-xs">
+                    Asistente
+                  </a>
 
                   {% if r.can_edit %}
                     <a href="/cases/{{ r.id }}/edit"
@@ -136,7 +143,8 @@
                   {% endif %}
 
                   {% if r.can_delete %}
-                    <form method="post" action="/cases/{{ r.id }}/delete" onsubmit="return confirm('¿Eliminar este caso?');">
+                    <form method="post" action="/cases/{{ r.id }}/delete"
+                          onsubmit="return confirm('¿Eliminar este caso?');">
                       <button class="bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded text-xs">Eliminar</button>
                     </form>
                   {% else %}
@@ -174,11 +182,17 @@
                 {% endif %}
               </td>
               <td class="px-4 py-2">
-                <div class="flex gap-2">
+                <div class="flex flex-wrap gap-2">
                   <a href="/cases/{{ c.id }}/view"
                      class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-xs">Detalle</a>
+
                   <a href="/cases/{{ c.id }}/upload"
                      class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">Abrir Carga</a>
+
+                  <a href="/cases/{{ c.id }}/assistant"
+                     class="bg-teal-600 hover:bg-teal-700 px-3 py-1 rounded text-xs">
+                    Asistente
+                  </a>
                 </div>
               </td>
             </tr>
@@ -186,44 +200,46 @@
 
           {% else %}
             <tr>
-              <td colspan="7" class="px-4 py-6 text-center text-gray-300">
+              <td colspan="{{ 7 if user_rol == 'admin' else 6 }}"
+                  class="px-4 py-6 text-center text-gray-300">
                 No tienes casos aún. Crea el primero con el botón <em>+ Crear caso</em>.
               </td>
             </tr>
           {% endif %}
         </tbody>
       </table>
-      </div>
-      
-      <!-- Navegación de páginas -->
-      <div class="bg-gray-800 rounded-lg shadow p-4 flex items-center justify-center gap-4">
-      
-        {% if has_prev %}
-        <a href="/cases?page={{ page - 1 }}" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">
-          ← Anterior
-        </a>
-        {% else %}
-        <span class="px-3 py-1 bg-gray-700 rounded text-sm opacity-40 cursor-not-allowed">
-          ← Anterior
-        </span>
-        {% endif %}
-      
-        <span class="text-gray-300 text-sm">
-          Página <strong>{{ page }}</strong> de <strong>{{ total_pages }}</strong>
-        </span>
-      
-        {% if has_next %}
-        <a href="/cases?page={{ page + 1 }}" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">
-          Siguiente →
-        </a>
-        {% else %}
-        <span class="px-3 py-1 bg-gray-700 rounded text-sm opacity-40 cursor-not-allowed">
-          Siguiente →
-        </span>
-        {% endif %}
-      
-      </div>
+    </div>
 
+    <!-- Navegación de páginas -->
+    <div class="bg-gray-800 rounded-lg shadow p-4 flex items-center justify-center gap-4">
+
+      {% if has_prev %}
+        <a href="/cases?page={{ page - 1 }}"
+           class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+          ← Anterior
+        </a>
+      {% else %}
+        <span class="px-3 py-1 bg-gray-700 rounded text-sm opacity-40 cursor-not-allowed">
+          ← Anterior
+        </span>
+      {% endif %}
+
+      <span class="text-gray-300 text-sm">
+        Página <strong>{{ page }}</strong> de <strong>{{ total_pages }}</strong>
+      </span>
+
+      {% if has_next %}
+        <a href="/cases?page={{ page + 1 }}"
+           class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+          Siguiente →
+        </a>
+      {% else %}
+        <span class="px-3 py-1 bg-gray-700 rounded text-sm opacity-40 cursor-not-allowed">
+          Siguiente →
+        </span>
+      {% endif %}
+
+    </div>
 
   </div>
 </div>
