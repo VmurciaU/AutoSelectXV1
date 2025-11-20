@@ -74,18 +74,15 @@ def decode_history(encoded: str | None) -> list[dict]:
 def build_initial_history() -> list[dict]:
     """
     Mensaje inicial del asistente cuando se abre el chat por primera vez.
-    Solo para modo demo; luego se puede reemplazar por un 'resumen del caso'
-    proveniente del grafo / pipeline PC1–PC7.
     """
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     return [
         {
             "role": "assistant",
             "content": (
-                "🧪 Modo demo del asistente de AutoSelect-X.\n\n"
-                "Aún no estoy conectado al grafo ni al pipeline PC1–PC7 para este caso, "
-                "pero ya puedes validar el flujo del chat, el banner y la UI.\n\n"
-                "Empieza con algo como:\n"
+                "🧪 Asistente técnico de AutoSelect-X.\n\n"
+                "El motor RAG del caso ya puede responder preguntas basadas en los documentos "
+                "procesados (pipeline PC1–PC7). Escribe, por ejemplo:\n"
                 "«Resume los requisitos principales de caudal y presión que aparecen en la Hoja de Datos»."
             ),
             "timestamp": now_str,
@@ -172,7 +169,7 @@ def post_case_assistant(
     """
     Recibe el mensaje del usuario, reconstruye el historial
     desde el hidden, agrega el mensaje del usuario y trata
-    de consultar el RAG del caso. Si falla, sigue en modo demo.
+    de consultar el RAG del caso.
     """
     case = (
         db.query(Case)
@@ -202,29 +199,39 @@ def post_case_assistant(
 
     # Intentar respuesta vía RAG del caso
     try:
+        # OJO: usamos mode="core" porque así validaste el pipeline manualmente:
+        # python -m raggrafo.pipelines.rag_case_query --case-id 14 --mode core --question "PREGUNTA" --raw
         rag_result = query_case_rag(
             case_id=case.id,
             question=clean_user_msg,
-            mode="hybrid",
+            mode="core",
             top_k=6,
         )
         rag_answer = (rag_result.get("answer") or "").strip()
+        rag_raw = rag_result.get("raw") or {}
 
         if rag_answer:
             assistant_text = rag_answer
         else:
-            # RAG respondió vacío o None -> mensaje de fallback
-            assistant_text = (
-                "⚠️ Ocurrió un problema al obtener la respuesta del asistente técnico "
-                "de este caso (respuesta vacía del motor RAG). "
-                "Por ahora sigo en modo demo."
-            )
+            rag_error = ""
+            if isinstance(rag_raw, dict):
+                rag_error = rag_raw.get("error", "")
+
+            if rag_error:
+                assistant_text = (
+                    "⚠️ Ocurrió un problema al obtener la respuesta del asistente técnico "
+                    "de este caso (el motor RAG devolvió una respuesta vacía).\n\n"
+                    f"Detalle técnico (RAG): {rag_error}"
+                )
+            else:
+                assistant_text = (
+                    "⚠️ El motor RAG del caso no devolvió contenido útil para esta pregunta. "
+                    "Revisa que el pipeline se haya ejecutado correctamente con '--use-core'."
+                )
 
     except Exception as e:
-        # Cualquier error en LightRAG / OpenAI -> mensaje claro en el chat
         assistant_text = (
-            "⚠️ Ocurrió un error al consultar el asistente técnico del caso. "
-            "Por ahora sigo en modo demo.\n\n"
+            "⚠️ Ocurrió un error al consultar el asistente técnico del caso.\n\n"
             f"Detalle técnico: {type(e).__name__}: {e}"
         )
 
