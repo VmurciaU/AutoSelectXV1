@@ -1,304 +1,156 @@
-#!/usr/bin/env python3
+# raggrafo/scripts/benchmark_queries_v5.py
 # -*- coding: utf-8 -*-
 """
-Benchmark RAG local por modos (v4 corregido), usando:
+Benchmark Queries v5 – AutoSelect-X
+Versión final compatible con:
+ - rag_case_query_finetune.py
+ - rag_config.py (modes + extract-list)
+ - pc6_lightrag.py (local)
 
-    python -m raggrafo.pipelines.rag_case_query --case-id N --mode M --question "..." --raw
-
-Este script:
-- NO usa servidor HTTP.
-- Usa el pipeline local que ya tienes (PC1–PC6).
-- Añade un modo lógico "combo" que fusiona naive + mix para cada pregunta.
-- Eliminado completamente el argumento --style (tu pipeline no lo soporta).
-
-Uso recomendado:
-
-  python raggrafo/scripts/benchmark_queries_v4.py \
-      --case-id 18 \
-      --modes naive mix combo \
-      --wrap 110
-
-Genera:
-- benchmark_v4_YYYYMMDD_HHMMSS.json
-- benchmark_v4_YYYYMMDD_HHMMSS.md
+Ejemplo:
+    python -m raggrafo.scripts.benchmark_queries_v5 --case-id 18
 """
 
-import argparse
-import json
-import subprocess
+import os
 import sys
+import json
 import time
-import textwrap
-from dataclasses import dataclass, asdict
-from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple, Any, Optional
+import argparse
+import asyncio
+
+from raggrafo.pipelines.rag_case_query_finetune import run_case_query_finetune
+
+# -----------------------------------------------------------
+# Utilidades
+# -----------------------------------------------------------
+
+def now_ts():
+    return time.strftime("%Y%m%d_%H%M%S")
 
 
-# === Preguntas del benchmark ===
+def ensure_project_root() -> Path:
+    """
+    Ubica el root del proyecto (carpeta de AutoSelectX).
+    """
+    p = Path(__file__).resolve()
+    for _ in range(6):
+        if (p / "raggrafo").exists():
+            return p
+        p = p.parent
+    return Path.cwd()
 
-QUESTIONS: List[Tuple[str, str]] = [
-    ("Q1", "¿Cuál es el caudal nominal, la presión de trabajo, la viscosidad de diseño y el turndown de las bombas dosificadoras del paquete, indicando sus TAG?"),
-    ("Q2", "¿Qué pruebas FAT, de desempeño e inspecciones de acuerdo con API 675 y la especificación técnica son solicitadas para las bombas dosificadoras y sus TAG?"),
-    ("Q3", "¿Cuántas bombas dosificadoras, tanques de almacenamiento tipo IBC y boquillas de inyección debe incluir el paquete de inyección de químicos, y cuál es la configuración duty/spare requerida?"),
-#    ("Q4", "¿Qué materiales se especifican para las partes mojadas de las bombas (cabezal hidráulico, válvulas, elemento dosificador, tuberías y skid) en el paquete de inyección de químicos?"),
-#    ("Q5", "¿Cuáles son las condiciones ambientales de diseño (temperatura, humedad, altitud, velocidad del viento) y la clasificación de área eléctrica donde operará el paquete de inyección de químicos?"),
-#    ("Q6", "¿Qué normas, estándares y códigos aplican al diseño, materiales, pruebas y seguridad del paquete de inyección de químicos y de las bombas dosificadoras (por ejemplo API 675, ASME, RETIE, NTC 2050)?"),
+
+# -----------------------------------------------------------
+# Preguntas de benchmark
+# -----------------------------------------------------------
+
+QUESTIONS = [
+    "¿Cuál es el caudal nominal, la presión de trabajo, la viscosidad de diseño y el turndown de las bombas dosificadoras del paquete, indicando sus TAG?",
+    "¿Qué pruebas FAT, de desempeño e inspecciones de acuerdo con API 675 y la especificación técnica son solicitadas para las bombas dosificadoras y sus TAG?",
+    "¿Cuántas bombas dosificadoras, tanques de almacenamiento tipo IBC y boquillas de inyección debe incluir el paquete, y cuál es la configuración duty/spare requerida?"
+]
+
+MODES = [
+    "naive",
+    "engineering",
+    "verify",
+    "extract",
+    "extract-list",
+    "combo",
+    "mix",
+    "mix-v2",
 ]
 
 
-# === Dataclasses ===
+# -----------------------------------------------------------
+# Ejecución del benchmark
+# -----------------------------------------------------------
 
-@dataclass
-class ModeResult:
-    mode: str
-    elapsed: float
-    answer: str
-    error: Optional[str] = None
+async def run_benchmark(case_id: int):
+    results = []
 
+    print(f"\n== RAG Local Benchmark v5 (FINETUNE) ==")
+    print(f"case-id: {case_id}\n")
 
-@dataclass
-class QuestionResult:
-    qid: str
-    question: str
-    modes: Dict[str, ModeResult]
+    for qi, q in enumerate(QUESTIONS, 1):
+        print(f"Q{qi}: {q}")
 
+        for mode in MODES:
+            print(f" Ejecutando [{mode}]...")
 
-# === Utilidades ===
+            t0 = time.time()
+            try:
+                r = await run_case_query_finetune(case_id, q, mode, list_mode=False)
+                dt = time.time() - t0
+                print(f"   [{mode:<12}] {dt:.2f}s")
 
-def detect_project_root() -> Path:
-    """Detecta raíz del proyecto suponiendo que este script está en raggrafo/scripts."""
-    return Path(__file__).resolve().parents[2]
+                results.append({
+                    "question_idx": qi,
+                    "question": q,
+                    "mode": mode,
+                    "time": dt,
+                    "result": r,
+                })
 
+            except Exception as e:
+                dt = time.time() - t0
+                print(f"   [{mode:<12}] ERROR after {dt:.2f}s: {e}")
+                results.append({
+                    "question_idx": qi,
+                    "question": q,
+                    "mode": mode,
+                    "time": dt,
+                    "error": str(e),
+                })
 
-def run_rag_query(
-    case_id: int,
-    mode: str,
-    question: str,
-    project_root: Optional[Path] = None,
-) -> ModeResult:
-    """
-    Ejecuta:
-        python -m raggrafo.pipelines.rag_case_query --case-id N --mode M --question "..." --raw
-    """
-    if project_root is None:
-        project_root = detect_project_root()
+        print("-" * 60)
 
-    cmd = [
-        sys.executable,
-        "-m", "raggrafo.pipelines.rag_case_query",
-        "--case-id", str(case_id),
-        "--mode", mode,
-        "--question", question,
-        "--raw",
-    ]
-
-    start = time.perf_counter()
-
-    try:
-        proc = subprocess.run(
-            cmd,
-            cwd=str(project_root),
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        elapsed = time.perf_counter() - start
-
-        if proc.returncode != 0:
-            return ModeResult(
-                mode=mode,
-                elapsed=elapsed,
-                answer=proc.stdout.strip(),
-                error=f"Error {proc.returncode}: {proc.stderr.strip()}",
-            )
-
-        return ModeResult(
-            mode=mode,
-            elapsed=elapsed,
-            answer=proc.stdout.strip(),
-        )
-
-    except Exception as exc:
-        elapsed = time.perf_counter() - start
-        return ModeResult(
-            mode=mode,
-            elapsed=elapsed,
-            answer="",
-            error=f"Excepción: {exc}",
-        )
+    return results
 
 
-def build_combo_answer(naive: ModeResult, mix: ModeResult) -> ModeResult:
-    """
-    Fusión textual simple naive + mix.
-    (Sin LLM adicional aún; versión de prueba.)
-    """
-    text = [
-        "**Respuesta base (modo naive)**",
-        "",
-        naive.answer or "(sin respuesta en modo naive)",
-        "",
-        "**Notas ampliadas (modo mix)**",
-        "",
-        mix.answer or "(sin respuesta en modo mix)",
-    ]
-    combined = "\n".join(text)
+# -----------------------------------------------------------
+# Guardado de outputs
+# -----------------------------------------------------------
 
-    error = None
-    if naive.error or mix.error:
-        parts = []
-        if naive.error:
-            parts.append(f"[naive] {naive.error}")
-        if mix.error:
-            parts.append(f"[mix] {mix.error}")
-        error = " | ".join(parts)
+def save_results(root: Path, results):
+    ts = now_ts()
+    out_json = f"benchmark_v5_{ts}.json"
+    out_md = f"benchmark_v5_{ts}.md"
 
-    return ModeResult(
-        mode="combo",
-        elapsed=max(naive.elapsed, mix.elapsed),
-        answer=combined,
-        error=error,
-    )
-
-
-def wrap_text(text: str, width: int) -> str:
-    """Envuelve texto para imprimir mejor en consola."""
-    if width <= 0:
-        return text
-
-    out = []
-    for line in text.splitlines():
-        if not line.strip():
-            out.append("")
-            continue
-        out.extend(
-            textwrap.fill(
-                line,
-                width=width,
-                subsequent_indent="  ",
-            ).splitlines()
-        )
-    return "\n".join(out)
-
-
-def save_results_json_md(results: List[QuestionResult], case_id: int, modes: List[str], project_root: Path):
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-    json_path = project_root / f"benchmark_v4_{ts}.json"
-    md_path   = project_root / f"benchmark_v4_{ts}.md"
-
-    # JSON
-    data = {
-        "case_id": case_id,
-        "timestamp": ts,
-        "modes": modes,
-        "questions": [],
-    }
-
-    for qr in results:
-        qd = {
-            "qid": qr.qid,
-            "question": qr.question,
-            "modes": {},
-        }
-        for mname, mr in qr.modes.items():
-            qd["modes"][mname] = asdict(mr)
-        data["questions"].append(qd)
-
-    json_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    with open(out_json, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
 
     # Markdown
-    lines = [
-        f"# Benchmark RAG v4 – case-id {case_id}\n",
-        f"- Fecha/hora: {ts}",
-        f"- Modos evaluados: {', '.join(modes)}\n",
-    ]
-
-    for qr in results:
-        lines.append(f"## {qr.qid} – {qr.question}\n")
-        for mname, mr in qr.modes.items():
-            lines.append(f"### [{mname}]  ({mr.elapsed:.2f}s)\n")
-            if mr.error:
-                lines.append(f"> ⚠️ Error: `{mr.error}`\n")
-            if mr.answer:
-                lines.append(mr.answer)
-                lines.append("")
-            lines.append("---\n")
-
-    md_path.write_text("\n".join(lines), encoding="utf-8")
-
-    return json_path, md_path
-
-
-# === MAIN ===
-
-def main(argv: Optional[List[str]] = None):
-    parser = argparse.ArgumentParser(description="Benchmark RAG local por modos (v4 corregido).")
-    parser.add_argument("--case-id", type=int, required=True)
-    parser.add_argument("--modes", nargs="+", default=["naive", "mix", "combo"])
-    parser.add_argument("--wrap", type=int, default=110)
-    args = parser.parse_args(argv)
-
-    project_root = detect_project_root()
-
-    print(f"Usando project_root: {project_root}")
-    print(f"case-id: {args.case_id}\n")
-    print("== RAG Local Benchmark v4 (corregido) ==\n")
-
-    results: List[QuestionResult] = []
-
-    for qid, question in QUESTIONS:
-        print(f"{qid}: {question}")
-        q_modes: Dict[str, ModeResult] = {}
-
-        # Ejecutar modos normales (naive / mix / etc.)
-        simple_modes = [m for m in args.modes if m != "combo"]
-
-        for mode in simple_modes:
-            mr = run_rag_query(args.case_id, mode, question, project_root)
-            q_modes[mode] = mr
-
-            print(f"[{mode:<6}] {mr.elapsed:.2f}s")
-            if mr.error:
-                print(f"  ⚠️ Error: {mr.error}")
-            if mr.answer:
-                print(wrap_text(mr.answer, args.wrap))
-            print("-" * 60 + "\n")
-
-        # Construir combo si fue solicitado
-        if "combo" in args.modes:
-            naive_res = q_modes.get("naive")
-            mix_res   = q_modes.get("mix")
-
-            if naive_res and mix_res:
-                combo_res = build_combo_answer(naive_res, mix_res)
+    with open(out_md, "w", encoding="utf-8") as f:
+        f.write("# Benchmark RAG – AutoSelect-X\n\n")
+        for item in results:
+            f.write(f"## Q{item['question_idx']} – {item['mode']}\n")
+            if "error" in item:
+                f.write(f"**ERROR:** {item['error']}\n\n")
             else:
-                combo_res = ModeResult(
-                    mode="combo",
-                    elapsed=0,
-                    answer="",
-                    error="No se pudo construir combo: falta naive o mix.",
-                )
+                f.write(f"**Tiempo:** {item['time']:.2f}s\n\n")
+                r = item["result"]
+                f.write("```\n")
+                f.write(json.dumps(r, ensure_ascii=False, indent=2))
+                f.write("\n```\n\n")
 
-            q_modes["combo"] = combo_res
+    print(f"\n💾 JSON guardado: {out_json}")
+    print(f"📝 Markdown guardado: {out_md}\n")
+    print("Sugerencia: less -R", out_md)
 
-            print(f"[combo ] {combo_res.elapsed:.2f}s")
-            if combo_res.error:
-                print(f"  ⚠️ Error: {combo_res.error}")
-            if combo_res.answer:
-                print(wrap_text(combo_res.answer, args.wrap))
-            print("-" * 60 + "\n")
 
-        results.append(QuestionResult(qid, question, q_modes))
-
-    json_path, md_path = save_results_json_md(results, args.case_id, args.modes, project_root)
-
-    print(f"💾 JSON guardado : {json_path.name}")
-    print(f"📝 Markdown guardado: {md_path.name}\n")
-    print("Sugerencia: less -R", md_path.name)
-    print()
-
+# -----------------------------------------------------------
+# MAIN
+# -----------------------------------------------------------
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--case-id", type=int, required=True)
+    args = ap.parse_args()
+
+    project_root = ensure_project_root()
+    print("Usando project_root:", project_root)
+
+    results = asyncio.run(run_benchmark(args.case_id))
+    save_results(project_root, results)
