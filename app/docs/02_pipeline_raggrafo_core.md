@@ -1,121 +1,171 @@
-# Pipeline PC1–PC7 + LightRAG Core (RAG Local por Caso)
+Pipeline PC1–PC7 + LightRAG Core (RAG Local por Caso)
+Documentación técnica – Proyecto AutoSelectX (Tesis 2025)
+1. Resumen Ejecutivo
 
-## Documentación técnica – Proyecto AutoSelectX (Tesis 2025)
+Este documento describe la arquitectura, funcionamiento y operación del pipeline técnico “Raggrafo Core”, que integra de manera completa:
 
-### 1. Resumen Ejecutivo
+Procesamiento de PDFs de ingeniería (HD, MR, ET, P&ID).
 
-Este documento describe la arquitectura, funcionamiento y operación del pipeline “Raggrafo Core”, que integra:
+Normalización, limpieza y estructuración (PC1–PC5).
 
-- Procesamiento estructurado de PDFs de ingeniería (HD, MR, ET).
-- Normalización y consolidación de información técnica por etapas PC1–PC5.
-- Construcción de un grafo técnico (entidades, relaciones, chunks).
-- Creación de un RAG local por caso, usando LightRAG Core (sin servidor web).
-- Consulta inteligente usando modos híbridos (Local + Global + Re-ranking) con modelos OpenAI.
+Construcción del grafo técnico por caso (entidades, relaciones, chunks).
 
-Este pipeline permite que cada `case_id` tenga su propio corpus, grafo, embeddings y almacenamiento independiente. Esto habilita escalabilidad por usuario/caso y permite auditoría técnica del conocimiento procesado.
+Creación automática del RAG local por case_id mediante LightRAG Core (sin servidor).
 
-### 2. Arquitectura General
+Consultas inteligentes usando diferentes modos del motor RAG.
 
-```
-PDFs (HD, MR, ET)
+Integración con modelos OpenAI (GPT-4o-mini) usando QueryParam optimizado.
+
+Benchmark técnico por caso (benchmark_queries_v5).
+
+Cada caso (case_id) mantiene su propio corpus independiente, su grafo, embeddings, caches y estructura.
+Esto garantiza aislamiento, reproducibilidad, trazabilidad y escalabilidad del proyecto AutoSelectX.
+
+2. Arquitectura General (Pipeline completo)
+PDFs (HD, MR, ET, P&ID)
         ↓
  PC1 – Lectura
  PC2 – Limpieza de Layout
- PC3 – Parsing (tablas, bloques, P&ID)
+ PC3 – Parsing (tablas, bloques, P&ID, texto)
  PC4 – Consolidación semántica
- PC5 – Grafo (nodes/edges/chunks)
+ PC5 – Construcción de grafo (entities / relations / chunks)
         ↓
-PC7 Core – LightRAG local por caso
+ PC6 – Inicialización LightRAG (almacenamiento por caso)
         ↓
-Consulta inteligente (rag_case_query)
-```
+ PC7 – LightRAG Core (RAG local)
+        ↓
+ rag_case_query (múltiples modos RAG)
+        ↓
+ Benchmark v5 (validación)
 
-### 3. Variables de Entorno Necesarias
-
-```
-export OPENAI_API_KEY="sk-proj-XXXXXXXX..."
+3. Variables de Entorno Requeridas
+export OPENAI_API_KEY="sk-proj-XXXXXXX"
 export LLM_MODEL=gpt-4o-mini
 export EMBEDDING_MODEL=text-embedding-3-small
-```
+export EMBEDDING_DIM=1536
+
 
 Opcionales:
 
-```
 export LIGHTRAG_LLM_BINDING=openai
 export LIGHTRAG_EMBEDDING_BINDING=openai
-export EMBEDDING_DIM=1536
-```
+export LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
+export NANO_VECTORDB_DIM=1536
 
-### 4. Flujo Completo Paso a Paso
+4. Ejecución completa del pipeline
+Procesamiento PC1–PC6 (por caso)
+python -m raggrafo.scripts.run_pipeline_for_case \
+    --case-id 14 \
+    --with-pc6
 
-```
-python -m raggrafo.scripts.run_pipeline_for_case --case-id 14 --use-core
-```
 
-### 5. Consultas al RAG
+Esto genera el rag_storage/case_<id> completo.
 
-```
-python -m raggrafo.pipelines.rag_case_query --case-id 14 --mode core --question "PREGUNTA" --raw
-```
+5. Consultas al RAG local
 
-### 6. Ejemplos (Case 14)
+Consulta directa por modo:
 
-#### Caudal nominal
-```
-P‑5540 → 2.0 gpd
-P‑5541 → 1.0 gpd
-P‑5542 → 0.51 gpd
-P‑5543 → 1.0 gpd
-P‑5544 → 3.0 gpd
-P‑5545 → 2.0 gpd
-```
+python -m raggrafo.pipelines.rag_case_query \
+    --case-id 14 \
+    --mode engineering \
+    --question "PREGUNTA"
 
-#### Turndown
-```
+
+Para ver la salida cruda:
+
+--raw
+
+6. Ejemplos (Case 14)
+Caudal nominal
+P-5540 → 2.0 gpd
+P-5541 → 1.0 gpd
+P-5542 → 0.51 gpd
+P-5543 → 1.0 gpd
+P-5544 → 3.0 gpd
+P-5545 → 2.0 gpd
+
+Turndown
 10:1 ±1% según API 675
-```
 
-#### Ensayo NDT
-Inspección No Destructiva — normas aplicables + ITP.
+Ensayo NDT
 
-### 7. Modos del RAG
+Inspección No Destructiva – normas, ITP, aceptación.
 
-| Modo | Origen | Descripción |
-|------|--------|-------------|
-| Naive | Texto | Respuestas simples |
-| Local | Grafo local | Vecindad inmediata |
-| Global | Grafo completo | Expansión total |
-| Hybrid | Local + Global | Modo más potente |
+7. Modos reales del RAG Local
 
-AutoSelectX usa:
-```
-QueryParam(mode="hybrid")
-```
+Estos son los modos implementados actualmente en AutoSelectX:
 
-### 8. Estructura generada por caso
+Modo	Estado	Descripción
+naive	✔ Funcional	Respuesta directa basada en chunks
+verify	✔ Funcional	Chequeo cruzado + coherencia
+engineering	⭐ Mejor respuesta	Explicación técnica completa
+mix	✔ Funcional	Fusión naive+engineering
+mix-v2	✔ Funcional	Fusión ponderada (pesos en rag_config)
+combo	✔ Funcional	Orquesta naive+engineering+verify
+extract	❌ Pendiente	Requiere template JSON
+extract-list	❌ Pendiente	Igual que extract, formato lista
 
-```
-rag_storage/case_14/
-    full_docs.jsonl
-    graph_chunk_entity_relation.graphml
-    vdb_entities.json
-    vdb_relationships.json
-    vdb_chunks.json
-    llm_response_cache.kv
-```
+ENGINEERING es el modo principal recomendado.
 
-### 9. Buenas Prácticas
+8. Estructura generada por caso
+rag_storage/
+ └── case_14/
+      full_docs.jsonl
+      text_chunks.jsonl
+      entity_chunks.jsonl
+      relation_chunks.jsonl
+      full_entities.jsonl
+      full_relations.jsonl
+      graph_chunk_entity_relation.graphml
+      vdb_entities.json
+      vdb_relationships.json
+      vdb_chunks.json
+      doc_status.json
+      llm_response_cache.kv
 
-- No mezclar casos
-- Documentar cada ejecución
-- Mantener consistencia en nombres de PDF
 
-### 10. Trabajo Futuro
+Cada directorio es autosuficiente.
 
-- Integración Chat Web AutoSelectX
-- Métricas de consulta
-- Expansión a normas API/ASME/EN
+9. Buenas prácticas
 
-### 11. Autor
+No mezclar PDFs entre casos.
+
+No reutilizar IDs de casos procesados previamente.
+
+Mantener trazabilidad del PDF original.
+
+Mantener consistencia en nombres (HD/MR/ET).
+
+Borrar caché solo si el pipeline lo requiere.
+
+Documentar versiones de modelos y embedding.
+
+10. Avances recientes añadidos (2025)
+
+✔ Pipeline PC1-PC6 revisado y estable
+✔ PC6 inicializa LightRAG local sin servidor
+✔ QueryParam extendido, ahora 100% compatible
+✔ Fusion mix-v2 estable
+✔ benchmark_queries_v5 funcionando
+✔ engineering = modo recomendado
+✔ extract y extract-list ya integrados en código
+❗ Pendiente: activar plantilla JSON para extract y extract-list
+
+11. Trabajo Futuro
+
+Implementar JSON schema definitivo para extract-list.
+
+Conectar rag_case_query al chat web del caso.
+
+Parametrizar lógica de selección automática de bombas.
+
+Integración total AI EngiQuote (selector, precios, reporte técnico).
+
+Métricas: tiempo por modo, aciertos, calidad de chunking.
+
+Ampliación para RETIE 2025, API 675 y ANSI/HI.
+
+12. Autor
 
 Victor Murcia – Proyecto AutoSelectX
+Maestría en Ingeniería de Sistemas y Computación – Universidad del Valle

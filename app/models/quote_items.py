@@ -22,7 +22,7 @@ class QuoteItem(Base):
     internal_note = Column(Text, nullable=True)
     customer_note = Column(Text, nullable=True)
 
-    metadata = Column(JSONB, nullable=True)
+    extra_metadata = Column(JSONB, nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)

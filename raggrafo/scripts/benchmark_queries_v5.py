@@ -38,8 +38,8 @@ from raggrafo.pipelines.rag_case_query_finetune import run_case_query_finetune
 
 QUESTIONS: List[Tuple[str, str]] = [
     ("Q1", "¿Cuál es el caudal nominal, la presión de trabajo, la viscosidad de diseño y el turndown de las bombas dosificadoras del paquete, indicando sus TAG?"),
-    ("Q2", "¿Qué pruebas FAT, de desempeño e inspecciones de acuerdo con API 675 y la especificación técnica son solicitadas para las bombas dosificadoras y sus TAG?"),
-    ("Q3", "¿Cuántas bombas dosificadoras, tanques de almacenamiento tipo IBC y boquillas de inyección debe incluir el paquete de inyección de químicos, y cuál es la configuración duty/spare requerida?"),
+    #("Q2", "¿Qué pruebas FAT, de desempeño e inspecciones de acuerdo con API 675 y la especificación técnica son solicitadas para las bombas dosificadoras y sus TAG?"),
+    #("Q3", "¿Cuántas bombas dosificadoras, tanques de almacenamiento tipo IBC y boquillas de inyección debe incluir el paquete de inyección de químicos, y cuál es la configuración duty/spare requerida?"),
 ]
 
 
@@ -179,14 +179,14 @@ def main(argv: Optional[List[str]] = None):
         "--modes",
         nargs="+",
         default=[
-            "naive",
-            #"engineering",
-            "verify",
-            #"extract",
-            #"extract-list",
-            #"combo",
-            "mix",
-            "mix-v2",
+            #"naive",
+            "engineering",
+            #"verify",
+            "extract",
+            "extract-list",
+            "combo",
+            #"mix",
+            #"mix-v2",
         ],
     )
     parser.add_argument("--wrap", type=int, default=120)
