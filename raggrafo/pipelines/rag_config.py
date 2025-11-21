@@ -1,159 +1,166 @@
-# raggrafo/pipelines/rag_config.py
 # -*- coding: utf-8 -*-
 """
-RAG CONFIG – AutoSelect-X (LOCAL)
-=================================
-Configuración central del RAG local. NO modifica chunking ni embeddings.
-Define modos, prompts y JSON schemas para todos los modos soportados:
+RAG CONFIG – AutoSelect-X (LOCAL, versión estable sin f-strings)
+================================================================
 
-    naive
-    engineering
-    verify
-    extract
-    extract-list
-    mix
-    combo
-    mix-v2
-
-Este file ES EL CORAZÓN del ajuste fino.
+- Schema MINIMAL (obligatorio + opcional)
+- Sin f-strings → NO hay errores por llaves {}
+- Prompts simplificados → LLM más preciso y menos alucinaciones
+- extract SIEMPRE devuelve una lista de bombas, incluso si es una sola.
 """
 
 from __future__ import annotations
-from typing import Any, Dict, Optional
+from typing import Any, Dict
+import json
 
 # ============================================================
-# QueryParam (import seguro)
+# QueryParam seguro
 # ============================================================
 
 try:
-    from lightrag import QueryParam   # este sí existe en tu versión cargada localmente
+    from lightrag import QueryParam
 except Exception:
     QueryParam = None
 
 
 def build_query_param(**kwargs) -> Any:
-    """
-    Construcción segura de QueryParam:
-    - Si existe QueryParam real: usarlo
-    - Si no existe o falla: devolver dict marcador
-    """
     if QueryParam is None:
         return {"__type__": "QueryParam", **kwargs}
-
     try:
         return QueryParam(**kwargs)
     except Exception:
         return {"__type__": "QueryParam", **kwargs}
 
 
-
 # ============================================================
-# JSON schemas FULL-FIELDS ALWAYS
+# SCHEMA MINIMAL (OBLIGATORIO + OPCIONAL)
 # ============================================================
 
-PUMP_FIELDS = {
-    "tag": None,
-    "service": None,
-    "fluid": None,
-    "location": None,
-    "flow_nominal": None,
-    "flow_min": None,
-    "flow_max": None,
-    "discharge_pressure": None,
-    "suction_pressure": None,
-    "delta_pressure": None,
-    "temperature": None,
-    "viscosity": None,
-    "density": None,
-    "npsha": None,
-    "npshr": None,
-    "material_head": None,
-    "material_diaphragm_or_seal": None,
-    "material_valves": None,
-    "material_plunger_or_piston": None,
-    "pump_type": None,
-    "drive_type": None,
-    "connections": None,
-    "stroke": None,
-    "voltage": None,
-    "frequency": None,
-    "motor_power": None,
-    "motor_current": None,
-    "start_mode": None,
-    "electrical_protection": None,
-    "standards": None,
-    "tests": None,
-    "certifications": None,
-    "source_pages": None,
-    "source_sections": None,
+PUMP_SCHEMA_MINIMAL_EXPANDED = """
+{
+  "fluid": null,
+  "flow_nominal": null,
+  "discharge_pressure": null,
+  "viscosity": null,
+
+  "optional": {
+    "density": null,
+    "temperature": null,
+    "tag": null,
+    "service": null,
+    "materials": null,
+    "area_classification": null,
+    "voltage": null,
+    "source_pages": null,
+    "location": null,
+    "pump_type": null,
+    "drive_type": null
+  }
 }
+"""
 
-PUMP_LIST_SCHEMA = {
-    "pumps": [PUMP_FIELDS],
-    "notes": None,
+PUMP_SCHEMA_MINIMAL_LIST_EXPANDED = """
+{
+  "pumps": [
+    {
+      "fluid": null,
+      "flow_nominal": null,
+      "discharge_pressure": null,
+      "viscosity": null,
+
+      "optional": {
+        "density": null,
+        "temperature": null,
+        "tag": null,
+        "service": null,
+        "materials": null,
+        "area_classification": null,
+        "voltage": null,
+        "source_pages": null,
+        "location": null,
+        "pump_type": null,
+        "drive_type": null
+      }
+    }
+  ],
+  "notes": null
 }
+"""
+
+# Convertir a dict (para comparaciones / validaciones)
+PUMP_SCHEMA_MINIMAL = json.loads(PUMP_SCHEMA_MINIMAL_EXPANDED)
+PUMP_SCHEMA_MINIMAL_LIST = json.loads(PUMP_SCHEMA_MINIMAL_LIST_EXPANDED)
+
 
 # ============================================================
-# Prompts texto
+# PROMPTS TEXTUALES
 # ============================================================
 
 PROMPT_NAIVE = """
-Actúa como asistente técnico. Responde claro, directo y sin inventar datos.
+Actúa como asistente técnico. Responde claro y sin inventar datos.
 Usa exclusivamente la información existente en los documentos del caso.
 """
 
 PROMPT_ENGINEERING = """
-Actúa como ingeniero de proyectos de sistemas de inyección de químicos.
-Responde usando valores del caso, citando páginas/secciones cuando existan.
-No inventes datos. Si algo no está en los documentos, dilo explícitamente.
+Actúa como ingeniero especializado en sistemas de inyección química.
+Usa valores reales del caso y cita páginas cuando existan.
+No inventes datos. Si no hay información, dilo.
 """
 
 PROMPT_VERIFY = """
 Verifica consistencia entre HD, MR, ET y P&ID:
-- caudal, presión, temperatura
-- materiales
-- requisitos eléctricos
-Indica contradicciones y qué datos son confiables.
+- Caudal, presión, viscosidad
+- Materiales
+- Requisitos eléctricos
+Indica contradicciones y señala qué valores son confiables.
 """
 
-PROMPT_COMBO = """
-Resume las perspectivas naive + engineering + extract + verify en un
-informe compacto para cotización. Destaca riesgos y datos faltantes.
-"""
 
 # ============================================================
-# Prompts JSON
+# PROMPTS JSON
 # ============================================================
 
-PROMPT_JSON_SINGLE = f"""
-Extrae SOLO LA BOMBA PRINCIPAL en formato JSON.
+# Versión "single" (una bomba) – la dejamos disponible por si algún
+# modo o herramienta la requiere, aunque por diseño usamos listas.
+PROMPT_JSON_SINGLE = """
+Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
+y devuelve UNA ÚNICA BOMBA (la más relevante para la pregunta),
+con el SIGUIENTE FORMATO EXACTO:
 
-Reglas:
-1) NO inventes datos. Todo lo que no aparezca, déjalo en null.
-2) Usa exclusivamente los documentos del caso.
-3) Si hay varias bombas, elige la más asociada al servicio químico principal.
-4) Devuelve SOLO JSON. Nada de texto adicional.
+REEMPLAZAR_AQUI_SCHEMA_MINIMAL
 
-Esquema esperado:
-{PUMP_FIELDS}
+Usa el esquema EXACTO del modelo.
+Los campos obligatorios SIEMPRE deben aparecer.
+Los opcionales pueden quedar en null.
+
+NO inventes datos.
 """
 
-PROMPT_JSON_LIST = f"""
-Extrae TODAS LAS BOMBAS en LISTA JSON.
+PROMPT_JSON_SINGLE = PROMPT_JSON_SINGLE.replace(
+    "REEMPLAZAR_AQUI_SCHEMA_MINIMAL",
+    PUMP_SCHEMA_MINIMAL_EXPANDED
+)
 
-Reglas:
-1) NO inventes datos. Campos faltantes → null.
-2) Devuelve:
-   {{
-       "pumps": [ {{...}}, {{...}} ],
-       "notes": "texto" o null
-   }}
-3) Si no hay bombas → lista vacía.
-4) Devuelve SOLO JSON.
+# Versión lista (múltiples bombas) – esta es la principal
+PROMPT_JSON_LIST = """
+Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
+y devuelve TODAS LAS BOMBAS encontradas, incluso si es una sola,
+con el SIGUIENTE FORMATO EXACTO:
 
-Esquema por bomba:
-{PUMP_FIELDS}
+REEMPLAZAR_AQUI_SCHEMA_MINIMAL_LIST
+
+Cada bomba debe usar el esquema EXACTO del modelo.
+Los campos obligatorios SIEMPRE deben aparecer.
+Los opcionales pueden quedar en null.
+
+NO inventes datos.
 """
+
+PROMPT_JSON_LIST = PROMPT_JSON_LIST.replace(
+    "REEMPLAZAR_AQUI_SCHEMA_MINIMAL_LIST",
+    PUMP_SCHEMA_MINIMAL_LIST_EXPANDED
+)
+
 
 # ============================================================
 # MODES
@@ -161,67 +168,80 @@ Esquema por bomba:
 
 _MODES: Dict[str, Dict[str, Any]] = {
     "naive": {
-        "description": "Respuesta directa básica.",
         "prompt_text": PROMPT_NAIVE,
         "query_param": build_query_param(),
     },
+
     "engineering": {
-        "description": "Respuesta técnica detallada.",
         "prompt_text": PROMPT_ENGINEERING,
         "query_param": build_query_param(),
     },
+
     "verify": {
-        "description": "Verificación de coherencia entre documentos.",
         "prompt_text": PROMPT_VERIFY,
         "query_param": build_query_param(),
     },
+
+    # EXTRACT — siempre trabajamos con LISTA de bombas
+    # (pero definimos también las claves *_single para compatibilidad
+    #  con el pipeline finetune).
     "extract": {
-        "description": "Extracción JSON – bomba única.",
+        # Compatibilidad con pipelines antiguos
+        "prompt_json": PROMPT_JSON_LIST,
+        "schema": PUMP_SCHEMA_MINIMAL_LIST,
+
+        # Claves esperadas por rag_case_query_finetune.py (método A)
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
-        "schema_single": PUMP_FIELDS,
-        "schema_list": PUMP_LIST_SCHEMA,
+        "schema_single": PUMP_SCHEMA_MINIMAL,
+        "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
+
         "query_param": build_query_param(),
+        # Forzamos list_mode=True para que extract devuelva lista
+        "list_mode": True,
     },
+
     "extract-list": {
-        "description": "Extracción JSON – lista completa de bombas.",
+        # Compatibilidad
+        "prompt_json": PROMPT_JSON_LIST,
+        "schema": PUMP_SCHEMA_MINIMAL_LIST,
+
+        # Misma configuración que extract, pero semánticamente explícito
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
-        "schema_single": PUMP_FIELDS,
-        "schema_list": PUMP_LIST_SCHEMA,
+        "schema_single": PUMP_SCHEMA_MINIMAL,
+        "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
+
         "query_param": build_query_param(),
         "list_mode": True,
     },
+
     "mix": {
-        "description": "Mezcla naive + engineering.",
-        "submodes": ["naive", "engineering"],
+        "submodes": ["naive", "engineering"]
     },
+
     "combo": {
-        "description": "naive + engineering + extract + verify.",
-        "submodes": ["naive", "engineering", "extract", "verify"],
-        "prompt_text": PROMPT_COMBO,
+        "submodes": ["naive", "engineering", "extract", "verify"]
     },
+
     "mix-v2": {
-        "description": "Fusión ponderada avanzada.",
         "submodes": ["engineering", "extract", "naive"],
-        "weights": {
-            "engineering": 0.6,
-            "extract": 0.3,
-            "naive": 0.1,
-        },
+        "weights": {"engineering": 0.6, "extract": 0.3, "naive": 0.1},
     },
 }
 
-# ============================================================
-# API pública
-# ============================================================
-
-def get(mode: str) -> Dict[str, Any]:
-    return _MODES.get(mode, {})
-
-def list_modes():
-    return _MODES
-
-# EXPOSICIÓN DE CONSTANTES (para compatibilidad con tu finetune viejo)
 MODES = _MODES
 MIX_V2_WEIGHTS = _MODES["mix-v2"]["weights"]
+
+# Config específica para extract, útil si el pipeline la busca por nombre
+EXTRACT_CONFIG: Dict[str, Any] = {
+    "prompt_json_single": PROMPT_JSON_SINGLE,
+    "prompt_json_list": PROMPT_JSON_LIST,
+    "schema_single": PUMP_SCHEMA_MINIMAL,
+    "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
+    "query_param": build_query_param(),
+    "list_mode": True,
+}
+
+# Método A — JSON directo
+EXTRACT_METHOD = "A"

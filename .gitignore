@@ -97,3 +97,8 @@ benchmark_v5_20251121_104559.json
 benchmark_v5_20251121_104559.md
 benchmark_v5_20251121_104853.json
 benchmark_v5_20251121_104853.md
+
+# No subir outputs temporales del pipeline
+RAGGrafo_borrar/
+benchmark_v5_*.json
+benchmark_v5_*.md

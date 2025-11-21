@@ -1,232 +1,157 @@
-#!/usr/bin/env python3
+# raggrafo/scripts/benchmark_queries_v5.py
 # -*- coding: utf-8 -*-
-# scripts/benchmark_queries_v5.py
 """
-Benchmark RAG local avanzado – v5 (FINETUNE)
-=============================================
+Benchmark v5 – compatible con finetune + extract unificado.
 
-Este benchmark:
-- NO usa subprocess.
-- Importa directamente run_case_query_finetune().
-- Prueba TODOS los modos del motor avanzado:
-    naive, engineering, verify, extract, extract-list,
-    combo, mix, mix-v2.
-- Compatible con la estructura Oil & Gas.
+Uso típico:
+
+  python -m raggrafo.scripts.benchmark_queries_v5 --case-id 2
+  python -m raggrafo.scripts.benchmark_queries_v5 --case-id 2 --modes extract engineering verify
 
 Genera:
-    benchmark_v5_YYYYMMDD_HHMMSS.json
-    benchmark_v5_YYYYMMDD_HHMMSS.md
+  - benchmark_v5_YYYYMMDD_HHMMSS.json
+  - benchmark_v5_YYYYMMDD_HHMMSS.md
 """
+
+from __future__ import annotations
 
 import argparse
 import asyncio
 import json
-import textwrap
 import time
-from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Any
+from typing import Dict, List
 
-# Motor FINETUNE
 from raggrafo.pipelines.rag_case_query_finetune import run_case_query_finetune
 
 
-# ============================================================
-# PREGUNTAS
-# ============================================================
+# Preguntas predefinidas (por ahora solo Q1, la que vienes usando)
+QUESTIONS: Dict[str, str] = {
+    "Q1": "¿Cuál es el caudal nominal, la presión de trabajo, la viscosidad de diseño y el turndown de las bombas dosificadoras del paquete, indicando sus TAG?"
+}
 
-QUESTIONS: List[Tuple[str, str]] = [
-    ("Q1", "¿Cuál es el caudal nominal, la presión de trabajo, la viscosidad de diseño y el turndown de las bombas dosificadoras del paquete, indicando sus TAG?"),
-    #("Q2", "¿Qué pruebas FAT, de desempeño e inspecciones de acuerdo con API 675 y la especificación técnica son solicitadas para las bombas dosificadoras y sus TAG?"),
-    #("Q3", "¿Cuántas bombas dosificadoras, tanques de almacenamiento tipo IBC y boquillas de inyección debe incluir el paquete de inyección de químicos, y cuál es la configuración duty/spare requerida?"),
+DEFAULT_MODES: List[str] = [
+    "naive",
+    "verify",
+    "engineering",
+    "extract",
+    "combo",
+    "mix",
+    "mix-v2",
 ]
 
 
-# ============================================================
-# RESULTADOS
-# ============================================================
+async def run_modes(case_id: int, question: str, modes: List[str]) -> Dict[str, Dict]:
+    results: Dict[str, Dict] = {}
 
-@dataclass
-class ModeResult:
-    mode: str
-    elapsed: float
-    final: str
-    raw: Any
-    error: Optional[str] = None
+    print("\n== RAG Local Benchmark v5 (FINETUNE) ==\n")
+    print(f"Q1: {question}")
+
+    for mode in modes:
+        print(f" Ejecutando [{mode}]...")
+        t0 = time.perf_counter()
+        try:
+            # list_mode=True solo tiene efecto real en modo "extract"
+            list_mode = (mode == "extract-list")
+            r = await run_case_query_finetune(
+                case_id=case_id,
+                mode=mode,
+                question=question,
+                list_mode=list_mode,
+            )
+            elapsed = time.perf_counter() - t0
+            results[mode] = {
+                "elapsed_s": round(elapsed, 2),
+                "final": r.get("final"),
+                "error": r.get("error"),
+            }
+
+            # Output inmediato en consola (similar a tus logs anteriores)
+            final_txt = r.get("final") or ""
+            print(f" [{mode:<11}] {round(elapsed, 2)}s")
+            print(final_txt)
+            print("-" * 60)
+
+        except Exception as e:
+            elapsed = time.perf_counter() - t0
+            results[mode] = {
+                "elapsed_s": round(elapsed, 2),
+                "final": None,
+                "error": str(e),
+            }
+            print(f"[ERROR en modo {mode}] {e}")
+            print("-" * 60)
+
+    return results
 
 
-@dataclass
-class QuestionResult:
-    qid: str
-    question: str
-    modes: Dict[str, ModeResult]
-
-
-# ============================================================
-# UTILIDADES
-# ============================================================
-
-def detect_project_root() -> Path:
-    """Detecta la raíz del proyecto, suponiendo que este script está en raggrafo/scripts."""
-    return Path(__file__).resolve().parents[2]
-
-
-def wrap_text(text: str, width: int) -> str:
-    """Envuelve texto para impresión."""
-    if width <= 0:
-        return text
-    out = []
-    for line in text.splitlines():
-        if not line.strip():
-            out.append("")
-            continue
-        out.extend(
-            textwrap.fill(line, width=width, subsequent_indent="  ").splitlines()
-        )
-    return "\n".join(out)
-
-
-def save_results_json_md(results: List[QuestionResult], case_id: int, modes: List[str], project_root: Path):
-    """Escribe benchmark a JSON y Markdown."""
+def save_outputs(case_id: int, question: str, modes: List[str], results: Dict[str, Dict]):
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    base = f"benchmark_v5_{ts}"
 
-    json_path = project_root / f"benchmark_v5_{ts}.json"
-    md_path   = project_root / f"benchmark_v5_{ts}.md"
-
-    data = {
+    # JSON
+    json_path = Path(f"{base}.json")
+    payload = {
         "case_id": case_id,
-        "timestamp": ts,
+        "question": question,
         "modes": modes,
-        "questions": [],
+        "results": results,
     }
-
-    for qr in results:
-        qd = {"qid": qr.qid, "question": qr.question, "modes": {}}
-        for mname, mr in qr.modes.items():
-            qd["modes"][mname] = asdict(mr)
-        data["questions"].append(qd)
-
-    json_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # Markdown
-    lines = [
-        f"# Benchmark RAG v5 – case-id {case_id}\n",
-        f"- Fecha/hora: {ts}",
-        f"- Modos evaluados: {', '.join(modes)}\n",
-    ]
+    md_path = Path(f"{base}.md")
+    lines = []
+    lines.append(f"# Benchmark v5 – case {case_id}\n")
+    lines.append(f"**Pregunta:** {question}\n")
+    lines.append(f"**Modos:** {', '.join(modes)}\n")
 
-    for qr in results:
-        lines.append(f"## {qr.qid} – {qr.question}\n")
-        for mname, mr in qr.modes.items():
-            lines.append(f"### [{mname}]  ({mr.elapsed:.2f}s)\n")
-            if mr.error:
-                lines.append(f"> ⚠️ Error: `{mr.error}`\n")
-            if mr.final:
-                lines.append(wrap_text(mr.final, 120))
-                lines.append("")
-            lines.append("---\n")
+    for mode in modes:
+        r = results.get(mode, {})
+        lines.append("\n---\n")
+        lines.append(f"## Modo: `{mode}`\n")
+        lines.append(f"- Tiempo: {r.get('elapsed_s')} s\n")
+        if r.get("error"):
+            lines.append(f"- Error: `{r['error']}`\n")
+        lines.append("\n```text\n")
+        if r.get("final"):
+            lines.append(str(r["final"]))
+        else:
+            lines.append("(sin salida)\n")
+        lines.append("\n```\n")
 
-    md_path.write_text("\n".join(lines), encoding="utf-8")
+    md_path.write_text("".join(lines), encoding="utf-8")
 
-    return json_path, md_path
-
-
-# ============================================================
-# EJECUTAR UN MODO
-# ============================================================
-
-async def run_mode(case_id: int, mode: str, question: str) -> ModeResult:
-    """Ejecuta un modo del motor FINETUNE."""
-    start = time.perf_counter()
-
-    try:
-        out = await run_case_query_finetune(
-            case_id=case_id,
-            question=question,
-            mode=mode,
-            list_mode=(mode == "extract-list"),
-        )
-        elapsed = time.perf_counter() - start
-
-        return ModeResult(
-            mode=mode,
-            elapsed=elapsed,
-            final=out.get("final", ""),
-            raw=out,
-            error=None,
-        )
-
-    except Exception as exc:
-        elapsed = time.perf_counter() - start
-        return ModeResult(
-            mode=mode,
-            elapsed=elapsed,
-            final="",
-            raw=None,
-            error=str(exc),
-        )
+    print(f"\n💾 JSON guardado : {json_path.name}")
+    print(f"📝 Markdown guardado: {md_path.name}\n")
+    print(f"Sugerencia: less -R {md_path.name}")
 
 
-# ============================================================
-# MAIN
-# ============================================================
-
-def main(argv: Optional[List[str]] = None):
-    parser = argparse.ArgumentParser(description="Benchmark RAG FINETUNE – v5")
+def main():
+    parser = argparse.ArgumentParser()
     parser.add_argument("--case-id", type=int, required=True)
     parser.add_argument(
-        "--modes",
-        nargs="+",
-        default=[
-            #"naive",
-            "engineering",
-            #"verify",
-            "extract",
-            "extract-list",
-            "combo",
-            #"mix",
-            #"mix-v2",
-        ],
+        "--question",
+        help="Texto de la pregunta. Si se omite, usa Q1 predefinida.",
     )
-    parser.add_argument("--wrap", type=int, default=120)
-    args = parser.parse_args(argv)
+    parser.add_argument(
+        "--modes",
+        nargs="*",
+        help="Lista de modos a ejecutar (si se omite, usa modos por defecto).",
+    )
 
-    project_root = detect_project_root()
+    args = parser.parse_args()
 
-    print(f"Usando project_root: {project_root}")
-    print(f"case-id: {args.case_id}\n")
-    print("== RAG Local Benchmark v5 (FINETUNE) ==\n")
+    case_id = args.case_id
+    question = args.question or QUESTIONS["Q1"]
+    modes = args.modes or DEFAULT_MODES
 
-    results: List[QuestionResult] = []
+    print(f"Usando project_root: {Path('.').resolve()}")
+    print(f"case-id: {case_id}\n")
 
-    for qid, question in QUESTIONS:
-        print(f"{qid}: {question}")
-        q_modes: Dict[str, ModeResult] = {}
-
-        for mode in args.modes:
-            print(f" Ejecutando [{mode}]...")
-
-            # CORRECCIÓN CRÍTICA: NO usamos run_until_complete
-            mr = asyncio.run(run_mode(args.case_id, mode, question))
-
-            q_modes[mode] = mr
-
-            print(f" [{mode:<12}] {mr.elapsed:.2f}s")
-            if mr.error:
-                print(f"   ⚠️ Error: {mr.error}")
-            if mr.final:
-                print(wrap_text(mr.final, args.wrap))
-            print("-" * 60 + "\n")
-
-        results.append(QuestionResult(qid, question, q_modes))
-
-    json_path, md_path = save_results_json_md(results, args.case_id, args.modes, project_root)
-
-    print(f"💾 JSON guardado : {json_path.name}")
-    print(f"📝 Markdown guardado: {md_path.name}")
-    print("\nSugerencia: less -R", md_path.name)
-    print()
+    results = asyncio.run(run_modes(case_id, question, modes))
+    save_outputs(case_id, question, modes, results)
 
 
 if __name__ == "__main__":
