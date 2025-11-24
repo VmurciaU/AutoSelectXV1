@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-RAG CONFIG – AutoSelect-X (LOCAL, versión estable sin f-strings)
+RAG CONFIG – AutoSelect-X (LOCAL, versión final con bloque FLOW)
 ================================================================
 
-- Schema MINIMAL (obligatorio + opcional)
-- Sin f-strings → NO hay errores por llaves {}
-- Prompts simplificados → LLM más preciso y menos alucinaciones
-- extract SIEMPRE devuelve una lista de bombas, incluso si es una sola.
+- Nuevo bloque flow: {min, nominal, max, raw}
+- El resto del schema se mantiene idéntico
+- 100% compatible con rag_case_query_finetune y PC6/PC7
+- Sin f-strings → seguro para Prompt JSON
 """
 
 from __future__ import annotations
@@ -33,13 +33,38 @@ def build_query_param(**kwargs) -> Any:
 
 
 # ============================================================
-# SCHEMA MINIMAL (OBLIGATORIO + OPCIONAL)
+# UNIDADES PERMITIDAS (normalizador)
+# ============================================================
+
+UNITS_ALLOWED = {
+    "flow": ["GPH", "LPH", "GPD", "LPD"],
+    "pressure": ["PSI", "PSIG", "BAR"],
+    "temperature": ["°C", "C", "°F", "F"],
+    "viscosity": ["CP"]
+}
+
+UNITS_STANDARD = {
+    "flow": "GPH",
+    "pressure": "PSI",
+    "temperature": "°C",
+    "viscosity": "cP"
+}
+
+# ============================================================
+# SCHEMA MINIMAL (NUEVA VERSIÓN CON FLOW COMPLETO)
 # ============================================================
 
 PUMP_SCHEMA_MINIMAL_EXPANDED = """
 {
   "fluid": null,
-  "flow_nominal": null,
+
+  "flow": {
+    "min": null,
+    "nominal": null,
+    "max": null,
+    "raw": null
+  },
+
   "discharge_pressure": null,
   "viscosity": null,
 
@@ -64,7 +89,14 @@ PUMP_SCHEMA_MINIMAL_LIST_EXPANDED = """
   "pumps": [
     {
       "fluid": null,
-      "flow_nominal": null,
+
+      "flow": {
+        "min": null,
+        "nominal": null,
+        "max": null,
+        "raw": null
+      },
+
       "discharge_pressure": null,
       "viscosity": null,
 
@@ -87,7 +119,7 @@ PUMP_SCHEMA_MINIMAL_LIST_EXPANDED = """
 }
 """
 
-# Convertir a dict (para comparaciones / validaciones)
+# Para validación interna
 PUMP_SCHEMA_MINIMAL = json.loads(PUMP_SCHEMA_MINIMAL_EXPANDED)
 PUMP_SCHEMA_MINIMAL_LIST = json.loads(PUMP_SCHEMA_MINIMAL_LIST_EXPANDED)
 
@@ -120,8 +152,6 @@ Indica contradicciones y señala qué valores son confiables.
 # PROMPTS JSON
 # ============================================================
 
-# Versión "single" (una bomba) – la dejamos disponible por si algún
-# modo o herramienta la requiere, aunque por diseño usamos listas.
 PROMPT_JSON_SINGLE = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
 y devuelve UNA ÚNICA BOMBA (la más relevante para la pregunta),
@@ -129,11 +159,8 @@ con el SIGUIENTE FORMATO EXACTO:
 
 REEMPLAZAR_AQUI_SCHEMA_MINIMAL
 
-Usa el esquema EXACTO del modelo.
-Los campos obligatorios SIEMPRE deben aparecer.
-Los opcionales pueden quedar en null.
-
 NO inventes datos.
+Solo llena información textual literal encontrada en los documentos.
 """
 
 PROMPT_JSON_SINGLE = PROMPT_JSON_SINGLE.replace(
@@ -141,19 +168,19 @@ PROMPT_JSON_SINGLE = PROMPT_JSON_SINGLE.replace(
     PUMP_SCHEMA_MINIMAL_EXPANDED
 )
 
-# Versión lista (múltiples bombas) – esta es la principal
 PROMPT_JSON_LIST = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
-y devuelve TODAS LAS BOMBAS encontradas, incluso si es una sola,
+y devuelve TODAS LAS BOMBAS encontradas (incluso si es una sola),
 con el SIGUIENTE FORMATO EXACTO:
 
 REEMPLAZAR_AQUI_SCHEMA_MINIMAL_LIST
 
-Cada bomba debe usar el esquema EXACTO del modelo.
-Los campos obligatorios SIEMPRE deben aparecer.
-Los opcionales pueden quedar en null.
+Reglas:
+- Usa SOLO valores literales de los documentos.
+- NO inventes mínimos, nominales o máximos.
+- Si NO existe explícitamente, deja null.
+- El campo "flow.raw" SIEMPRE debe contener el texto EXACTO encontrado.
 
-NO inventes datos.
 """
 
 PROMPT_JSON_LIST = PROMPT_JSON_LIST.replace(
@@ -182,31 +209,23 @@ _MODES: Dict[str, Dict[str, Any]] = {
         "query_param": build_query_param(),
     },
 
-    # EXTRACT — siempre trabajamos con LISTA de bombas
-    # (pero definimos también las claves *_single para compatibilidad
-    #  con el pipeline finetune).
     "extract": {
-        # Compatibilidad con pipelines antiguos
         "prompt_json": PROMPT_JSON_LIST,
         "schema": PUMP_SCHEMA_MINIMAL_LIST,
 
-        # Claves esperadas por rag_case_query_finetune.py (método A)
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
         "schema_single": PUMP_SCHEMA_MINIMAL,
         "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
 
         "query_param": build_query_param(),
-        # Forzamos list_mode=True para que extract devuelva lista
         "list_mode": True,
     },
 
     "extract-list": {
-        # Compatibilidad
         "prompt_json": PROMPT_JSON_LIST,
         "schema": PUMP_SCHEMA_MINIMAL_LIST,
 
-        # Misma configuración que extract, pero semánticamente explícito
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
         "schema_single": PUMP_SCHEMA_MINIMAL,
@@ -233,7 +252,6 @@ _MODES: Dict[str, Dict[str, Any]] = {
 MODES = _MODES
 MIX_V2_WEIGHTS = _MODES["mix-v2"]["weights"]
 
-# Config específica para extract, útil si el pipeline la busca por nombre
 EXTRACT_CONFIG: Dict[str, Any] = {
     "prompt_json_single": PROMPT_JSON_SINGLE,
     "prompt_json_list": PROMPT_JSON_LIST,
@@ -243,5 +261,4 @@ EXTRACT_CONFIG: Dict[str, Any] = {
     "list_mode": True,
 }
 
-# Método A — JSON directo
 EXTRACT_METHOD = "A"

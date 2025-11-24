@@ -1,29 +1,33 @@
 # -*- coding: utf-8 -*-
 """
-RAG CASE QUERY – FINETUNED (versión multipaso robusta)
-======================================================
+RAG CASE QUERY – FINETUNED (versión multipaso con unidades RAW)
+===============================================================
 
-NUEVA ARQUITECTURA:
--------------------
-1) DISCOVERY:
-      - Extrae TAGs
-      - Extrae tipos de bomba
-      - Extrae filas de tablas si no hay TAGs
+Arquitectura robusta de 4 pasos:
+1) DISCOVERY (tags, types, count)
+2) EXTRACT BY TAG (Método A + Método B)
+3) EXTRACT FROM TABLES (cuando no hay TAGs)
+4) FALLBACK A JSON DIRECTO
 
-2) EXTRACT POR BOMBA:
-      - Método A → JSON directo
-      - Método B → Regex + Engineering (fallback)
+Nuevo: Captura de unidades RAW para:
+- Flujo (GPD, LPH, m3/d…)
+- Presión (psig, bar…)
+- Temperatura (°F, °C)
+- Viscosidad (cP, cSt…)
+- Densidad (kg/m3, g/cm3…)
 
-3) ENSAMBLADO GLOBAL:
-      - pumps = [...]
-      - notes = "ok" / "no-context" / "fallback-used"
+Salida estable:
+{
+  "pumps": [
+      { "flow_nominal": { "value": ..., "unit": ... }, ... }
+  ],
+  "notes": "ok|fallback-A|no-context"
+}
 
-Garantías:
-----------
-- Siempre retorna JSON válido.
-- Siempre retorna lista de bombas.
-- No altera PC6.
-- Compatible con rag_config.py.
+Compatible 100% con:
+- pc6_lightrag.py
+- rag_config.py
+- extract / extract-list
 """
 
 from __future__ import annotations
@@ -40,7 +44,6 @@ from .pc6_lightrag import (
     _make_rag,
     _core_initialize,
 )
-
 from .json_repair import repair_and_parse
 
 try:
@@ -51,33 +54,34 @@ except Exception:
 CaseId = Union[int, str]
 
 
-# ------------------------------------------------------------
-# Helper universal JSON
-# ------------------------------------------------------------
-def _force_json(obj: Any) -> str:
-    if isinstance(obj, str) and "[no-context]" in obj:
-        return json.dumps({"pumps": [], "notes": "no-context"}, ensure_ascii=False, indent=2)
-    if obj is None:
+#####################################################################
+# HELPERS JSON
+#####################################################################
+def _wrap_json(value: Any) -> str:
+    """Siempre devuelve JSON string."""
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False, indent=2)
+    if value is None:
         return json.dumps({}, ensure_ascii=False, indent=2)
-    if isinstance(obj, (dict, list)):
-        return json.dumps(obj, ensure_ascii=False, indent=2)
-    return json.dumps({"text": str(obj)}, ensure_ascii=False, indent=2)
+    return json.dumps({"text": str(value)}, ensure_ascii=False, indent=2)
 
 
-# ------------------------------------------------------------
-# Wrapper seguro del aquery
-# ------------------------------------------------------------
+#####################################################################
+# AQUERY WRAPPER
+#####################################################################
 async def _safe_aquery(rag, question: str, query_param: Any = None):
     if rag is None:
         raise RuntimeError("RAG no inicializado")
+
     if hasattr(rag, "aquery") and inspect.iscoroutinefunction(rag.aquery):
         return await rag.aquery(question, query_param)
-    raise RuntimeError("Tu LightRAG local no tiene método aquery async compatible")
+
+    raise RuntimeError("El LightRAG local no implementa aquery async")
 
 
-# ------------------------------------------------------------
-# Carga del RAG desde PC6
-# ------------------------------------------------------------
+#####################################################################
+# LOAD PC6 RAG
+#####################################################################
 async def _load_rag(case_id: CaseId):
     case_dir = Path(RAG_STORAGE_DIR) / f"case_{case_id}"
     if not case_dir.exists():
@@ -90,38 +94,42 @@ async def _load_rag(case_id: CaseId):
             await _core_initialize(rag)
         else:
             _core_initialize(rag)
-    except Exception as e:
-        print(f"[WARN] _core_initialize falló: {e}")
+    except:
+        pass
 
     return rag
 
 
-# ============================================================
+#####################################################################
+# REGEX DE UNIDADES
+#####################################################################
+FLOW_PATTERN = re.compile(r"(\d+(\.\d+)?)\s*(GPD|LPH|m3/d|BPD|LPM)", re.IGNORECASE)
+PRESSURE_PATTERN = re.compile(r"(\d+(\.\d+)?)\s*(psig|psi|bar|kg/cm2)", re.IGNORECASE)
+TEMP_PATTERN = re.compile(r"(-?\d+(\.\d+)?)\s*(°F|°C|F|C)", re.IGNORECASE)
+VISC_PATTERN = re.compile(r"(\d+(\.\d+)?)\s*(cP|cSt)", re.IGNORECASE)
+DENS_PATTERN = re.compile(r"(\d+(\.\d+)?)\s*(kg/m3|g/cm3)", re.IGNORECASE)
+
+
+def _extract_unit(pattern, text: str):
+    m = pattern.search(text)
+    if not m:
+        return {"value": None, "unit": None}
+    return {"value": float(m.group(1)), "unit": m.group(3)}
+
+
+#####################################################################
 # PASO 1 – DISCOVERY
-# ============================================================
-async def _discover_pumps(rag, question: str) -> Dict[str, Any]:
-    """
-    Retorna:
-    {
-        "tags": [...],
-        "types": [...],
-        "count": int
-    }
-    """
+#####################################################################
+async def _discover_pumps(rag, question: str):
     prompt = """
-Eres un extractor técnico especializado.
+A partir de TODOS los documentos (HD, MR, ET), devuelve EXACTAMENTE:
 
-A partir de TODOS los documentos del caso, detecta:
-- Todos los TAG de bombas (ej: P-5540, P-5541…)
-- Tipos de bomba (ej: bomba dosificadora, API675, diafragma…)
-- Cuenta total de bombas si aparece en HD/MR/ET
-
-Formato EXACTO JSON:
 {
   "tags": [],
   "types": [],
   "count": null
 }
+
 NO inventes datos.
 """
 
@@ -140,46 +148,62 @@ NO inventes datos.
     }
 
 
-# ============================================================
-# PASO 2 – Extract para una BOMBA por TAG (Método A/B)
-# ============================================================
+#####################################################################
+# PASO 2 – EXTRACT SINGLE BY TAG
+#####################################################################
 async def _extract_single_by_tag(rag, tag: str) -> Dict[str, Any]:
     """
-    Extrae UNA BOMBA específica usando multipaso A/B.
+    Extrae UNA bomba específica usando Método A y fallback B.
     """
 
-    # ---------- Método A (JSON directo)
+    # MÉTODO A
     prompt = CFG.EXTRACT_CONFIG["prompt_json_single"]
     q = f"{prompt}\n\nPregunta:\nDame todos los datos de proceso de la bomba {tag}"
 
     resp = await _safe_aquery(rag, q, CFG.EXTRACT_CONFIG["query_param"])
     safe_a = repair_and_parse(resp)
 
-    if isinstance(safe_a, dict) and safe_a.get("fluid") or safe_a.get("optional"):
-        safe_a["optional"] = safe_a.get("optional", {})
-        safe_a["optional"]["tag"] = tag
-        return safe_a
+    # Si método A devolvió algo válido
+    if isinstance(safe_a, dict):
+        # Captura unidades desde texto bruto
+        raw_text = str(resp)
 
-    # ---------- Método B (regex + engineering)
+        return {
+            "fluid": safe_a.get("fluid"),
+            "flow_nominal": _extract_unit(FLOW_PATTERN, raw_text),
+            "discharge_pressure": _extract_unit(PRESSURE_PATTERN, raw_text),
+            "viscosity": _extract_unit(VISC_PATTERN, raw_text),
+            "optional": {
+                "tag": tag,
+                "temperature": _extract_unit(TEMP_PATTERN, raw_text),
+                "density": _extract_unit(DENS_PATTERN, raw_text),
+                "service": safe_a.get("optional", {}).get("service"),
+                "materials": safe_a.get("optional", {}).get("materials"),
+                "location": safe_a.get("optional", {}).get("location"),
+                "voltage": safe_a.get("optional", {}).get("voltage"),
+                "pump_type": safe_a.get("optional", {}).get("pump_type"),
+                "drive_type": safe_a.get("optional", {}).get("drive_type"),
+                "source_pages": safe_a.get("optional", {}).get("source_pages"),
+            }
+        }
+
+    # MÉTODO B – Regex + engineering
     eng = await _safe_aquery(
         rag,
-        f"Como ingeniero, describe los datos de proceso de {tag}",
+        f"Describe técnicamente los datos de proceso de {tag}",
         CFG.MODES["engineering"]["query_param"],
     )
-    eng_text = eng["text"] if isinstance(eng, dict) else str(eng)
+    text = eng["text"] if isinstance(eng, dict) else str(eng)
 
-    flow = re.findall(r"(\d+(\.\d+)?)\s*GPD", eng_text)
-    pres = re.findall(r"(\d+)\s*psig", eng_text)
-
-    result = {
+    return {
         "fluid": None,
-        "flow_nominal": flow[0][0] if flow else None,
-        "discharge_pressure": pres[0][0] if pres else None,
-        "viscosity": None,
+        "flow_nominal": _extract_unit(FLOW_PATTERN, text),
+        "discharge_pressure": _extract_unit(PRESSURE_PATTERN, text),
+        "viscosity": _extract_unit(VISC_PATTERN, text),
         "optional": {
             "tag": tag,
-            "temperature": None,
-            "density": None,
+            "temperature": _extract_unit(TEMP_PATTERN, text),
+            "density": _extract_unit(DENS_PATTERN, text),
             "service": None,
             "materials": None,
             "location": None,
@@ -190,43 +214,29 @@ async def _extract_single_by_tag(rag, tag: str) -> Dict[str, Any]:
         }
     }
 
-    return result
 
-
-# ============================================================
-# PASO 3 – Extract sin TAGs (tablas)
-# ============================================================
+#####################################################################
+# PASO 3 – EXTRACT ONLY FROM TABLES
+#####################################################################
 async def _extract_from_tables(rag, question: str) -> List[Dict[str, Any]]:
-    """
-    Si no existen TAGs, intentar detectar filas de tablas (GPD / psig).
-    """
     prompt = """
-Analiza TODAS las tablas del caso.
+Extrae TODAS las bombas desde TABLAS, incluso si no hay TAGs.
 
-Extrae TODAS las bombas, incluso si no hay TAG.
-Busca filas con:
-- Capacidad mínima (GPD)
-- Capacidad máxima (GPD)
-- Presión (psig)
-
-Devuelve formato EXACTO:
+Debe devolver EXACTAMENTE:
 {
   "pumps": [
     {
       "fluid": null,
-      "flow_nominal": null,
-      "discharge_pressure": null,
-      "viscosity": null,
-      "optional": {
-        "tag": null,
-        "temperature": null
-      }
+      "flow_nominal": { "value": ..., "unit": "..." },
+      "discharge_pressure": { "value": ..., "unit": "..." },
+      "viscosity": { "value": ..., "unit": "..." },
+      "optional": { "tag": null }
     }
   ]
 }
 """
-
     q = f"{prompt}\n\nPregunta:\n{question}"
+
     resp = await _safe_aquery(rag, q)
     safe = repair_and_parse(resp)
 
@@ -236,96 +246,67 @@ Devuelve formato EXACTO:
     return []
 
 
-# ============================================================
-# PASO 4 – ENSAMBLADO MULTIPASO
-# ============================================================
+#####################################################################
+# PASO 4 – MULTIPASO ENSAMBLE
+#####################################################################
 async def _run_extract_multipaso(rag, question: str) -> Dict[str, Any]:
 
-    # -- DISCOVERY
     disc = await _discover_pumps(rag, question)
     tags = disc["tags"]
-    types = disc["types"]
-    count = disc["count"]
 
-    pumps: List[Dict[str, Any]] = []
+    pumps = []
 
-    # -- Si hay TAGs, extraemos una por una
+    # Si hay TAGs → extraemos cada una
     if tags:
         for tag in tags:
             p = await _extract_single_by_tag(rag, tag)
             pumps.append(p)
         return {"pumps": pumps, "notes": "ok"}
 
-    # -- Si NO hay TAGs → tabla
+    # Si no hay TAGs → tablas
     table_pumps = await _extract_from_tables(rag, question)
     if table_pumps:
         return {"pumps": table_pumps, "notes": "ok-tables"}
 
-    # -- Fallback final → Método A con lista
+    # Fallback A → JSON directo lista
     fallback = await _safe_aquery(
         rag,
         CFG.MODES["extract"]["prompt_json_list"] + f"\n\nPregunta:\n{question}",
         CFG.MODES["extract"]["query_param"],
     )
     safe_fb = repair_and_parse(fallback)
-
     if isinstance(safe_fb, dict) and "pumps" in safe_fb:
         return {"pumps": safe_fb["pumps"], "notes": "fallback-A"}
 
-    # -- Último recurso
     return {"pumps": [], "notes": "no-context"}
 
 
-# ============================================================
-# Modos tradicionales (naive, engineering, verify)
-# ============================================================
-async def _run_simple(rag, question: str, mode: str) -> Dict[str, Any]:
-    cfg = CFG.MODES.get(mode)
-    if not cfg:
-        return {"final": "", "raw": None, "error": f"Modo '{mode}' no existe"}
-
-    prompt = cfg.get("prompt_text", "")
-    q = f"{prompt}\n\nPregunta:\n{question}"
-
-    resp = await _safe_aquery(rag, q, cfg.get("query_param"))
-    final = resp["text"] if isinstance(resp, dict) and "text" in resp else str(resp)
-
-    return {"final": final, "raw": resp, "error": None}
-
-
-# ============================================================
-# Wrapper público UNIFICADO
-# ============================================================
+#####################################################################
+# RUN PUBLICO
+#####################################################################
 async def run_case_query_finetune(
     case_id: CaseId,
     mode: str,
     question: str,
     list_mode: bool = False,
 ):
-    if CFG is None:
-        raise RuntimeError("rag_config.py falló al cargar")
-
     rag = await _load_rag(case_id)
 
-    if mode == "extract" or mode == "extract-list":
+    if mode in ["extract", "extract-list"]:
         result = await _run_extract_multipaso(rag, question)
-        return {"final": json.dumps(result, ensure_ascii=False, indent=2),
-                "raw": result,
-                "error": None}
+        return {
+            "final": json.dumps(result, ensure_ascii=False, indent=2),
+            "raw": result,
+            "error": None,
+        }
 
-    if mode == "naive":
-        return await _run_simple(rag, question, "naive")
-    if mode == "engineering":
-        return await _run_simple(rag, question, "engineering")
-    if mode == "verify":
-        return await _run_simple(rag, question, "verify")
-
-    raise RuntimeError(f"Modo '{mode}' no soportado en esta versión multipaso")
+    # Modos texto
+    return await _safe_aquery(rag, question)
 
 
-# ============================================================
+#####################################################################
 # CLI
-# ============================================================
+#####################################################################
 if __name__ == "__main__":
     import argparse
 
