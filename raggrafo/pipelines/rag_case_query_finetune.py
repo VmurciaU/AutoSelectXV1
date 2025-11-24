@@ -1,15 +1,29 @@
-# raggrafo/pipelines/rag_case_query_finetune.py
 # -*- coding: utf-8 -*-
 """
-RAG CASE QUERY – FINETUNED (versión estable)
-============================================
-Compatible 100% con:
- - pc6_lightrag.py (local, sin servidor)
- - rag_config.py (modos, prompts, JSON schemas)
- - extract / extract-list (JSON siempre válido)
- - mix, combo, mix-v2, naive, engineering, verify
+RAG CASE QUERY – FINETUNED (versión multipaso robusta)
+======================================================
 
-NO TOCA PC6.
+NUEVA ARQUITECTURA:
+-------------------
+1) DISCOVERY:
+      - Extrae TAGs
+      - Extrae tipos de bomba
+      - Extrae filas de tablas si no hay TAGs
+
+2) EXTRACT POR BOMBA:
+      - Método A → JSON directo
+      - Método B → Regex + Engineering (fallback)
+
+3) ENSAMBLADO GLOBAL:
+      - pumps = [...]
+      - notes = "ok" / "no-context" / "fallback-used"
+
+Garantías:
+----------
+- Siempre retorna JSON válido.
+- Siempre retorna lista de bombas.
+- No altera PC6.
+- Compatible con rag_config.py.
 """
 
 from __future__ import annotations
@@ -17,8 +31,9 @@ from __future__ import annotations
 import asyncio
 import inspect
 import json
+import re
 from pathlib import Path
-from typing import Any, Dict, Union
+from typing import Any, Dict, List, Union
 
 from .pc6_lightrag import (
     RAG_STORAGE_DIR,
@@ -26,10 +41,8 @@ from .pc6_lightrag import (
     _core_initialize,
 )
 
-# JSON Repair
 from .json_repair import repair_and_parse
 
-# Config central
 try:
     from raggrafo.pipelines import rag_config as CFG
 except Exception:
@@ -38,71 +51,40 @@ except Exception:
 CaseId = Union[int, str]
 
 
-# ============================================================
-# Helpers
-# ============================================================
-
+# ------------------------------------------------------------
+# Helper universal JSON
+# ------------------------------------------------------------
 def _force_json(obj: Any) -> str:
-    """
-    Normaliza SIEMPRE a JSON (str).
-    - dict/list -> json.dumps(...)
-    - texto -> {"text": "..."}
-    - caso no-context -> JSON estándar con pumps vacías.
-    """
-    # Caso especial: respuestas tipo "no-context"
     if isinstance(obj, str) and "[no-context]" in obj:
-        safe = {
-            "pumps": [],
-            "notes": "no-context: el RAG no encontró información suficiente para esta pregunta.",
-        }
-        return json.dumps(safe, ensure_ascii=False, indent=2)
-
+        return json.dumps({"pumps": [], "notes": "no-context"}, ensure_ascii=False, indent=2)
     if obj is None:
         return json.dumps({}, ensure_ascii=False, indent=2)
-
     if isinstance(obj, (dict, list)):
         return json.dumps(obj, ensure_ascii=False, indent=2)
-
-    # texto genérico → envolver
-    return json.dumps({"text": str(obj).strip()}, ensure_ascii=False, indent=2)
+    return json.dumps({"text": str(obj)}, ensure_ascii=False, indent=2)
 
 
+# ------------------------------------------------------------
+# Wrapper seguro del aquery
+# ------------------------------------------------------------
 async def _safe_aquery(rag, question: str, query_param: Any = None):
-    """
-    Wrapper universal que usa SIEMPRE rag.aquery(...).
-
-    Firma esperada (compatible con tu PC6):
-        async def aquery(self, query: str, query_param=None)
-    """
     if rag is None:
-        raise RuntimeError("RAG no inicializado (rag == None). Revisa _load_rag.")
-
+        raise RuntimeError("RAG no inicializado")
     if hasattr(rag, "aquery") and inspect.iscoroutinefunction(rag.aquery):
         return await rag.aquery(question, query_param)
+    raise RuntimeError("Tu LightRAG local no tiene método aquery async compatible")
 
-    raise RuntimeError("Tu LightRAG local no expone un método aquery async compatible")
 
-
-# ============================================================
-# Inicializar RAG local desde PC6
-# ============================================================
-
+# ------------------------------------------------------------
+# Carga del RAG desde PC6
+# ------------------------------------------------------------
 async def _load_rag(case_id: CaseId):
-    """
-    Carga el RAG local para un case_id usando PC6.
-
-    Usa:
-      - RAG_STORAGE_DIR / f"case_{case_id}"
-      - _make_rag(...)
-      - _core_initialize(...)
-    """
     case_dir = Path(RAG_STORAGE_DIR) / f"case_{case_id}"
     if not case_dir.exists():
-        raise RuntimeError(f"No existe el storage del caso {case_id}: {case_dir}")
+        raise RuntimeError(f"No existe storage del caso {case_id}: {case_dir}")
 
     rag = _make_rag(case_dir)
 
-    # Inicialización segura
     try:
         if inspect.iscoroutinefunction(_core_initialize):
             await _core_initialize(rag)
@@ -115,240 +97,243 @@ async def _load_rag(case_id: CaseId):
 
 
 # ============================================================
-# Ejecución por modo
+# PASO 1 – DISCOVERY
 # ============================================================
+async def _discover_pumps(rag, question: str) -> Dict[str, Any]:
+    """
+    Retorna:
+    {
+        "tags": [...],
+        "types": [...],
+        "count": int
+    }
+    """
+    prompt = """
+Eres un extractor técnico especializado.
 
+A partir de TODOS los documentos del caso, detecta:
+- Todos los TAG de bombas (ej: P-5540, P-5541…)
+- Tipos de bomba (ej: bomba dosificadora, API675, diafragma…)
+- Cuenta total de bombas si aparece en HD/MR/ET
+
+Formato EXACTO JSON:
+{
+  "tags": [],
+  "types": [],
+  "count": null
+}
+NO inventes datos.
+"""
+
+    q = f"{prompt}\n\nPregunta:\n{question}"
+
+    resp = await _safe_aquery(rag, q)
+    safe = repair_and_parse(resp)
+
+    if not isinstance(safe, dict):
+        return {"tags": [], "types": [], "count": None}
+
+    return {
+        "tags": safe.get("tags", []) or [],
+        "types": safe.get("types", []) or [],
+        "count": safe.get("count", None),
+    }
+
+
+# ============================================================
+# PASO 2 – Extract para una BOMBA por TAG (Método A/B)
+# ============================================================
+async def _extract_single_by_tag(rag, tag: str) -> Dict[str, Any]:
+    """
+    Extrae UNA BOMBA específica usando multipaso A/B.
+    """
+
+    # ---------- Método A (JSON directo)
+    prompt = CFG.EXTRACT_CONFIG["prompt_json_single"]
+    q = f"{prompt}\n\nPregunta:\nDame todos los datos de proceso de la bomba {tag}"
+
+    resp = await _safe_aquery(rag, q, CFG.EXTRACT_CONFIG["query_param"])
+    safe_a = repair_and_parse(resp)
+
+    if isinstance(safe_a, dict) and safe_a.get("fluid") or safe_a.get("optional"):
+        safe_a["optional"] = safe_a.get("optional", {})
+        safe_a["optional"]["tag"] = tag
+        return safe_a
+
+    # ---------- Método B (regex + engineering)
+    eng = await _safe_aquery(
+        rag,
+        f"Como ingeniero, describe los datos de proceso de {tag}",
+        CFG.MODES["engineering"]["query_param"],
+    )
+    eng_text = eng["text"] if isinstance(eng, dict) else str(eng)
+
+    flow = re.findall(r"(\d+(\.\d+)?)\s*GPD", eng_text)
+    pres = re.findall(r"(\d+)\s*psig", eng_text)
+
+    result = {
+        "fluid": None,
+        "flow_nominal": flow[0][0] if flow else None,
+        "discharge_pressure": pres[0][0] if pres else None,
+        "viscosity": None,
+        "optional": {
+            "tag": tag,
+            "temperature": None,
+            "density": None,
+            "service": None,
+            "materials": None,
+            "location": None,
+            "voltage": None,
+            "pump_type": None,
+            "drive_type": None,
+            "source_pages": None,
+        }
+    }
+
+    return result
+
+
+# ============================================================
+# PASO 3 – Extract sin TAGs (tablas)
+# ============================================================
+async def _extract_from_tables(rag, question: str) -> List[Dict[str, Any]]:
+    """
+    Si no existen TAGs, intentar detectar filas de tablas (GPD / psig).
+    """
+    prompt = """
+Analiza TODAS las tablas del caso.
+
+Extrae TODAS las bombas, incluso si no hay TAG.
+Busca filas con:
+- Capacidad mínima (GPD)
+- Capacidad máxima (GPD)
+- Presión (psig)
+
+Devuelve formato EXACTO:
+{
+  "pumps": [
+    {
+      "fluid": null,
+      "flow_nominal": null,
+      "discharge_pressure": null,
+      "viscosity": null,
+      "optional": {
+        "tag": null,
+        "temperature": null
+      }
+    }
+  ]
+}
+"""
+
+    q = f"{prompt}\n\nPregunta:\n{question}"
+    resp = await _safe_aquery(rag, q)
+    safe = repair_and_parse(resp)
+
+    if isinstance(safe, dict) and "pumps" in safe:
+        return safe["pumps"]
+
+    return []
+
+
+# ============================================================
+# PASO 4 – ENSAMBLADO MULTIPASO
+# ============================================================
+async def _run_extract_multipaso(rag, question: str) -> Dict[str, Any]:
+
+    # -- DISCOVERY
+    disc = await _discover_pumps(rag, question)
+    tags = disc["tags"]
+    types = disc["types"]
+    count = disc["count"]
+
+    pumps: List[Dict[str, Any]] = []
+
+    # -- Si hay TAGs, extraemos una por una
+    if tags:
+        for tag in tags:
+            p = await _extract_single_by_tag(rag, tag)
+            pumps.append(p)
+        return {"pumps": pumps, "notes": "ok"}
+
+    # -- Si NO hay TAGs → tabla
+    table_pumps = await _extract_from_tables(rag, question)
+    if table_pumps:
+        return {"pumps": table_pumps, "notes": "ok-tables"}
+
+    # -- Fallback final → Método A con lista
+    fallback = await _safe_aquery(
+        rag,
+        CFG.MODES["extract"]["prompt_json_list"] + f"\n\nPregunta:\n{question}",
+        CFG.MODES["extract"]["query_param"],
+    )
+    safe_fb = repair_and_parse(fallback)
+
+    if isinstance(safe_fb, dict) and "pumps" in safe_fb:
+        return {"pumps": safe_fb["pumps"], "notes": "fallback-A"}
+
+    # -- Último recurso
+    return {"pumps": [], "notes": "no-context"}
+
+
+# ============================================================
+# Modos tradicionales (naive, engineering, verify)
+# ============================================================
 async def _run_simple(rag, question: str, mode: str) -> Dict[str, Any]:
-    """
-    Modos de texto puro: naive, engineering, verify.
-    """
-    cfg = CFG.MODES.get(mode) if CFG else None
+    cfg = CFG.MODES.get(mode)
     if not cfg:
         return {"final": "", "raw": None, "error": f"Modo '{mode}' no existe"}
 
     prompt = cfg.get("prompt_text", "")
-    q = f"{prompt}\n\nPregunta:\n{question}" if prompt else question
+    q = f"{prompt}\n\nPregunta:\n{question}"
 
     resp = await _safe_aquery(rag, q, cfg.get("query_param"))
-
     final = resp["text"] if isinstance(resp, dict) and "text" in resp else str(resp)
+
     return {"final": final, "raw": resp, "error": None}
 
 
-async def _run_extract(rag, question: str, list_mode: bool) -> Dict[str, Any]:
-    """
-    Núcleo UNIFICADO de extract + selector de método A/B.
-
-      MÉTODO A → Prompt JSON directo (actual)
-      MÉTODO B → Usa modo engineering como motor semántico y construye JSON limpio
-
-      - list_mode=False → bomba principal
-      - list_mode=True  → lista de bombas
-      - Siempre devuelve JSON string válido
-    """
-    if CFG is None:
-        raise RuntimeError("rag_config.py no se cargó correctamente")
-
-    cfg = CFG.MODES["extract"]
-
-    # ============================
-    # Método A → prompt JSON directo (actual)
-    # ============================
-    async def extract_method_a():
-        prompt = cfg["prompt_json_list"] if list_mode else cfg["prompt_json_single"]
-        q = f"{prompt}\n\nPregunta:\n{question}"
-
-        resp = await _safe_aquery(rag, q, cfg["query_param"])
-
-        # Reparación avanzada del JSON devuelto por LLM
-        safe_json = repair_and_parse(resp)
-
-        final = json.dumps(safe_json, ensure_ascii=False, indent=2)
-        return {"final": final, "raw": resp, "error": None}
-
-    # ============================
-    # Método B → ingeniería + construcción JSON
-    # ============================
-    async def extract_method_b():
-        eng = await _run_simple(rag, question, "engineering")
-        text = eng["final"]
-
-        import re
-        tags = re.findall(r"P-\d{4}", text)
-        caudales = re.findall(r"(\d+(\.\d+)?)\s*GPD", text)
-        presiones = re.findall(r"(\d+)\s*psig", text)
-
-        pumps = []
-
-        for i, tag in enumerate(tags):
-            pumps.append({
-                "tag": tag,
-                "service": None,
-                "fluid": None,
-                "location": None,
-                "flow_nominal": caudales[i][0] if i < len(caudales) else None,
-                "flow_min": None,
-                "flow_max": None,
-                "discharge_pressure": presiones[i][0] if i < len(presiones) else None,
-                "suction_pressure": None,
-                "delta_pressure": None,
-                "temperature": None,
-                "viscosity": None,
-                "density": None,
-                "npsha": None,
-                "npshr": None,
-                "material_head": None,
-                "material_diaphragm_or_seal": None,
-                "material_valves": None,
-                "material_plunger_or_piston": None,
-                "pump_type": None,
-                "drive_type": None,
-                "connections": None,
-                "stroke": None,
-                "voltage": None,
-                "frequency": None,
-                "motor_power": None,
-                "motor_current": None,
-                "start_mode": None,
-                "electrical_protection": None,
-                "standards": None,
-                "tests": None,
-                "certifications": None,
-                "source_pages": None,
-                "source_sections": None,
-            })
-
-        # Resultado final según list_mode
-        if list_mode:
-            result = {"pumps": pumps, "notes": None}
-        else:
-            result = pumps[0] if pumps else {"pumps": [], "notes": "no-data"}
-
-        return {
-            "final": json.dumps(result, ensure_ascii=False, indent=2),
-            "raw": eng,
-            "error": None,
-        }
-
-    # ============================
-    # SELECTOR A/B
-    # ============================
-    if CFG.EXTRACT_METHOD == "B":
-        return await extract_method_b()
-    else:
-        return await extract_method_a()
-
-
-async def _run_extract_list(rag, question: str) -> Dict[str, Any]:
-    """Alias semántico de extract-list."""
-    return await _run_extract(rag, question, list_mode=True)
-
-
-async def _run_mix(rag, question: str) -> Dict[str, Any]:
-    r1 = await _run_simple(rag, question, "naive")
-    r2 = await _run_simple(rag, question, "engineering")
-
-    final = f"[NAIVE]\n{r1['final']}\n\n[ENGINEERING]\n{r2['final']}"
-    return {"final": final, "raw": {"naive": r1, "engineering": r2}, "error": None}
-
-
-async def _run_combo(rag, question: str) -> Dict[str, Any]:
-    r_naive = await _run_simple(rag, question, "naive")
-    r_eng = await _run_simple(rag, question, "engineering")
-    r_ext = await _run_extract(rag, question, list_mode=False)
-    r_ver = await _run_simple(rag, question, "verify")
-
-    final = (
-        "=== NAIVE ===\n" + r_naive["final"] + "\n\n"
-        "=== ENGINEERING ===\n" + r_eng["final"] + "\n\n"
-        "=== EXTRACT ===\n" + r_ext["final"] + "\n\n"
-        "=== VERIFY ===\n" + r_ver["final"]
-    )
-
-    return {
-        "final": final,
-        "raw": {
-            "naive": r_naive,
-            "engineering": r_eng,
-            "extract": r_ext,
-            "verify": r_ver,
-        },
-        "error": None,
-    }
-
-
-async def _run_mix_v2(rag, question: str) -> Dict[str, Any]:
-    weights = CFG.MIX_V2_WEIGHTS if CFG else {"engineering": 0.6, "extract": 0.3, "naive": 0.1}
-    modes = ["engineering", "extract", "naive"]
-
-    results: Dict[str, Any] = {}
-    for m in modes:
-        if m == "extract":
-            results[m] = await _run_extract(rag, question, list_mode=False)
-        else:
-            results[m] = await _run_simple(rag, question, m)
-
-    block = []
-    for m in modes:
-        block.append(f"### [{m.upper()} – peso {weights[m]}]\n{results[m]['final']}\n")
-
-    return {
-        "final": "\n".join(block),
-        "raw": results,
-        "weights": weights,
-        "error": None,
-    }
-
-
 # ============================================================
-# FUNCIÓN PRINCIPAL PÚBLICA
+# Wrapper público UNIFICADO
 # ============================================================
-
 async def run_case_query_finetune(
     case_id: CaseId,
     mode: str,
     question: str,
     list_mode: bool = False,
-) -> Dict[str, Any]:
-    """
-    Punto de entrada único para todos los modos.
-    """
+):
     if CFG is None:
         raise RuntimeError("rag_config.py falló al cargar")
 
     rag = await _load_rag(case_id)
 
-    if mode == "extract":
-        return await _run_extract(rag, question, list_mode=list_mode)
+    if mode == "extract" or mode == "extract-list":
+        result = await _run_extract_multipaso(rag, question)
+        return {"final": json.dumps(result, ensure_ascii=False, indent=2),
+                "raw": result,
+                "error": None}
 
-    if mode == "extract-list":
-        return await _run_extract_list(rag, question)
+    if mode == "naive":
+        return await _run_simple(rag, question, "naive")
+    if mode == "engineering":
+        return await _run_simple(rag, question, "engineering")
+    if mode == "verify":
+        return await _run_simple(rag, question, "verify")
 
-    if mode == "mix":
-        return await _run_mix(rag, question)
-
-    if mode == "combo":
-        return await _run_combo(rag, question)
-
-    if mode == "mix-v2":
-        return await _run_mix_v2(rag, question)
-
-    return await _run_simple(rag, question, mode)
+    raise RuntimeError(f"Modo '{mode}' no soportado en esta versión multipaso")
 
 
 # ============================================================
 # CLI
 # ============================================================
-
 if __name__ == "__main__":
     import argparse
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--case-id", required=True)
     ap.add_argument("--question", required=True)
-    ap.add_argument("--mode", default="naive")
+    ap.add_argument("--mode", default="extract")
     ap.add_argument("--list-mode", action="store_true")
-
     args = ap.parse_args()
 
     out = asyncio.run(
@@ -359,5 +344,4 @@ if __name__ == "__main__":
             list_mode=args.list_mode,
         )
     )
-
     print(json.dumps(out, ensure_ascii=False, indent=2))
