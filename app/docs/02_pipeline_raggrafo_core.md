@@ -1,27 +1,29 @@
-Pipeline PC1–PC7 + LightRAG Core (RAG Local por Caso)
-Documentación técnica – Proyecto AutoSelectX (Tesis 2025)
+📘 Pipeline PC1–PC7 + LightRAG Core (RAG Local por Caso)
+Documentación técnica – Proyecto AutoSelect-X (Tesis 2025)
 1. Resumen Ejecutivo
 
-Este documento describe la arquitectura, funcionamiento y operación del pipeline técnico “Raggrafo Core”, que integra de manera completa:
+Este documento describe la arquitectura, funcionamiento y estado actualizado (2025-11-24) del pipeline técnico Raggrafo Core, componente central del proyecto AutoSelectX / AI EngiQuote, diseñado para procesar PDFs de ingeniería del sector Oil & Gas (Ecopetrol, Cupiagua, Caño Sur), construir un RAG por caso y extraer requisitos técnicos para selección y cotización de bombas dosificadoras.
 
-Procesamiento de PDFs de ingeniería (HD, MR, ET, P&ID).
+El pipeline integra:
 
-Normalización, limpieza y estructuración (PC1–PC5).
+PC1–PC5 → Procesamiento profundo de PDFs (texto, tablas, P&ID, secciones, contexto).
 
-Construcción del grafo técnico por caso (entidades, relaciones, chunks).
+PC6 → Construcción automática de RAG local por case_id usando LightRAG Core.
 
-Creación automática del RAG local por case_id mediante LightRAG Core (sin servidor).
+PC7 → Query inteligente multi-modo (naive, engineering, mix, mix-v2, verify).
 
-Consultas inteligentes usando diferentes modos del motor RAG.
+Pipeline industrial 80/20 para extract/extract-list.
 
-Integración con modelos OpenAI (GPT-4o-mini) usando QueryParam optimizado.
+Normalizador v3 (unidades → GPH/PSI/°C/cP).
 
-Benchmark técnico por caso (benchmark_queries_v5).
+Benchmark técnico v5.
 
-Cada caso (case_id) mantiene su propio corpus independiente, su grafo, embeddings, caches y estructura.
-Esto garantiza aislamiento, reproducibilidad, trazabilidad y escalabilidad del proyecto AutoSelectX.
+Aislamiento completo por caso (cada case_id tiene su grafo, embeddings, caches).
 
-2. Arquitectura General (Pipeline completo)
+Resultado:
+Un RAG estable, reproducible, industrial y escalable para extracción automática de parámetros técnicos.
+
+2. Arquitectura General (Pipeline Completo)
 PDFs (HD, MR, ET, P&ID)
         ↓
  PC1 – Lectura
@@ -30,84 +32,103 @@ PDFs (HD, MR, ET, P&ID)
  PC4 – Consolidación semántica
  PC5 – Construcción de grafo (entities / relations / chunks)
         ↓
- PC6 – Inicialización LightRAG (almacenamiento por caso)
+ PC6 – Inicialización LightRAG local (por caso)
         ↓
- PC7 – LightRAG Core (RAG local)
+ PC7 – LightRAG Core (RAG local independiente)
         ↓
- rag_case_query (múltiples modos RAG)
+ rag_case_query_finetune (múltiples modos)
         ↓
- Benchmark v5 (validación)
+ extract_and_normalize (normalización unificada)
+        ↓
+ benchmark_queries_v5 (validación industrial)
+
+Componentes adicionales:
+
+Normalizador v3 (corrige flujos min/nom/max y unidades).
+
+Multipaso 80/20 (DESCUBRE bombas → TAGS → TABLAS → FALLBACK JSON).
+
+RAG por caso: cada caso se procesa de forma aislada en rag_storage/case_<id>.
 
 3. Variables de Entorno Requeridas
-export OPENAI_API_KEY="sk-proj-XXXXXXX"
+Obligatorias
+export OPENAI_API_KEY="sk-proj-XXXX"
 export LLM_MODEL=gpt-4o-mini
 export EMBEDDING_MODEL=text-embedding-3-small
 export EMBEDDING_DIM=1536
 
-
-Opcionales:
-
+Opcionales
 export LIGHTRAG_LLM_BINDING=openai
 export LIGHTRAG_EMBEDDING_BINDING=openai
 export LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
 export NANO_VECTORDB_DIM=1536
 
-4. Ejecución completa del pipeline
-Procesamiento PC1–PC6 (por caso)
+4. Ejecución Completa del Pipeline (PC1–PC6)
 python -m raggrafo.scripts.run_pipeline_for_case \
     --case-id 14 \
     --with-pc6
 
 
-Esto genera el rag_storage/case_<id> completo.
+Esto genera:
 
-5. Consultas al RAG local
+rag_storage/case_14/
+    corpus, chunks, entidades, relaciones
+    vdb_entities.json
+    vdb_relationships.json
+    vdb_chunks.json
+    graph_chunk_entity_relation.graphml
+    llm_response_cache.kv
+    doc_status.json
 
-Consulta directa por modo:
-
-python -m raggrafo.pipelines.rag_case_query \
+5. Consultas al RAG Local
+Modo directo:
+python -m raggrafo.pipelines.rag_case_query_finetune \
     --case-id 14 \
     --mode engineering \
-    --question "PREGUNTA"
+    --question "¿Cuál es el caudal nominal?"
 
-
-Para ver la salida cruda:
-
+Ver salida cruda:
 --raw
 
-6. Ejemplos (Case 14)
-Caudal nominal
-P-5540 → 2.0 gpd
-P-5541 → 1.0 gpd
-P-5542 → 0.51 gpd
-P-5543 → 1.0 gpd
-P-5544 → 3.0 gpd
-P-5545 → 2.0 gpd
+6. Ejemplos Reales (Case 2 / Cupiagua)
+Caudales nominales (extraídos con extract-list + normalización)
+
+P-5540 → 0.1-2.0 GPD
+
+P-5541 → 0.1-1.0 GPD
+
+P-5542 → 0.01-0.51 GPD
+
+P-5543 → 0.1-1.0 GPD
+
+P-5544 → 0.3-3.0 GPD
+
+P-5545 → 0.1-2.0 GPD
+
+Convertidos a GPH automáticamente por el Normalizador v3.
 
 Turndown
-10:1 ±1% según API 675
 
-Ensayo NDT
+≈ 10:1 (según API-675)
 
-Inspección No Destructiva – normas, ITP, aceptación.
+Ensayos NDT
 
-7. Modos reales del RAG Local
+Inspección según normas API/ASME, extraíble por modo engineering.
 
-Estos son los modos implementados actualmente en AutoSelectX:
-
+7. Modos Reales del RAG Local (AutoSelectX)
 Modo	Estado	Descripción
-naive	✔ Funcional	Respuesta directa basada en chunks
-verify	✔ Funcional	Chequeo cruzado + coherencia
-engineering	⭐ Mejor respuesta	Explicación técnica completa
-mix	✔ Funcional	Fusión naive+engineering
-mix-v2	✔ Funcional	Fusión ponderada (pesos en rag_config)
-combo	✔ Funcional	Orquesta naive+engineering+verify
-extract	❌ Pendiente	Requiere template JSON
-extract-list	❌ Pendiente	Igual que extract, formato lista
-
-ENGINEERING es el modo principal recomendado.
-
-8. Estructura generada por caso
+naive	✔ OK	Respuesta directa basada en chunks
+verify	✔ OK	Chequeo cruzado / consistencia
+engineering	⭐ TOP	Explicación técnica detallada
+mix	✔ OK	naive + engineering
+mix-v2	✔ OK	Ponderado (pesos desde rag_config)
+combo	✔ OK	naive + engineering + verify
+extract	✔ OK	Modo estructurado, una bomba
+extract-list	✔ OK	Modo industrial 80/20 (todas las bombas)
+El modo recomendado:
+ENGINEERING para texto
+extract-list para extracción técnica industrial
+8. Estructura Generada por Caso
 rag_storage/
  └── case_14/
       full_docs.jsonl
@@ -122,50 +143,72 @@ rag_storage/
       vdb_chunks.json
       doc_status.json
       llm_response_cache.kv
+      raw.json
+      normalized.json
 
 
-Cada directorio es autosuficiente.
+Todos los archivos son autosuficientes y reproducibles.
 
-9. Buenas prácticas
+9. Buenas Prácticas
 
 No mezclar PDFs entre casos.
 
-No reutilizar IDs de casos procesados previamente.
+Case IDs inmutables.
 
-Mantener trazabilidad del PDF original.
+Respetar nombres HD/MR/ET.
 
-Mantener consistencia en nombres (HD/MR/ET).
+Mantener backups de PDFs originales.
 
-Borrar caché solo si el pipeline lo requiere.
+Borrar caché solo si es estrictamente necesario.
 
-Documentar versiones de modelos y embedding.
+Registrar versión del modelo LLM y embeddings.
 
-10. Avances recientes añadidos (2025)
+10. Avances Recientes (2025-11-24)
+✔ Gran avance del proyecto:
 
-✔ Pipeline PC1-PC6 revisado y estable
-✔ PC6 inicializa LightRAG local sin servidor
-✔ QueryParam extendido, ahora 100% compatible
-✔ Fusion mix-v2 estable
-✔ benchmark_queries_v5 funcionando
-✔ engineering = modo recomendado
-✔ extract y extract-list ya integrados en código
-❗ Pendiente: activar plantilla JSON para extract y extract-list
+✔ Pipeline PC1–PC6 estable y validado.
+
+✔ LightRAG Core funcionando sin servidor por caso.
+
+✔ query_param y binding OpenAI integrados.
+
+✔ Fusión mix-v2 optimizada.
+
+✔ extract-list industrial 80/20 funcionando.
+
+✔ Normalizador v3 estable (GPH/PSI/°C/cP).
+
+✔ Corrección automática del flujo nominal = null cuando corresponde.
+
+✔ Multipaso inteligente (tags → tablas → fallback).
+
+✔ benchmark_queries_v5 funcionando correctamente.
+
+✔ Grafo técnico estable (305 nodos, 272 edges en Case 2).
+
+✔ Error interno de LightRAG "mode NoneType" aislado e inofensivo.
+
+✔ Interoperabilidad total con extract_and_normalize.py.
 
 11. Trabajo Futuro
 
-Implementar JSON schema definitivo para extract-list.
+Implementar JSON schema rígido para extract-list.
 
-Conectar rag_case_query al chat web del caso.
+Conectar extracción al chat web del caso.
 
-Parametrizar lógica de selección automática de bombas.
+Integrar selector automático de bomba (AI EngiQuote).
 
-Integración total AI EngiQuote (selector, precios, reporte técnico).
+Integración con Cloud SQL / precios.
 
-Métricas: tiempo por modo, aciertos, calidad de chunking.
+Métricas por modo: precisión, chunks, tiempo.
 
-Ampliación para RETIE 2025, API 675 y ANSI/HI.
+Optimizar PC4 para RETIE 2025 y API-675.
+
+Formalizar reportes PDF automáticos.
 
 12. Autor
 
-Victor Murcia – Proyecto AutoSelectX
-Maestría en Ingeniería de Sistemas y Computación – Universidad del Valle
+Victor Murcia
+Proyecto AutoSelectX – AI EngiQuote
+Maestría en Ingeniería de Sistemas y Computación
+Universidad del Valle, 2025

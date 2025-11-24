@@ -1,22 +1,30 @@
 # -*- coding: utf-8 -*-
 """
-RAG CONFIG – AutoSelect-X (LOCAL, versión final con bloque FLOW)
-================================================================
+RAG CONFIG – AutoSelect-X (INDUSTRIAL, versión final estable)
+==============================================================
 
-- Nuevo bloque flow: {min, nominal, max, raw}
-- El resto del schema se mantiene idéntico
-- 100% compatible con rag_case_query_finetune y PC6/PC7
-- Sin f-strings → seguro para Prompt JSON
+- Define TODOS los prompts y schemas usados por el pipeline.
+- Mantiene consistencia absoluta con:
+    • rag_case_query_finetune.py  (multipaso industrial)
+    • extract_and_normalize.py
+    • normalizer v4
+    • PC6/PC7 LightRAG local
+
+- Incluye:
+    ✔ Schema expandido con flow {min, nominal, max, raw}
+    ✔ Versiones SINGLE y LIST
+    ✔ Prompts universalmente compatibles (sin f-strings)
+    ✔ QueryParam seguro para LightRAG
 """
 
 from __future__ import annotations
 from typing import Any, Dict
 import json
 
-# ============================================================
-# QueryParam seguro
-# ============================================================
 
+# ============================================================
+# QueryParam seguro (funciona incluso si LightRAG falla)
+# ============================================================
 try:
     from lightrag import QueryParam
 except Exception:
@@ -24,8 +32,10 @@ except Exception:
 
 
 def build_query_param(**kwargs) -> Any:
+    """Crea QueryParam seguro sin romper si LightRAG está ausente."""
     if QueryParam is None:
         return {"__type__": "QueryParam", **kwargs}
+
     try:
         return QueryParam(**kwargs)
     except Exception:
@@ -33,25 +43,25 @@ def build_query_param(**kwargs) -> Any:
 
 
 # ============================================================
-# UNIDADES PERMITIDAS (normalizador)
+# UNIDADES PERMITIDAS (para Normalizer v4)
 # ============================================================
-
 UNITS_ALLOWED = {
     "flow": ["GPH", "LPH", "GPD", "LPD"],
     "pressure": ["PSI", "PSIG", "BAR"],
     "temperature": ["°C", "C", "°F", "F"],
-    "viscosity": ["CP"]
+    "viscosity": ["CP", "cP"],
 }
 
 UNITS_STANDARD = {
     "flow": "GPH",
     "pressure": "PSI",
     "temperature": "°C",
-    "viscosity": "cP"
+    "viscosity": "cP",
 }
 
+
 # ============================================================
-# SCHEMA MINIMAL (NUEVA VERSIÓN CON FLOW COMPLETO)
+# SCHEMA (EXPANDIDO INDUSTRIAL)
 # ============================================================
 
 PUMP_SCHEMA_MINIMAL_EXPANDED = """
@@ -119,7 +129,7 @@ PUMP_SCHEMA_MINIMAL_LIST_EXPANDED = """
 }
 """
 
-# Para validación interna
+# Objetos JSON reales
 PUMP_SCHEMA_MINIMAL = json.loads(PUMP_SCHEMA_MINIMAL_EXPANDED)
 PUMP_SCHEMA_MINIMAL_LIST = json.loads(PUMP_SCHEMA_MINIMAL_LIST_EXPANDED)
 
@@ -129,38 +139,40 @@ PUMP_SCHEMA_MINIMAL_LIST = json.loads(PUMP_SCHEMA_MINIMAL_LIST_EXPANDED)
 # ============================================================
 
 PROMPT_NAIVE = """
-Actúa como asistente técnico. Responde claro y sin inventar datos.
-Usa exclusivamente la información existente en los documentos del caso.
+Actúa como asistente técnico. Responde sin inventar datos.
+Usa exclusivamente valores literales presentes en HD, MR, ET y P&ID.
 """
 
 PROMPT_ENGINEERING = """
 Actúa como ingeniero especializado en sistemas de inyección química.
-Usa valores reales del caso y cita páginas cuando existan.
-No inventes datos. Si no hay información, dilo.
+Cita páginas y tablas cuando sea posible. NO inventes datos.
+Si la información no existe explícitamente, deja null.
 """
 
 PROMPT_VERIFY = """
 Verifica consistencia entre HD, MR, ET y P&ID:
-- Caudal, presión, viscosidad
-- Materiales
+- Caudal, presión, viscosidad, temperatura
+- Materiales y servicio
 - Requisitos eléctricos
-Indica contradicciones y señala qué valores son confiables.
+Indica contradicciones sin inventar información.
 """
 
 
 # ============================================================
-# PROMPTS JSON
+# PROMPTS JSON (SINGLE / LIST)
 # ============================================================
 
 PROMPT_JSON_SINGLE = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
-y devuelve UNA ÚNICA BOMBA (la más relevante para la pregunta),
-con el SIGUIENTE FORMATO EXACTO:
+y devuelve UNA ÚNICA BOMBA, con el SIGUIENTE FORMATO EXACTO:
 
 REEMPLAZAR_AQUI_SCHEMA_MINIMAL
 
-NO inventes datos.
-Solo llena información textual literal encontrada en los documentos.
+Reglas:
+- Usa SOLO valores literales encontrados.
+- Si un campo no existe, déjalo null.
+- NO inventes mínimos, nominales o máximos.
+- flow.raw SIEMPRE debe contener el texto literal.
 """
 
 PROMPT_JSON_SINGLE = PROMPT_JSON_SINGLE.replace(
@@ -168,19 +180,19 @@ PROMPT_JSON_SINGLE = PROMPT_JSON_SINGLE.replace(
     PUMP_SCHEMA_MINIMAL_EXPANDED
 )
 
+
 PROMPT_JSON_LIST = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID)
-y devuelve TODAS LAS BOMBAS encontradas (incluso si es una sola),
+y devuelve TODAS las bombas encontradas (una o varias),
 con el SIGUIENTE FORMATO EXACTO:
 
 REEMPLAZAR_AQUI_SCHEMA_MINIMAL_LIST
 
 Reglas:
-- Usa SOLO valores literales de los documentos.
+- Usa SOLO valores literales del caso.
 - NO inventes mínimos, nominales o máximos.
-- Si NO existe explícitamente, deja null.
-- El campo "flow.raw" SIEMPRE debe contener el texto EXACTO encontrado.
-
+- flow.raw SIEMPRE debe contener el texto literal encontrado.
+- Si no existe un valor explícito, déjalo en null.
 """
 
 PROMPT_JSON_LIST = PROMPT_JSON_LIST.replace(
@@ -209,43 +221,46 @@ _MODES: Dict[str, Dict[str, Any]] = {
         "query_param": build_query_param(),
     },
 
+    # Modo extract (1 sola bomba si aplica)
     "extract": {
         "prompt_json": PROMPT_JSON_LIST,
         "schema": PUMP_SCHEMA_MINIMAL_LIST,
 
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
+
         "schema_single": PUMP_SCHEMA_MINIMAL,
         "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
 
         "query_param": build_query_param(),
-        "list_mode": True,
     },
 
+    # Modo extract-list (siempre todas las bombas)
     "extract-list": {
         "prompt_json": PROMPT_JSON_LIST,
         "schema": PUMP_SCHEMA_MINIMAL_LIST,
 
         "prompt_json_single": PROMPT_JSON_SINGLE,
         "prompt_json_list": PROMPT_JSON_LIST,
+
         "schema_single": PUMP_SCHEMA_MINIMAL,
         "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
 
         "query_param": build_query_param(),
-        "list_mode": True,
     },
 
     "mix": {
-        "submodes": ["naive", "engineering"]
+        "submodes": ["naive", "engineering"],
     },
 
     "combo": {
-        "submodes": ["naive", "engineering", "extract", "verify"]
+        "submodes": ["naive", "engineering", "extract", "verify"],
     },
 
     "mix-v2": {
         "submodes": ["engineering", "extract", "naive"],
         "weights": {"engineering": 0.6, "extract": 0.3, "naive": 0.1},
+        "query_param": build_query_param(),
     },
 }
 
@@ -258,7 +273,6 @@ EXTRACT_CONFIG: Dict[str, Any] = {
     "schema_single": PUMP_SCHEMA_MINIMAL,
     "schema_list": PUMP_SCHEMA_MINIMAL_LIST,
     "query_param": build_query_param(),
-    "list_mode": True,
 }
 
-EXTRACT_METHOD = "A"
+EXTRACT_METHOD = "A"  # Método por defecto

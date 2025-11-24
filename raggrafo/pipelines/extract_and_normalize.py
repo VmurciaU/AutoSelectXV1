@@ -3,18 +3,15 @@
 EXTRACT & NORMALIZE – AutoSelect-X
 ==================================
 
-Función unificada para:
-1. Ejecutar el pipeline RAG (cualquier modo)
-2. Guardar raw.json
-3. Normalizar el resultado (Normalizer v4)
-4. Guardar normalized.json
-5. Imprimir ambos en pantalla
-6. Retornar un dict limpio para la UI
+Pipeline unificado:
+1. Ejecuta RAG (extract / extract-list)
+2. Guarda raw.json
+3. Normaliza → normalizado.json
+4. Retorna dict listo para UI
 
-Usa:
+Depende de:
 - rag_case_query_finetune.extract_query()
 - normalizer.normalize_result()
-- normalizer.save_normalized()
 """
 
 from __future__ import annotations
@@ -32,9 +29,8 @@ from . import normalizer as NORM
 
 
 # ================================================================
-# UTILIDAD: GUARDAR RAW.JSON
+# GUARDAR RAW.JSON
 # ================================================================
-
 def _save_raw(case_id: int, raw: Dict[str, Any]) -> str:
     base_dir = os.path.join("raggrafo", "rag_storage", f"case_{case_id}")
     os.makedirs(base_dir, exist_ok=True)
@@ -50,26 +46,12 @@ def _save_raw(case_id: int, raw: Dict[str, Any]) -> str:
 # ================================================================
 # FUNCIÓN PRINCIPAL
 # ================================================================
-
 async def extract_and_normalize(
     case_id: int,
     question: str,
     mode: str = "extract-list",
     top_k: int = 6
 ) -> Dict[str, Any]:
-    """
-    Ejecuta:
-      1. RAG (modo configurable)
-      2. Guarda raw.json
-      3. Normaliza -> normalized.json
-      4. Retorna dict final
-
-    Parámetros:
-      case_id: ID del caso
-      question: pregunta al RAG
-      mode: extract, extract-list, engineering, verify, mix, mix-v2, etc.
-      top_k: número de chunks a recuperar
-    """
 
     print("\n====================================================")
     print("        EJECUTANDO RAG (extract + normalize)")
@@ -96,7 +78,7 @@ async def extract_and_normalize(
     # 2. Guardar RAW
     _save_raw(case_id, raw)
 
-    # 3. Normalizar usando Normalizer v4
+    # 3. Normalizar
     normalized = await NORM.normalize_result(raw)
 
     # 4. Guardar NORMALIZED
@@ -109,7 +91,6 @@ async def extract_and_normalize(
     print("\n===== NORMALIZED =====")
     print(json.dumps(normalized, ensure_ascii=False, indent=2))
 
-    # 6. Retornar para la UI
     return {
         "case_id": case_id,
         "raw": raw,
@@ -118,17 +99,14 @@ async def extract_and_normalize(
 
 
 # ================================================================
-# CLI MANUAL
+# CLI
 # ================================================================
-
 if __name__ == "__main__":
     import sys
 
     if len(sys.argv) < 4:
         print("\nUso:")
         print("  python -m raggrafo.pipelines.extract_and_normalize CASE_ID \"pregunta\" MODE")
-        print("\nEjemplo:")
-        print("  python -m raggrafo.pipelines.extract_and_normalize 2 \"¿Cuál es el flujo nominal?\" extract-list")
         sys.exit(1)
 
     case_id = int(sys.argv[1])
