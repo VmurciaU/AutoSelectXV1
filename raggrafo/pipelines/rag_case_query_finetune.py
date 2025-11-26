@@ -60,14 +60,23 @@ async def _safe_aquery(rag, question: str, query_param=None):
 
     - Verifica que RAG exista
     - Verifica que aquery sea async
+    - Si no se pasa query_param, usa uno seguro por defecto desde rag_config
     """
     if rag is None:
         raise RuntimeError("RAG no inicializado")
+
+    # Si no tenemos query_param, intentamos usar el de 'naive' (o 'engineering')
+    if query_param is None and CFG is not None and hasattr(CFG, "MODES"):
+        default_cfg = CFG.MODES.get("naive") or CFG.MODES.get("engineering") or {}
+        qp = default_cfg.get("query_param")
+        if qp is not None:
+            query_param = qp
 
     if hasattr(rag, "aquery") and inspect.iscoroutinefunction(rag.aquery):
         return await rag.aquery(question, query_param)
 
     raise RuntimeError("LightRAG local no implementa aquery async")
+
 
 
 async def _load_rag(case_id: CaseId):

@@ -195,6 +195,8 @@ Reglas:
 - Si no existe un valor explícito, déjalo en null.
 """
 
+
+
 PROMPT_JSON_LIST = PROMPT_JSON_LIST.replace(
     "REEMPLAZAR_AQUI_SCHEMA_MINIMAL_LIST",
     PUMP_SCHEMA_MINIMAL_LIST_EXPANDED

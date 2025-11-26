@@ -135,13 +135,14 @@
                         {% else %}
                           {# Mensajes normales (usuario o asistente sin RAW) #}
                           <div class="prose prose-invert prose-xs max-w-none [&_*]:text-[0.82rem]">
-                            {{ msg.content | replace('\n', '<br>') | safe }}
+                            {{ msg.content | safe }}
                           </div>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                          
+                          {% endif %}
+                          </div>
+                          </div>
+                          </div>
+                          </div>
               {% endfor %}
             {% else %}
               <div class="text-center text-sm text-gray-400 mt-10 space-y-2">
@@ -152,7 +153,16 @@
                 </p>
               </div>
             {% endif %}
+            
+            <!-- TIMER DE TYPING DEL ASISTENTE -->
+            <div id="typing-indicator" class="hidden flex items-center gap-2 text-xs text-gray-400 px-2 py-1">
+              <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+              <span id="typing-text">AX está escribiendo…</span>
+              <span id="typing-timer">(0:00)</span>
+            </div>
           </div>
+
+
         </div>
 
         <!-- Input fijo abajo -->
@@ -171,16 +181,14 @@
             <div class="flex items-center justify-between gap-3 text-xs text-gray-400">
               <div class="flex flex-wrap items-center gap-2">
                 <span>Comandos sugeridos:</span>
+
+                <!-- NUEVO: Comando buscar bomba para un ítem -->
                 <button type="button"
                         class="px-2 py-1 rounded-full bg-gray-800 border border-gray-600 hover:bg-gray-700"
-                        onclick="document.getElementById('user_message').value='Extrae una tabla con Tag, caudal, presión y viscosidad de las bombas dosificadoras de este caso.'">
-                  @extraer_requisitos_item_1
+                        onclick="setCommandAndSubmit('@buscar_bombas_items')">
+                  @buscar_bombas_items
                 </button>
-                <button type="button"
-                        class="px-2 py-1 rounded-full bg-gray-800 border border-gray-600 hover:bg-gray-700"
-                        onclick="document.getElementById('user_message').value='Resume los requisitos principales de caudal y presión que aparecen en la Hoja de Datos.'">
-                  @resumen_hd
-                </button>
+
               </div>
 
               <button
@@ -401,5 +409,64 @@
       });
     }
   })();
+
+  // Helper: pone el comando en el textarea y envía el formulario
+  function setCommandAndSubmit(cmd) {
+    const textarea = document.getElementById('user_message');
+    if (!textarea) return;
+    textarea.value = cmd;
+    const form = textarea.closest('form');
+    if (form) {
+      form.submit();
+    }
+  }
 </script>
+
+<script>
+  let typingInterval = null;
+  let seconds = 0;
+
+  function startTypingTimer() {
+    const indicator = document.getElementById("typing-indicator");
+    const timer = document.getElementById("typing-timer");
+
+    indicator.classList.remove("hidden");
+    seconds = 0;
+
+    typingInterval = setInterval(() => {
+      seconds++;
+      const m = String(Math.floor(seconds / 60)).padStart(1, "0");
+      const s = String(seconds % 60).padStart(2, "0");
+      timer.textContent = `(${m}:${s})`;
+    }, 1000);
+  }
+
+  function stopTypingTimer() {
+    const indicator = document.getElementById("typing-indicator");
+    indicator.classList.add("hidden");
+
+    if (typingInterval) {
+      clearInterval(typingInterval);
+      typingInterval = null;
+    }
+  }
+
+  // Hook: cuando se envía el formulario, iniciamos el timer
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    if (form) {
+      form.addEventListener("submit", () => {
+        startTypingTimer();
+      });
+    }
+  });
+
+  // Hook: cuando la página recarga por la respuesta, detener timer
+  window.addEventListener("load", () => {
+    stopTypingTimer();
+  });
+</script>
+
+
 {% endblock %}
