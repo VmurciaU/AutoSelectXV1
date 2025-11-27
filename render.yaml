@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: autoselectx-app
+    env: python
+    region: ohio
+    plan: free
+
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    envVars:
+      - key: PROJECT_ROOT
+        value: /var/data
+
+      - key: DATABASE_URL
+        fromDatabase:
+          name: autoselectx-db
+          property: connectionString
+
+    disk:
+      name: rag-storage
+      mountPath: /var/data
+      sizeGB: 1
+
+databases:
+  - name: autoselectx-db
+    region: ohio
+    plan: free
