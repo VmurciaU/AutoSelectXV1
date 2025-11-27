@@ -64,18 +64,49 @@ Caches por caso
 
 Grafo técnico (GraphML) por caso
 
-3. Variables de Entorno Requeridas
-🟦 Obligatorias
-export OPENAI_API_KEY="sk-proj-XXXX"
-export LLM_MODEL=gpt-4o-mini
-export EMBEDDING_MODEL=text-embedding-3-small
-export EMBEDDING_DIM=1536
+# 3. Variables de Entorno Requeridas
+# 3.1. Variables para Desarrollo (LOCAL)
+# Archivo sugerido: .env.local
 
-🟨 Opcionales
-export LIGHTRAG_LLM_BINDING=openai
-export LIGHTRAG_EMBEDDING_BINDING=openai
-export LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
-export NANO_VECTORDB_DIM=1536
+# === OpenAI / Modelos ===
+OPENAI_API_KEY="sk-proj-XXXX"
+LLM_MODEL="gpt-4o-mini"
+EMBEDDING_MODEL="text-embedding-3-small"
+EMBEDDING_DIM="1536"
+
+# === LightRAG / VectorDB ===
+LIGHTRAG_LLM_BINDING="openai"
+LIGHTRAG_EMBEDDING_BINDING="openai"
+LIGHTRAG_EMBEDDING_MODEL="text-embedding-3-small"
+NANO_VECTORDB_DIM="1536"
+
+# === Base de Datos Local ===
+DATABASE_URL="postgresql://postgres:root@localhost:5433/autoselectx"
+
+
+# 3.2. Variables para Producción (Render)
+# Configurar en: Render → Environment → Environment Variables
+
+# === OpenAI / Modelos ===
+OPENAI_API_KEY=sk-proj-XXXX
+LLM_MODEL=gpt-4o-mini
+EMBEDDING_MODEL=text-embedding-3-small
+EMBEDDING_DIM=1536
+
+# === LightRAG / VectorDB ===
+LIGHTRAG_LLM_BINDING=openai
+LIGHTRAG_EMBEDDING_BINDING=openai
+LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
+NANO_VECTORDB_DIM=1536
+
+# === Base de Datos (Render) ===
+DATABASE_URL=postgres://<USER>:<PASSWORD>@<HOST>.internal:5432/<DBNAME>
+
+# === Seguridad / Autenticación ===
+SECRET_KEY=sBk3K8ef13AxU2aFAKEKEY123
+JWT_ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
 
 4. Ejecución Completa del Pipeline (PC1–PC6)
 python -m raggrafo.scripts.run_pipeline_for_case \

@@ -1,21 +1,39 @@
 # app/database/conection.py
+
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# URL de conexión a tu base de datos PostgreSQL
-DATABASE_URL = "postgresql://postgres:root@localhost:5433/autoselectx"
+# =====================================================
+# 1. Leer DATABASE_URL desde variables de entorno
+# =====================================================
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Motor SQLAlchemy
-engine = create_engine(DATABASE_URL)
+# Si no existe DATABASE_URL (por ejemplo en local)
+# usamos la URL por defecto local:
+if not DATABASE_URL:
+    print("⚠️ Aviso: DATABASE_URL no encontrada. Usando configuración LOCAL.")
+    DATABASE_URL = "postgresql://postgres:root@localhost:5433/autoselectx"
 
-# Sesión local (manejo de transacciones)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# =====================================================
+# 2. Crear engine SQLAlchemy para cualquier entorno
+# =====================================================
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,   # Evita conexiones rotas en Render
+)
 
-# Base declarativa para todos los modelos
+# Sesión para transacciones
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+# Base de modelos
 Base = declarative_base()
 
-# ✅ Función auxiliar (para usar en scripts de creación)
+# Auxiliar para debug
 def get_db_url() -> str:
-    """Retorna la URL de conexión a la base de datos"""
     return DATABASE_URL
