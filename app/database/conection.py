@@ -24,7 +24,18 @@ engine = create_engine(
     pool_pre_ping=True,   # Evita conexiones rotas en Render
 )
 
-# Sesión para transacciones
+# =====================================================
+# 3. 🔥 FORZAR CONEXIÓN AL ARRANCAR (debug Render)
+# =====================================================
+try:
+    with engine.connect() as conn:
+        print("✔ Connected to database!")
+except Exception as e:
+    print("❌ Database connection failed:", e)
+
+# =====================================================
+# 4. Crear sesión SQLAlchemy
+# =====================================================
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
