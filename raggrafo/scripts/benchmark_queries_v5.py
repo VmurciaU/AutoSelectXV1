@@ -52,14 +52,17 @@ async def run_modes(case_id: int, question: str, modes: List[str]) -> Dict[str, 
         print(f" Ejecutando [{mode}]...")
         t0 = time.perf_counter()
         try:
-            # list_mode=True solo tiene efecto real en modo "extract"
-            list_mode = (mode == "extract-list")
+            # ⚠️ IMPORTANTE:
+            # Antes se pasaba list_mode al finetune, pero la firma actual de
+            # run_case_query_finetune ES solo (case_id, mode, question).
+            # El manejo de "extract" / "extract-list" se hace INTERNAMENTE
+            # en extract_query, usando el parámetro `mode`.
             r = await run_case_query_finetune(
                 case_id=case_id,
                 mode=mode,
                 question=question,
-                list_mode=list_mode,
             )
+
             elapsed = time.perf_counter() - t0
             results[mode] = {
                 "elapsed_s": round(elapsed, 2),

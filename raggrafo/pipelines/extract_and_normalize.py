@@ -121,28 +121,29 @@ if __name__ == "__main__":
 # ================================================================
 # FUNCIÓN SINCRÓNICA PARA FASTAPI
 # ================================================================
-def run_extract_and_normalize(case_id: int, question: str, mode: str = "extract-list", top_k: int = 6) -> Dict[str, Any]:
+def run_extract_and_normalize(case_id: int, question: str, mode="extract-list", top_k=6):
     """
-    Envoltura sincrónica para usar extract_and_normalize() desde FastAPI.
-    Ejecuta el pipeline completo y devuelve el dict final.
+    Wrapper SEGURO para FastAPI.
+    Ejecuta extract_and_normalize() dentro del loop sin bloquearlo.
     """
     try:
+        # Caso: CLI (no hay loop)
         return asyncio.run(
             extract_and_normalize(
                 case_id=case_id,
                 question=question,
                 mode=mode,
-                top_k=top_k
+                top_k=top_k,
             )
         )
     except RuntimeError:
-        # Si ya existe un loop (FastAPI), usar create_task
-        loop = asyncio.get_event_loop()
-        return loop.run_until_complete(
+        # Caso: FastAPI (loop ya corriendo)
+        loop = asyncio.get_running_loop()
+        return loop.create_task(
             extract_and_normalize(
                 case_id=case_id,
                 question=question,
                 mode=mode,
-                top_k=top_k
+                top_k=top_k,
             )
         )

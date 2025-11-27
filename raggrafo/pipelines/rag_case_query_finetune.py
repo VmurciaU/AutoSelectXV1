@@ -33,6 +33,7 @@ import json
 import re
 from pathlib import Path
 from typing import Any, Dict, List, Union
+import copy
 
 from .pc6_lightrag import (
     RAG_STORAGE_DIR,
@@ -182,8 +183,10 @@ def _fix_pump_flow(pump: Dict[str, Any]) -> Dict[str, Any]:
 
     # Caso industrial genérico:
     # - RAW tiene "mínima ... X; máxima ... Y"
-    # - JSON trae min=None, nominal=X, max=Y
     # - RAW NO menciona "nominal"
+    # Regla de la casa:
+    #   -> reconstruimos min/max si faltan
+    #   -> PERO NUNCA aceptamos un "nominal" inventado si el texto no dice "nominal".
     if not nominal_in_text and len(nums) >= 2:
         # Rellenar min / max si faltan
         if fmin is None:
@@ -193,10 +196,10 @@ def _fix_pump_flow(pump: Dict[str, Any]) -> Dict[str, Any]:
             fmax = nums[1]
             flow["max"] = fmax
 
-        # Si nominal coincide con uno de los extremos y no hay "nominal" en texto,
-        # asumimos que es un error del LLM y lo anulamos.
-        if fnom is not None and (fnom == fmin or fnom == fmax):
+        # Cualquier valor de nominal en este contexto es sospechoso → lo anulamos.
+        if fnom is not None:
             flow["nominal"] = None
+
 
     pump["flow"] = flow
     return pump
@@ -231,14 +234,26 @@ async def _discover_pumps_primary(rag) -> List[str]:
     """
     prompt = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID).
-Devuelve SOLO los TAGs de bombas dosificadoras en este formato JSON:
+
+Tu tarea es ENCONTRAR TODAS las bombas dosificadoras de químicos del paquete
+(incluyendo bombas en paralelo, stand-by, redundantes, etc.).
+
+Devuelve SOLO los TAGs de esas bombas en este formato JSON ESTRICTO:
 
 {
   "tags": ["P-101", "P-102", "P-103"]
 }
 
-NO inventes datos. Si no estás seguro, deja la lista vacía.
+Reglas IMPORTANTES:
+- Si encuentras una TABLA de datos de proceso (por ejemplo en la ET o en la HD)
+donde aparezcan varios TAG de bombas dosificadoras (como P-5540, P-5541, P-5542, etc.),
+  debes incluir TODOS esos TAGs en la lista.
+- No agrupes varias bombas en un solo TAG.
+- No mezcles TAG de otros equipos (tanques, válvulas, etc.), solo bombas dosificadoras.
+- NO inventes TAGs. Solo devuelve los que realmente aparezcan en las tablas o texto.
+- Si no estás seguro, usa una lista vacía: "tags": [].
 """
+
     resp = await _safe_aquery(rag, prompt)
     safe = repair_and_parse(resp)
 
@@ -480,16 +495,42 @@ async def _run_extract_multipaso(rag, question: str, mode: str) -> Dict[str, Any
     fb_prompt = mode_cfg.get("prompt_json_list", "")
     fb_qp = mode_cfg.get("query_param")
 
+    # Pregunta canónica interna: SIEMPRE extrae todas las bombas
+    canonical_q = (
+        "Listado completo de bombas dosificadoras del paquete químico con todos "
+        "sus datos de proceso (caudal mínimo, nominal y máximo, presión, "
+        "temperatura, viscosidad, servicio y TAG)."
+    )
+
     fb = await _safe_aquery(
         rag,
-        fb_prompt + f"\n\nPregunta:\n{question}",
+        fb_prompt + f"\n\nPregunta:\n{canonical_q}",
         fb_qp,
     )
+
     safe_fb = repair_and_parse(fb)
+
     if isinstance(safe_fb, dict) and isinstance(safe_fb.get("pumps"), list):
-        # Aplicamos postproceso genérico de flow a todas las bombas
-        res = {"pumps": safe_fb["pumps"], "notes": "fallback-A"}
-        return _postprocess_result(res)
+        res = {
+            "pumps": safe_fb["pumps"],
+            "notes": "fallback-A",
+            "_fallback_text": fb,
+        }
+    else:
+        res = {
+            "pumps": [],
+            "notes": "fallback-invalid",
+            "_fallback_text": fb,
+        }
+
+    return res
+
+    
+
+
+
+
+
 
     # Sin contexto suficiente
     return {"pumps": [], "notes": "no-context"}
@@ -517,10 +558,23 @@ async def extract_query(
 
     # Modos estructurados
     if mode in ("extract", "extract-list"):
+        
         result = await _run_extract_multipaso(rag, question, mode)
-        # Postproceso de seguridad: aseguramos que TODOS los flows
-        # pasen por la corrección industrial.
+
+
+        # 1) Postproceso industrial obligatorio
         result = _postprocess_result(result)
+
+        # 2) NUEVO: duplicador de bombas FINAL
+        if isinstance(result, dict) and isinstance(result.get("pumps"), list):
+            # Usamos el texto crudo que pasó por fallback
+            # El multipaso mete el fb original dentro de `notes` o en el safe_fb... 
+            # pero para modos extract-list SIEMPRE tenemos full_str en result["final"].
+            # Tomar el texto del fallback si existe
+            fallback_text = result.get("_fallback_text") or ""
+            result["pumps"] = apply_pump_count_postprocessor(result["pumps"], fallback_text)
+
+
 
         if return_raw_dict:
             return result
@@ -531,10 +585,30 @@ async def extract_query(
         }
 
     # Modos de texto libre (naive, mix, combo, engineering, verify, etc.)
-    out = await _safe_aquery(rag, question)
+    # Usamos la configuración específica del modo si está definida en rag_config.
+    query_param = None
+    if CFG is not None and hasattr(CFG, "MODES"):
+        mode_cfg = CFG.MODES.get(mode) or {}
+        query_param = mode_cfg.get("query_param")
+
+    out = await _safe_aquery(rag, question, query_param)
+
+    # Normalizamos la salida a texto + raw + error=None
     if isinstance(out, dict):
-        return {"text": out.get("text"), "notes": "text-mode"}
-    return {"text": str(out), "notes": "text-mode"}
+        # Muchos modelos devuelven {"text": "..."}; si no, serializamos.
+        text = out.get("text") or out.get("answer")
+        if text is None:
+            text = json.dumps(out, ensure_ascii=False)
+        raw = out
+    else:
+        text = str(out)
+        raw = {"text": text}
+
+    return {
+        "final": text,
+        "raw": raw,
+        "error": None,
+    }
 
 
 # ================================================================
@@ -551,6 +625,88 @@ async def run_case_query_finetune(case_id: CaseId, mode: str, question: str):
             --question "¿Cuál es el caudal nominal?"
     """
     return await extract_query(int(case_id), question, mode)
+
+
+import re
+import copy
+
+def apply_pump_count_postprocessor(pumps: list, fb_text: str) -> list:
+    """
+    Duplica bombas cuando el fallback detecta 1 pero el texto menciona múltiples.
+    - No modifica prompts
+    - No modifica el JSON original
+    - No afecta normalizer
+    """
+
+    # Si ya hay más de 1 bomba, no hacer nada
+    if pumps is None or len(pumps) != 1:
+        return pumps
+
+    text = fb_text.lower()
+
+    # ============================================================
+    # 1. Detectar patrones numéricos explícitos: "3 bombas", "3 metering pumps"
+    # ============================================================
+    pat_num = re.search(r"\b(\d+)\s*(bombas?|metering pumps?)\b", text)
+    if pat_num:
+        n = int(pat_num.group(1))
+        if n > 1:
+            base = pumps[0]
+            return [copy.deepcopy(base) for _ in range(n)]
+
+    # ============================================================
+    # 2. Detectar formato "2+1", "3+0", etc.
+    # ============================================================
+    pat_plus = re.search(r"(\d+)\s*\+\s*(\d+)", text)
+    if pat_plus:
+        a = int(pat_plus.group(1))
+        b = int(pat_plus.group(2))
+        n = a + b
+        if n > 1:
+            base = pumps[0]
+            return [copy.deepcopy(base) for _ in range(n)]
+
+    # ============================================================
+    # 3. Detectar cantidad textual: "dos bombas", "tres bombas"
+    # ============================================================
+    WORD2NUM = {
+        "una": 1, "un": 1,
+        "dos": 2,
+        "tres": 3,
+        "cuatro": 4,
+        "cinco": 5,
+        "seis": 6,
+        "siete": 7
+    }
+
+    pat_word = re.search(r"\b(una|un|dos|tres|cuatro|cinco|seis|siete)\s+bombas?\b", text)
+    if pat_word:
+        w = pat_word.group(1)
+        n = WORD2NUM.get(w, 1)
+        if n > 1:
+            base = pumps[0]
+            return [copy.deepcopy(base) for _ in range(n)]
+
+    # ============================================================
+    # 4. Detectar “dos bombas de operación y una de respaldo”
+    # ============================================================
+    pat_oper = re.search(
+        r"(una|un|dos|tres|cuatro)\s+bombas?\s+de\s+operaci[oó]n\s+y\s+(una|un|dos|tres|cuatro)",
+        text
+    )
+    if pat_oper:
+        n1 = WORD2NUM.get(pat_oper.group(1), 1)
+        n2 = WORD2NUM.get(pat_oper.group(2), 1)
+        n = n1 + n2
+        if n > 1:
+            base = pumps[0]
+            return [copy.deepcopy(base) for _ in range(n)]
+
+    # ============================================================
+    # Si nada coincide: devolver la bomba única detectada
+    # ============================================================
+    return pumps
+
 
 
 if __name__ == "__main__":

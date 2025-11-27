@@ -8,12 +8,21 @@ Genera HTML amigable para:
 2) RAW en vista expandible
 3) Normalizado en vista expandible
 
-Se usa desde el endpoint /cases/{id}/assistant
-
-Autor: Victor + Asistente técnico
+Incluye formateo de valores numéricos para evitar demasiados decimales.
 """
 
 import html
+
+
+# ============================================================
+# Utilidad: formateo de valores numéricos
+# ============================================================
+
+def fmt(v):
+    """Formatea valores numéricos con 4 decimales máximo."""
+    if isinstance(v, float):
+        return f"{v:.4f}".rstrip("0").rstrip(".")  # limpia ceros finales
+    return v
 
 
 # ============================================================
@@ -32,7 +41,7 @@ def build_summary_html(normalized_json: dict) -> str:
     out.append("""
     <table border="1" cellpadding="6" cellspacing="0"
            style="border-collapse: collapse; font-size:14px; width:100%;">
-        <tr style="background:#f0f0f0;">
+        <tr style="background:#243447; color:#ffffff; font-weight:bold;">
             <th>TAG</th>
             <th>Fluido</th>
             <th>Caudal nominal (GPH)</th>
@@ -48,11 +57,10 @@ def build_summary_html(normalized_json: dict) -> str:
         tag = html.escape(str(opt.get("tag") or "—"))
         fluid = html.escape(str(p.get("fluid") or "—"))
 
-        fnom = p.get("flow_nominal_std") or "—"
-        fmax = p.get("flow_max_std") or "—"
-
-        dpress = p.get("discharge_pressure_std") or "—"
-        visc = p.get("viscosity_std") or "—"
+        fnom = fmt(p.get("flow_nominal_std") or "—")
+        fmax = fmt(p.get("flow_max_std") or "—")
+        dpress = fmt(p.get("discharge_pressure_std") or "—")
+        visc = fmt(p.get("viscosity_std") or "—")
 
         out.append(f"""
         <tr>
@@ -87,23 +95,25 @@ def build_json_html(pumps_list: list, title: str = "JSON") -> str:
     out.append(f"<details open><summary><b>{title} – Ver/Ocultar</b></summary>")
 
     for idx, pump in enumerate(pumps_list, start=1):
-
-        out.append(f"<details><summary><b>Bomba {idx}</b></summary>")
+        
+        out.append(
+            f"<details><summary style='background:#243447; color:#ffffff; padding:6px 10px; border-radius:4px; border: none; outline: none;'><b>Bomba {idx}</b></summary>")
         out.append("""
-            <table border='1' cellpadding='6' cellspacing='0'
-                   style='border-collapse: collapse; margin:10px 0; width:100%;'>
+            <table cellpadding='6' cellspacing='0' 
+            style='border-collapse: collapse; margin:10px 0; width:100%; border:0;'>
         """)
 
         # Campos principales
         for key, value in pump.items():
 
-            # Caso dict (subtabla)
+            # Caso dict → subtabla
             if isinstance(value, dict):
                 out.append(
-                    f"<tr><td colspan='2' style='background:#fafafa;'><b>{html.escape(key)}</b></td></tr>"
+                    f"<tr><td colspan='2' style='background:#2f3b4d; color:#ffffff; font-weight:bold; padding:6px 10px; border:none;'>{html.escape(key)}</td></tr>"
                 )
+
                 for sub_k, sub_v in value.items():
-                    sub_v = "—" if sub_v in (None, "", []) else sub_v
+                    sub_v = "—" if sub_v in (None, "", []) else fmt(sub_v)
                     out.append(f"""
                         <tr>
                             <td style='padding-left:25px;'>{html.escape(str(sub_k))}</td>
@@ -113,7 +123,7 @@ def build_json_html(pumps_list: list, title: str = "JSON") -> str:
                 continue
 
             # Campo simple
-            value = "—" if value in (None, "", []) else value
+            value = "—" if value in (None, "", []) else fmt(value)
             out.append(f"""
                 <tr>
                     <td><b>{html.escape(str(key))}</b></td>

@@ -134,7 +134,7 @@
                           </div>
                         {% else %}
                           {# Mensajes normales (usuario o asistente sin RAW) #}
-                          <div class="prose prose-invert prose-xs max-w-none [&_*]:text-[0.82rem]">
+                          <div class="prose prose-invert prose-xs max-w-none leading-relaxed [&_*]:text-[0.82rem] [&_strong]:text-blue-300">
                             {{ msg.content | safe }}
                           </div>
                           
@@ -159,11 +159,11 @@
               <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
               <span id="typing-text">AX está escribiendo…</span>
               <span id="typing-timer">(0:00)</span>
-            </div>
-          </div>
-
-
-        </div>
+              </div>
+              </div>
+            
+              
+              </div>
 
         <!-- Input fijo abajo -->
         <div class="border-t border-gray-700 px-5 py-3 bg-gray-900/90 rounded-b-lg flex-shrink-0">
@@ -218,7 +218,7 @@
 
             <!-- Requisitos técnicos -->
             <details class="bg-gray-900 rounded-lg border border-gray-700" open>
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
                 <span>Requisitos técnicos (Items)</span>
                 <span class="text-gray-400 text-[11px]">
                   {% if requirements and requirements|length > 0 %}
@@ -262,7 +262,7 @@
 
             <!-- Ítems de bomba -->
             <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
                 <span>Ítems de bomba seleccionados</span>
                 <span class="text-gray-400 text-[11px]">
                   {% if quote_items and quote_items|length > 0 %}
@@ -310,7 +310,8 @@
 
             <!-- Cliente -->
             <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+
                 <span>Cliente</span>
                 <span class="text-gray-400 text-[11px]">
                   {% if selected_client %}
@@ -340,7 +341,7 @@
 
             <!-- Términos -->
             <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
                 <span>Términos comerciales</span>
                 <span class="text-gray-400 text-[11px]">
                   {% if selected_terms %}
@@ -369,7 +370,7 @@
 
             <!-- Notas -->
             <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold">
+              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
                 <span>Notas de la cotización</span>
               </summary>
               <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
@@ -427,9 +428,10 @@
   let seconds = 0;
 
   function startTypingTimer() {
-    const indicator = document.getElementById("typing-indicator");
-    const timer = document.getElementById("typing-timer");
 
+    const indicator = document.getElementById("typing-indicator");
+    const timer = document.getElementById("typing-timer");    
+  
     indicator.classList.remove("hidden");
     seconds = 0;
 
