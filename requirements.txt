@@ -10,22 +10,24 @@ pydantic==2.11.4
 pydantic-settings==2.10.1
 typing_extensions==4.15.0
 orjson==3.11.3
+Jinja2==3.1.2
 
 # === Auth ===
 passlib==1.7.4
 python-jose==3.5.0
+bcrypt==4.2.1          # ← OBLIGATORIO para Passlib (Render lo necesita)
 
 # === Database ===
 SQLAlchemy==2.0.41
 psycopg2-binary==2.9.10
 
-# === RAG / Vector DB / Graph ===
+# === RAG / Graph ===
 lightrag-hku==1.4.9.4
 nano-vectordb==0.0.4.3
 networkx==3.5
 json-repair==0.52.3
 
-# === PDF / Document Processing ===
+# === PDF / Processing ===
 pdfminer.six==20221105
 pdfplumber==0.10.2
 python-docx==1.2.0
@@ -39,6 +41,3 @@ tiktoken==0.11.0
 tqdm==4.66.2
 numpy==2.2.6
 Pillow==11.2.1
-
-# === Add Jinja to install to RENDER ===
-Jinja2==3.1.2
