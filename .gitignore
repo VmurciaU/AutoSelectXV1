@@ -1,105 +1,64 @@
-# Ignorar entorno virtual
+# ============================================================
+#   AUTOSELECT-X / AI EngiQuote
+#   .gitignore limpio, profesional y seguro
+# ============================================================
+
+# ---- ENTORNOS VIRTUALES ----
 venv/
 
-# Archivos temporales o del sistema
+# ---- ARCHIVOS DEL SISTEMA ----
 __pycache__/
 *.pyc
-*.log
-venv/
-.env
-*.sqlite
-.DS_Store
-/outputs/
-/outputs/*.json
-/outputs/session_files/
-requirements_full_backup.txt
-
-# Archivos de Jupyter
-.ipynb_checkpoints/
-
-# Archivos de VSCode u otros editores
-.vscode/
-
-#Otros
 *.pyo
 *.pyd
 *.so
+.DS_Store
+
+# ---- ARCHIVOS SENSIBLES / SECRETS ----
+.env
+env.sh
+start_server.sh
+raggrafo/pipelines/key.txt
+
+# ---- LOGS, BASES DE DATOS LOCALES ----
+*.log
+*.sqlite
+
+# ---- JUPYTER ----
+.ipynb_checkpoints/
+
+# ---- EDITORES ----
+.vscode/
+
+# ---- BUILD / DISTRIBUCIÓN ----
 build/
 dist/
 *.egg-info/
 
-
-# Pdf documentos base especificaciones
+# ---- PDF DOCUMENTS (no se suben al repo) ----
 *.pdf
-# Backups o pruebas
 
-#Tiene la Key 
-raggrafo/pipelines/key.txt
+# ---- DOCKER COMPOSE LOCAL DE WSL ----
+compose/
 
-#Arranque del server LightRag
-env.sh
-start_server.sh
-
-
-#Conexion a DB desde WSL
-/compose
-
-#Salidas de pruebas de corpus PDF
-raggrafo/outputs/
-raggrafo/tests/
-raggrafo/rag_storage/
+# ---- DATA & SHARED (datos temporales / sensibles) ----
 shared_data/
+data/
 
-raggrafo/scripts/benchmark_20251119_222818.json
-raggrafo/scripts/benchmark_20251119_222818.md
-raggrafo/scripts/benchmark_20251119_223940.json
-raggrafo/scripts/benchmark_20251119_223940.md
+# ---- RAG STORAGE (generado automáticamente) ----
+raggrafo/rag_storage/
+raggrafo/tests/
+raggrafo/outputs/
 
-benchmark_20251119_224753.json
-benchmark_20251119_224753.md
-benchmark_20251119_230851.json
-benchmark_20251119_230851.md
-benchmark_v4_20251119_232534.json
-benchmark_v4_20251119_232534.md
-benchmark_v4_20251119_233134.json
-benchmark_v4_20251119_233134.md
-benchmark_v4_20251119_233323.json
-benchmark_v4_20251119_233323.md
-benchmark_v4_20251119_234326.json
-benchmark_v4_20251119_234326.md
-benchmark_v4_20251119_234824.json
-benchmark_v4_20251119_234824.md
-benchmark_v4_20251119_234837.json
-benchmark_v4_20251119_234837.md
-benchmark_v4_20251119_235151.json
-benchmark_v4_20251119_235151.md
-
-benchmark_v5_20251120_222845.json
-benchmark_v5_20251120_222845.md
-benchmark_v5_20251120_223306.json
-benchmark_v5_20251120_223306.md
-benchmark_v5_20251120_224133.json
-benchmark_v5_20251120_224133.md
-benchmark_v5_20251121_004609.json
-benchmark_v5_20251121_004609.md
-benchmark_v5_20251121_004858.json
-benchmark_v5_20251121_004858.md
-benchmark_v5_20251121_005244.json
-benchmark_v5_20251121_005244.md
-benchmark_v5_20251121_005413.json
-benchmark_v5_20251121_005413.md
-benchmark_v5_20251121_005548.json
-benchmark_v5_20251121_005548.md
-
-benchmark_v5_20251121_104446.json
-benchmark_v5_20251121_104446.md
-benchmark_v5_20251121_104559.json
-benchmark_v5_20251121_104559.md
-benchmark_v5_20251121_104853.json
-benchmark_v5_20251121_104853.md
-
-# No subir outputs temporales del pipeline
-RAGGrafo_borrar/
-benchmark_v5_*.json
-benchmark_v5_*.md
+# ---- BENCHMARKS, RESULTADOS TEMPORALES ----
+benchmark_v*.json
+benchmark_v*.md
 raw.json
+
+# ---- ARCHIVOS GENERADOS POR EL PIPELINE ----
+RAGGrafo_borrar/
+outputs/
+outputs/*.json
+outputs/session_files/
+
+requirements_full_backup.txt
