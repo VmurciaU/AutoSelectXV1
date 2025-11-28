@@ -1,50 +1,44 @@
 # app/database/conection.py
 
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-# =====================================================
-# 1. Leer DATABASE_URL desde variables de entorno
-# =====================================================
+# Cargar .env
+load_dotenv()
+
+# Cargar .env
+load_dotenv()
+print("🟡 DEBUG: .env real leído desde:", os.path.abspath(".env"))
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+print("🟡 DEBUG: DATABASE_URL=", DATABASE_URL)
+
+
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Si no existe DATABASE_URL (por ejemplo en local)
-# usamos la URL por defecto local:
 if not DATABASE_URL:
-    print("⚠️ Aviso: DATABASE_URL no encontrada. Usando configuración LOCAL.")
-    DATABASE_URL = "postgresql://postgres:root@localhost:5433/autoselectx"
+    raise RuntimeError("❌ ERROR FATAL: DATABASE_URL no está definida en .env")
 
-# =====================================================
-# 2. Crear engine SQLAlchemy para cualquier entorno
-# =====================================================
+# Crear engine
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,   # Evita conexiones rotas en Render
+    pool_pre_ping=True,
 )
 
-# =====================================================
-# 3. 🔥 FORZAR CONEXIÓN AL ARRANCAR (debug Render)
-# =====================================================
+# Probar conexión
 try:
     with engine.connect() as conn:
-        print("✔ Connected to database!")
+        print(f"✔ Connected to database: {DATABASE_URL}")
 except Exception as e:
     print("❌ Database connection failed:", e)
+    raise
 
-# =====================================================
-# 4. Crear sesión SQLAlchemy
-# =====================================================
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base de modelos
 Base = declarative_base()
 
-# Auxiliar para debug
-def get_db_url() -> str:
+def get_db_url():
     return DATABASE_URL
