@@ -19,6 +19,9 @@ from app.database.conection import SessionLocal
 from app.utils.auth import get_current_user_id
 from app.models.cases import Case
 
+from app.models.user import User 
+
+
 # Pipelines EXTRACT-LIST + NORMALIZE
 from raggrafo.pipelines.extract_and_normalize import run_extract_and_normalize
 
@@ -97,10 +100,15 @@ async def get_case_assistant(
     case = db.query(Case).filter(Case.id == case_id).first()
     if not case:
         raise HTTPException(status_code=404, detail="Caso no encontrado")
+    
+    current_user = db.query(User).get(current_user_id)
 
     chat_history = decode_history(history)
     if not chat_history:
         chat_history = build_initial_history()
+
+    
+
 
     history_serialized = encode_history(chat_history)
 
@@ -115,6 +123,8 @@ async def get_case_assistant(
         "selected_terms": None,
         "quote_notes": "",
         "pipeline_summary": None,
+        "user_name": current_user.nombre,
+        "user_rol": current_user.rol,
     }
 
     return templates.TemplateResponse("case_assistant.html", context)
@@ -141,6 +151,8 @@ async def post_case_assistant(
     case = db.query(Case).filter(Case.id == case_id).first()
     if not case:
         raise HTTPException(status_code=404, detail="Caso no encontrado")
+    current_user = db.query(User).get(current_user_id)
+
 
     # -----------------------------------
     # 2. Reconstruir historial
@@ -264,6 +276,8 @@ async def post_case_assistant(
         "selected_terms": None,
         "quote_notes": "",
         "pipeline_summary": None,
+        "user_name": current_user.nombre,
+        "user_rol": current_user.rol,   
     }
 
     return templates.TemplateResponse("case_assistant.html", context)

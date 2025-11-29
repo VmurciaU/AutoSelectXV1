@@ -62,7 +62,6 @@
           </div>
           {% endif %}
         </div>
-
         <ul class="text-sm text-gray-400 list-disc list-inside mt-2">
           <li><strong>Tipos de archivo:</strong> solo PDF.</li>
           <li>Verifica que tus documentos sean legibles y completos.</li>
@@ -75,58 +74,64 @@
         <h3 class="text-md font-semibold text-white mb-1">Cargar documentos al caso</h3>
 
         {% if not active_case %}
-          <p class="text-sm text-red-300">
-            No hay un caso activo. Debes seleccionar un caso desde <a href="/cases" class="text-teal-300 underline">Mis Casos</a>.
-          </p>
+        <p class="text-sm text-red-300">
+          No hay un caso activo. Debes seleccionar un caso desde <a href="/cases" class="text-teal-300 underline">Mis
+            Casos</a>.
+        </p>
         {% else %}
-          {# OJO: volvemos a usar /upload (router existente) #}
-          <form method="POST"
-                action="/upload"
-                enctype="multipart/form-data"
-                class="space-y-4">
-            <div>
-              <label for="file" class="block text-sm font-medium mb-1">Seleccionar documento</label>
-              <input type="file"
-                     id="file"
-                     name="file"
-                     accept=".pdf"
-                     class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     required>
-            </div>
+        {# OJO: volvemos a usar /upload (router existente) #}
 
+
+        <!-- FORMULARIO: Solo el input y hidden -->
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="space-y-4">
+
+          <div>
+            <label for="file" class="block text-sm font-medium mb-1">Seleccionar documento</label>
+            <input type="file" id="file" name="file" accept=".pdf"
+              class="bg-gray-700 text-white w-full border border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required>
+          </div>
+
+          <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
+        </form>
+
+        <!-- BOTONES EN LA MISMA FILA -->
+        <div class="flex flex-wrap gap-3 mt-2">
+
+          <!-- Botón: Cargar -->
+          <form method="POST" action="/upload" enctype="multipart/form-data">
             <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
-
-            <button type="submit"
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
               Cargar Documento
             </button>
           </form>
 
-          <!-- BOTÓN: procesar documentos del caso (ruta existente /procesar) -->
-          <form method="POST"
-                action="/procesar">
+          <!-- Botón: Procesar -->
+          <form method="POST" action="/procesar">
             <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
-            <button type="submit"
-                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded transition mt-4">
-              Procesar documentos del caso
+            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded">
+              Procesar Documento
             </button>
           </form>
 
-          <!-- BOTÓN: ir al asistente / chat del caso -->
+          <!-- Botón: Asistente -->
           <form action="/cases/{{ selected_case_id }}/assistant" method="GET">
-            <button type="submit"
-                    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded transition mt-4">
-              Ir al asistente del caso
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded">
+              Ir al asistente
             </button>
           </form>
+
+        </div>
+
+
+
         {% endif %}
       </div>
 
       {# ================== PROGRESO – barra + cronómetro ================== #}
       {% if processing_status == 'in_progress' and active_case %}
-      <div id="progress-container"
-           class="mt-4 bg-gray-800 p-4 rounded-lg shadow-md"
-           data-case-id="{{ selected_case_id or '' }}">
+      <div id="progress-container" class="mt-4 bg-gray-800 p-4 rounded-lg shadow-md"
+        data-case-id="{{ selected_case_id or '' }}">
 
         <div class="text-sm font-medium text-white mb-2">
           Procesando documentos del caso #{{ active_case.id }}…
@@ -134,9 +139,8 @@
 
         <!-- Barra simbólica -->
         <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
-          <div id="barra-progreso"
-               class="bg-yellow-400 h-4 transition-all duration-500 ease-in-out"
-               style="width: 5%;"></div>
+          <div id="barra-progreso" class="bg-yellow-400 h-4 transition-all duration-500 ease-in-out" style="width: 5%;">
+          </div>
         </div>
 
         <!-- Cronómetro -->
@@ -225,7 +229,7 @@
                 return;
               }
 
-              if (["done","quoted","archived"].includes(data.status)) {
+              if (["done", "quoted", "archived"].includes(data.status)) {
                 detenerMonitoreo();
 
                 barra.style.width = "100%";
@@ -292,13 +296,11 @@
         <li class="bg-gray-700 px-3 py-2 rounded text-gray-200 text-sm flex justify-between items-center">
           <span class="break-words w-4/5">{{ file }}</span>
           {# Volvemos a /delete-file (router existente) #}
-          <form method="POST"
-                action="/delete-file"
-                class="ml-2">
+          <form method="POST" action="/delete-file" class="ml-2">
             <input type="hidden" name="filename" value="{{ file }}">
             <input type="hidden" name="case_id" value="{{ selected_case_id or '' }}">
             <button type="submit"
-                    class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
+              class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded transition">
               Eliminar
             </button>
           </form>

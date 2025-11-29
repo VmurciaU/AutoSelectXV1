@@ -62,3 +62,5 @@ outputs/*.json
 outputs/session_files/
 
 requirements_full_backup.txt
+
+.env.pipeline
