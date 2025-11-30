@@ -31,6 +31,21 @@ from raggrafo.pipelines.printPumpsJson import build_all_messages
 # Motor RAG (modo engineering)
 from raggrafo.scripts.rag_service import run_rag_case
 
+import os
+
+
+def load_requirements_from_storage(case_id: int):
+    """Carga las bombas normalizadas desde rag_storage si existen."""
+    path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r") as f:
+            data = json.load(f)
+        return data.get("pumps", [])
+    except:
+        return []
+
 # ============================================================
 #  CONFIGURACIÓN BASE
 # ============================================================
@@ -117,7 +132,7 @@ async def get_case_assistant(
         "case": case,
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
-        "requirements": requirements_list if 'requirements_list' in locals() else [],
+        "requirements": load_requirements_from_storage(case_id),
         "requirements_json": requirements_list if 'requirements_list' in locals() else [],
         "quote_items": [],
         "selected_client": None,
@@ -202,6 +217,12 @@ async def post_case_assistant(
 
                 requirements_list = normalized_json.get("pumps", [])
 
+                # Guardar para persistencia
+                path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
+                with open(path, "w") as f:
+                    json.dump(normalized_json, f, indent=2)
+
+
                 msgs = build_all_messages(raw_json, normalized_json)
 
                 for key in ["summary", "raw", "normalized"]:
@@ -273,7 +294,9 @@ async def post_case_assistant(
         "case": case,
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
-        "requirements": requirements_list if 'requirements_list' in locals() else [],
+        "requirements": requirements_list 
+            if 'requirements_list' in locals() 
+            else load_requirements_from_storage(case_id),
         "requirements_json": requirements_list if 'requirements_list' in locals() else [],
         "quote_items": [],
         "selected_client": None,
