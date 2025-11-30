@@ -1,0 +1,209 @@
+<!-- ================================================================
+     MODAL_EDIT.HTML
+     Archivo centralizado donde viven TODOS los modales del sistema.
+     Se incluye desde paneles como:
+     
+================================================================ -->
+
+<!-- ================================================================
+     MODAL TIPO A — EDITAR BOMBA DETECTADA
+     (Usado desde panel_pumps_detected.html)
+================================================================ -->
+<div id="modal_edit_detected"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-md p-5 border border-gray-700">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-base font-semibold">Editar bomba detectada</h2>
+      <button onclick="closeModal('modal_edit_detected')"
+              class="text-gray-400 hover:text-white text-xl leading-none">&times;</button>
+    </div>
+
+    <!-- FORM -->
+    <form id="form_edit_detected" class="space-y-3 text-sm">
+
+      <input type="hidden" id="edit_detected_index">
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">TAG</label>
+        <input id="edit_detected_tag" type="text"
+               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs focus:ring focus:ring-blue-600">
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block mb-1 text-xs text-gray-400">Caudal</label>
+          <input id="edit_detected_caudal" type="text"
+                 class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+        </div>
+        <div>
+          <label class="block mb-1 text-xs text-gray-400">Presión</label>
+          <input id="edit_detected_presion" type="text"
+                 class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+        </div>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Fluido</label>
+        <input id="edit_detected_fluido" type="text"
+               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Cantidad de bombas</label>
+        <input id="edit_detected_cantidad" type="number" min="1"
+               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <!-- Botonera -->
+      <div class="pt-3 flex justify-end gap-2">
+        <button type="button"
+                onclick="closeModal('modal_edit_detected')"
+                class="px-3 py-1.5 text-xs rounded bg-gray-700 hover:bg-gray-600 border border-gray-600">
+          Cancelar
+        </button>
+
+        <button type="button"
+                onclick="saveEditDetected()"
+                class="px-3 py-1.5 text-xs rounded bg-blue-700 hover:bg-blue-600 border border-blue-500">
+          Guardar cambios
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+<!-- ==================================================================
+     *** FUTUROS MODALES CENTRALIZADOS ***
+     Aquí dejamos los placeholders para otros tipos de modal.
+================================================================== -->
+
+<!-- ================================================================
+     MODAL TIPO B — EDITAR BOMBA CREADA POR CLIENTE
+     (SE AGREGARÁ MÁS ADELANTE)
+================================================================ -->
+<!--  
+<div id="modal_edit_cliente"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+  
+  AQUI VA EL FORM COMPLETO PARA BOMBAS DEL CLIENTE
+  Se deja placeholder para futura etapa (Sprint siguiente)
+  
+</div>
+-->
+
+
+<!-- ================================================================
+     MODAL TIPO C — OTROS MODALES (terminos, configuraciones, etc.)
+================================================================ -->
+<!--  
+<div id="modal_edit_otros"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+  
+  Futuros modales del sistema centralizados
+  Ejemplos:
+  - Modal para editar condiciones del caso
+  - Modal para agregar notas o requerimientos adicionales
+
+</div>
+-->
+
+
+<!-- =================================================================
+     SCRIPT GLOBAL PARA TODOS LOS MODALES
+     Vive en este archivo para ser accesible desde cualquier panel.
+================================================================= -->
+<script>
+/* ================================================================
+   VARIABLES GLOBALES
+   requirementsData = array JSON generado por FastAPI
+================================================================ */
+let requirementsData = window.requirementsDataGlobal || [];
+
+
+/* ================================================================
+   FUNCION GENERICA PARA ABRIR CUALQUIER MODAL
+================================================================ */
+function openModal(id) {
+    document.getElementById(id).classList.remove('hidden');
+}
+
+/* ================================================================
+   FUNCION GENERICA PARA CERRAR CUALQUIER MODAL
+================================================================ */
+function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+}
+
+
+/* ================================================================
+   *** EDITAR BOMBA DETECTADA ***
+   Llamado desde panel_pumps_detected.html:
+     onclick="openEditItemModal(index)"
+================================================================ */
+function openEditItemModal(index) {
+
+    const item = requirementsData[index];
+
+    // Guardamos el índice actual
+    document.getElementById('edit_detected_index').value = index;
+
+    // Llenamos campos
+    document.getElementById('edit_detected_tag').value = item.tag || "";
+    document.getElementById('edit_detected_caudal').value = item.caudal || "";
+    document.getElementById('edit_detected_presion').value = item.presion || "";
+    document.getElementById('edit_detected_fluido').value = item.fluido || "";
+    document.getElementById('edit_detected_cantidad').value = item.cantidad_bombas || 1;
+
+    openModal('modal_edit_detected');
+}
+
+
+/* ================================================================
+   GUARDAR CAMBIOS — BOMBA DETECTADA
+================================================================ */
+function saveEditDetected() {
+
+    const index = document.getElementById('edit_detected_index').value;
+
+    // Actualizamos el JSON en memoria del navegador
+    requirementsData[index].tag = document.getElementById('edit_detected_tag').value;
+    requirementsData[index].caudal = document.getElementById('edit_detected_caudal').value;
+    requirementsData[index].presion = document.getElementById('edit_detected_presion').value;
+    requirementsData[index].fluido = document.getElementById('edit_detected_fluido').value;
+    requirementsData[index].cantidad_bombas = document.getElementById('edit_detected_cantidad').value;
+
+    // Más adelante aquí haremos:
+    // fetch('/cases/update', { method: 'POST', body: JSON.stringify(requirementsData) })
+
+    closeModal('modal_edit_detected');
+
+    // Refrescamos panel por simplicidad
+    location.reload();
+}
+
+
+/* ================================================================
+   ELIMINAR REQUERIMIENTO
+   Llamado desde panel:
+     onclick="deleteRequirement(index)"
+================================================================ */
+function deleteRequirement(index) {
+
+    if (!confirm("¿Eliminar este ítem?")) return;
+
+    requirementsData.splice(index, 1);
+
+    // Luego conectamos esto al backend:
+    // fetch('/cases/update', ...)
+
+    location.reload();
+}
+
+</script>

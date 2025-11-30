@@ -1,0 +1,31 @@
+<!-- Cliente -->
+<details class="bg-gray-900 rounded-lg border border-gray-700">
+  <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+    <span>Cliente</span>
+    <span class="text-gray-400 text-[11px]">
+      {% if selected_client %}
+        {{ selected_client.nombre }}
+      {% else %}
+        sin asignar
+      {% endif %}
+    </span>
+  </summary>
+
+  <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+    {% if selected_client %}
+      <p class="text-[11px] text-gray-300">
+        {{ selected_client.nombre }}<br>
+        {{ selected_client.ciudad|default("") }}
+      </p>
+    {% else %}
+      <p class="text-[11px] text-gray-400">
+        Asigna un cliente para esta cotización.
+      </p>
+    {% endif %}
+
+    <button type="button"
+            class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+      Seleccionar / crear cliente
+    </button>
+  </div>
+</details>

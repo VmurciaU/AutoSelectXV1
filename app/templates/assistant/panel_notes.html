@@ -1,0 +1,14 @@
+<!-- Notas -->
+<details class="bg-gray-900 rounded-lg border border-gray-700">
+  <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+    <span>Notas de la cotización</span>
+  </summary>
+
+  <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+    <textarea
+      name="quote_notes"
+      rows="3"
+      class="w-full rounded-md bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-[11px] text-gray-100 px-2 py-1.5 resize-none"
+      placeholder="Notas técnicas o comerciales relevantes">{{ quote_notes|default("") }}</textarea>
+  </div>
+</details>

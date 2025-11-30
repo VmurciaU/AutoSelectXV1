@@ -7,12 +7,13 @@
   <div class="max-w-7xl mx-auto space-y-6 flex flex-col h-full">
 
     <!-- Encabezado del caso -->
-    <div class="bg-gray-800 rounded-lg p-5 shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4 flex-shrink-0">
+    <div
+      class="bg-gray-800 rounded-lg p-5 shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4 flex-shrink-0">
       <div>
         <h1 class="text-2xl font-semibold">
           Asistente del caso
           {% if case %}
-            – {{ case.name or ("Caso #" ~ case.id) }}
+          – {{ case.name or ("Caso #" ~ case.id) }}
           {% endif %}
         </h1>
         <p class="text-sm text-gray-300 mt-1">
@@ -22,8 +23,8 @@
 
       <div class="flex flex-wrap items-center gap-3 text-sm">
         {% if case %}
-          {% set st = case.status|default("desconocido") %}
-          <span class="px-3 py-1 rounded-full text-xs font-medium
+        {% set st = case.status|default("desconocido") %}
+        <span class="px-3 py-1 rounded-full text-xs font-medium
                        {% if st in ['done','quoted','archived','ready_for_chat'] %}
                          bg-emerald-500/20 text-emerald-300 border border-emerald-400/50
                        {% elif st in ['processing','indexing','queued'] %}
@@ -33,14 +34,14 @@
                        {% else %}
                          bg-gray-700 text-gray-200 border border-gray-500/50
                        {% endif %}">
-            Estado: {{ st }}
-          </span>
+          Estado: {{ st }}
+        </span>
         {% endif %}
 
         {% if pipeline_summary %}
-          <span class="px-3 py-1 rounded-full text-xs bg-gray-700 border border-gray-600 text-gray-200">
-            PC1–PC6: {{ pipeline_summary }}
-          </span>
+        <span class="px-3 py-1 rounded-full text-xs bg-gray-700 border border-gray-600 text-gray-200">
+          PC1–PC6: {{ pipeline_summary }}
+        </span>
         {% endif %}
       </div>
     </div>
@@ -72,98 +73,104 @@
         <!-- Área de mensajes con scroll fijo -->
         <div class="flex-1 min-h-0 flex flex-col">
           <div id="chat-messages"
-               class="flex-1 min-h-0 px-4 sm:px-5 py-4 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 bg-gradient-to-b from-gray-900/70 to-gray-900"
-               style="max-height: calc(100vh - 400px);">
+            class="flex-1 min-h-0 px-4 sm:px-5 py-4 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 bg-gradient-to-b from-gray-900/70 to-gray-900"
+            style="max-height: calc(100vh - 400px);">
 
             {% if chat_messages and chat_messages|length > 0 %}
-              {% for msg in chat_messages %}
-                {% set is_user = (msg.role == 'user') %}
-                <div class="flex {% if is_user %}justify-end{% else %}justify-start{% endif %}">
-                  <div class="max-w-[92%] sm:max-w-[80%] flex gap-3 {% if is_user %}flex-row-reverse{% else %}flex-row{% endif %}">
+            {% for msg in chat_messages %}
+            {% set is_user = (msg.role == 'user') %}
+            <div class="flex {% if is_user %}justify-end{% else %}justify-start{% endif %}">
+              <div
+                class="max-w-[92%] sm:max-w-[80%] flex gap-3 {% if is_user %}flex-row-reverse{% else %}flex-row{% endif %}">
 
-                    <!-- Avatar -->
-                    <div class="flex-shrink-0 mt-1">
-                      {% if is_user %}
-                        <div class="w-8 h-8 rounded-full bg-gray-600/60 border border-gray-400 flex items-center justify-center text-xs font-medium">
-                          Yo
-                        </div>
-                      {% else %}
-                        <div class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-xs font-semibold text-blue-200">
-                          AX
-                        </div>
-                      {% endif %}
-                    </div>
+                <!-- Avatar -->
+                <div class="flex-shrink-0 mt-1">
+                  {% if is_user %}
+                  <div
+                    class="w-8 h-8 rounded-full bg-gray-600/60 border border-gray-400 flex items-center justify-center text-xs font-medium">
+                    Yo
+                  </div>
+                  {% else %}
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-xs font-semibold text-blue-200">
+                    AX
+                  </div>
+                  {% endif %}
+                </div>
 
-                    <!-- Burbuja -->
-                    <div class="flex-1 space-y-1">
-                      <div class="flex items-center justify-between gap-3">
-                        <span class="text-[11px] font-medium {% if is_user %}text-gray-200{% else %}text-blue-200{% endif %}">
-                          {% if is_user %}Usuario{% else %}Asistente{% endif %}
-                        </span>
-                        <span class="text-[10px] text-gray-500">
-                          {{ msg.timestamp|default("") }}
-                        </span>
-                      </div>
+                <!-- Burbuja -->
+                <div class="flex-1 space-y-1">
+                  <div class="flex items-center justify-between gap-3">
+                    <span
+                      class="text-[11px] font-medium {% if is_user %}text-gray-200{% else %}text-blue-200{% endif %}">
+                      {% if is_user %}Usuario{% else %}Asistente{% endif %}
+                    </span>
+                    <span class="text-[10px] text-gray-500">
+                      {{ msg.timestamp|default("") }}
+                    </span>
+                  </div>
 
-                      <div class="rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm
+                  <div class="rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm
                                   {% if is_user %}
                                     bg-blue-600 text-white rounded-br-none
                                   {% else %}
                                     bg-gray-700 text-gray-100 rounded-bl-none border border-gray-600/60
                                   {% endif %}">
-                        {% if not is_user and 'Respuesta RAW (JSON):' in msg.content %}
-                          {# --- Formato especial para respuestas RAG largas --- #}
-                          {% set partes = msg.content.split('Respuesta RAW (JSON):') %}
-                          {% set parte_pretty = partes[0] %}
-                          {% set parte_raw = partes[1] if partes|length > 1 else '' %}
+                    {% if not is_user and 'Respuesta RAW (JSON):' in msg.content %}
+                    {# --- Formato especial para respuestas RAG largas --- #}
+                    {% set partes = msg.content.split('Respuesta RAW (JSON):') %}
+                    {% set parte_pretty = partes[0] %}
+                    {% set parte_raw = partes[1] if partes|length > 1 else '' %}
 
-                          <div class="space-y-2">
-                            <div class="text-[0.82rem] leading-relaxed whitespace-pre-wrap">
-                              {{ parte_pretty }}
-                            </div>
+                    <div class="space-y-2">
+                      <div class="text-[0.82rem] leading-relaxed whitespace-pre-wrap">
+                        {{ parte_pretty }}
+                      </div>
 
-                            {% if parte_raw %}
-                              <details class="bg-gray-900/80 border border-gray-600 rounded-md p-2 text-[0.75rem] text-gray-200">
-                                <summary class="cursor-pointer font-semibold">
-                                  Ver respuesta RAW (JSON)
-                                </summary>
-                                <pre class="mt-2 whitespace-pre-wrap text-[0.72rem] text-gray-300">
+                      {% if parte_raw %}
+                      <details
+                        class="bg-gray-900/80 border border-gray-600 rounded-md p-2 text-[0.75rem] text-gray-200">
+                        <summary class="cursor-pointer font-semibold">
+                          Ver respuesta RAW (JSON)
+                        </summary>
+                        <pre class="mt-2 whitespace-pre-wrap text-[0.72rem] text-gray-300">
 {{ parte_raw }}</pre>
-                              </details>
-                            {% endif %}
-                          </div>
-                        {% else %}
-                          {# Mensajes normales (usuario o asistente sin RAW) #}
-                          <div class="prose prose-invert prose-xs max-w-none leading-relaxed [&_*]:text-[0.82rem] [&_strong]:text-blue-300">
-                            {{ msg.content | safe }}
-                          </div>
-                          
-                          {% endif %}
-                          </div>
-                          </div>
-                          </div>
-                          </div>
-              {% endfor %}
-            {% else %}
-              <div class="text-center text-sm text-gray-400 mt-10 space-y-2">
-                <p>⚙️ El asistente está listo para trabajar con los documentos de este caso (modo demo).</p>
-                <p>Empieza con algo como:</p>
-                <p class="italic text-gray-300">
-                  "Resume los requisitos principales de caudal y presión que aparecen en la Hoja de Datos."
-                </p>
+                      </details>
+                      {% endif %}
+                    </div>
+                    {% else %}
+                    {# Mensajes normales (usuario o asistente sin RAW) #}
+                    <div
+                      class="prose prose-invert prose-xs max-w-none leading-relaxed [&_*]:text-[0.82rem] [&_strong]:text-blue-300">
+                      {{ msg.content | safe }}
+                    </div>
+
+                    {% endif %}
+                  </div>
+                </div>
               </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="text-center text-sm text-gray-400 mt-10 space-y-2">
+              <p>⚙️ El asistente está listo para trabajar con los documentos de este caso (modo demo).</p>
+              <p>Empieza con algo como:</p>
+              <p class="italic text-gray-300">
+                "Resume los requisitos principales de caudal y presión que aparecen en la Hoja de Datos."
+              </p>
+            </div>
             {% endif %}
-            
+
             <!-- TIMER DE TYPING DEL ASISTENTE -->
             <div id="typing-indicator" class="hidden flex items-center gap-2 text-xs text-gray-400 px-2 py-1">
               <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
               <span id="typing-text">AX está escribiendo…</span>
               <span id="typing-timer">(0:00)</span>
-              </div>
-              </div>
-            
-              
-              </div>
+            </div>
+          </div>
+
+
+        </div>
 
         <!-- Input fijo abajo -->
         <div class="border-t border-gray-700 px-5 py-3 bg-gray-900/90 rounded-b-lg flex-shrink-0">
@@ -171,10 +178,7 @@
             <input type="hidden" name="history" value="{{ chat_history_serialized or '' }}">
 
             <label for="user_message" class="sr-only">Mensaje</label>
-            <textarea
-              id="user_message"
-              name="user_message"
-              rows="2"
+            <textarea id="user_message" name="user_message" rows="2"
               class="w-full rounded-xl bg-gray-800 text-gray-100 placeholder-gray-400 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm px-3 py-2 resize-none"
               placeholder="Escribe tu pregunta o pide: 'Extrae los requisitos para la bomba principal de inyección'..."></textarea>
 
@@ -189,12 +193,11 @@
 
               </div>
 
-              <button
-                type="submit"
+              <button type="submit"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition">
                 <span>Enviar</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13" />
                   <polygon points="22 2 15 22 11 13 2 9 22 2" />
                 </svg>
@@ -206,194 +209,9 @@
 
       <!-- PANEL DE COTIZACIÓN -->
       <div class="bg-gray-800 rounded-lg shadow flex flex-col h-full">
-        <div class="border-b border-gray-700 px-4 py-3 flex-shrink-0">
-          <h2 class="text-sm font-semibold">Panel de cotización del caso</h2>
-        </div>
-
-        <div class="flex-1 min-h-0 flex flex-col">
-          <div class="flex-1 min-h-0 p-4 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800"
-               style="max-height: calc(100vh - 400px);">
-
-            <!-- Requisitos técnicos -->
-            <details class="bg-gray-900 rounded-lg border border-gray-700" open>
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-                <span>Requisitos técnicos (Items)</span>
-                <span class="text-gray-400 text-[11px]">
-                  {% if requirements and requirements|length > 0 %}
-                    {{ requirements|length }} items
-                  {% else %}
-                    sin definir
-                  {% endif %}
-                </span>
-              </summary>
-              <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
-                {% if requirements and requirements|length > 0 %}
-                  {% for item in requirements %}
-                    <div class="bg-gray-800 rounded-md border border-gray-700 p-2 space-y-1">
-                      <div class="flex justify-between items-center">
-                        <span class="font-semibold">Item {{ loop.index }} – {{ item.tag or "Sin tag" }}</span>
-                        <span class="text-[10px] text-gray-400">
-                          {{ item.estado|default("borrador") }}
-                        </span>
-                      </div>
-                      <div class="grid grid-cols-2 gap-x-2 gap-y-1">
-                        <span>Q: {{ item.caudal|default("—") }}</span>
-                        <span>P: {{ item.presion|default("—") }}</span>
-                        <span>Fluido: {{ item.fluido|default("—") }}</span>
-                        <span>Visc.: {{ item.viscosidad|default("—") }}</span>
-                        <span>Mats.: {{ item.materiales|default("—") }}</span>
-                        <span>Bombas: {{ item.cantidad_bombas|default("—") }}</span>
-                      </div>
-                      {% if item.notas %}
-                        <p class="mt-1 text-[11px] text-gray-400">Notas: {{ item.notas }}</p>
-                      {% endif %}
-                    </div>
-                  {% endfor %}
-                {% else %}
-                  <p class="text-[11px] text-gray-400">
-                    Aún no hay requisitos técnicos. Usa el chat para extraerlos (por ejemplo, con
-                    <span class="font-mono">@extraer_requisitos_item_1</span>) y luego los enviaremos aquí.
-                  </p>
-                {% endif %}
-              </div>
-            </details>
-
-            <!-- Ítems de bomba -->
-            <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-                <span>Ítems de bomba seleccionados</span>
-                <span class="text-gray-400 text-[11px]">
-                  {% if quote_items and quote_items|length > 0 %}
-                    {{ quote_items|length }} ítems
-                  {% else %}
-                    ninguno
-                  {% endif %}
-                </span>
-              </summary>
-              <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
-                {% if quote_items and quote_items|length > 0 %}
-                  {% for qi in quote_items %}
-                    <div class="bg-gray-800 rounded-md border border-gray-700 p-2 space-y-1">
-                      <div class="flex justify-between items-center">
-                        <span class="font-semibold">
-                          Item {{ loop.index }} – {{ qi.product_code or "P/N" }}
-                        </span>
-                        <span class="text-[10px] text-gray-400">
-                          Cant.: {{ qi.cantidad|default(1) }}
-                        </span>
-                      </div>
-                      <p class="text-[11px] text-gray-300">
-                        {{ qi.descripcion|default("Descripción técnica/comercial de la bomba seleccionada.") }}
-                      </p>
-                      {% if qi.precio_unitario %}
-                        <p class="text-[11px] text-gray-400">
-                          Precio unitario: {{ qi.precio_unitario }}
-                        </p>
-                      {% endif %}
-                    </div>
-                  {% endfor %}
-                {% else %}
-                  <p class="text-[11px] text-gray-400">
-                    Cuando selecciones una bomba para cada Item, aparecerán aquí como ítems de cotización.
-                  </p>
-                {% endif %}
-                <div class="mt-2">
-                  <button type="button"
-                          class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
-                    Buscar bomba para un Item
-                  </button>
-                </div>
-              </div>
-            </details>
-
-            <!-- Cliente -->
-            <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-
-                <span>Cliente</span>
-                <span class="text-gray-400 text-[11px]">
-                  {% if selected_client %}
-                    {{ selected_client.nombre }}
-                  {% else %}
-                    sin asignar
-                  {% endif %}
-                </span>
-              </summary>
-              <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
-                {% if selected_client %}
-                  <p class="text-[11px] text-gray-300">
-                    {{ selected_client.nombre }}<br>
-                    {{ selected_client.ciudad|default("") }}
-                  </p>
-                {% else %}
-                  <p class="text-[11px] text-gray-400">
-                    Asigna un cliente para esta cotización.
-                  </p>
-                {% endif %}
-                <button type="button"
-                        class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
-                  Seleccionar / crear cliente
-                </button>
-              </div>
-            </details>
-
-            <!-- Términos -->
-            <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-                <span>Términos comerciales</span>
-                <span class="text-gray-400 text-[11px]">
-                  {% if selected_terms %}
-                    {{ selected_terms.nombre }}
-                  {% else %}
-                    estándar
-                  {% endif %}
-                </span>
-              </summary>
-              <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
-                {% if selected_terms %}
-                  <p class="text-[11px] text-gray-300 whitespace-pre-line">
-                    {{ selected_terms.texto }}
-                  </p>
-                {% else %}
-                  <p class="text-[11px] text-gray-400">
-                    Se usarán términos estándar hasta que selecciones una plantilla específica.
-                  </p>
-                {% endif %}
-                <button type="button"
-                        class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
-                  Seleccionar / editar términos
-                </button>
-              </div>
-            </details>
-
-            <!-- Notas -->
-            <details class="bg-gray-900 rounded-lg border border-gray-700">
-              <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-                <span>Notas de la cotización</span>
-              </summary>
-              <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
-                <textarea
-                  name="quote_notes"
-                  rows="3"
-                  class="w-full rounded-md bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-[11px] text-gray-100 px-2 py-1.5 resize-none"
-                  placeholder="Notas técnicas o comerciales relevantes para esta oferta.">{{ quote_notes|default("") }}</textarea>
-              </div>
-            </details>
-
-          </div>
-        </div>
-
-        <div class="border-t border-gray-700 p-4 flex flex-col gap-2 flex-shrink-0">
-          <button type="button"
-                  class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-gray-700 hover:bg-gray-600 border border-gray-500">
-            Ver preview de cotización
-          </button>
-          <button type="button"
-                  class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500">
-            Guardar cotización
-          </button>
-        </div>
+        {% include "assistant/_quote_panel.html" %}
       </div>
+
 
     </div>
   </div>
@@ -428,8 +246,8 @@
   function startTypingTimer() {
 
     const indicator = document.getElementById("typing-indicator");
-    const timer = document.getElementById("typing-timer");    
-  
+    const timer = document.getElementById("typing-timer");
+
     indicator.classList.remove("hidden");
     seconds = 0;
 

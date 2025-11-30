@@ -117,7 +117,8 @@ async def get_case_assistant(
         "case": case,
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
-        "requirements": [],
+        "requirements": requirements_list if 'requirements_list' in locals() else [],
+        "requirements_json": requirements_list if 'requirements_list' in locals() else [],
         "quote_items": [],
         "selected_client": None,
         "selected_terms": None,
@@ -199,6 +200,8 @@ async def post_case_assistant(
                 raw_json = comando_result.get("raw", {})
                 normalized_json = comando_result.get("normalized", {})
 
+                requirements_list = normalized_json.get("pumps", [])
+
                 msgs = build_all_messages(raw_json, normalized_json)
 
                 for key in ["summary", "raw", "normalized"]:
@@ -270,7 +273,8 @@ async def post_case_assistant(
         "case": case,
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
-        "requirements": [],
+        "requirements": requirements_list if 'requirements_list' in locals() else [],
+        "requirements_json": requirements_list if 'requirements_list' in locals() else [],
         "quote_items": [],
         "selected_client": None,
         "selected_terms": None,

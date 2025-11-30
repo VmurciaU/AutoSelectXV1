@@ -1,0 +1,62 @@
+<!-- Ítems de bomba seleccionados -->
+<details class="bg-gray-900 rounded-lg border border-gray-700">
+  <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+    <span>Ítems de bomba seleccionados</span>
+    <span class="text-gray-400 text-[11px]">
+      {% if quote_items and quote_items|length > 0 %}
+        {{ quote_items|length }} ítems
+      {% else %}
+        ninguno
+      {% endif %}
+    </span>
+  </summary>
+
+  <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
+
+    {% if quote_items and quote_items|length > 0 %}
+
+      {% for qi in quote_items %}
+        <div class="bg-gray-800 rounded-md border border-gray-700 p-2 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-semibold">
+              Item {{ loop.index }} – {{ qi.product_code or "P/N" }}
+            </span>
+            <span class="text-[10px] text-gray-400">
+              Cant.: {{ qi.cantidad|default(1) }}
+            </span>
+          </div>
+
+          <p class="text-[11px] text-gray-300">
+            {{ qi.descripcion|default("Descripción técnica/comercial de la bomba seleccionada.") }}
+          </p>
+
+          {% if qi.precio_unitario %}
+            <p class="text-[11px] text-gray-400">
+              Precio unitario: {{ qi.precio_unitario }}
+            </p>
+          {% endif %}
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button class="text-blue-400 hover:underline text-[11px]">Editar</button>
+            <button class="text-red-400 hover:underline text-[11px]">Eliminar</button>
+          </div>
+        </div>
+      {% endfor %}
+
+    {% else %}
+
+      <p class="text-[11px] text-gray-400">
+        Cuando selecciones una bomba para un Item, aparecerá aquí como un ítem de cotización.
+      </p>
+
+    {% endif %}
+
+    <div class="mt-2">
+      <button type="button"
+              class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+        Buscar bomba para un Item
+      </button>
+    </div>
+
+  </div>
+</details>
