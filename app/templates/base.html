@@ -69,12 +69,18 @@
 
 
   {% if requirements_json is defined %}
-  {% raw %}
+
+  {% if requirements_json is defined %}
   <script>
-    window.requirementsDataGlobal = {{ requirements_json | tojson }};
+    window.requirementsDataGlobal = JSON.parse('{{ requirements_json | tojson | safe }}');
   </script>
-  {% endraw %}
   {% endif %}
+
+  {% endif %}
+
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+
 </body>
 
 </html>
