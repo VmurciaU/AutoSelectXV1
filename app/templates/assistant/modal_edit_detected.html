@@ -1,0 +1,332 @@
+<!-- ================================================================
+     MODAL_EDIT.HTML
+     Archivo centralizado donde viven TODOS los modales del sistema.
+     Se incluye desde paneles como:
+     
+================================================================ -->
+
+<!-- ================================================================
+     MODAL TIPO A — EDITAR BOMBA DETECTADA
+     (Usado desde panel_pumps_detected.html)
+================================================================ -->
+<div id="modal_edit_detected"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-md p-5 border border-gray-700">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-base font-semibold">Editar bomba detectada</h2>
+      <button onclick="closeModal('modal_edit_detected')"
+        class="text-gray-400 hover:text-white text-xl leading-none">&times;</button>
+    </div>
+
+    <!-- FORM -->
+    <form id="form_edit_detected" class="space-y-3 text-sm">
+
+      <input type="hidden" id="edit_detected_index">
+
+      <!-- ===================== CAMPOS RAÍZ ===================== -->
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Fluido</label>
+        <input id="edit_fluid" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Viscosidad (cP)</label>
+        <input id="edit_viscosity" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Presión de descarga</label>
+        <input id="edit_discharge_pressure" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div class="grid grid-cols-3 gap-2">
+        <div>
+          <label class="block mb-1 text-xs text-gray-400">Caudal min</label>
+          <input id="edit_flow_min" type="text"
+            class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+        </div>
+        <div>
+          <label class="block mb-1 text-xs text-gray-400">Caudal nominal</label>
+          <input id="edit_flow_nominal" type="text"
+            class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+        </div>
+        <div>
+          <label class="block mb-1 text-xs text-gray-400">Caudal max</label>
+          <input id="edit_flow_max" type="text"
+            class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+        </div>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Cantidad de bombas</label>
+        <input id="edit_cantidad" type="number" min="1"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <!-- ===================== OPTIONAL ===================== -->
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">TAG</label>
+        <input id="edit_optional_tag" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Servicio</label>
+        <input id="edit_optional_service" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Temperatura</label>
+        <input id="edit_optional_temperature" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Materiales</label>
+        <input id="edit_optional_materials" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Área Clasificada</label>
+        <input id="edit_optional_area" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Ubicación</label>
+        <input id="edit_optional_location" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Tipo de accionamiento</label>
+        <input id="edit_optional_drive_type" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Tipo de bomba</label>
+        <input id="edit_optional_pump_type" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+      <div>
+        <label class="block mb-1 text-xs text-gray-400">Voltaje</label>
+        <input id="edit_optional_voltage" type="text"
+          class="input-edit w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-xs">
+      </div>
+
+
+
+
+
+
+
+      <!-- Botonera -->
+      <div class="pt-3 flex justify-end gap-2">
+        <button type="button" onclick="closeModal('modal_edit_detected')"
+          class="px-3 py-1.5 text-xs rounded bg-gray-700 hover:bg-gray-600 border border-gray-600">
+          Cancelar
+        </button>
+
+        <button type="button" onclick="saveEditDetected()"
+          class="px-3 py-1.5 text-xs rounded bg-blue-700 hover:bg-blue-600 border border-blue-500">
+          Guardar cambios
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+<!-- ==================================================================
+     *** FUTUROS MODALES CENTRALIZADOS ***
+     Aquí dejamos los placeholders para otros tipos de modal.
+================================================================== -->
+
+<!-- ================================================================
+     MODAL TIPO B — EDITAR BOMBA CREADA POR CLIENTE
+     (SE AGREGARÁ MÁS ADELANTE)
+================================================================ -->
+<!--  
+<div id="modal_edit_cliente"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+  
+  AQUI VA EL FORM COMPLETO PARA BOMBAS DEL CLIENTE
+  Se deja placeholder para futura etapa (Sprint siguiente)
+  
+</div>
+-->
+
+
+<!-- ================================================================
+     MODAL TIPO C — OTROS MODALES (terminos, configuraciones, etc.)
+================================================================ -->
+<!--  
+<div id="modal_edit_otros"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+  
+  Futuros modales del sistema centralizados
+  Ejemplos:
+  - Modal para editar condiciones del caso
+  - Modal para agregar notas o requerimientos adicionales
+
+</div>
+-->
+
+
+<!-- =================================================================
+     SCRIPT GLOBAL PARA TODOS LOS MODALES
+     Vive en este archivo para ser accesible desde cualquier panel.
+================================================================= -->
+<script>
+  /* ================================================================
+     VARIABLES GLOBALES
+     requirementsData = array JSON generado por FastAPI
+  ================================================================ */
+  let requirementsData = window.requirementsDataGlobal || [];
+
+
+  /* ================================================================
+     FUNCION GENERICA PARA ABRIR CUALQUIER MODAL
+  ================================================================ */
+  function openModal(id) {
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  /* ================================================================
+     FUNCION GENERICA PARA CERRAR CUALQUIER MODAL
+  ================================================================ */
+  function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+
+
+  /* ================================================================
+     *** EDITAR BOMBA DETECTADA ***
+     Llamado desde panel_pumps_detected.html:
+       onclick="openEditItemModal(index)"
+  ================================================================ */
+  function openEditItemModal(index) {
+
+    const item = requirementsData[index];
+
+    // Guardamos el índice actual
+    document.getElementById('edit_detected_index').value = index;
+
+    // Llenamos campos
+    // Raíz
+    document.getElementById("edit_fluid").value = item.fluid || "";
+    document.getElementById("edit_viscosity").value = item.viscosity || "";
+    document.getElementById("edit_discharge_pressure").value = item.discharge_pressure || "";
+
+    document.getElementById("edit_flow_min").value = item.flow?.min || "";
+    document.getElementById("edit_flow_nominal").value = item.flow?.nominal || "";
+    document.getElementById("edit_flow_max").value = item.flow?.max || "";
+
+    document.getElementById("edit_cantidad").value = item.cantidad_bombas || 1;
+
+    // OPTIONAL
+    document.getElementById("edit_optional_tag").value = item.optional?.tag || "";
+    document.getElementById("edit_optional_service").value = item.optional?.service || "";
+    document.getElementById("edit_optional_temperature").value = item.optional?.temperature || "";
+    document.getElementById("edit_optional_materials").value = item.optional?.materials || "";
+    document.getElementById("edit_optional_area").value = item.optional?.area_classification || "";
+    document.getElementById("edit_optional_location").value = item.optional?.location || "";
+    document.getElementById("edit_optional_drive_type").value = item.optional?.drive_type || "";
+    document.getElementById("edit_optional_pump_type").value = item.optional?.pump_type || "";
+    document.getElementById("edit_optional_voltage").value = item.optional?.voltage || "";
+
+
+
+    openModal('modal_edit_detected');
+  }
+
+
+  /* ================================================================
+     GUARDAR CAMBIOS — BOMBA DETECTADA
+  ================================================================ */
+  function saveEditDetected() {
+
+    function saveEditDetected() {
+
+      // Obtener índice real
+      const index = document.getElementById("edit_detected_index").value;
+      const item = requirementsData[index];
+
+      // ========= CAMPOS RAÍZ =========
+      item.fluid = document.getElementById("edit_fluid").value;
+      item.viscosity = document.getElementById("edit_viscosity").value;
+      item.discharge_pressure = document.getElementById("edit_discharge_pressure").value;
+
+      item.flow = item.flow || {};
+      item.flow.min = document.getElementById("edit_flow_min").value;
+      item.flow.nominal = document.getElementById("edit_flow_nominal").value;
+      item.flow.max = document.getElementById("edit_flow_max").value;
+
+      item.cantidad_bombas = document.getElementById("edit_cantidad").value;
+
+      // ========= OPTIONAL =========
+      item.optional = item.optional || {};
+      item.optional.tag = document.getElementById("edit_optional_tag").value;
+      item.optional.service = document.getElementById("edit_optional_service").value;
+      item.optional.temperature = document.getElementById("edit_optional_temperature").value;
+      item.optional.materials = document.getElementById("edit_optional_materials").value;
+      item.optional.area_classification = document.getElementById("edit_optional_area").value;
+      item.optional.location = document.getElementById("edit_optional_location").value;
+      item.optional.drive_type = document.getElementById("edit_optional_drive_type").value;
+      item.optional.pump_type = document.getElementById("edit_optional_pump_type").value;
+      item.optional.voltage = document.getElementById("edit_optional_voltage").value;
+
+      // ========= GUARDAR =========
+      sessionStorage.setItem("requirementsDataGlobal", JSON.stringify(requirementsData));
+
+      // ========= CERRAR Y REFRESCAR =========
+      closeModal('modal_edit_detected');
+      location.reload();
+    }
+
+
+  }
+
+
+  /* ================================================================
+     ELIMINAR REQUERIMIENTO
+     Llamado desde panel:
+       onclick="deleteRequirement(index)"
+  ================================================================ */
+  function deleteRequirement(index) {
+
+    if (!confirm("¿Eliminar este ítem?")) return;
+
+    requirementsData.splice(index, 1);
+
+    // Luego conectamos esto al backend:
+    // fetch('/cases/update', ...)
+
+    location.reload();
+  }
+
+</script>
+
+<script>
+  // Sobrescribir datos si existen en sessionStorage
+  const localData = sessionStorage.getItem("requirementsDataGlobal");
+
+  if (localData) {
+      window.requirementsDataGlobal = JSON.parse(localData);
+  }
+</script>
