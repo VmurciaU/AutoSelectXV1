@@ -1,0 +1,130 @@
+{# ==========================================================
+FRAGMENTO: Bombas detectadas
+OJO: NO EXTENDER base.html, se usa sólo via {% include %}
+========================================================== #}
+
+<details class="bg-gray-900 rounded-lg border border-gray-700" open>
+  <summary
+    class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+    <span>Bombas detectadas</span>
+    <span class="text-gray-400 text-[11px]">
+      {% if requirements and requirements|length > 0 %}
+      {{ requirements|length }} items
+      {% else %}
+      sin detectar
+      {% endif %}
+    </span>
+  </summary>
+
+  <div class="px-3 py-2 border-t border-gray-700 space-y-3 text-xs text-gray-200">
+
+    {% if requirements and requirements|length > 0 %}
+
+    {% for item in requirements %}
+
+    <!-- TARJETA -->
+    <div class="bg-gray-800 rounded-md border border-gray-700 p-3 space-y-2">
+
+      <!-- Header -->
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-semibold">
+          Item {{ loop.index }} – TAG:
+          {% if item.optional and item.optional.tag %}
+          {{ item.optional.tag }}
+          {% else %}
+          Sin TAG
+          {% endif %}
+        </span>
+        <span class="text-[10px] text-gray-400">
+          {{ item.estado|default("borrador") }}
+        </span>
+      </div>
+
+      <!-- Datos resumidos reales -->
+      <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
+
+        <!-- Caudal -->
+        <span>
+          Caudal:
+          <strong>
+            {% if item.flow_max_std %}
+            {{ "%.3f"|format(item.flow_max_std) }} {{ item.flow_unit_std }}
+            {% elif item.flow.max %}
+            {{ item.flow.max }} GPD
+            {% else %}
+            —
+            {% endif %}
+          </strong>
+        </span>
+
+        <!-- Presión -->
+        <span>
+          Presión:
+          <strong>
+            {% if item.discharge_pressure_std %}
+            {{ item.discharge_pressure_std }} PSI
+            {% elif item.discharge_pressure %}
+            {{ item.discharge_pressure }} PSI
+            {% else %}
+            —
+            {% endif %}
+          </strong>
+        </span>
+
+        <!-- Fluido -->
+        <span>
+          Fluido:
+          <strong>{{ item.fluid|default("—") }}</strong>
+        </span>
+
+        <!-- Cantidad (por ahora 1 fijo) -->
+        <span>
+          Cantidad: <strong>1</strong>
+        </span>
+
+      </div>
+
+      <!-- Acciones -->
+       <!-- 
+
+      <div class="flex justify-end gap-2 pt-1">
+        <button type="button" class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
+          onclick="openEditItemModal('{{ loop.index0 }}')">
+          Ver / Editar
+        </button>
+
+        <button type="button" class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600"
+          onclick="deleteRequirement('{{ loop.index0 }}')">
+          Eliminar
+        </button>
+      </div>
+      -->
+
+
+
+    </div>
+
+    {% endfor %}
+
+    <!-- Confirmar -->
+    <!-- 
+     <div>
+        <button type="button"
+                class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-emerald-700 hover:bg-emerald-600 border border-emerald-500">
+          Confirmar bombas detectadas
+        </button>
+      </div>
+      -->
+
+    {% else %}
+    <p class="text-[11px] text-gray-400">
+      No hay bombas detectadas. Usa el asistente con
+      <span class="font-mono">@buscar_bombas_items</span>.
+    </p>
+    {% endif %}
+
+  </div>
+</details>
+
+{# El modal puede ir aquí o al final del case_assistant; por simplicidad lo dejamos aquí #}
+{% include "assistant/modal_edit.html" %}

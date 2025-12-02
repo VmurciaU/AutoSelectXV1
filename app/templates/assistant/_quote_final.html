@@ -12,8 +12,19 @@
     style="max-height: calc(100vh - 400px);">
 
     {# 1. Bombas detectadas (nuevo panel) #}
-    {% include "assistant/panel_pumps_detected_view.html" %}
+    {% include "assistant/panel_pumps_detected.html" %}
 
+    {# 2. Ítems de bomba seleccionados #}
+    {% include "assistant/panel_pumps_selected.html" %}
+
+    {# 3. Cliente #}
+    {% include "assistant/panel_client.html" %}
+
+    {# 4. Términos comerciales #}
+    {% include "assistant/panel_terms.html" %}
+
+    {# 5. Notas de la cotización #}
+    {% include "assistant/panel_notes.html" %}
 
   </div>
 </div>
@@ -22,7 +33,10 @@
 <div class="border-t border-gray-700 p-4 flex flex-col gap-2 flex-shrink-0">
   <button type="button"
           class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-gray-700 hover:bg-gray-600 border border-gray-500">
-   Continuar con la cotización
+    Ver preview de cotización
   </button>
-
+  <button type="button"
+          class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500">
+    Guardar cotización
+  </button>
 </div>
