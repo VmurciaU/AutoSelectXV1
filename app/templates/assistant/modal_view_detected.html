@@ -1,0 +1,137 @@
+<!-- ===================================================================
+     MODAL VER DETALLES BOMBA DETECTADA (VIEW ONLY)
+=================================================================== -->
+
+<div id="modal_view_detected"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-md p-5 border border-gray-700">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-base font-semibold">Detalles bomba detectada</h2>
+      <button onclick="closeModal('modal_view_detected')"
+        class="text-gray-400 hover:text-white text-xl leading-none">&times;</button>
+    </div>
+
+    <!-- CONTENIDO SOLO LECTURA -->
+    <div class="space-y-3 text-sm">
+
+      <!-- ===================== CAMPOS RAÍZ ===================== -->
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Fluido</p>
+          <p id="view_fluid" class="text-xs text-gray-100">—</p>
+        </div>
+
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Viscosidad (cP)</p>
+          <p id="view_viscosity" class="text-xs text-gray-100">—</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Presión descarga (PSI)</p>
+          <p id="view_discharge_pressure" class="text-xs text-gray-100">—</p>
+        </div>
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Presión descarga (STD, PSI)</p>
+          <p id="view_discharge_pressure_std" class="text-xs text-gray-100">—</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2">
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Caudal min</p>
+          <p id="view_flow_min" class="text-xs text-gray-100">—</p>
+        </div>
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Nominal</p>
+          <p id="view_flow_nominal" class="text-xs text-gray-100">—</p>
+        </div>
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Max</p>
+          <p id="view_flow_max" class="text-xs text-gray-100">—</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Caudal máximo (STD)</p>
+          <p id="view_flow_max_std" class="text-xs text-gray-100">—</p>
+        </div>
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Unidad caudal (STD)</p>
+          <p id="view_flow_unit_std" class="text-xs text-gray-100">—</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Cantidad</p>
+          <p id="view_cantidad" class="text-xs text-gray-100">—</p>
+        </div>
+        <div>
+          <p class="block mb-1 text-xs text-gray-400">Estado</p>
+          <p id="view_estado" class="text-xs text-gray-100">—</p>
+        </div>
+      </div>
+
+      <!-- ===================== OPTIONAL ===================== -->
+
+      <div class="pt-2 border-t border-gray-700 mt-2">
+        <p class="text-[11px] text-gray-400 mb-2">Datos adicionales</p>
+
+        <div class="mb-2">
+          <p class="block mb-1 text-xs text-gray-400">Descripción</p>
+          <p id="view_optional_description" class="text-xs text-gray-100">—</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">TAG</p>
+            <p id="view_optional_tag" class="text-xs text-gray-100">—</p>
+          </div>
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Servicio</p>
+            <p id="view_optional_service" class="text-xs text-gray-100">—</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-2">
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Temperatura</p>
+            <p id="view_optional_temperature" class="text-xs text-gray-100">—</p>
+          </div>
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Materiales</p>
+            <p id="view_optional_materials" class="text-xs text-gray-100">—</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-2">
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Área Clasificada</p>
+            <p id="view_optional_area" class="text-xs text-gray-100">—</p>
+          </div>
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Ubicación</p>
+            <p id="view_optional_location" class="text-xs text-gray-100">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÓN CERRAR -->
+      <div class="pt-3 flex justify-end">
+        <button type="button" onclick="closeModal('modal_view_detected')"
+          class="px-3 py-1.5 text-xs rounded bg-gray-700 hover:bg-gray-600 border border-gray-600">
+          Cerrar
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

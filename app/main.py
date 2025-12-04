@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from app.routers import quote_routes
 import os
 
 # Routers
@@ -47,6 +48,9 @@ app.include_router(nav_routes.router)
 # =========================
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
+
+# Include Quote Routes
+app.include_router(quote_routes.router)
 
 
 @app.get("/health")

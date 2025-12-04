@@ -1,42 +1,410 @@
-{# Panel derecho de cotización – FRAGMENTO #}
+{% extends "base.html" %}
 
-<!-- ENCABEZADO -->
-<div class="border-b border-gray-700 px-4 py-3 flex-shrink-0">
-  <h2 class="text-sm font-semibold">Panel de cotización del caso</h2>
-</div>
 
-<!-- CONTENEDOR CON ALTURA FIJA + SCROLL INTERNO -->
-<div class="flex-1 min-h-0 flex flex-col">
-  <div
-    class="flex-1 min-h-0 p-4 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800"
-    style="max-height: calc(100vh - 400px);">
+{% block title %}Cotización del caso - AutoSelect-X{% endblock %}
 
-    {# 1. Bombas detectadas (nuevo panel) #}
-    {% include "assistant/panel_pumps_detected.html" %}
+{% block content %}
+<div class="h-full bg-gray-900 text-white pt-5 px-6 pb-6">
 
-    {# 2. Ítems de bomba seleccionados #}
-    {% include "assistant/panel_pumps_selected.html" %}
+  <div class="max-w-7xl mx-auto space-y-4 flex flex-col h-[calc(100vh-8rem)]">
 
-    {# 3. Cliente #}
-    {% include "assistant/panel_client.html" %}
+    {# =========================
+    BANNER SUPERIOR DEL CASO
+    ========================= #}
+    <div
+      class="bg-gray-800 rounded-lg p-4 shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4 flex-shrink-0 border border-gray-700">
 
-    {# 4. Términos comerciales #}
-    {% include "assistant/panel_terms.html" %}
+      <div class="space-y-1">
+        <h1 class="text-2xl font-semibold flex items-center gap-2">
+          Cotización del caso
+          {% if case %}
+          <span class="text-sm text-gray-300">
+            – {{ case.name or ("Caso #" ~ case.id) }}
+          </span>
+          {% endif %}
+        </h1>
 
-    {# 5. Notas de la cotización #}
-    {% include "assistant/panel_notes.html" %}
+        <p class="text-xs text-gray-300">
+          Revisa, ajusta y guarda la información técnica y comercial de este caso antes de generar la cotización final.
+        </p>
+
+        <div class="flex flex-wrap gap-3 text-[11px] text-gray-400 mt-1">
+          {% if case and case.id %}
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+            <span class="font-semibold uppercase tracking-wide">ID</span>
+            <span>#{{ case.id }}</span>
+          </span>
+          {% endif %}
+
+          {% if case and case.status %}
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+            <span class="font-semibold uppercase tracking-wide">Estado</span>
+            <span>{{ case.status }}</span>
+          </span>
+          {% endif %}
+
+          {% if case and case.created_at %}
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+            <span class="font-semibold uppercase tracking-wide">Creado</span>
+            <span>{{ case.created_at.strftime("%Y-%m-%d") if case.created_at else "" }}</span>
+          </span>
+          {% endif %}
+
+          {% if case and case.updated_at %}
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+            <span class="font-semibold uppercase tracking-wide">Actualizado</span>
+            <span>{{ case.updated_at.strftime("%Y-%m-%d") if case.updated_at else "" }}</span>
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="flex flex-col md:items-end gap-2">
+
+        <p class="text-[11px] text-gray-400 max-w-xs md:text-right">
+          Puedes regresar al asistente para seguir haciendo preguntas técnicas. La información confirmada aquí se
+          guardará
+          en la base de datos para este caso.
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          {% if case and case.id %}
+          <a href="/cases/{{ case.id }}/assistant"
+            class="px-3 py-1.5 text-xs font-semibold rounded-md border border-gray-500 bg-gray-800 hover:bg-gray-700">
+            ← Volver al asistente
+          </a>
+          {% else %}
+          <a href="/cases"
+            class="px-3 py-1.5 text-xs font-semibold rounded-md border border-gray-500 bg-gray-800 hover:bg-gray-700">
+            ← Volver a casos
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+
+    {# =========================================
+    PANEL CENTRAL CON ALTURA FIJA + SCROLL
+    ========================================= #}
+    <div class="flex-1 min-h-0 flex flex-col bg-gray-900 rounded-lg border border-gray-800 shadow">
+
+      {# Encabezado pequeño del panel #}
+      <div class="border-b border-gray-800 px-4 py-3 flex-shrink-0 flex items-center justify-between">
+        <h2 class="text-sm font-semibold">
+          Panel de cotización del caso
+        </h2>
+        <p class="text-[11px] text-gray-400">
+          Ajusta bombas detectadas, selección comercial, cliente, términos y notas.
+        </p>
+      </div>
+
+      {# CONTENEDOR SCROLLEABLE DE ACORDEONES #}
+      <div class="flex-1 min-h-0 flex flex-col">
+        <div
+          class="flex-1 min-h-0 p-4 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800"
+          style="max-height: calc(100vh - 260px);">
+
+          {# 1. Bombas detectadas (estado técnico inicial) #}
+          {% include "assistant/panel_pumps_detected.html" %}
+
+          {# 2. Bombas detectadas (estado técnico DB si existe si no toma Bombas JSON) #}
+          {% include "assistant/panel_pumps_detected_DB.html" %}
+
+          {# 3. Bombas seleccionadas para cotización #}
+          {% include "assistant/panel_pumps_selected.html" %}
+
+          {# 4. Cliente #}
+          {% include "assistant/panel_client.html" %}
+
+          {# 5. Términos comerciales #}
+          {% include "assistant/panel_terms.html" %}
+
+          {# 6. Notas de la cotización #}
+          {% include "assistant/panel_notes.html" %}
+
+        </div>
+
+        {# FOOTER FIJO DEL PANEL #}
+        <div class="border-t border-gray-800 p-4 flex flex-col md:flex-row gap-2 flex-shrink-0 bg-gray-900">
+          <button type="button"
+            class="w-full md:w-1/3 px-3 py-2 rounded-md text-xs font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+            Ver preview de cotización
+          </button>
+          <button type="submit"
+            class="w-full md:flex-1 px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 border border-emerald-500">
+            Guardar cotización
+          </button>
+        </div>
+      </div>
+
+    </div>
 
   </div>
+
 </div>
 
-<!-- FOOTER FIJO -->
-<div class="border-t border-gray-700 p-4 flex flex-col gap-2 flex-shrink-0">
-  <button type="button"
-          class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-gray-700 hover:bg-gray-600 border border-gray-500">
-    Ver preview de cotización
-  </button>
-  <button type="button"
-          class="w-full px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500">
-    Guardar cotización
-  </button>
-</div>
+{# ==========================
+MODALES CENTRALIZADOS
+========================== #}
+{# Modal de vista de bomba detectada (solo lectura) #}
+{% include "assistant/modal_view_detected.html" %}
+
+{# Modal para editar bomba detectada desde BD #}
+{% include "assistant/modal_edit_detected.html" %}
+
+
+{# Aquí en el futuro se podrán incluir:
+- modal para selección comercial (bomba seleccionada)
+- modal para cliente
+- modal para términos
+- modal para notas
+Se mantienen centralizados para ser reutilizados.
+#}
+
+{# JSON maestro para todos los paneles y modales #}
+<script id="pumps-json" type="application/json">
+  {{ pumps_payload_json | safe }}
+</script>
+
+<!-- 🔥 SCRIPTS NUEVOS  -->
+<script>
+  // 1️⃣ Convertir JSON a objeto JS
+  const pumpsData = JSON.parse(
+    document.getElementById("pumps-json").textContent
+  );
+</script>
+
+<script>
+  // 2️⃣ Funciones globales para abrir/cerrar modales
+  function openModal(id) {
+    document.getElementById(id).classList.remove("hidden");
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.add("hidden");
+  }
+</script>
+
+<script>
+  // 3️⃣ Lógica principal para VER DETALLES
+  function openViewDetectedModal(index) {
+    const pump = pumpsData.detected[index];
+    if (!pump) return;
+
+    // --- Llenar campos raíz ---
+    document.getElementById("view_fluid").textContent =
+      pump.fluid || "—";
+    document.getElementById("view_viscosity").textContent =
+      pump.viscosity || "—";
+
+    document.getElementById("view_discharge_pressure").textContent =
+      pump.discharge_pressure || "—";
+
+    document.getElementById("view_discharge_pressure_std").textContent =
+      pump.discharge_pressure_std || "—";
+
+    document.getElementById("view_flow_min").textContent =
+      pump.flow?.min || "—";
+
+    document.getElementById("view_flow_nominal").textContent =
+      pump.flow?.nominal || "—";
+
+    document.getElementById("view_flow_max").textContent =
+      pump.flow?.max || "—";
+
+    document.getElementById("view_flow_max_std").textContent =
+      pump.flow_max_std || "—";
+
+    document.getElementById("view_flow_unit_std").textContent =
+      pump.flow_unit_std || "—";
+
+    document.getElementById("view_cantidad").textContent =
+      pump.cantidad_bombas || "1";
+
+    document.getElementById("view_estado").textContent =
+      pump.estado || "borrador";
+
+    // --- Optional ---
+    const opt = pump.optional || {};
+
+    document.getElementById("view_optional_description").textContent =
+      opt.description || "—";
+
+    document.getElementById("view_optional_tag").textContent =
+      opt.tag || "—";
+
+    document.getElementById("view_optional_service").textContent =
+      opt.service || "—";
+
+    document.getElementById("view_optional_temperature").textContent =
+      opt.temperature || "—";
+
+    document.getElementById("view_optional_materials").textContent =
+      opt.materials || "—";
+
+    document.getElementById("view_optional_area").textContent =
+      opt.area || "—";
+
+    document.getElementById("view_optional_location").textContent =
+      opt.location || "—";
+
+    // Mostrar modal
+    openModal("modal_view_detected");
+  }
+</script>
+
+<script>
+  // Abrir modal de EDICIÓN de bomba detectada (por ahora usando el mismo array que detected)
+  function openEditDetectedModal(index) {
+    const pump = pumpsData.detected[index];  // TODO: en el futuro usar pumpsData.db cuando venga de la BD
+    if (!pump) {
+      console.warn("No se encontró bomba para edición en índice", index);
+      return;
+    }
+
+    // Guardar índice en hidden
+    document.getElementById("edit_detected_index").value = index;
+
+    // --- Campos raíz ---
+    document.getElementById("edit_fluid").value =
+      pump.fluid || "";
+
+    document.getElementById("edit_viscosity").value =
+      pump.viscosity ?? "";
+
+    document.getElementById("edit_discharge_pressure").value =
+      pump.discharge_pressure ?? "";
+
+    document.getElementById("edit_discharge_pressure_std").value =
+      pump.discharge_pressure_std ?? "";
+
+    document.getElementById("edit_flow_min").value =
+      (pump.flow && pump.flow.min) ?? "";
+
+    document.getElementById("edit_flow_nominal").value =
+      (pump.flow && pump.flow.nominal) ?? "";
+
+    document.getElementById("edit_flow_max").value =
+      (pump.flow && pump.flow.max) ?? "";
+
+    document.getElementById("edit_flow_max_std").value =
+      pump.flow_max_std ?? "";
+
+    document.getElementById("edit_flow_unit_std").value =
+      pump.flow_unit_std ?? "";
+
+    document.getElementById("edit_cantidad").value =
+      pump.cantidad_bombas ?? 1;
+
+    document.getElementById("edit_estado").value =
+      pump.estado || "borrador";
+
+    // --- Optional ---
+    const opt = pump.optional || {};
+
+    document.getElementById("edit_optional_description").value =
+      opt.description ?? "";
+
+    document.getElementById("edit_optional_tag").value =
+      opt.tag ?? "";
+
+    document.getElementById("edit_optional_service").value =
+      opt.service ?? "";
+
+    document.getElementById("edit_optional_temperature").value =
+      opt.temperature ?? "";
+
+    document.getElementById("edit_optional_materials").value =
+      opt.materials ?? "";
+
+    document.getElementById("edit_optional_area").value =
+      opt.area ?? "";
+
+    document.getElementById("edit_optional_location").value =
+      opt.location ?? "";
+
+    // Mostrar modal de edición
+    openModal("modal_edit_detected");
+  }
+</script>
+
+<script>
+  function saveEditDetected() {
+    const indexStr = document.getElementById("edit_detected_index").value;
+    const index = parseInt(indexStr, 10);
+
+    if (Number.isNaN(index) || !pumpsData.detected[index]) {
+      console.warn("Índice inválido al guardar edición:", indexStr);
+      return;
+    }
+
+    // Referencia local
+    const pump = pumpsData.detected[index];
+
+    // --- Actualizar objeto en memoria con los valores del form ---
+    pump.fluid = document.getElementById("edit_fluid").value || null;
+    pump.viscosity = document.getElementById("edit_viscosity").value || null;
+
+    pump.discharge_pressure =
+      document.getElementById("edit_discharge_pressure").value || null;
+
+    pump.discharge_pressure_std =
+      document.getElementById("edit_discharge_pressure_std").value || null;
+
+    pump.flow = pump.flow || {};
+    pump.flow.min =
+      document.getElementById("edit_flow_min").value || null;
+    pump.flow.nominal =
+      document.getElementById("edit_flow_nominal").value || null;
+    pump.flow.max =
+      document.getElementById("edit_flow_max").value || null;
+
+    pump.flow_max_std =
+      document.getElementById("edit_flow_max_std").value || null;
+
+    pump.flow_unit_std =
+      document.getElementById("edit_flow_unit_std").value || null;
+
+    pump.cantidad_bombas =
+      document.getElementById("edit_cantidad").value || 1;
+
+    pump.estado =
+      document.getElementById("edit_estado").value || "borrador";
+
+    // Optional
+    pump.optional = pump.optional || {};
+    pump.optional.description =
+      document.getElementById("edit_optional_description").value || null;
+
+    pump.optional.tag =
+      document.getElementById("edit_optional_tag").value || null;
+
+    pump.optional.service =
+      document.getElementById("edit_optional_service").value || null;
+
+    pump.optional.temperature =
+      document.getElementById("edit_optional_temperature").value || null;
+
+    pump.optional.materials =
+      document.getElementById("edit_optional_materials").value || null;
+
+    pump.optional.area =
+      document.getElementById("edit_optional_area").value || null;
+
+    pump.optional.location =
+      document.getElementById("edit_optional_location").value || null;
+
+    console.log("✅ Bomba editada localmente:", pump);
+
+    // TODO: En la siguiente fase:
+    // - enviar estos datos a la API para guardarlos en la BD (fetch/POST)
+    // - refrescar el panel de 'Editar Bombas detectadas' sin recargar la página
+
+    closeModal("modal_edit_detected");
+  }
+</script>
+
+
+
+{% endblock %}

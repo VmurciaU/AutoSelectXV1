@@ -8,7 +8,7 @@
 <details class="bg-gray-900 rounded-lg border border-gray-700" open>
   <summary
     class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-    <span>Bombas detectadas</span>
+    <span>Editar Bombas detectadas</span>
     <span class="text-gray-400 text-[11px]">
       {% if items and items|length > 0 %}
         {{ items|length }} items
@@ -92,11 +92,15 @@
         <div class="flex gap-2">
           <button
             class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
-            onclick="openViewDetectedModal('{{ loop.index0 }}')">
-            Ver Detalles
+            onclick="openEditDetectedModal('{{ loop.index0 }}')">
+            Editar
           </button>
 
-
+          <button
+            class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600"
+            onclick="deleteRequirement('{{ loop.index0 }}')">
+            Eliminar
+          </button>
         </div>
 
       </div>
@@ -122,4 +126,6 @@
   </div>
 </details>
 
+{# Modal centralizado #}
+{% include "assistant/modal_edit_detected.html" %}
 

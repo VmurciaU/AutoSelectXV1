@@ -18,6 +18,24 @@
 
 <body class="text-white font-sans bg-gray-900">
 
+  {# Inyectar los requirements lo más pronto posible #}
+  {% if requirements_json is defined %}
+  <script>
+    // Datos iniciales desde el backend
+    window.requirementsDataGlobal = {{ requirements_json | tojson }};
+
+    // Opcional pero útil: sincronizar con sessionStorage para navegar entre pantallas
+    try {
+      sessionStorage.setItem(
+        "requirementsDataGlobal",
+        JSON.stringify(window.requirementsDataGlobal)
+      );
+    } catch (e) {
+      console.warn("No se pudo guardar requirementsDataGlobal en sessionStorage al inicio:", e);
+    }
+  </script>
+  {% endif %}
+
   <!-- Navbar -->
   <header class="bg-gray-800 bg-opacity-90 fixed w-full z-50 shadow">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -67,14 +85,6 @@
 
   </div>
 
-
-  {% if requirements_json is defined %}
-  {% raw %}
-  <script>
-    window.requirementsDataGlobal = {{ requirements_json | tojson }};
-  </script>
-  {% endraw %}
-  {% endif %}
 </body>
 
 </html>
