@@ -1,14 +1,14 @@
 {# ==========================================================
-   FRAGMENTO: Bombas detectadas (vista compacta profesional)
-   OJO: NO EXTENDER base.html, se usa sólo via {% include %}
-   ========================================================== #}
+FRAGMENTO A: Bombas detectadas desde JSON (SIEMPRE visible)
+El botón "Guardar" solo se muestra si NO hay bombas en BD.
+========================================================== #}
 
-{% set items = requirements if requirements else requirements_json %}
+{% set items = requirements_json %}
 
 <details class="bg-gray-900 rounded-lg border border-gray-700" open>
   <summary
     class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
-    <span>Bombas detectadas</span>
+    <span>Bombas detectadas (JSON inicial)</span>
     <span class="text-gray-400 text-[11px]">
       {% if items and items|length > 0 %}
         {{ items|length }} items
@@ -23,25 +23,20 @@
     {% if items and items|length > 0 %}
 
       {% for item in items %}
-
-      <!-- ======= FILA COMPACTA ======= -->
+      <!-- ===== FILA ===== -->
       <div class="flex items-center justify-between py-2 px-2 border-b border-gray-800 hover:bg-gray-800 rounded">
 
-        <!-- COLUMNA PRINCIPAL (TAG + parámetros) -->
         <div class="flex items-center gap-6 flex-wrap text-[11px]">
-
-          <!-- TAG -->
           <span class="font-semibold text-gray-100">
             {{ item.optional.tag if item.optional and item.optional.tag else "Sin TAG" }}
           </span>
 
-          <!-- Caudal -->
           <span>
             Caudal:
             <strong class="text-gray-300">
               {% if item.flow_max_std %}
                 {{ "%.3f"|format(item.flow_max_std) }} {{ item.flow_unit_std }}
-              {% elif item.flow.max %}
+              {% elif item.flow and item.flow.max %}
                 {{ item.flow.max }} GPD
               {% else %}
                 —
@@ -49,7 +44,6 @@
             </strong>
           </span>
 
-          <!-- Presión -->
           <span>
             Presión:
             <strong class="text-gray-300">
@@ -63,53 +57,48 @@
             </strong>
           </span>
 
-          <!-- Fluido -->
           <span>
             Fluido:
             <strong class="text-gray-300">{{ item.fluid|default("—") }}</strong>
           </span>
 
-          <!-- Cantidad -->
           <span>
             Cant:
-            <strong class="text-gray-300">
-              {% if item.cantidad_bombas %}
-                {{ item.cantidad_bombas }}
-              {% else %}
-                1
-              {% endif %}
-            </strong>
+            <strong class="text-gray-300">{{ item.cantidad_bombas|default(1) }}</strong>
           </span>
 
-          <!-- Estado -->
           <span class="text-gray-400">
             {{ item.estado|default("borrador") }}
           </span>
-
         </div>
 
-        <!-- ACCIONES -->
-        <div class="flex gap-2">
-          <button
-            class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
-            onclick="openViewDetectedModal('{{ loop.index0 }}')">
-            Ver Detalles
-          </button>
-
-
-        </div>
+        <button type="button"
+          class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
+          onclick="openViewDetectedModal('{{ loop.index0 }}')">
+          Ver Detalles
+        </button>
 
       </div>
-      <!-- ===== FIN FILA ======= -->
-
       {% endfor %}
 
-      <!-- Botón confirmar -->
+      <!-- BOTÓN / MENSAJE SEGÚN ESTADO EN BD -->
       <div class="pt-2">
-        <button type="button"
-          class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-emerald-700 hover:bg-emerald-600 border border-emerald-500">
-          Guardar bombas detectadas
-        </button>
+
+        {% if not has_pumps_in_db %}
+          <!-- Caso: aún NO hay bombas en BD -->
+          <button type="button" onclick="submitSaveDetectedPumps()"
+            class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-emerald-700 hover:bg-emerald-600 border border-emerald-500">
+            Guardar bombas detectadas
+          </button>
+
+        {% else %}
+          <!-- Caso: ya hay bombas en BD -->
+          <p class="text-[11px] text-gray-400">
+            Estas bombas provienen del análisis inicial del asistente.
+            Ya existe una versión guardada en la base de datos que puedes editar abajo.
+          </p>
+        {% endif %}
+
       </div>
 
     {% else %}

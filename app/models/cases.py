@@ -12,15 +12,15 @@ class Case(Base):
     customer_id = Column(Integer, nullable=True, index=True)  # futuro FK a clientes
 
     # Datos principales del caso
-    name = Column(String(200), nullable=True)  # título o nombre del caso
-    status = Column(String(20), nullable=False, default="queued")  # queued|indexing|done|error|quoted|archived
+    name = Column(String(200), nullable=True)
+    status = Column(String(20), nullable=False, default="queued")
 
     # Rutas usadas por tu pipeline PC1–PC6 / LightRAG (MVP)
-    input_dir = Column(String(500), nullable=False)   # p.ej. shared_data/inbox/<case_id>/original/
-    index_dir = Column(String(500), nullable=False)   # p.ej. shared_data/index/<case_id>/
+    input_dir = Column(String(500), nullable=False)
+    index_dir = Column(String(500), nullable=False)
 
-    # Métricas simples para control
-    rag_version = Column(String(50), nullable=True)   # p.ej. "pc1-6@2025.11.09"
+    # Métricas simples
+    rag_version = Column(String(50), nullable=True)
     doc_count = Column(Integer, nullable=False, default=0)
 
     # Notas libres
@@ -30,10 +30,18 @@ class Case(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    # Relaciones básicas
+    # Relaciones
     user = relationship("User", backref="cases", lazy="joined")
 
-    # Índices útiles (consultas por usuario/estado)
+    # 🔥 RELACIÓN CORRECTA con bombas detectadas
+    pumps_detected = relationship(
+        "PumpsDetected",
+        back_populates="case",
+        cascade="all, delete-orphan",
+        lazy="selectin"
+    )
+
+    # Índices
     __table_args__ = (
         Index("ix_cases_user_status", "user_id", "status"),
     )

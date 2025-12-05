@@ -24,6 +24,8 @@ from app.models.customers import Customer
 from app.models.delivery_terms import DeliveryTerm
 from app.models.quotes import Quote
 from app.models.quote_items import QuoteItem
+from app.models.pumps_detected import PumpsDetected
+
 
 def main():
     # Idempotente: crea solo si no existen
