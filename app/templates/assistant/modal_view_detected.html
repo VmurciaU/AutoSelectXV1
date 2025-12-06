@@ -1,5 +1,5 @@
 <!-- ===================================================================
-     MODAL VER DETALLES BOMBA DETECTADA (VIEW ONLY)
+     MODAL VER DETALLES BOMBA DETECTADA (VIEW ONLY) — COMPLETO
 =================================================================== -->
 
 <div id="modal_view_detected"
@@ -14,11 +14,10 @@
         class="text-gray-400 hover:text-white text-xl leading-none">
         &times;
       </button>
-
     </div>
 
     <!-- CONTENIDO SOLO LECTURA -->
-    <div class="space-y-3 text-sm">
+    <div class="space-y-4 text-sm">
 
       <!-- ===================== CAMPOS RAÍZ ===================== -->
 
@@ -27,51 +26,84 @@
           <p class="block mb-1 text-xs text-gray-400">Fluido</p>
           <p id="view_fluid" class="text-xs text-gray-100">—</p>
         </div>
-
         <div>
           <p class="block mb-1 text-xs text-gray-400">Viscosidad (cP)</p>
           <p id="view_viscosity" class="text-xs text-gray-100">—</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <!-- ========= PROPIEDADES DEL PROCESO (NUEVA SECCIÓN) ========= -->
+
+      <div class="pt-2 border-t border-gray-700 mt-2">
+        <p class="text-[11px] text-gray-400 mb-2">Propiedades del proceso</p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Densidad (kg/m³)</p>
+            <p id="view_density" class="text-xs text-gray-100">—</p>
+          </div>
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Temp. Proceso (°C)</p>
+            <p id="view_temperature" class="text-xs text-gray-100">—</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-2">
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Presión máx diseño (STD)</p>
+            <p id="view_pressure_max" class="text-xs text-gray-100">—</p>
+          </div>
+          <div>
+            <p class="block mb-1 text-xs text-gray-400">Temperatura nota (°C)</p>
+            <p id="view_temperature_note" class="text-xs text-gray-100">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== PRESIONES ===================== -->
+
+      <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-700 mt-2">
         <div>
           <p class="block mb-1 text-xs text-gray-400">Presión descarga (PSI)</p>
           <p id="view_discharge_pressure" class="text-xs text-gray-100">—</p>
         </div>
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Presión descarga (STD, PSI)</p>
+          <p class="block mb-1 text-xs text-gray-400">Presión descarga STD (PSI)</p>
           <p id="view_discharge_pressure_std" class="text-xs text-gray-100">—</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-2">
+      <!-- ===================== CAUDALES ===================== -->
+
+      <div class="grid grid-cols-3 gap-3 pt-2 border-t border-gray-700 mt-2">
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Caudal min</p>
+          <p class="block mb-1 text-xs text-gray-400">Caudal mín (GPD)</p>
           <p id="view_flow_min" class="text-xs text-gray-100">—</p>
         </div>
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Nominal</p>
+          <p class="block mb-1 text-xs text-gray-400">Nominal (GPD)</p>
           <p id="view_flow_nominal" class="text-xs text-gray-100">—</p>
         </div>
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Max</p>
+          <p class="block mb-1 text-xs text-gray-400">Máx (GPD)</p>
           <p id="view_flow_max" class="text-xs text-gray-100">—</p>
         </div>
       </div>
 
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Caudal máximo (STD)</p>
+          <p class="block mb-1 text-xs text-gray-400">Caudal máx STD</p>
           <p id="view_flow_max_std" class="text-xs text-gray-100">—</p>
         </div>
         <div>
-          <p class="block mb-1 text-xs text-gray-400">Unidad caudal (STD)</p>
+          <p class="block mb-1 text-xs text-gray-400">Unidad STD</p>
           <p id="view_flow_unit_std" class="text-xs text-gray-100">—</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <!-- ===================== CANTIDAD / ESTADO ===================== -->
+
+      <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-700 mt-2">
         <div>
           <p class="block mb-1 text-xs text-gray-400">Cantidad</p>
           <p id="view_cantidad" class="text-xs text-gray-100">—</p>
@@ -82,7 +114,7 @@
         </div>
       </div>
 
-      <!-- ===================== OPTIONAL ===================== -->
+      <!-- ===================== DATOS ADICIONALES ===================== -->
 
       <div class="pt-2 border-t border-gray-700 mt-2">
         <p class="text-[11px] text-gray-400 mb-2">Datos adicionales</p>
@@ -135,6 +167,5 @@
       </div>
 
     </div>
-
   </div>
 </div>

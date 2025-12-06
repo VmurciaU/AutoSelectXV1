@@ -90,6 +90,70 @@ def _normalize_detected_list(raw):
     return []
 
 
+# -----------------------------------------------
+# Helpers: conversión desde formulario HTML
+# -----------------------------------------------
+def to_float_or_none(value):
+    """
+    Convierte valores provenientes del formulario a float o None.
+    Maneja:
+      - None
+      - "", "   "  -> None
+      - "2.5", "0.1" -> float
+      - ints / Decimal -> float
+    Evita mandar "" a columnas Float de la BD.
+    """
+    if value is None:
+        return None
+    # Si ya viene como número (raro, pero por si acaso)
+    if isinstance(value, (int, float, decimal.Decimal)):
+        return float(value)
+    value = str(value).strip()
+    if value == "":
+        return None
+    try:
+        return float(value)
+    except ValueError:
+        # Si llega basura, preferimos NULL antes que reventar
+        return None
+
+
+def to_int_or_none(value):
+    """
+    Convierte valores del formulario a int o None.
+    Maneja:
+      - None
+      - "", "   " -> None
+      - "1", "1.0" -> 1
+    """
+    if value is None:
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, (float, decimal.Decimal)):
+        return int(value)
+    value = str(value).strip()
+    if value == "":
+        return None
+    try:
+        return int(float(value))
+    except ValueError:
+        return None
+
+
+def normalize_str(value):
+    """
+    Limpia strings opcionales:
+      - None -> None
+      - "   " -> None
+      - "  texto  " -> "texto"
+    """
+    if value is None:
+        return None
+    value = str(value).strip()
+    return value or None
+
+
 # ======================================================
 # GET PRINCIPAL – Vista de cotización
 # ======================================================
@@ -140,9 +204,6 @@ async def get_quote_view(
     # ------------------------------------
     # 5. Construir JSON maestro para JS (modales)
     # ------------------------------------
-    # OJO: aquí asumimos que PumpsDetected.to_dict() existe
-    #      y devuelve tipos básicos (int, float, str, etc.).
-    #      Aun así, por si hay Decimal/fechas, usamos _json_default.
     try:
         pumps_payload = {
             "detected": detected_from_json or [],
@@ -154,8 +215,6 @@ async def get_quote_view(
             default=_json_default,
         )
     except Exception as e:
-        # Si algo raro pasa, no reventamos la vista:
-        # dejamos payload vacío para que al menos el HTML cargue.
         print(f"[quote_routes] ERROR serializando pumps_payload: {e}")
         pumps_payload_json = json.dumps(
             {"detected": [], "db": []},
@@ -235,7 +294,6 @@ async def save_detected_pumps(
 
     # 4. Guardar cada bomba en BD
     for item in detected_list:
-        # item es dict; usamos .get en cada clave
         pump = PumpsDetected(
             case_id=case_id,
             created_by=current_user_id,
@@ -287,7 +345,7 @@ async def update_detected_pump(
     db: Session = Depends(get_db),
     current_user_id: int = Depends(get_current_user_id),
 ):
-
+    # 1. Buscar bomba activa
     pump = db.query(PumpsDetected).filter(
         PumpsDetected.id == pump_id,
         PumpsDetected.case_id == case_id,
@@ -297,38 +355,55 @@ async def update_detected_pump(
     if not pump:
         raise HTTPException(404, "Bomba no encontrada o inactiva.")
 
+    # 2. Leer formulario
     form = await request.form()
 
-    # Actualizar campos
+    # 3. Auditoría
     pump.updated_by = current_user_id
-    pump.touch()  # asumimos que existe este método en el modelo
+    pump.touch()
 
-    pump.fluid = form.get("fluid")
-    pump.viscosity = form.get("viscosity")
+    # 4. Actualizar campos numéricos (Float → usando helper)
+    pump.viscosity = to_float_or_none(form.get("viscosity"))
 
-    pump.discharge_pressure = form.get("discharge_pressure")
-    pump.discharge_pressure_std = form.get("discharge_pressure_std")
+    pump.discharge_pressure = to_float_or_none(form.get("discharge_pressure"))
+    pump.discharge_pressure_std = to_float_or_none(form.get("discharge_pressure_std"))
 
-    pump.flow_min = form.get("flow_min")
-    pump.flow_nominal = form.get("flow_nominal")
-    pump.flow_max = form.get("flow_max")
+    pump.flow_min = to_float_or_none(form.get("flow_min"))
+    pump.flow_nominal = to_float_or_none(form.get("flow_nominal"))
+    pump.flow_max = to_float_or_none(form.get("flow_max"))
 
-    pump.flow_max_std = form.get("flow_max_std")
-    pump.flow_unit_std = form.get("flow_unit_std")
+    pump.flow_max_std = to_float_or_none(form.get("flow_max_std"))
 
-    pump.cantidad_bombas = form.get("cantidad_bombas")
-    pump.estado = form.get("estado")
+    pump.temperature = to_float_or_none(form.get("temperature"))
 
-    pump.description = form.get("description")
-    pump.tag = form.get("tag")
-    pump.service = form.get("service")
-    pump.temperature = form.get("temperature")
-    pump.materials = form.get("materials")
-    pump.area = form.get("area")
-    pump.location = form.get("location")
+    # 5. Actualizar cantidad_bombas (Integer, NOT NULL)
+    raw_cant = form.get("cantidad_bombas")
+    new_cant = to_int_or_none(raw_cant)
+    if new_cant is not None and new_cant > 0:
+        pump.cantidad_bombas = new_cant
+    # Si viene vacío o inválido, se deja el valor anterior.
 
+    # 6. Actualizar campos de texto
+    pump.fluid = normalize_str(form.get("fluid"))
+    pump.flow_unit_std = normalize_str(form.get("flow_unit_std"))
+
+    pump.description = normalize_str(form.get("description"))
+    pump.tag = normalize_str(form.get("tag"))
+    pump.service = normalize_str(form.get("service"))
+    pump.materials = normalize_str(form.get("materials"))
+    pump.area = normalize_str(form.get("area"))
+    pump.location = normalize_str(form.get("location"))
+
+    # 7. Estado (borrador / ajustada / validada)
+    estado_form = normalize_str(form.get("estado"))
+    if estado_form in {"borrador", "ajustada", "validada"}:
+        pump.estado = estado_form
+    # Si viene raro o vacío, conserva el estado actual.
+
+    # 8. Commit
     db.commit()
 
+    # 9. Redirigir a GET
     return RedirectResponse(
         url=f"/quote/{case_id}",
         status_code=303

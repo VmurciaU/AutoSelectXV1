@@ -174,6 +174,13 @@
     // Case ID disponible para URLs de update/delete
     const currentCaseId = {{ case.id }};
 
+    // Helper para mostrar valores bonitos en VIEW
+    function displayValue(value, fallback = "—") {
+      if (value === null || value === undefined) return fallback;
+      if (typeof value === "string" && value.trim() === "") return fallback;
+      return value;
+    }
+
     // 2️⃣ Funciones globales para abrir/cerrar modales
     function openModal(id) {
       document.getElementById(id).classList.remove("hidden");
@@ -188,51 +195,79 @@
       const pump = pumpsData.detected[index];
       if (!pump) return;
 
-      document.getElementById("view_fluid").textContent =
-        pump.fluid || "—";
-      document.getElementById("view_viscosity").textContent =
-        pump.viscosity || "—";
+      const opt = pump.optional || {};
+      const flow = pump.flow || {};
 
+      // ===================== ROOT =====================
+      document.getElementById("view_fluid").textContent =
+        displayValue(pump.fluid);
+
+      document.getElementById("view_viscosity").textContent =
+        displayValue(pump.viscosity);
+
+      // ========= PROPIEDADES DEL PROCESO (NUEVA SECCIÓN) =========
+      document.getElementById("view_density").textContent =
+        displayValue(pump.density);
+
+      const tempProceso = pump.temperature ?? opt.temperature;
+      document.getElementById("view_temperature").textContent =
+        displayValue(tempProceso);
+
+      document.getElementById("view_pressure_max").textContent =
+        displayValue(pump.pressure_max);
+
+      const tempNote = opt.temperature_note;
+      document.getElementById("view_temperature_note").textContent =
+        displayValue(tempNote);
+
+      // ===================== PRESIONES =====================
       document.getElementById("view_discharge_pressure").textContent =
-        pump.discharge_pressure || "—";
+        displayValue(pump.discharge_pressure);
 
       document.getElementById("view_discharge_pressure_std").textContent =
-        pump.discharge_pressure_std || "—";
+        displayValue(pump.discharge_pressure_std);
 
+      // ===================== CAUDALES =====================
       document.getElementById("view_flow_min").textContent =
-        (pump.flow && pump.flow.min) ?? "—";
+        displayValue(flow.min);
       document.getElementById("view_flow_nominal").textContent =
-        (pump.flow && pump.flow.nominal) ?? "—";
+        displayValue(flow.nominal);
       document.getElementById("view_flow_max").textContent =
-        (pump.flow && pump.flow.max) ?? "—";
+        displayValue(flow.max);
 
       document.getElementById("view_flow_max_std").textContent =
-        pump.flow_max_std ?? "—";
+        displayValue(pump.flow_max_std);
       document.getElementById("view_flow_unit_std").textContent =
-        pump.flow_unit_std ?? "—";
+        displayValue(pump.flow_unit_std);
 
+      // ===================== CANTIDAD / ESTADO =====================
       document.getElementById("view_cantidad").textContent =
-        pump.cantidad_bombas || "1";
+        displayValue(pump.cantidad_bombas, "1");
 
       document.getElementById("view_estado").textContent =
-        pump.estado || "borrador";
+        displayValue(pump.estado, "borrador");
 
-      const opt = pump.optional || {};
-
+      // ===================== DATOS ADICIONALES =====================
       document.getElementById("view_optional_description").textContent =
-        opt.description || "—";
+        displayValue(opt.description);
+
       document.getElementById("view_optional_tag").textContent =
-        opt.tag || "—";
+        displayValue(opt.tag);
+
       document.getElementById("view_optional_service").textContent =
-        opt.service || "—";
+        displayValue(opt.service);
+
       document.getElementById("view_optional_temperature").textContent =
-        opt.temperature || "—";
+        displayValue(opt.temperature);
+
       document.getElementById("view_optional_materials").textContent =
-        opt.materials || "—";
+        displayValue(opt.materials);
+
       document.getElementById("view_optional_area").textContent =
-        opt.area || "—";
+        displayValue(opt.area);
+
       document.getElementById("view_optional_location").textContent =
-        opt.location || "—";
+        displayValue(opt.location);
 
       openModal("modal_view_detected");
     }
@@ -248,55 +283,132 @@
       }
 
       // Guardamos índice (solo referencia)
-      document.getElementById("edit_detected_index").value = index;
+      const hiddenIndex = document.getElementById("edit_detected_index");
+      if (hiddenIndex) hiddenIndex.value = index;
 
       const form = document.getElementById("form_edit_detected");
       form.action = `/quote/${currentCaseId}/detected-pump/${pump.id}/update`;
 
-      // Campos raíz
-      document.getElementById("edit_fluid").value =
-        pump.fluid ?? "";
-      document.getElementById("edit_viscosity").value =
-        pump.viscosity ?? "";
-      document.getElementById("edit_discharge_pressure").value =
-        pump.discharge_pressure ?? "";
-      document.getElementById("edit_discharge_pressure_std").value =
-        pump.discharge_pressure_std ?? "";
-
-      const flow = pump.flow || {};
-      document.getElementById("edit_flow_min").value =
-        flow.min ?? "";
-      document.getElementById("edit_flow_nominal").value =
-        flow.nominal ?? "";
-      document.getElementById("edit_flow_max").value =
-        flow.max ?? "";
-
-      document.getElementById("edit_flow_max_std").value =
-        pump.flow_max_std ?? "";
-      document.getElementById("edit_flow_unit_std").value =
-        pump.flow_unit_std ?? "";
-
-      document.getElementById("edit_cantidad").value =
-        pump.cantidad_bombas ?? 1;
-      document.getElementById("edit_estado").value =
-        pump.estado || "borrador";
-
-      // Optional
       const opt = pump.optional || {};
-      document.getElementById("edit_optional_description").value =
-        opt.description ?? "";
-      document.getElementById("edit_optional_tag").value =
-        opt.tag ?? "";
-      document.getElementById("edit_optional_service").value =
-        opt.service ?? "";
-      document.getElementById("edit_optional_temperature").value =
-        opt.temperature ?? "";
-      document.getElementById("edit_optional_materials").value =
-        opt.materials ?? "";
-      document.getElementById("edit_optional_area").value =
-        opt.area ?? "";
-      document.getElementById("edit_optional_location").value =
-        opt.location ?? "";
+      const flow = pump.flow || {};
+
+      // ===================== SECCIÓN 1 – DATOS DEL FLUIDO =====================
+      const inputCantidad = document.getElementById("edit_cantidad");
+      if (inputCantidad) {
+        inputCantidad.value = pump.cantidad_bombas ?? "";
+      }
+
+      const inputFluid = document.getElementById("edit_fluid");
+      if (inputFluid) {
+        inputFluid.value = pump.fluid ?? "";
+      }
+
+      const inputViscosity = document.getElementById("edit_viscosity");
+      if (inputViscosity) {
+        inputViscosity.value = pump.viscosity ?? "";
+      }
+
+      // Estos NO existen aún en el modelo; se quedan visibles pero sin dato persistido
+      const inputDensity = document.getElementById("edit_density");
+      if (inputDensity) {
+        inputDensity.value = pump.density ?? "";
+      }
+
+      const inputTempProceso = document.getElementById("edit_temperature");
+      if (inputTempProceso) {
+        // En BD la temperatura de proceso está en "temperature"
+        inputTempProceso.value = pump.temperature ?? "";
+      }
+
+      const inputPressureMax = document.getElementById("edit_pressure_max");
+      if (inputPressureMax) {
+        inputPressureMax.value = pump.pressure_max ?? "";
+      }
+
+      // ===================== SECCIÓN 2 – PRESIONES =====================
+      const inputPd = document.getElementById("edit_discharge_pressure");
+      if (inputPd) {
+        inputPd.value = pump.discharge_pressure ?? "";
+      }
+
+      const inputPdStd = document.getElementById("edit_discharge_pressure_std");
+      if (inputPdStd) {
+        inputPdStd.value = pump.discharge_pressure_std ?? "";
+      }
+
+      // ===================== SECCIÓN 3 – CAUDALES =====================
+      const inputFlowMin = document.getElementById("edit_flow_min");
+      if (inputFlowMin) {
+        inputFlowMin.value = flow.min ?? "";
+      }
+
+      const inputFlowNominal = document.getElementById("edit_flow_nominal");
+      if (inputFlowNominal) {
+        inputFlowNominal.value = flow.nominal ?? "";
+      }
+
+      const inputFlowMax = document.getElementById("edit_flow_max");
+      if (inputFlowMax) {
+        inputFlowMax.value = flow.max ?? "";
+      }
+
+      const inputFlowMaxStd = document.getElementById("edit_flow_max_std");
+      if (inputFlowMaxStd) {
+        inputFlowMaxStd.value = pump.flow_max_std ?? "";
+      }
+
+      const inputFlowUnitStd = document.getElementById("edit_flow_unit_std");
+      if (inputFlowUnitStd) {
+        inputFlowUnitStd.value = pump.flow_unit_std ?? "";
+      }
+
+      // ===================== SECCIÓN 4 – ESTADO =====================
+      const selectEstado = document.getElementById("edit_estado");
+      if (selectEstado) {
+        const estado = pump.estado || "borrador";
+        if (["borrador", "ajustada", "validada"].includes(estado)) {
+          selectEstado.value = estado;
+        } else {
+          selectEstado.value = "borrador";
+        }
+      }
+
+      // ===================== SECCIÓN 5 – OPCIONALES =====================
+      const inputTag = document.getElementById("edit_optional_tag");
+      if (inputTag) {
+        inputTag.value = opt.tag ?? "";
+      }
+
+      const inputService = document.getElementById("edit_optional_service");
+      if (inputService) {
+        inputService.value = opt.service ?? "";
+      }
+
+      const inputTempNote = document.getElementById("edit_optional_temperature");
+      if (inputTempNote) {
+        // Aún no hay columna temperature_note en el modelo; no rellenamos desde BD
+        inputTempNote.value = "";
+      }
+
+      const inputMaterials = document.getElementById("edit_optional_materials");
+      if (inputMaterials) {
+        inputMaterials.value = opt.materials ?? "";
+      }
+
+      const inputArea = document.getElementById("edit_optional_area");
+      if (inputArea) {
+        inputArea.value = opt.area ?? "";
+      }
+
+      const inputLocation = document.getElementById("edit_optional_location");
+      if (inputLocation) {
+        inputLocation.value = opt.location ?? "";
+      }
+
+      const inputDescription = document.getElementById("edit_optional_description");
+      if (inputDescription) {
+        inputDescription.value = opt.description ?? "";
+      }
 
       openModal("modal_edit_detected");
     }
