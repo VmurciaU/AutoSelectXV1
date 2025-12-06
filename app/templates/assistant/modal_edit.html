@@ -10,8 +10,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-3">
       <h2 class="text-base font-semibold">Editar bomba detectada (BD)</h2>
-      <button type="button"
-        onclick="closeModal('modal_edit_detected')"
+      <button type="button" onclick="closeModal('modal_edit_detected')"
         class="text-gray-400 hover:text-white text-xl leading-none">
         &times;
       </button>
@@ -22,87 +21,156 @@
       <!-- índice en array JS (db) solo para referencia -->
       <input type="hidden" id="edit_detected_index">
 
-      <!-- ===================== CAMPOS RAÍZ ===================== -->
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Fluido</label>
-          <input id="edit_fluid" name="fluid" type="text"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+      <!-- =========================================================
+           SECCIÓN 1 – DATOS DEL FLUIDO
+      ========================================================== -->
+      <div class="border-b border-gray-700 pb-3 mb-2">
+        <p class="text-[11px] text-gray-400 mb-2">Datos del fluido</p>
+
+        <div class="grid grid-cols-3 gap-3 mt-2">
+
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Cantidad de bombas</label>
+            <input id="edit_cantidad" name="cantidad_bombas"
+              type="number" min="1" max="100" step="1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Fluido</label>
+            <input id="edit_fluid" name="fluid" type="text"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Viscosidad (cP)</label>
+            <input id="edit_viscosity" name="viscosity"
+              type="number" min="0" max="20000" step="1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
         </div>
 
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Viscosidad (cP)</label>
-          <input id="edit_viscosity" name="viscosity" type="number" step="0.01"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+        <div class="grid grid-cols-3 gap-3 mt-2">
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Densidad (kg/m³)</label>
+            <input id="edit_density" name="density"
+              type="number" min="0" max="2000" step="0.1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Temperatura proceso (°C)</label>
+            <input id="edit_temperature" name="temperature"
+              type="number" min="0" max="200" step="0.1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Presión máx. diseño (std)</label>
+            <input id="edit_pressure_max" name="pressure_max"
+              type="number" min="0" max="10000" step="1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Presión descarga (original)</label>
-          <input id="edit_discharge_pressure" name="discharge_pressure" type="number" step="0.01"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
-        </div>
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Presión descarga (PSI std)</label>
-          <input id="edit_discharge_pressure_std" name="discharge_pressure_std" type="number" step="0.01"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+      <!-- =========================================================
+           SECCIÓN 2 – PRESIONES
+      ========================================================== -->
+      <div class="border-b border-gray-700 pb-3 mb-2">
+        <p class="text-[11px] text-gray-400 mb-2">Presiones de operación</p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">
+              Presión descarga (original)
+            </label>
+            <input id="edit_discharge_pressure" name="discharge_pressure"
+              type="number" min="0" max="10000" step="1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">
+              Presión descarga (PSI std)
+            </label>
+            <input id="edit_discharge_pressure_std" name="discharge_pressure_std"
+              type="number" min="0" max="10000" step="1"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-3">
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Caudal mín. (GPD)</label>
-          <input id="edit_flow_min" name="flow_min" type="number" step="0.001"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+      <!-- =========================================================
+           SECCIÓN 3 – CAUDALES
+      ========================================================== -->
+      <div class="border-b border-gray-700 pb-3 mb-2">
+        <p class="text-[11px] text-gray-400 mb-2">Caudales</p>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Caudal mín. (GPD)</label>
+            <input id="edit_flow_min" name="flow_min"
+              type="number" min="0" max="10000" step="any"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Caudal nominal (GPD)</label>
+            <input id="edit_flow_nominal" name="flow_nominal"
+              type="number" min="0" max="10000" step="any"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. (GPD)</label>
+            <input id="edit_flow_max" name="flow_max"
+              type="number" min="0" max="10000" step="any"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
         </div>
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Caudal nominal (GPD)</label>
-          <input id="edit_flow_nominal" name="flow_nominal" type="number" step="0.001"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
-        </div>
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. (GPD)</label>
-          <input id="edit_flow_max" name="flow_max" type="number" step="0.001"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+
+        <div class="grid grid-cols-2 gap-3 mt-2">
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. std</label>
+            <input id="edit_flow_max_std" name="flow_max_std"
+              type="number" min="0" max="10000" step="any"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+          </div>
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Unidad caudal std</label>
+            <input id="edit_flow_unit_std" name="flow_unit_std"
+              type="text" readonly
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-gray-400 cursor-not-allowed">
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. std</label>
-          <input id="edit_flow_max_std" name="flow_max_std" type="number" step="0.001"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
-        </div>
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Unidad caudal std</label>
-          <input id="edit_flow_unit_std" name="flow_unit_std" type="text"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+      <!-- =========================================================
+           SECCIÓN 4 – CANTIDAD Y ESTADO (OCULTA)
+      ========================================================== -->
+      <div class="hidden">
+        <div class="border-b border-gray-700 pb-3 mb-2">
+          <p class="text-[11px] text-gray-400 mb-2">Configuración de la bomba</p>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block mb-1 text-[11px] text-gray-400">Estado</label>
+              <select id="edit_estado" name="estado"
+                class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+                <option value="borrador">borrador</option>
+                <option value="ajustada">ajustada</option>
+                <option value="validada">validada</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Cantidad de bombas</label>
-          <input id="edit_cantidad" name="cantidad_bombas" type="number" min="1"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
-        </div>
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Estado</label>
-          <select id="edit_estado" name="estado"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
-            <option value="borrador">borrador</option>
-            <option value="ajustada">ajustada</option>
-            <option value="validada">validada</option>
-          </select>
-        </div>
-      </div>
+      <!-- =========================================================
+           SECCIÓN 5 – OPCIONALES (TAG, SERVICIO, AREA, ETC.)
+      ========================================================== -->
+      <div class="border-b border-gray-700 pb-3 mt-2">
+        <p class="text-[11px] text-gray-400 mb-2">Información adicional (opcional)</p>
 
-      <!-- ===================== OPTIONAL ===================== -->
-      <div class="border-t border-gray-700 pt-3 mt-2">
-        <p class="text-[11px] text-gray-400 mb-2">Información adicional</p>
-
-        <div class="grid grid-cols-2 gap-3 mb-2">
+        <div class="grid grid-cols-3 gap-3 mt-2">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">TAG</label>
             <input id="edit_optional_tag" name="tag" type="text"
@@ -113,22 +181,21 @@
             <input id="edit_optional_service" name="service" type="text"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mb-2">
           <div>
-            <label class="block mb-1 text-[11px] text-gray-400">Temperatura (°C)</label>
-            <input id="edit_optional_temperature" name="temperature" type="number" step="0.1"
+            <label class="block mb-1 text-[11px] text-gray-400">Temperatura nota (°C)</label>
+            <input id="edit_optional_temperature" name="temperature_note"
+              type="number" min="0" max="200" step="0.1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mt-2">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Materiales</label>
             <input id="edit_optional_materials" name="materials" type="text"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-3 mb-2">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Área</label>
             <input id="edit_optional_area" name="area" type="text"
@@ -141,17 +208,18 @@
           </div>
         </div>
 
-        <div>
-          <label class="block mb-1 text-[11px] text-gray-400">Descripción</label>
-          <textarea id="edit_optional_description" name="description" rows="2"
-            class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 resize-y"></textarea>
+        <div class="grid grid-cols-1 gap-3 mt-2">
+          <div>
+            <label class="block mb-1 text-[11px] text-gray-400">Descripción / notas</label>
+            <textarea id="edit_optional_description" name="description" rows="2"
+              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 resize-y"></textarea>
+          </div>
         </div>
       </div>
 
       <!-- Botonera -->
       <div class="pt-3 flex justify-end gap-2">
-        <button type="button"
-          onclick="closeModal('modal_edit_detected')"
+        <button type="button" onclick="closeModal('modal_edit_detected')"
           class="px-3 py-1.5 text-xs rounded bg-gray-700 hover:bg-gray-600 border border-gray-600">
           Cancelar
         </button>

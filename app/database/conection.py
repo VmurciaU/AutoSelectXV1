@@ -28,6 +28,7 @@ engine = create_engine(
     pool_pre_ping=True,
 )
 
+"""  Prueba para TES WSL caido DB 5
 # Probar conexión
 try:
     with engine.connect() as conn:
@@ -35,6 +36,8 @@ try:
 except Exception as e:
     print("❌ Database connection failed:", e)
     raise
+    
+"""
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
