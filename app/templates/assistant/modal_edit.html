@@ -25,27 +25,25 @@
            SECCIÓN 1 – DATOS DEL FLUIDO
       ========================================================== -->
       <div class="border-b border-gray-700 pb-3 mb-2">
-        <p class="text-[11px] text-gray-400 mb-2">Datos del fluido</p>
+        <p class="block mb-1 text-[11px] text-gray-100 font-semibold">Datos del fluido</p>
 
         <div class="grid grid-cols-3 gap-3 mt-2">
 
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Cantidad de bombas</label>
-            <input id="edit_cantidad" name="cantidad_bombas"
-              type="number" min="1" max="100" step="1"
+            <input id="edit_cantidad" name="cantidad_bombas" type="number" min="1" max="100" step="1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
 
           <div>
-            <label class="block mb-1 text-[11px] text-gray-400">Fluido</label>
+            <label class="block mb-1 text-[11px] text-gray-400">Fluido (*)</label>
             <input id="edit_fluid" name="fluid" type="text"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
 
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Viscosidad (cP)</label>
-            <input id="edit_viscosity" name="viscosity"
-              type="number" min="0" max="20000" step="1"
+            <input id="edit_viscosity" name="viscosity" type="number" min="0" max="20000" step="1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
         </div>
@@ -53,22 +51,19 @@
         <div class="grid grid-cols-3 gap-3 mt-2">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Densidad (kg/m³)</label>
-            <input id="edit_density" name="density"
-              type="number" min="0" max="2000" step="0.1"
+            <input id="edit_density" name="density" type="number" min="0" max="2000" step="0.1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
 
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Temperatura proceso (°C)</label>
-            <input id="edit_temperature" name="temperature"
-              type="number" min="0" max="200" step="0.1"
+            <input id="edit_temperature" name="temperature" type="number" min="0" max="200" step="0.1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
 
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Presión máx. diseño (std)</label>
-            <input id="edit_pressure_max" name="pressure_max"
-              type="number" min="0" max="10000" step="1"
+            <input id="edit_pressure_max" name="pressure_max" type="number" min="0" max="10000" step="1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
         </div>
@@ -83,19 +78,18 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">
-              Presión descarga (original)
+              Presión descarga (Detectada)
             </label>
-            <input id="edit_discharge_pressure" name="discharge_pressure"
-              type="number" min="0" max="10000" step="1"
-              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+            <input id="edit_discharge_pressure" name="discharge_pressure" type="number" min="0" max="10000" step="1"
+              readonly class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-gray-400 opacity-60
+              cursor-not-allowed">
           </div>
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">
-              Presión descarga (PSI std)
+              Presión descarga (PSI std) (*)
             </label>
-            <input id="edit_discharge_pressure_std" name="discharge_pressure_std"
-              type="number" min="0" max="10000" step="1"
-              class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
+            <input id="edit_discharge_pressure_std" name="discharge_pressure_std" type="number" min="0" max="10000"
+              step="1" class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
         </div>
       </div>
@@ -109,20 +103,17 @@
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Caudal mín. (GPD)</label>
-            <input id="edit_flow_min" name="flow_min"
-              type="number" min="0" max="10000" step="any"
+            <input id="edit_flow_min" name="flow_min" type="number" min="0" max="10000" step="any"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Caudal nominal (GPD)</label>
-            <input id="edit_flow_nominal" name="flow_nominal"
-              type="number" min="0" max="10000" step="any"
+            <input id="edit_flow_nominal" name="flow_nominal" type="number" min="0" max="10000" step="any"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
           <div>
-            <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. (GPD)</label>
-            <input id="edit_flow_max" name="flow_max"
-              type="number" min="0" max="10000" step="any"
+            <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. (GPD) (*)</label>
+            <input id="edit_flow_max" name="flow_max" type="number" min="0" max="10000" step="any"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
         </div>
@@ -130,14 +121,12 @@
         <div class="grid grid-cols-2 gap-3 mt-2">
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Caudal máx. std</label>
-            <input id="edit_flow_max_std" name="flow_max_std"
-              type="number" min="0" max="10000" step="any"
+            <input id="edit_flow_max_std" name="flow_max_std" type="number" min="0" max="10000" step="any"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Unidad caudal std</label>
-            <input id="edit_flow_unit_std" name="flow_unit_std"
-              type="text" readonly
+            <input id="edit_flow_unit_std" name="flow_unit_std" type="text" readonly
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600 text-gray-400 cursor-not-allowed">
           </div>
         </div>
@@ -183,8 +172,7 @@
           </div>
           <div>
             <label class="block mb-1 text-[11px] text-gray-400">Temperatura nota (°C)</label>
-            <input id="edit_optional_temperature" name="temperature_note"
-              type="number" min="0" max="200" step="0.1"
+            <input id="edit_optional_temperature" name="temperature_note" type="number" min="0" max="200" step="0.1"
               class="w-full px-2 py-1 rounded bg-gray-700 border border-gray-600">
           </div>
         </div>

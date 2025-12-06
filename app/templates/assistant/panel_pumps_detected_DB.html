@@ -1,8 +1,8 @@
 {# ==========================================================
-   FRAGMENTO B: Bombas detectadas desde BD (EDITABLES)
-   Solo se muestra si hay bombas activas en BD.
-   Usa pumps_from_db (lista de objetos ORM) + pumpsData.db en JS
-   ========================================================== #}
+FRAGMENTO B: Bombas detectadas desde BD (EDITABLES)
+Solo se muestra si hay bombas activas en BD.
+Usa pumps_from_db (lista de objetos ORM) + pumpsData.db en JS
+========================================================== #}
 
 {% if pumps_from_db and pumps_from_db|length > 0 %}
 <details class="bg-gray-900 rounded-lg border border-gray-700" open>
@@ -32,11 +32,11 @@
           Caudal:
           <strong class="text-gray-300">
             {% if pump.flow_max_std %}
-              {{ "%.3f"|format(pump.flow_max_std) }} {{ pump.flow_unit_std or "" }}
+            {{ "%.3f"|format(pump.flow_max_std) }} {{ pump.flow_unit_std or "" }}
             {% elif pump.flow_max %}
-              {{ pump.flow_max }} GPD
+            {{ pump.flow_max }} GPD
             {% else %}
-              —
+            —
             {% endif %}
           </strong>
         </span>
@@ -46,11 +46,11 @@
           Presión:
           <strong class="text-gray-300">
             {% if pump.discharge_pressure_std %}
-              {{ pump.discharge_pressure_std }} PSI
+            {{ pump.discharge_pressure_std }} PSI
             {% elif pump.discharge_pressure %}
-              {{ pump.discharge_pressure }} PSI
+            {{ pump.discharge_pressure }} PSI
             {% else %}
-              —
+            —
             {% endif %}
           </strong>
         </span>
@@ -78,20 +78,19 @@
       <!-- ACCIONES -->
       <div class="flex gap-2">
         <!-- Editar: usa índice de loop como índice en pumpsData.db -->
-        <button type="button"
-          class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
+        <button type="button" class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
           onclick="openEditDetectedModal('{{ loop.index0 }}')">
           Editar
         </button>
 
-        <!-- Eliminar: soft delete vía POST -->
-        <form method="post" action="/quote/{{ case.id }}/detected-pump/{{ pump.id }}/delete"
-          onsubmit="return confirm('¿Eliminar (desactivar) esta bomba?');">
-          <button type="submit"
-            class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600">
-            Eliminar
-          </button>
-        </form>
+        <!-- Eliminar: soft delete usando el form global quote_form -->
+        <button type="button" onclick="submitDeleteDetectedPump('{{ pump.id }}')"
+          class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600">
+          Eliminar
+        </button>
+
+
+
       </div>
 
     </div>
