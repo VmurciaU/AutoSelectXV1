@@ -1,0 +1,60 @@
+MAPA DE TEMPLATES – ASISTENTE (Zona Cotización)
+
+1) Ruta principal
+   - quote_routes.py
+     - GET  /quote/{case_id}                  -> assistant/_quote_final.html
+     - POST /quote/{case_id}/save-detected-pumps
+     - POST /quote/{case_id}/detected-pump/{pump_id}/update
+     - POST /quote/{case_id}/detected-pump/{pump_id}/delete
+
+2) Template principal
+   - assistant/_quote_final.html
+     - Extiende base.html
+     - Contiene <form id="quote_form"> para:
+       - guardar bombas detectadas (JSON -> BD)
+       - eliminar bombas detectadas (soft delete)
+     - Incluye paneles (dentro del form):
+       - assistant/panel_pumps_detected.html        (JSON inicial)
+       - assistant/panel_pumps_detected_DB.html     (BD)
+       - assistant/panel_pumps_selected.html
+       - assistant/panel_client.html
+       - assistant/panel_terms.html
+       - assistant/panel_notes.html
+     - Incluye modales (fuera del form):
+       - assistant/modal_view_detected.html         (solo lectura, JSON)
+       - assistant/modal_edit.html                  (edición bomba BD)
+     - JS importante:
+       - pumpsData = { detected, db }
+       - openViewDetectedModal(index)               -> llena modal_view_detected
+       - openEditDetectedModal(index)               -> llena modal_edit (form_edit_detected)
+       - submitSaveDetectedPumps()                  -> POST /save-detected-pumps
+       - submitDeleteDetectedPump(pumpId)           -> POST /detected-pump/{id}/delete
+
+3) Paneles
+   - assistant/panel_pumps_detected.html
+     - Usa pumpsData.detected
+     - Botón “Ver detalles” -> openViewDetectedModal(loop.index0)
+     - Botón “Guardar bombas detectadas” -> submitSaveDetectedPumps()
+
+   - assistant/panel_pumps_detected_DB.html
+     - Usa pumpsData.db
+     - Botón “Editar”   -> openEditDetectedModal(loop.index0)
+     - Botón “Eliminar” -> submitDeleteDetectedPump(pump.id)
+
+4) Modales
+   - assistant/modal_view_detected.html
+     - Modal de vista solo lectura (JSON inicial)
+     - IDs de campos: view_fluid, view_viscosity, view_flow_min, etc.
+     - Rellenado por openViewDetectedModal()
+
+   - assistant/modal_edit.html
+     - Modal de edición de bomba detectada en BD
+     - Form: id="form_edit_detected"
+     - Campos edit_* (edit_fluid, edit_discharge_pressure_std, edit_flow_max, etc.)
+     - Presión descarga (Detectada) -> readonly
+     - Enviado a /quote/{case_id}/detected-pump/{pump_id}/update (action seteada en JS)
+
+5) Archivo legacy (no usado)
+   - assistant/modal_edit_detected_borrar.html
+     - Versión antigua del modal de edición
+     - No se incluye en ningún template

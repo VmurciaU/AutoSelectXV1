@@ -1,0 +1,782 @@
+**********************
+REGLA 01 — Selección del Liquid End (Tabla MRA1_01)
+
+1. Seleccionar todas las filas donde end_material coincida con el material requerido.
+   WHERE end_material = <material>
+
+2. Evaluar el uso de Plunger H:
+     - Si la bomba requiere Plunger H → plunger_h_applicable = TRUE
+     - Si no requiere Plunger H → plunger_h_applicable = FALSE
+
+3. Si consult_factory = TRUE:
+     - price_usd debe considerarse como NULL
+     - la cotización automática se detiene
+     - el sistema devuelve estado "Consult Factory"
+
+4. La fila seleccionada será la primera coincidencia exacta del material y condición
+   de plunger H.
+
+5. Campos involucrados:
+     - code
+     - end_material
+     - material_pump
+     - plunger_h_applicable
+     - consult_factory
+     - price_usd
+     - notes
+
+
+**********************
+REGLA 02 — Selección del Plunger (Tabla MRA1_02)
+
+1. Seleccionar todas las filas donde code coincida con el plunger requerido.
+   WHERE code = <plunger_code>
+
+2. Evaluar el material del liquid end:
+     - Si el liquid end es metálico → material_pump = 'metallic'
+     - Si el liquid end es plástico → material_pump = 'plastic'
+   WHERE material_pump = <metallic | plastic>
+
+3. Validar incompatibilidades:
+     - Si no existe una fila para el plunger y material solicitado
+       → configuración inválida.
+
+4. Si consult_factory = TRUE:
+     - price_usd debe considerarse como NULL
+     - la cotización automática se detiene
+     - el sistema devuelve estado "Consult Factory"
+
+5. Validar presión máxima:
+     required_pressure_psi ≤ max_pressure_psi
+
+6. La fila seleccionada será la coincidencia exacta entre:
+     code, material_pump y límite de presión.
+
+7. Campos involucrados:
+     - code
+     - plunger_in
+     - material_pump
+     - plunger_mm
+     - max_gph
+     - max_lhr
+     - max_pressure_psi
+     - max_pressure_bar
+     - consult_factory
+     - price_usd
+     - notes
+
+**********************
+
+REGLA 03 — Selección del Gear Ratio (Tabla MRA1_03)
+
+Seleccionar todas las filas donde code coincida con el gear ratio requerido.
+
+WHERE code = <gear_ratio_code>
+
+
+Evaluar el material del liquid end:
+
+Si el liquid end es metálico → material_pump = 'metallic'
+
+Si el liquid end es plástico → material_pump = 'plastic'
+
+WHERE material_pump = <metallic | plastic>
+
+
+Validar incompatibilidades específicas:
+
+Gear Ratio 10 (9.5:1)
+
+No disponible para liquid ends plásticos.
+Si material_pump = 'plastic' → configuración inválida.
+
+Gear Ratio 8 (8:1)
+
+Solo válido si motor_rpm ≤ 1425.
+Si motor_rpm > 1425 → configuración inválida.
+
+Si consult_factory = TRUE:
+
+price_usd debe considerarse NULL
+
+la cotización automática se detiene
+
+el sistema devuelve estado "Consult Factory"
+
+La fila seleccionada será la coincidencia exacta entre:
+
+code
+
+material_pump
+
+validaciones especiales del código (ratio 10 / ratio 8)
+
+Campos involucrados:
+
+code
+
+description
+
+material_pump
+
+spm_1725rpm
+
+spm_1425rpm
+
+price_usd
+
+consult_factory
+
+notes
+
+
+**********************
+
+REGLA 04 — Selección de Pipe Connections (Tabla MRA1_06)
+
+Seleccionar todas las filas donde code coincida con el código de conexión requerido.
+WHERE code = <pipe_code>
+
+Evaluar el tipo de construcción de la bomba (material del liquid end):
+
+Si la bomba tiene liquid end metálico → metallic_applicable debe ser TRUE
+
+Si la bomba tiene liquid end plástico → plastic_applicable debe ser TRUE
+Si la bandera correspondiente es FALSE → la configuración es inválida.
+
+Seleccionar la columna de precio según el material del liquid end:
+
+Si el material del liquid end es 316L → usar price_316L_base_usd
+
+Si el material del liquid end es Alloy-20 → usar price_alloy20_usd
+
+Si el material del liquid end es PVC → usar price_PVC_base_usd
+
+Si el material del liquid end es PVDF → usar price_PVDF_base_usd
+
+Validar disponibilidad del material para esa conexión:
+
+Si la columna de precio seleccionada es NULL (N/A) →
+la opción no está disponible para ese material.
+La configuración se marca como inválida o se fuerza un estado
+de “Consult Factory (Pipe Connection)” según la política general.
+
+Si consult_factory = TRUE:
+
+Todos los precios (price_316L_base_usd, price_alloy20_usd,
+price_PVC_base_usd, price_PVDF_base_usd) deben tratarse como NULL
+
+La cotización automática se detiene
+
+El sistema devuelve estado "Consult Factory (Pipe Connection)"
+
+La fila seleccionada será la coincidencia exacta entre:
+
+code
+
+el tipo de construcción (metallic_applicable / plastic_applicable)
+
+el material específico del liquid end (316L, Alloy-20, PVC o PVDF)
+
+y una columna de precio distinta de NULL.
+
+Campos involucrados:
+
+code
+
+suction_code
+
+discharge_code
+
+metallic_applicable
+
+plastic_applicable
+
+price_316L_base_usd
+
+price_alloy20_usd
+
+price_PVC_base_usd
+
+price_PVDF_base_usd
+
+consult_factory
+
+notes
+
+
+**********************
+REGLA 05 — Selección de O-Ring (Tabla MRA1_07)
+
+Seleccionar todas las filas donde code coincida con el O-ring requerido.
+
+WHERE code = <o_ring_code>
+
+
+Filtrar según el tipo de liquid end:
+
+Si el liquid end es metálico → material_pump = 'metallic'
+
+Si el liquid end es plástico → material_pump = 'plastic'
+
+Validar compatibilidad:
+
+Si no existe fila con el mismo code y material_pump
+→ configuración inválida.
+
+Verificar compatibilidad química (fluido contiene “Sodium hypochlorite”):
+
+El sistema recomendará automáticamente O-ring V (Viton).
+
+Si el usuario selecciona otro O-ring → generar una advertencia.
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL
+
+la cotización automática se detiene
+
+el sistema devuelve estado "Consult Factory"
+
+La fila seleccionada será la coincidencia exacta entre:
+
+code
+
+material_pump
+
+Campos involucrados:
+
+code
+
+material
+
+material_pump
+
+price_usd
+
+consult_factory
+
+notes
+
+**********************
+REGLA 06 — Selección de Capacity Control (Tabla MRA1_08)
+
+(siguiendo EXACTAMENTE tu formato estándar)
+
+REGLA 06 — Selección del Control de Capacidad (Tabla MRA1_08)
+
+Seleccionar todas las filas donde code coincida con el control requerido.
+WHERE code = <capacity_control_code>
+
+Validar si el control requiere reducción de capacidad (derate):
+
+Si derate_capacity = TRUE
+→ actualizar factor de capacidad en la bomba.
+(la lógica de derate se aplicará en el motor-sizing, no aquí)
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL
+
+la cotización automática se detiene
+
+el sistema devuelve estado "Consult Factory"
+
+Validar precio:
+
+Si price_usd es NULL → requiere consulta
+
+Si price_usd es numérico → valor válido para cotización
+
+La fila seleccionada será la coincidencia exacta del code solicitado.
+
+Campos involucrados:
+
+code
+
+description
+
+internal_code
+
+price_usd
+
+consult_factory
+
+derate_capacity
+
+notes
+
+**********************
+
+REGLA 07 — Selección del Sistema de Detección de Ruptura de Diafragma (Tabla MRA1_09)
+
+Seleccionar todas las filas donde code coincida con la opción requerida.
+WHERE code = <diaphragm_rupture_code>
+
+Validar compatibilidad con plunger_code y tipo de liquid end, según el código:
+
+Código 2 – Direct Attach Head Mounted Pressure type with gauge only
+
+Permitido si:
+
+plunger_code ∈ {C, D} y el liquid end es metálico
+
+O plunger_code = H y end_material = "316L SS"
+
+En cualquier otro caso → configuración inválida.
+
+Código 3 – Bracket Mounted Pressure type with external tubing and gauge only
+
+Permitido si:
+
+plunger_code ∈ {C, D} y el liquid end es plástico
+
+O plunger_code ∈ {E, F} con cualquier liquid end
+
+En cualquier otro caso → configuración inválida.
+
+Código 4 – Pressure type with gauge and NEMA 4 Switch
+
+Permitido si plunger_code != 'H'
+
+Si plunger_code = 'H' → configuración inválida.
+
+Código 5 – Pressure type with gauge and Ex Proof Switch
+
+Permitido si plunger_code != 'H'
+
+Si plunger_code = 'H' → configuración inválida.
+
+Códigos 6 y 7 – Double diaphragm (con o sin probe)
+
+No disponibles para plunger_code ∈ {C, D, H}
+
+Si el plunger es C, D o H → configuración inválida.
+
+Validar compatibilidad con la opción de alta temperatura (Hi Temp Option):
+
+Si la bomba tiene Hi Temp Option activada (hi_temp_option = TRUE) y
+hi_temp_allowed = FALSE en la fila seleccionada
+→ configuración inválida.
+
+En la versión actual de la tabla (códigos 2–7), todos tienen hi_temp_allowed = FALSE,
+por lo que ningún sistema de ruptura de diafragma de esta tabla es válido con Hi Temp Option.
+(La opción “None (Standard)” se maneja fuera de esta tabla.)
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL
+
+la cotización automática se detiene
+
+el sistema devuelve el estado "Consult Factory"
+
+La fila seleccionada será la coincidencia exacta del:
+
+code
+
+que cumpla las restricciones de plunger_code y tipo de liquid end
+
+y cumpla la condición de hi_temp_allowed para la bomba actual.
+
+Campos involucrados:
+
+code
+
+description
+
+plunger_compatibility
+
+hi_temp_allowed
+
+price_usd
+
+consult_factory
+
+notes
+
+
+**********************
+
+REGLA 08 — Selección de Opciones Extendidas del Liquid End (Tabla MRA1_10)
+
+Seleccionar todas las filas donde code coincida con la opción extendida requerida.
+WHERE code = <liquid_end_extended_code>
+
+Determinar la clase de material del liquid end actual:
+
+Si end_material ∈ {PVC} → material_pump = 'PVC'
+
+Si end_material ∈ {PVDF} → material_pump = 'PVDF'
+
+En cualquier otro caso (316L SS, Hast C, Alloy, etc.) → material_pump = 'METALLIC'
+
+Validar compatibilidad básica con el material usando los flags:
+
+Si material_pump = 'METALLIC' y allow_metallic = FALSE → configuración inválida
+
+Si material_pump = 'PVC' y allow_pvc = FALSE → configuración inválida
+
+Si material_pump = 'PVDF' y allow_pvdf = FALSE → configuración inválida
+
+Validaciones especiales por código:
+
+Código V – High viscosity
+
+No disponible para plunger_code = 'C'.
+Si plunger_code = 'C' → configuración inválida.
+
+No disponible para cabezales plásticos.
+Si material_pump ∈ {'PVC','PVDF'} → configuración inválida.
+
+Máxima presión permitida = 350 psi.
+Si required_pressure_psi > 350 → configuración inválida.
+
+Requiere siempre “large head”.
+Si head_type ≠ 'large' → configuración inválida (o se corrige a large head según política).
+
+Código S – Slurry
+
+Solo válido para end_material = '316L SS'.
+Si end_material ≠ '316L SS' → configuración inválida.
+
+Código D – Degas
+
+Solo válido para PVC y PVDF.
+Si material_pump = 'METALLIC' → configuración inválida.
+
+Código G – G7 wetted parts
+
+Solo válido para liquid ends metálicos.
+Si material_pump ∈ {'PVC','PVDF'} → configuración inválida.
+
+Código U – UHMW Polyethylene
+
+No tiene restricciones adicionales de material; se rige solo por consult_factory.
+
+Si consult_factory = TRUE:
+
+Los campos de precio (price_usd_metallic, price_usd_pvc, price_usd_pvdf) se consideran NULL.
+
+La cotización automática se detiene para esta opción.
+
+El sistema devuelve estado "Consult Factory (Liquid End Extended Option)".
+
+Cálculo del precio según el material (solo si consult_factory = FALSE y la combinación es válida):
+
+Si material_pump = 'METALLIC' → price_usd = price_usd_metallic
+
+Si material_pump = 'PVC' → price_usd = price_usd_pvc
+
+Si material_pump = 'PVDF' → price_usd = price_usd_pvdf
+Si el precio correspondiente es NULL o “NA” → la opción no está disponible para ese material y la configuración se marca como inválida.
+
+La fila seleccionada será la coincidencia exacta entre:
+
+code = <liquid_end_extended_code>
+
+material_pump compatible con allow_metallic / allow_pvc / allow_pvdf
+
+y que cumpla todas las validaciones especiales del código (V, S, D, G, U).
+
+Campos involucrados:
+
+code
+
+description
+
+end_material
+
+material_pump
+
+allow_metallic
+
+allow_pvc
+
+allow_pvdf
+
+price_usd_metallic
+
+price_usd_pvc
+
+price_usd_pvdf
+
+plunger_code
+
+required_pressure_psi
+
+head_type
+
+consult_factory
+
+notes
+
+restrictions
+
+**********************
+REGLA 09 — Selección de Opciones de Temperatura (Tabla MRA1_13)
+
+Seleccionar todas las filas donde code coincida con la opción de temperatura requerida.
+WHERE code = <temperature_option_code>
+
+Determinar la clase de material del liquid end actual:
+
+Si end_material ∈ {PVC, PVDF, otros plásticos} → material_pump = 'plastic'
+
+En cualquier otro caso (316L SS, Hast C, Alloy, etc.) → material_pump = 'metallic'
+
+Validar la restricción de uso solo con liquid ends metálicos:
+
+Si metallic_only = TRUE y material_pump != 'metallic'
+→ configuración inválida.
+
+Reglas especiales por código:
+
+Código N – Standard
+
+No requiere validaciones adicionales.
+Temperaturas estándar de ambiente y líquido (rango base del catálogo).
+
+Código 1 – Low ambient
+
+Requiere siempre la opción de lubricación 5.
+Si requires_lube_option_5 = TRUE y lubrication_option_code != '5'
+→ configuración inválida o se genera advertencia:
+“Debe seleccionarse Lubrication Option 5 para Low Ambient”.
+
+Código 2 – High temperature (PEEK diaphragm)
+
+Solo válido para liquid ends metálicos.
+Si material_pump = 'plastic' → configuración inválida.
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL.
+
+La cotización automática se detiene para esta opción.
+
+El sistema devuelve estado "Consult Factory (Temperature Option)".
+
+La fila seleccionada será la coincidencia exacta entre:
+
+code = <temperature_option_code>
+
+material_pump compatible con metallic_only
+
+y que cumpla las dependencias (por ejemplo, lubricación opción 5).
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+consult_factory
+
+requires_lube_option_5
+
+metallic_only
+
+end_material
+
+material_pump
+
+lubrication_option_code
+
+notes
+
+**********************
+REGLA 10 — Selección de Drive Extended Options (Tabla MRA1_14)
+
+Seleccionar todas las filas donde code coincida con la opción de drive requerida.
+WHERE code = <drive_extended_code>
+
+Validar compatibilidad con el tipo de accionamiento (si aplica):
+
+Para código S – Sand protection option:
+
+Si drive_type = 'actuator' → configuración inválida
+(según la nota: “N/A for actuator”).
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL.
+
+La cotización automática se detiene para esta opción.
+
+El sistema devuelve estado "Consult Factory (Drive Option)".
+
+La fila seleccionada será la coincidencia exacta de code que cumpla las restricciones de tipo de drive.
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+consult_factory
+
+drive_type
+
+notes
+
+**********************
+REGLA 11 — Selección de Motor Extended Options (Tabla MRA1_15)
+
+Seleccionar todas las filas donde code coincida con la opción de motor requerida.
+WHERE code = <motor_extended_code>
+
+Distinguir entre configuración estándar y opciones extendidas:
+
+code = 'N' → motor estándar, price_usd = 0, cotizable normalmente.
+
+code ∈ {'Y','V','C'} → opciones extendidas aún en diseño.
+
+Si consult_factory = TRUE:
+
+Todas las opciones con code ∈ {'Y','V','C'} deben tratarse como no cotizables automáticamente.
+
+price_usd se considera NULL.
+
+El sistema devuelve estado "Consult Factory (Motor Extended Option)".
+
+La fila seleccionada será la coincidencia exacta del code requerido.
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+consult_factory
+
+notes
+
+**********************
+REGLA 12 — Selección de Lubrication Options (Tabla MRA1_16)
+
+Seleccionar todas las filas donde code coincida con la opción de lubricación requerida.
+WHERE code = <lubrication_option_code>
+
+Identificar el tipo de aceite y su rango de temperatura (si aplica):
+
+code = '3' → aceite de baja temperatura no sintético, rango 15°F a 50°F.
+
+code = '4' → aceite grado alimenticio (Nevastane).
+
+code = '5' → aceite sintético de alto desempeño (hydraulic oil).
+
+code = '9' → bomba enviada sin aceite.
+
+Relación con la REGLA 09 (opciones de temperatura):
+
+Si la temperatura seleccionada es Low Ambient (code 1)
+→ lubrication_option_code debe ser '5'.
+Si no se cumple, la configuración es inválida o se genera advertencia.
+
+Validación de precio:
+
+Todos los price_usd son valores explícitos (incluyendo 0).
+
+No se usa consult_factory en esta tabla.
+
+La fila seleccionada será la coincidencia exacta del code solicitado.
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+oil_type
+
+temperature_range_F
+
+lubrication_option_code
+
+notes
+
+**********************
+REGLA 13 — Selección de Coating System Options (Tabla MRA1_17)
+
+Seleccionar todas las filas donde code coincida con el sistema de pintura requerido.
+WHERE code = <coating_system_code>
+
+Interpretar las opciones:
+
+N → pintura estándar RAL 1018, price_usd = 0.
+
+B, C, D → sistemas especiales (grado alimenticio u offshore).
+
+Si consult_factory = TRUE:
+
+price_usd se considera NULL.
+
+La cotización automática se detiene para el sistema de pintura.
+
+El sistema devuelve estado "Consult Factory (Coating System)".
+
+La fila seleccionada será la coincidencia exacta del code solicitado.
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+consult_factory
+
+notes
+
+**********************
+REGLA 14 — Selección de Run Test Options (Tabla MRA1_18)
+
+Seleccionar todas las filas donde code coincida con la opción de prueba de funcionamiento requerida.
+WHERE code = <run_test_code>
+
+Considerar la prueba estándar:
+
+code = 'N' → “Standard production test”, siempre incluida por defecto.
+price_usd = 0.
+
+Para cualquier código A–G:
+
+El precio indicado en price_usd se suma al costo de la bomba base.
+
+No se requiere consult_factory (todos los precios son explícitos).
+
+Relación con Component Test Options (tabla de Hydro test):
+
+Para code = 'F' (“API package – 10 point curve with hydro component test”)
+→ la nota indica “select component test N”.
+
+Si run_test_code = 'F' y component_test_code ≠ 'N'
+→ configuración inválida o se genera advertencia por doble cobro de hydro test.
+
+La fila seleccionada será la coincidencia exacta del code solicitado.
+
+Campos involucrados:
+
+code
+
+description
+
+price_usd
+
+run_test_code
+
+component_test_code
+
+notes
+
+**********************
