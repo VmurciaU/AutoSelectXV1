@@ -15,7 +15,9 @@ if __name__ == "__main__" and __package__ is None:
 
 from app.database.conection import Base, engine
 
-# IMPORTA TODOS LOS MODELOS para registrarlos en la metadata
+# ===============================
+# IMPORTAR MODELOS EXISTENTES
+# ===============================
 from app.models.user import User
 from app.models.cases import Case
 from app.models.documents import Document
@@ -26,11 +28,54 @@ from app.models.quotes import Quote
 from app.models.quote_items import QuoteItem
 from app.models.pumps_detected import PumpsDetected
 
+# ===============================
+# IMPORTAR NUEVOS MODELOS MROY
+# ===============================
+
+# --- Master Tables ---
+from app.models.mroy_master import (
+    MroyaCapacityMaster,
+    MroyaHpMaster,
+    MroyaViscosidadMaster,
+)
+
+# --- MRA1 Main Tables ---
+from app.models.mroy_main import (
+    MroyMRA1LiquidEnd,
+    MroyMRA1Plunger,
+    MroyMRA1GearRatio,
+    MroyMRA1MotorOptions,
+    MroyMRA1MotorMount,
+    MroyMRA1PipeConnections,
+    MroyMRA1Oring,
+    MroyMRA1CapacityControl,
+    MroyMRA1DiaphragmRupture,
+)
+
+# --- MRA1 Extended Tables ---
+from app.models.mroy_extended import (
+    MroyMRA1BaseOptions,
+    MroyMRA1CodeCompleteIdentifier,
+    MroyMRA1LiquidEndExtended,
+    MroyMRA1TemperatureExtended,
+    MroyMRA1DriveExtended,
+    MroyMRA1MotorExtended,
+    MroyMRA1LubricationOptions,
+    MroyMRA1CoatingSystem,
+    MroyMRA1RunTestOptions,
+)
+
 
 def main():
-    # Idempotente: crea solo si no existen
+    print("⏳ Creando/verificando todas las tablas del sistema AutoSelectX...")
+
+    # CREATE ALL TABLES (idempotente)
     Base.metadata.create_all(bind=engine)
-    print("✅ Tablas creadas / verificadas (todas las entidades del MVP).")
+
+    print("✅ Todas las tablas han sido creadas o verificadas con éxito.")
+    print("Incluye: Users, Cases, PumpsDetected, Master MROY y todas las MRA1.")
+
 
 if __name__ == "__main__":
     main()
+
