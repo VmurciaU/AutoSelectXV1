@@ -57,10 +57,9 @@ from app.models.mroy_master import (
 
 # -------------------------------------------------------------------
 # Configura aquí la ruta base donde dejarás los Excel en tu proyecto
-# (AJÚSTALA EN TU PROYECTO REAL)
 # -------------------------------------------------------------------
 BASE_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "shared_data", "mroy_catalog")
+    os.path.join(os.path.dirname(__file__), "..", "database", "MRA11")
 )
 
 
@@ -102,11 +101,62 @@ def as_str(val):
 
 
 def _read_excel(filename: str) -> pd.DataFrame:
+    """
+    Lee un Excel dentro de BASE_PATH.
+
+    - Primero intenta el nombre exacto.
+    - Si no lo encuentra, lista el directorio y trata de encontrar
+      un archivo que coincida de forma flexible (case-insensitive y por prefijo).
+    """
+    import os
+
     path = os.path.join(BASE_PATH, filename)
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"No se encontró el Excel: {path}")
-    df = pd.read_excel(path)
-    return df
+
+    # 1) Intento directo
+    if os.path.exists(path):
+        print(f"📂 Leyendo Excel (exacto): {path}")
+        return pd.read_excel(path)
+
+    # 2) Debug fuerte: mostrar qué hay realmente en la carpeta
+    print("⚠ No se encontró el Excel con nombre exacto:")
+    print(f"   Buscado: {path}")
+    print("   Contenido real de la carpeta:")
+    try:
+        for f in os.listdir(BASE_PATH):
+            print(f"   - {repr(f)}")
+    except FileNotFoundError:
+        print(f"❌ BASE_PATH no existe: {BASE_PATH}")
+        raise FileNotFoundError(f"BASE_PATH no existe: {BASE_PATH}")
+
+    # 3) Búsqueda flexible: por lower() y prefijo
+    files = os.listdir(BASE_PATH)
+    lower_map = {f.lower(): f for f in files}
+
+    # a) Caso: solo difiere mayúsculas/minúsculas
+    if filename.lower() in lower_map:
+        real_name = lower_map[filename.lower()]
+        real_path = os.path.join(BASE_PATH, real_name)
+        print(f"✅ Encontrado por lower(): {real_path}")
+        return pd.read_excel(real_path)
+
+    # b) Caso: usamos prefijo sin extensión, por si hay espacios o .xls/.xlsx
+    base_no_ext = os.path.splitext(filename)[0].lower()
+    candidates = [
+        f for f in files
+        if os.path.splitext(f)[0].lower() == base_no_ext
+    ]
+    if len(candidates) == 1:
+        real_name = candidates[0]
+        real_path = os.path.join(BASE_PATH, real_name)
+        print(f"✅ Encontrado por prefijo/sondeo: {real_path}")
+        return pd.read_excel(real_path)
+
+    # c) Si sigue sin encontrarse, levantamos error claro
+    raise FileNotFoundError(
+        f"No se encontró el Excel '{filename}' en {BASE_PATH}. "
+        f"Revisa nombre exacto, mayúsculas, espacios y extensión."
+    )
+
 
 
 # -------------------------------------------------------------------

@@ -78,8 +78,8 @@ class MroyMRA1GearRatio(Base):
 
     material_pump = Column(String(20), nullable=False)  # metallic / plastic
 
-    spm_1725rpm = Column(Float, nullable=False)
-    spm_1425rpm = Column(Float, nullable=False)
+    spm_1725rpm = Column(Float, nullable=True)
+    spm_1425rpm = Column(Float, nullable=True)
 
     price_usd = Column(Float, nullable=False, default=0.0)
     consult_factory = Column(Boolean, nullable=False, default=False)

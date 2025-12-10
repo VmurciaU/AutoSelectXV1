@@ -11,40 +11,30 @@ from app.database.conection import Base
 
 
 class MroyaCapacityMaster(Base):
-    """
-    Tabla: mroya_capacity_master.xlsx
-
-    Relaciona:
-      - serie (A, B, etc.)
-      - tipo de cabeza (metal / plastic)
-      - código de plunger
-      - código de gear ratio
-      - strokes a 60/50 Hz
-      - capacidades a 100 psi y a presión máxima
-    """
     __tablename__ = "mroya_capacity_master"
 
     id = Column(Integer, primary_key=True, index=True)
 
     series = Column(String(10), nullable=False)  # A, B...
     head_type = Column(String(20), nullable=False)  # metal / plastic
-    plunger_code = Column(String(5), nullable=False)  # H, C, D, E, F...
-    plunger_diameter_in = Column(String(10), nullable=False)  # "3/8", "7/16", etc.
+    plunger_code = Column(String(5), nullable=False)
+    plunger_diameter_in = Column(String(10), nullable=False)
     plunger_diameter_mm = Column(Float, nullable=False)
 
-    gear_ratio_code = Column(String(10), nullable=False)  # 77, 48, 24, 15, 10...
+    gear_ratio_code = Column(String(10), nullable=False)  # 77, 48, 24, 15, 10, 08...
 
-    strokes60 = Column(Float, nullable=False)
+    # 👇 AQUÍ VIENE EL CAMBIO IMPORTANTE
+    # 60 Hz: hay combinaciones que NO existen (gear 08), por eso permitimos NULL
+    strokes60 = Column(Float, nullable=True)
+    cap60_100psi_gph = Column(Float, nullable=True)
+    cap60_100psi_lph = Column(Float, nullable=True)
+    cap60_maxP_gph = Column(Float, nullable=True)
+    cap60_maxP_lph = Column(Float, nullable=True)
+    maxP_psi = Column(Float, nullable=True)
+    maxP_bar = Column(Float, nullable=True)
+
+    # 50 Hz: en el catálogo SIEMPRE hay datos para esas filas, los dejamos obligatorios
     strokes50 = Column(Float, nullable=False)
-
-    cap60_100psi_gph = Column(Float, nullable=False)
-    cap60_100psi_lph = Column(Float, nullable=False)
-    cap60_maxP_gph = Column(Float, nullable=False)
-    cap60_maxP_lph = Column(Float, nullable=False)
-
-    maxP_psi = Column(Float, nullable=False)
-    maxP_bar = Column(Float, nullable=False)
-
     cap50_100psi_gph = Column(Float, nullable=False)
     cap50_100psi_lph = Column(Float, nullable=False)
     cap50_maxP_gph = Column(Float, nullable=False)
@@ -86,28 +76,23 @@ class MroyaHpMaster(Base):
 
 
 class MroyaViscosidadMaster(Base):
-    """
-    Tabla: mroya_viscosidad_master.xlsx
-
-    Define la viscosidad máxima permitida por combinación:
-      - tamaño/código de plunger
-      - gear ratio
-      - strokes a 60/50 Hz
-      - viscosidad con/sin código V (cp)
-    """
     __tablename__ = "mroya_viscosidad_master"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    plunger_size_in = Column(String(10), nullable=False)  # "3/8", etc.
+    plunger_size_in = Column(String(10), nullable=False)
     plunger_size_mm = Column(Float, nullable=False)
     plunger_code = Column(String(5), nullable=False)
 
-    gear_ratio = Column(String(10), nullable=False)  # 77, 48, 24...
+    gear_ratio = Column(String(10), nullable=False)
 
-    strokes_60hz = Column(Float, nullable=False)
+    # Algunas combinaciones NO existen a 60 Hz → deben permitir NULL
+    strokes_60hz = Column(Float, nullable=True)
+
+    # 50 Hz está presente para todos los plungers → obligatorio
     strokes_50hz = Column(Float, nullable=False)
 
+    # Estas dos columnas muchas veces dicen "N/A" → deben ser NULL
     viscosidad_con_codigo_V_cp = Column(Float, nullable=True)
     viscosidad_sin_codigo_V_cp = Column(Float, nullable=True)
 

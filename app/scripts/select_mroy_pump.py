@@ -50,6 +50,10 @@ from app.models.mroy_master import (
 )
 from app.models.pumps_detected import PumpsDetected  # <-- AQUÍ el modelo correcto
 
+# 👇 Añadir estos dos imports SOLO para que SQLAlchemy registre bien las relaciones
+from app.models.cases import Case      # noqa: F401
+from app.models.user import User       # noqa: F401
+
 
 # -------------------------------------------------------------------
 # Helpers genéricos
@@ -325,29 +329,36 @@ def check_viscosity_limit(
 # Selección en mroya_capacity_master
 # -------------------------------------------------------------------
 def find_capacity_candidate(
-    session,
-    *,
-    head_type: str,
-    required_flow_gph: float,
-    required_pressure_psi: float,
-    ctx: Dict[str, Any],
-) -> MroyaCapacityMaster:
+        session,
+        *,
+        head_type: str,
+        required_flow_gph: float,
+        required_pressure_psi: float,
+        ctx: Dict[str, Any],
+        ) -> MroyaCapacityMaster:
     """
     Busca la primera combinación en mroya_capacity_master que cumpla:
       - head_type
-      - cap60_maxP_gph >= flow requerido
-      - maxP_psi       >= presión requerida
-
-    Ordenamos por cap60_maxP_gph asc → la bomba más pequeña que cumple.
+      - capacidad suficiente según la presión requerida
+      - maxP_psi >= presión requerida
     """
+
+    pressure = required_pressure_psi or 0.0
+
+    # Elegimos columna de capacidad adecuada
+    if pressure <= 100.0:
+        flow_col = MroyaCapacityMaster.cap60_100psi_gph
+    else:
+        flow_col = MroyaCapacityMaster.cap60_maxP_gph
+
     q = (
         session.query(MroyaCapacityMaster)
         .filter(
             MroyaCapacityMaster.head_type == head_type,
-            MroyaCapacityMaster.cap60_maxP_gph >= required_flow_gph,
-            MroyaCapacityMaster.maxP_psi >= (required_pressure_psi or 0.0),
+            flow_col >= required_flow_gph,
+            MroyaCapacityMaster.maxP_psi >= pressure,
         )
-        .order_by(MroyaCapacityMaster.cap60_maxP_gph.asc())
+        .order_by(flow_col.asc())
     )
 
     cap_row = q.first()
@@ -357,6 +368,15 @@ def find_capacity_candidate(
             f"flow >= {required_flow_gph} GPH y presión >= {required_pressure_psi} psi "
             f"para head_type='{head_type}'."
         )
+
+    print("\n🔎 DEBUG – Capacity seleccionada")
+    print("series:", cap_row.series)
+    print("plunger_code:", cap_row.plunger_code)
+    print("gear_ratio_code:", cap_row.gear_ratio_code)
+    print("cap60_100psi_gph:", cap_row.cap60_100psi_gph)
+    print("cap60_maxP_gph:", cap_row.cap60_maxP_gph)
+    print("maxP_psi:", cap_row.maxP_psi)
+    print()
 
     return cap_row
 
@@ -427,6 +447,27 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
 
     try:
         pump = session.get(PumpsDetected, pump_id)  # <-- aquí usamos PumpsDetected
+        print("\n🔍 DEBUG — Bomba detectada cargada desde DB")
+        print("id:", pump.id)
+        print("fluid:", pump.fluid)
+        print("viscosity:", pump.viscosity)
+        print("discharge_pressure:", pump.discharge_pressure)
+        print("discharge_pressure_std:", pump.discharge_pressure_std)
+        print("flow_min:", pump.flow_min)
+        print("flow_nominal:", pump.flow_nominal)
+        print("flow_max:", pump.flow_max)
+        print("flow_max_std:", pump.flow_max_std)
+        print("flow_unit_std:", pump.flow_unit_std)
+        print("materials:", pump.materials)
+        print("head_type (parsed):", _material_to_head_type(pump.materials or ""))
+        print()
+
+
+        
+
+
+
+
         if not pump:
             raise SelectionError(f"No existe bomba detectada con id={pump_id}")
 
@@ -466,6 +507,13 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
         # -------------------------------
         # 2) Seleccionar combinación en capacity_master
         # -------------------------------
+
+        print("🔍 DEBUG — Valores usados para selección")
+        print("required_flow_gph:", required_flow_gph)
+        print("required_pressure_psi:", required_pressure_psi)
+        print("head_type:", head_type)
+        print()
+
         cap_row = find_capacity_candidate(
             session,
             head_type=head_type,
@@ -606,6 +654,7 @@ def _print_pretty(result: Dict[str, Any]):
 
 if __name__ == "__main__":
     import sys
+    import traceback  # 👈 añadir
 
     if len(sys.argv) < 2:
         print("Uso: python -m app.scripts.select_mroy_pump <pump_id>")
@@ -619,3 +668,4 @@ if __name__ == "__main__":
         print("❌ Error de selección:", e)
     except Exception as e:
         print("❌ Error inesperado:", repr(e))
+        traceback.print_exc()   # 👈 añadir ESTA línea
