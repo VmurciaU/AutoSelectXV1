@@ -1,4 +1,3 @@
-# app/scripts/select_mroy_pump.py
 """
 Selector maestro de bomba MROY a partir de una bomba detectada en la DB.
 
@@ -48,9 +47,9 @@ from app.models.mroy_master import (
     MroyaCapacityMaster,
     MroyaViscosidadMaster,
 )
-from app.models.pumps_detected import PumpsDetected  # <-- AQUÍ el modelo correcto
+from app.models.pumps_detected import PumpsDetected
 
-# 👇 Añadir estos dos imports SOLO para que SQLAlchemy registre bien las relaciones
+# Solo para que SQLAlchemy registre bien relaciones (no se usan directo aquí)
 from app.models.cases import Case      # noqa: F401
 from app.models.user import User       # noqa: F401
 
@@ -73,22 +72,24 @@ def as_float(val, default: Optional[float] = None) -> Optional[float]:
 
 def _material_to_head_type(material: str) -> str:
     """
-    Clasifica el liquid end como 'metallic' o 'plastic' según el material.
-    Se puede refinar más adelante si agregas más materiales.
+    Normaliza el material EXACTAMENTE a los valores usados en DB:
+        - metallic
+        - plastic
     """
     if not material:
         return "metallic"
 
     m = material.upper()
-    # metales típicos
+
+    # Metales típicos → metallic
     if any(x in m for x in ["SS", "316", "ALLOY", "HAST", "DUPLEX", "TITANIUM"]):
         return "metallic"
 
-    # plásticos típicos
+    # Plásticos típicos → plastic
     if any(x in m for x in ["PVC", "PVDF", "PP", "CPVC"]):
         return "plastic"
 
-    # por defecto asumimos metálico
+    # fallback → metallic
     return "metallic"
 
 
@@ -175,23 +176,19 @@ def select_plunger(
     """
     REGLA 02 — Selección del Plunger (Tabla MRA1_02).
 
-    - WHERE code = <plunger_code> AND material_pump = <metallic|plastic>
-    - Validar presión requerida ≤ max_pressure_psi
-    - Si consult_factory = TRUE → marcar Consult Factory.
+    NOTA IMPORTANTE:
+    La tabla de plunger NO tiene columna material_pump.
+    Por lo tanto, la selección es SOLO por plunger_code.
     """
     pl = (
         session.query(MroyMRA1Plunger)
-        .filter(
-            MroyMRA1Plunger.code == plunger_code,
-            MroyMRA1Plunger.material_pump == head_type,
-        )
+        .filter(MroyMRA1Plunger.code == plunger_code)
         .first()
     )
 
     if not pl:
         raise SelectionError(
-            f"[REGLA 02] No se encontró Plunger code='{plunger_code}' "
-            f"para head_type='{head_type}'"
+            f"[REGLA 02] No se encontró Plunger code='{plunger_code}'."
         )
 
     if required_pressure_psi and pl.max_pressure_psi is not None:
@@ -204,7 +201,7 @@ def select_plunger(
     if pl.consult_factory:
         ctx["consult_factory"] = True
         ctx["errors"].append(
-            f"[REGLA 02] Plunger {plunger_code} tiene consult_factory=TRUE (requiere fábrica)."
+            f"[REGLA 02] Plunger {plunger_code} tiene consult_factory=TRUE."
         )
 
     return pl
@@ -329,20 +326,19 @@ def check_viscosity_limit(
 # Selección en mroya_capacity_master
 # -------------------------------------------------------------------
 def find_capacity_candidate(
-        session,
-        *,
-        head_type: str,
-        required_flow_gph: float,
-        required_pressure_psi: float,
-        ctx: Dict[str, Any],
-        ) -> MroyaCapacityMaster:
+    session,
+    *,
+    head_type: str,
+    required_flow_gph: float,
+    required_pressure_psi: float,
+    ctx: Dict[str, Any],
+) -> MroyaCapacityMaster:
     """
     Busca la primera combinación en mroya_capacity_master que cumpla:
       - head_type
       - capacidad suficiente según la presión requerida
       - maxP_psi >= presión requerida
     """
-
     pressure = required_pressure_psi or 0.0
 
     # Elegimos columna de capacidad adecuada
@@ -393,9 +389,6 @@ def build_code_segments(
 ) -> Dict[str, Any]:
     """
     Arma los segmentos 01, 02, 03 y un código compacto de la bomba.
-
-    Esto se puede ajustar después para calzar EXACTO con el formato oficial
-    de código Milton Roy; por ahora usamos una concatenación clara.
     """
     seg01 = str(liquid_end.code)
     seg02 = plunger.code
@@ -446,7 +439,10 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
     }
 
     try:
-        pump = session.get(PumpsDetected, pump_id)  # <-- aquí usamos PumpsDetected
+        pump = session.get(PumpsDetected, pump_id)
+        if not pump:
+            raise SelectionError(f"No existe bomba detectada con id={pump_id}")
+
         print("\n🔍 DEBUG — Bomba detectada cargada desde DB")
         print("id:", pump.id)
         print("fluid:", pump.fluid)
@@ -462,26 +458,19 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
         print("head_type (parsed):", _material_to_head_type(pump.materials or ""))
         print()
 
-
-        
-
-
-
-
-        if not pump:
-            raise SelectionError(f"No existe bomba detectada con id={pump_id}")
-
         if hasattr(pump, "is_active") and pump.is_active is False:
             ctx["warnings"].append("La bomba detectada está marcada como inactiva.")
 
         # -------------------------------
         # 1) Extraer requisitos básicos
         # -------------------------------
-        material = (pump.materials or "").strip() or "316 SS"
+        material = (pump.materials or "").strip() or "316L SS"  # default metálico
         head_type = _material_to_head_type(material)
 
         required_pressure_psi = as_float(
-            pump.discharge_pressure_std if pump.discharge_pressure_std is not None else pump.discharge_pressure
+            pump.discharge_pressure_std
+            if pump.discharge_pressure_std is not None
+            else pump.discharge_pressure
         ) or 0.0
 
         # Flow representativo: max > nominal > min > std
@@ -507,7 +496,6 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
         # -------------------------------
         # 2) Seleccionar combinación en capacity_master
         # -------------------------------
-
         print("🔍 DEBUG — Valores usados para selección")
         print("required_flow_gph:", required_flow_gph)
         print("required_pressure_psi:", required_pressure_psi)
@@ -580,7 +568,7 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
             gear_ratio=gear_ratio,
         )
 
-        result = {
+        result: Dict[str, Any] = {
             "pump_id": pump_id,
             "case_id": pump.case_id,
             "tag": pump.tag,
@@ -652,9 +640,73 @@ def _print_pretty(result: Dict[str, Any]):
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
+def print_code_breakdown(result: Dict[str, Any]):
+    """
+    Imprime el desglose completo de los segmentos 01–18 usando únicamente
+    los datos que YA EXISTEN en result (01–03) y placeholders para 04–18.
+    """
+    code_info = result.get("code_info", {})
+    components = result.get("selected_components", {})
+
+    print("\n==============================")
+    print(" DESGLOSE COMPLETO DEL CÓDIGO")
+    print("==============================\n")
+
+    print("Código final:", code_info.get("full_code", "N/A"))
+    print("----------------------------------------\n")
+
+    # 01 — Liquid End
+    le = components.get("liquid_end_01", {})
+    print("01 — Liquid End Material")
+    print(f"    Código: {le.get('code')}")
+    print(f"    Material: {le.get('end_material')}")
+    print(f"    Tipo bomba: {le.get('material_pump')}")
+    print(f"    Precio USD: {le.get('price_usd')}\n")
+
+    # 02 — Plunger
+    pl = components.get("plunger_02", {})
+    print("02 — Plunger")
+    print(f"    Código: {pl.get('code')}")
+    print(f"    Diámetro: {pl.get('plunger_in')}")
+    print(f"    Presión máx: {pl.get('max_pressure_psi')} psi\n")
+
+    # 03 — Gear Ratio
+    gr = components.get("gear_ratio_03", {})
+    print("03 — Gear Ratio")
+    print(f"    Código: {gr.get('code')}")
+    print(f"    Descripción: {gr.get('description')}")
+    print(f"    SPM 1725rpm: {gr.get('spm_1725rpm')}")
+    print(f"    SPM 1425rpm: {gr.get('spm_1425rpm')}")
+    print(f"    Precio USD: {gr.get('price_usd')}\n")
+
+    # PLACEHOLDERS PARA 04–18
+    placeholders = {
+        "04": "Motor Options",
+        "05": "Motor Mount",
+        "06": "Pipe Connections",
+        "07": "O-Ring",
+        "08": "Capacity Control",
+        "09": "Diaphragm Rupture",
+        "10": "Base Options",
+        "11": "Complete Code Identifier",
+        "12": "Liquid End Extended Options",
+        "13": "Temperature Extended Options",
+        "14": "Drive Extended Options",
+        "15": "Motor Extended Options",
+        "16": "Lubrication Options",
+        "17": "Coating System",
+        "18": "Run Test Options",
+    }
+
+    for seg, label in placeholders.items():
+        print(f"{seg} — {label}: (no seleccionado todavía)")
+
+    print("\n====================================================\n")
+
+
 if __name__ == "__main__":
     import sys
-    import traceback  # 👈 añadir
+    import traceback
 
     if len(sys.argv) < 2:
         print("Uso: python -m app.scripts.select_mroy_pump <pump_id>")
@@ -663,9 +715,10 @@ if __name__ == "__main__":
     pump_id = int(sys.argv[1])
     try:
         res = select_mroy_pump_by_id(pump_id)
-        _print_pretty(res)
+        _print_pretty(res)         # JSON completo
+        print_code_breakdown(res)  # Desglose humano 01–18
     except SelectionError as e:
         print("❌ Error de selección:", e)
     except Exception as e:
         print("❌ Error inesperado:", repr(e))
-        traceback.print_exc()   # 👈 añadir ESTA línea
+        traceback.print_exc()

@@ -62,6 +62,16 @@ BASE_PATH = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "database", "MRA11")
 )
 
+def normalize_head_type(value: str) -> str:
+    if not value:
+        return None
+    v = str(value).strip().lower()
+    if v.startswith("metal"):
+        return "metallic"
+    if v.startswith("plast"):
+        return "plastic"
+    return v
+
 
 # -------------------------------------------------------------------
 # Helpers genéricos
@@ -487,7 +497,7 @@ def load_capacity_master(session):
     for _, row in df.iterrows():
         obj = MroyaCapacityMaster(
             series=as_str(row["series"]),
-            head_type=as_str(row["head_type"]),
+            head_type = normalize_head_type(row["head_type"]),
             plunger_code=as_str(row["plunger_code"]),
             plunger_diameter_in=as_str(row["plunger_diameter_in"]),
             plunger_diameter_mm=as_float(row["plunger_diameter_mm"]),
@@ -557,48 +567,54 @@ def load_viscosidad_master(session):
 # -------------------------------------------------------------------
 # Orquestador principal
 # -------------------------------------------------------------------
+def safe_run(loader_fn, session, label):
+    print(f"▶ Ejecutando {label} ...")
+    try:
+        loader_fn(session)
+        session.commit()
+        print(f"✔ {label} cargado correctamente")
+    except Exception as e:
+        session.rollback()
+        print(f"❌ ERROR cargando {label}: {repr(e)}")
+
+
 def load_all_mroy_catalog():
     os.makedirs(BASE_PATH, exist_ok=True)
     session = SessionLocal()
-    try:
-        print("▶ Iniciando carga de catálogo MROY desde:", BASE_PATH)
 
-        # MRA1 core
-        load_mroy_01_liquid(session)
-        load_mroy_02_plunger(session)
-        load_mroy_03_gear(session)
-        load_mroy_04_motor_options(session)
-        load_mroy_05_motor_mount(session)
-        load_mroy_06_pipe_connections(session)
-        load_mroy_07_oring(session)
-        load_mroy_08_capacity_control(session)
-        load_mroy_09_diaphragm_rupture(session)
+    print("▶ Iniciando carga TOTAL del catálogo MROY\n")
 
-        # Extended
-        load_mroy_10_base_options(session)
-        load_mroy_11_code_complete(session)
-        load_mroy_12_liquid_end_extended(session)
-        load_mroy_13_temperature_extended(session)
-        load_mroy_14_drive_extended(session)
-        load_mroy_15_motor_extended(session)
-        load_mroy_16_lubrication(session)
-        load_mroy_17_coating_system(session)
-        load_mroy_18_run_test(session)
+    # ------------------------
+    # MRA1_xx (todas las hojas)
+    # ------------------------
+    safe_run(load_mroy_01_liquid, session, "MRA1_01_liquid")
+    safe_run(load_mroy_02_plunger, session, "MRA1_02_plunger")
+    safe_run(load_mroy_03_gear, session, "MRA1_03_gear")
+    safe_run(load_mroy_04_motor_options, session, "MRA1_04_motor_options")
+    safe_run(load_mroy_05_motor_mount, session, "MRA1_05_motor_mount")
+    safe_run(load_mroy_06_pipe_connections, session, "MRA1_06_pipe_connections")
+    safe_run(load_mroy_07_oring, session, "MRA1_07_oring")
+    safe_run(load_mroy_08_capacity_control, session, "MRA1_08_capacity_control")
+    safe_run(load_mroy_09_diaphragm_rupture, session, "MRA1_09_diaphragm_rupture")
+    safe_run(load_mroy_10_base_options, session, "MRA1_10_base_options")
+    safe_run(load_mroy_11_code_complete, session, "MRA1_11_code_complete")
+    safe_run(load_mroy_12_liquid_end_extended, session, "MRA1_12_liquid_end_extended")
+    safe_run(load_mroy_13_temperature_extended, session, "MRA1_13_temperature_extended")
+    safe_run(load_mroy_14_drive_extended, session, "MRA1_14_drive_extended")
+    safe_run(load_mroy_15_motor_extended, session, "MRA1_15_motor_extended")
+    safe_run(load_mroy_16_lubrication, session, "MRA1_16_lubrication")
+    safe_run(load_mroy_17_coating_system, session, "MRA1_17_coating_system")
+    safe_run(load_mroy_18_run_test, session, "MRA1_18_run_test")
 
-        # Masters
-        load_capacity_master(session)
-        load_hp_master(session)
-        load_viscosidad_master(session)
+    # ------------------------
+    # Masters
+    # ------------------------
+    safe_run(load_capacity_master, session, "mroya_capacity_master")
+    safe_run(load_hp_master, session, "mroya_hp_master")
+    safe_run(load_viscosidad_master, session, "mroya_viscosidad_master")
 
-        session.commit()
-        print("✅ Catálogo MROY cargado correctamente en la DB.")
-
-    except Exception as e:
-        session.rollback()
-        print("❌ Error cargando catálogo MROY:", repr(e))
-
-    finally:
-        session.close()
+    print("\n⭐⭐ Carga TOTAL finalizada – revisar logs de errores si alguno falló ⭐⭐")
+    session.close()
 
 
 if __name__ == "__main__":
