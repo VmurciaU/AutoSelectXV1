@@ -78,6 +78,30 @@ class MroySelectedPump(Base):
     mroy_series = Column(String(10), nullable=False)
     full_code = Column(String(100), nullable=False)
     summary_text = Column(Text, nullable=True)
+    
+    
+    # ---------------------------
+    # Códigos MROY persistidos (01–18)
+    # ---------------------------
+    code_01 = Column(String(10), nullable=True)
+    code_02 = Column(String(10), nullable=True)
+    code_03 = Column(String(10), nullable=True)
+    code_04 = Column(String(10), nullable=True)
+    code_05 = Column(String(10), nullable=True)
+    code_06 = Column(String(10), nullable=True)
+    code_07 = Column(String(10), nullable=True)
+    code_08 = Column(String(10), nullable=True)
+    code_09 = Column(String(10), nullable=True)
+    code_10 = Column(String(10), nullable=True)
+    code_11 = Column(String(10), nullable=True)
+    code_12 = Column(String(10), nullable=True)
+    code_13 = Column(String(10), nullable=True)
+    code_14 = Column(String(10), nullable=True)
+    code_15 = Column(String(10), nullable=True)
+    code_16 = Column(String(10), nullable=True)
+    code_17 = Column(String(10), nullable=True)
+    code_18 = Column(String(10), nullable=True)
+
 
     # ---------------------------
     # FKs mínimas a catálogo
@@ -173,4 +197,24 @@ class MroySelectedPump(Base):
             "is_active": self.is_active,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            
+            "code_01": self.code_01,
+            "code_02": self.code_02,
+            "code_03": self.code_03,
+            "code_04": self.code_04,
+            "code_05": self.code_05,
+            "code_06": self.code_06,
+            "code_07": self.code_07,
+            "code_08": self.code_08,
+            "code_09": self.code_09,
+            "code_10": self.code_10,
+            "code_11": self.code_11,
+            "code_12": self.code_12,
+            "code_13": self.code_13,
+            "code_14": self.code_14,
+            "code_15": self.code_15,
+            "code_16": self.code_16,
+            "code_17": self.code_17,
+            "code_18": self.code_18,
+            
         }

@@ -765,6 +765,13 @@ def upsert_mroy_selected_pump(
         selected.updated_by = user_id
         selected.mroy_series = code_info.get("series") or selected.mroy_series
         selected.full_code = code_info.get("full_code") or selected.full_code
+        
+        segments = (code_info.get("segments") or {})
+        selected.code_01 = (segments.get("01") or {}).get("code")
+        selected.code_02 = (segments.get("02") or {}).get("code")
+        selected.code_03 = (segments.get("03") or {}).get("code")
+
+        
         selected.summary_text = summary_text
 
         # FKs de catálogo

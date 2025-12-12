@@ -486,7 +486,8 @@ async def get_quote_view(
         pumps_payload = {
             "detected": detected_from_json or [],
             "db": [
-                {
+                (
+                    lambda sp: {
                     "id": pump.id,
                     "tag": pump.tag,
                     "fluid": pump.fluid,
@@ -495,18 +496,38 @@ async def get_quote_view(
                     "discharge_pressure_std": pump.discharge_pressure_std,
                     "discharge_pressure": pump.discharge_pressure,
                     "cantidad_bombas": pump.cantidad_bombas,
-                    "mroy_full_code": (
-                        selected_by_pump_id.get(pump.id).full_code
-                        if selected_by_pump_id.get(pump.id)
-                        else None
-                    ),
-                    
-                }
-                for pump in detected_from_db
-            ],
 
-            
-        }
+                    # Identidad MROY
+                    "mroy_full_code": sp.full_code if sp else None,
+
+                    # 🔥 CÓDIGOS MROY DESDE BD (01–18)
+                    "mroy_codes": {
+                        "01": sp.code_01 if sp else None,
+                        "02": sp.code_02 if sp else None,
+                        "03": sp.code_03 if sp else None,
+                        "04": sp.code_04 if sp else None,
+                        "05": sp.code_05 if sp else None,
+                        "06": sp.code_06 if sp else None,
+                        "07": sp.code_07 if sp else None,
+                        "08": sp.code_08 if sp else None,
+                        "09": sp.code_09 if sp else None,
+                        "10": sp.code_10 if sp else None,
+                        "11": sp.code_11 if sp else None,
+                        "12": sp.code_12 if sp else None,
+                        "13": sp.code_13 if sp else None,
+                        "14": sp.code_14 if sp else None,
+                        "15": sp.code_15 if sp else None,
+                        "16": sp.code_16 if sp else None,
+                        "17": sp.code_17 if sp else None,
+                        "18": sp.code_18 if sp else None,
+                } if sp else None,
+            }
+        )(selected_by_pump_id.get(pump.id))
+        for pump in detected_from_db
+    ],
+}
+
+
         pumps_payload_json = json.dumps(
             pumps_payload,
             ensure_ascii=False,
@@ -784,6 +805,100 @@ async def select_mroy_pump_route(
         )
 
     # 4. Redirigir a la vista de cotización
+    return RedirectResponse(
+        url=f"/quote/{case_id}",
+        status_code=303,
+    )
+
+
+
+@router.post("/quote/{case_id}/detected-pump/{pump_id}/save-mroy-selection")
+async def save_mroy_selection_manual(
+    case_id: int,
+    pump_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    # 1) Validar caso
+    case = db.query(Case).filter(Case.id == case_id).first()
+    if not case:
+        raise HTTPException(404, "Caso no encontrado")
+
+    # 2) Validar bomba detectada activa
+    pump = (
+        db.query(PumpsDetected)
+        .filter(
+            PumpsDetected.id == pump_id,
+            PumpsDetected.case_id == case_id,
+            PumpsDetected.is_active == True,
+        )
+        .first()
+    )
+    if not pump:
+        raise HTTPException(404, "Bomba detectada no encontrada o inactiva.")
+
+    # 3) Leer formulario
+    form = await request.form()
+
+    # 4) Tomar códigos 01–18
+    codes = {}
+    for i in range(1, 19):
+        k = f"{i:02d}"
+        codes[k] = (form.get(f"code_{k}") or "").strip() or None
+
+    # 5) Armar full_code (simple y consistente con tu preview)
+    #    MRA1-{01}{02}{03}-{04..18}
+    core = f"{codes['01'] or ''}{codes['02'] or ''}{codes['03'] or ''}"
+    extras = "".join([codes[f"{i:02d}"] or "" for i in range(4, 19)])
+    full_code = f"MRA1-{core}"
+    if extras:
+        full_code += f"-{extras}"
+
+    # 6) Upsert en mroy_selected_pumps (persistir)
+    selected = (
+        db.query(MroySelectedPump)
+        .filter(MroySelectedPump.detected_pump_id == pump_id)
+        .first()
+    )
+
+    if selected is None:
+        selected = MroySelectedPump(
+            case_id=case_id,
+            detected_pump_id=pump_id,
+            created_by=current_user_id,
+            mroy_series="A",  # por ahora fijo
+            full_code=full_code,
+        )
+        db.add(selected)
+
+    selected.updated_by = current_user_id
+    selected.is_active = True
+    selected.full_code = full_code
+
+    # Guardar códigos 01–18
+    selected.code_01 = codes["01"]
+    selected.code_02 = codes["02"]
+    selected.code_03 = codes["03"]
+    selected.code_04 = codes["04"]
+    selected.code_05 = codes["05"]
+    selected.code_06 = codes["06"]
+    selected.code_07 = codes["07"]
+    selected.code_08 = codes["08"]
+    selected.code_09 = codes["09"]
+    selected.code_10 = codes["10"]
+    selected.code_11 = codes["11"]
+    selected.code_12 = codes["12"]
+    selected.code_13 = codes["13"]
+    selected.code_14 = codes["14"]
+    selected.code_15 = codes["15"]
+    selected.code_16 = codes["16"]
+    selected.code_17 = codes["17"]
+    selected.code_18 = codes["18"]
+
+    selected.touch()
+    db.commit()
+
     return RedirectResponse(
         url=f"/quote/{case_id}",
         status_code=303,

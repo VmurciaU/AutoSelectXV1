@@ -399,7 +399,10 @@
       return false;
     }
 
-    const raw = String(value ?? "").trim();
+    let raw = String(value ?? "").trim();
+    // si viene "1.0" o 1.0 desde backend/serialización, normalizamos
+    raw = raw.replace(/\.0$/, "");
+
     if (!raw) {
       dbgModal(`${selectId}: value vacío`, { value });
       return false;
@@ -428,8 +431,8 @@
   // --- Preview del código MROY
   function updateMroyCodePreview() {
     const ids = [
-      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08","code_09",
-      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_01", "code_02", "code_03", "code_04", "code_05", "code_06", "code_07", "code_08", "code_09",
+      "code_10", "code_11", "code_12", "code_13", "code_14", "code_15", "code_16", "code_17", "code_18"
     ];
     const values = {};
     ids.forEach(id => values[id] = document.getElementById(id)?.value || "");
@@ -456,17 +459,18 @@
   }
 
   // --- Función global (para onclick)
-  window.openMroySelector = function(pumpIdStr) {
+  window.openMroySelector = function (pumpIdStr, tagStr = "") {
+
     // 1) Reset 01–03 a vacío (placeholder)
-    ["code_01","code_02","code_03"].forEach(id => {
+    ["code_01", "code_02", "code_03"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = "";
     });
 
     // 2) Reset 04–18 al primer item
     [
-      "code_04","code_05","code_06","code_07","code_08","code_09",
-      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_04", "code_05", "code_06", "code_07", "code_08", "code_09",
+      "code_10", "code_11", "code_12", "code_13", "code_14", "code_15", "code_16", "code_17", "code_18"
     ].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.selectedIndex = 0;
@@ -488,11 +492,34 @@
 
     const hasMroySelection = !!pump.mroy_full_code;
 
+    // 7A) Si YA hay selección guardada → cargar 01–18 desde BD (pump.mroy_codes)
+    if (hasMroySelection && pump.mroy_codes) {
+      dbgModal("LOAD existing selection from DB", pump.mroy_codes);
+
+      // Cargar 01–03
+      setSelectValueSafe("code_01", pump.mroy_codes["01"]);
+      setSelectValueSafe("code_02", pump.mroy_codes["02"]);
+      setSelectValueSafe("code_03", pump.mroy_codes["03"]);
+
+      // Cargar 04–18
+      for (let i = 4; i <= 18; i++) {
+        const k = String(i).padStart(2, "0");
+        setSelectValueSafe(`code_${k}`, pump.mroy_codes[k]);
+      }
+    }
+
+
     // 5) UI básica (safe)
     const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val ?? ""; };
-    setText("mroy_proc_tag", pump.tag || `Bomba #${pump.id}`);
-    setText("mroy-modal-tag", pump.tag || `Bomba #${pump.id}`);
-    setText("mroy_header_tag", pump.tag || `Bomba #${pump.id}`);
+
+    const tag = (tagStr && String(tagStr).trim())
+      ? tagStr
+      : (pump.tag || `Bomba #${pump.id}`);
+
+    setText("mroy_proc_tag", tag);
+    setText("mroy-modal-tag", tag);
+    setText("mroy_header_tag", tag);
+
 
     const pumpIdEl = document.getElementById("mroy_pump_id");
     if (pumpIdEl) pumpIdEl.value = pump.id;
@@ -503,7 +530,7 @@
       if (!window.currentCaseId) {
         console.warn("⚠️ currentCaseId no existe o está vacío. No puedo armar el form.action");
       } else {
-        form.action = `/quote/${window.currentCaseId}/detected-pump/${pump.id}/select-mroy`;
+        form.action = `/quote/${window.currentCaseId}/detected-pump/${pump.id}/save-mroy-selection`;
         form.method = "post";
       }
     }
@@ -530,13 +557,13 @@
   };
 
   // --- Listeners (una vez)
-  (function bindMroyListenersOnce(){
+  (function bindMroyListenersOnce() {
     if (window.__mroyListenersBound) return;
     window.__mroyListenersBound = true;
 
     [
-      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08",
-      "code_09","code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_01", "code_02", "code_03", "code_04", "code_05", "code_06", "code_07", "code_08",
+      "code_09", "code_10", "code_11", "code_12", "code_13", "code_14", "code_15", "code_16", "code_17", "code_18"
     ].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener("change", updateMroyCodePreview);
