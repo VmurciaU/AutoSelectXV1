@@ -105,6 +105,13 @@ class PumpsDetected(Base):
         back_populates="pumps_detected_updated",
     )
 
+    # 👇 NUEVA relación 1–1 con la bomba MROY seleccionada
+    selected_pump = relationship(
+        "MroySelectedPump",
+        back_populates="detected_pump",
+        uselist=False,
+    )
+
     __table_args__ = (
         Index("ix_pumps_detected_case_active", "case_id", "is_active"),
     )

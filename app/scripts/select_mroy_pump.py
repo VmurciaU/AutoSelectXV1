@@ -1,4 +1,6 @@
 """
+app.sripts.select_mroy_pump.py
+
 Selector maestro de bomba MROY a partir de una bomba detectada en la DB.
 
 Flujo:
@@ -49,9 +51,14 @@ from app.models.mroy_master import (
 )
 from app.models.pumps_detected import PumpsDetected
 
+from app.models.mroy_selected_pump import MroySelectedPump  # 👈 NUEVO
+
 # Solo para que SQLAlchemy registre bien relaciones (no se usan directo aquí)
 from app.models.cases import Case      # noqa: F401
 from app.models.user import User       # noqa: F401
+
+from sqlalchemy.orm import Session
+
 
 
 # -------------------------------------------------------------------
@@ -113,6 +120,13 @@ def _flow_to_gph(flow_value, unit: str) -> float:
 
     # Si la unidad es desconocida, devolvemos tal cual
     return f
+
+
+def _lph_from_gph(gph: Optional[float]) -> Optional[float]:
+    """Convierte GPH a LPH (solo si viene un número)."""
+    if gph is None:
+        return None
+    return gph * 3.78541
 
 
 # -------------------------------------------------------------------
@@ -630,6 +644,138 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
 
     finally:
         session.close()
+
+# -------------------------------------------------------------------
+# Guardar/actualizar bomba seleccionada MROY en la DB (MVP)
+# -------------------------------------------------------------------
+def upsert_mroy_selected_pump(
+    pump_id: int,
+    user_id: int,
+    db: Optional[Session] = None,
+) -> MroySelectedPump:
+    """
+    Capa fina de persistencia para el MVP.
+
+    - Lee la bomba detectada (PumpsDetected).
+    - Ejecuta select_mroy_pump_by_id(pump_id) → dict con selección.
+    - Crea o actualiza la fila en mroy_selected_pumps asociada a esa bomba.
+    """
+
+    own_session = False
+    if db is None:
+        db = SessionLocal()
+        own_session = True
+
+    try:
+        # 1) Verificar que la bomba detectada exista y esté activa
+        detected = (
+            db.query(PumpsDetected)
+            .filter(
+                PumpsDetected.id == pump_id,
+                PumpsDetected.is_active.is_(True),
+            )
+            .first()
+        )
+        if not detected:
+            raise ValueError(f"No existe bomba detectada activa con id={pump_id}")
+
+        # 2) Ejecutar el selector (usa su propia sesión interna)
+        result = select_mroy_pump_by_id(pump_id)
+
+        # 3) Extraer info relevante del dict
+        code_info = result.get("code_info", {}) or {}
+        capacity_row = result.get("capacity_master_row", {}) or {}
+        components = result.get("selected_components", {}) or {}
+        input_req = result.get("input_requirements", {}) or {}
+
+        # IDs de catálogo
+        capacity_master_id = capacity_row.get("id")
+        liquid_end_id = components.get("liquid_end_01", {}).get("id")
+        plunger_id = components.get("plunger_02", {}).get("id")
+        gear_ratio_id = components.get("gear_ratio_03", {}).get("id")
+
+        # Snapshot técnico de diseño
+        design_flow_gph = input_req.get("required_flow_gph")
+        design_flow_lph = _lph_from_gph(design_flow_gph)
+        design_pressure_psi = input_req.get("required_pressure_psi")
+        design_viscosity_cp = input_req.get("viscosity_cp")
+
+        # Texto resumen (MVP)
+        tag = detected.tag or "Sin TAG"
+        fluid = detected.fluid or "-"
+        service = detected.service or "-"
+
+        if design_flow_gph is not None and design_pressure_psi is not None:
+            summary_text = (
+                f"{tag} – {fluid} – {service} – "
+                f"Q≈{design_flow_gph:.3f} GPH, P≈{design_pressure_psi:.0f} PSI"
+            )
+        else:
+            summary_text = f"{tag} – {fluid} – {service}"
+
+        # 4) Buscar si ya existe selección para esta bomba
+        selected = (
+            db.query(MroySelectedPump)
+            .filter(MroySelectedPump.detected_pump_id == pump_id)
+            .first()
+        )
+
+        if selected is None:
+            # Crear nueva fila
+            selected = MroySelectedPump(
+                case_id=detected.case_id,
+                detected_pump_id=pump_id,
+                created_by=user_id,
+                mroy_series=code_info.get("series") or "A",
+                full_code=code_info.get("full_code") or "",
+            )
+            db.add(selected)
+
+        # Actualizar campos comunes
+        selected.updated_by = user_id
+        selected.mroy_series = code_info.get("series") or selected.mroy_series
+        selected.full_code = code_info.get("full_code") or selected.full_code
+        selected.summary_text = summary_text
+
+        # FKs de catálogo
+        selected.capacity_master_id = capacity_master_id
+        selected.liquid_end_id = liquid_end_id
+        selected.plunger_id = plunger_id
+        selected.gear_ratio_id = gear_ratio_id
+        # Por ahora no guardamos viscosity_master_id específico
+        # selected.viscosity_master_id = ...
+
+        # Snapshot técnico
+        selected.design_flow_gph = design_flow_gph
+        selected.design_flow_lph = design_flow_lph
+        selected.design_pressure_psi = design_pressure_psi
+        selected.design_viscosity_cp = design_viscosity_cp
+
+        # Precio total todavía no calculado (MVP)
+        if selected.price_total_usd is None:
+            selected.price_total_usd = None
+        if selected.currency is None:
+            selected.currency = "USD"
+
+        selected.is_active = True
+        selected.touch()
+
+        db.commit()
+        db.refresh(selected)
+        return selected
+
+    except SelectionError:
+        if own_session:
+            db.rollback()
+        # Re-lanzamos tal cual para que la ruta pueda mostrar mensaje
+        raise
+    except Exception:
+        if own_session:
+            db.rollback()
+        raise
+    finally:
+        if own_session:
+            db.close()
 
 
 # -------------------------------------------------------------------

@@ -16,6 +16,39 @@ from app.utils.auth import get_current_user_id
 from app.models.cases import Case
 from app.models.user import User
 from app.models.pumps_detected import PumpsDetected
+from app.models.mroy_selected_pump import MroySelectedPump
+
+# ⬇️ MODELOS MROY (core 01–09)
+from app.models.mroy_main import (
+    MroyMRA1LiquidEnd,
+    MroyMRA1Plunger,
+    MroyMRA1GearRatio,
+    MroyMRA1MotorOptions,
+    MroyMRA1MotorMount,
+    MroyMRA1PipeConnections,
+    MroyMRA1Oring,
+    MroyMRA1CapacityControl,
+    MroyMRA1DiaphragmRupture,
+)
+
+# ⬇️ MODELOS MROY (extendidas 10–18)
+from app.models.mroy_extended import (
+    MroyMRA1BaseOptions,
+    MroyMRA1CodeCompleteIdentifier,
+    MroyMRA1LiquidEndExtended,
+    MroyMRA1TemperatureExtended,
+    MroyMRA1DriveExtended,
+    MroyMRA1MotorExtended,
+    MroyMRA1LubricationOptions,
+    MroyMRA1CoatingSystem,
+    MroyMRA1RunTestOptions,
+)
+
+# ⬇️ Servicio maestro de selección MROY (usa el script que ya creaste)
+from app.scripts.select_mroy_pump import (
+    upsert_mroy_selected_pump,
+    SelectionError,
+)
 
 # Loader del asistente
 from app.routers.chat_routes import load_requirements_from_storage
@@ -33,6 +66,167 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# ================================================
+# HELPER: Catálogo MROY para el modal
+# ================================================
+def get_mroy_catalog_context(db: Session) -> dict:
+    """
+    Devuelve todas las listas de opciones que el modal MROY necesita.
+    Se usa en la vista de cotización para llenar los <select>.
+    """
+
+    # Core 01–09
+    liquid_end_options = (
+        db.query(MroyMRA1LiquidEnd)
+        .order_by(MroyMRA1LiquidEnd.code)
+        .all()
+    )
+
+    plunger_options = (
+        db.query(MroyMRA1Plunger)
+        .order_by(MroyMRA1Plunger.code)
+        .all()
+    )
+
+    gear_options = (
+        db.query(MroyMRA1GearRatio)
+        .order_by(MroyMRA1GearRatio.code)
+        .all()
+    )
+
+    motor_options = (
+        db.query(MroyMRA1MotorOptions)
+        .order_by(MroyMRA1MotorOptions.code)
+        .all()
+    )
+
+    motor_mount_options = (
+        db.query(MroyMRA1MotorMount)
+        .order_by(MroyMRA1MotorMount.code)
+        .all()
+    )
+
+    pipe_connection_options = (
+        db.query(MroyMRA1PipeConnections)
+        .order_by(MroyMRA1PipeConnections.code)
+        .all()
+    )
+
+    oring_options = (
+        db.query(MroyMRA1Oring)
+        .order_by(MroyMRA1Oring.code)
+        .all()
+    )
+
+    capacity_control_options = (
+        db.query(MroyMRA1CapacityControl)
+        .order_by(MroyMRA1CapacityControl.code)
+        .all()
+    )
+
+    rupture_options = (
+        db.query(MroyMRA1DiaphragmRupture)
+        .order_by(MroyMRA1DiaphragmRupture.code)
+        .all()
+    )
+
+    # Extendidas 10–18
+    base_options = (
+        db.query(MroyMRA1BaseOptions)
+        .order_by(MroyMRA1BaseOptions.code)
+        .all()
+    )
+
+    code_identifier_options = (
+        db.query(MroyMRA1CodeCompleteIdentifier)
+        .order_by(MroyMRA1CodeCompleteIdentifier.code)
+        .all()
+    )
+
+    liquid_end_ext_options = (
+        db.query(MroyMRA1LiquidEndExtended)
+        .order_by(MroyMRA1LiquidEndExtended.code)
+        .all()
+    )
+
+    temperature_ext_options = (
+        db.query(MroyMRA1TemperatureExtended)
+        .order_by(MroyMRA1TemperatureExtended.code)
+        .all()
+    )
+
+    drive_ext_options = (
+        db.query(MroyMRA1DriveExtended)
+        .order_by(MroyMRA1DriveExtended.code)
+        .all()
+    )
+
+    motor_ext_options = (
+        db.query(MroyMRA1MotorExtended)
+        .order_by(MroyMRA1MotorExtended.code)
+        .all()
+    )
+
+    lubrication_options = (
+        db.query(MroyMRA1LubricationOptions)
+        .order_by(MroyMRA1LubricationOptions.code)
+        .all()
+    )
+
+    coating_options = (
+        db.query(MroyMRA1CoatingSystem)
+        .order_by(MroyMRA1CoatingSystem.code)
+        .all()
+    )
+
+    run_test_options = (
+        db.query(MroyMRA1RunTestOptions)
+        .order_by(MroyMRA1RunTestOptions.code)
+        .all()
+    )
+
+    # ⬇️ AQUÍ aplicamos el filtro para el UI
+    liquid_end_options        = dedupe_by_code(liquid_end_options)
+    plunger_options           = dedupe_by_code(plunger_options)
+    gear_options              = dedupe_by_code(gear_options)
+    motor_options             = dedupe_by_code(motor_options)
+    motor_mount_options       = dedupe_by_code(motor_mount_options)
+    pipe_connection_options   = dedupe_by_code(pipe_connection_options)
+    oring_options             = dedupe_by_code(oring_options)
+    capacity_control_options  = dedupe_by_code(capacity_control_options)
+    rupture_options           = dedupe_by_code(rupture_options)
+    base_options              = dedupe_by_code(base_options)
+    code_identifier_options   = dedupe_by_code(code_identifier_options)
+    liquid_end_ext_options    = dedupe_by_code(liquid_end_ext_options)
+    temperature_ext_options   = dedupe_by_code(temperature_ext_options)
+    drive_ext_options         = dedupe_by_code(drive_ext_options)
+    motor_ext_options         = dedupe_by_code(motor_ext_options)
+    lubrication_options       = dedupe_by_code(lubrication_options)
+    coating_options           = dedupe_by_code(coating_options)
+    run_test_options          = dedupe_by_code(run_test_options)
+
+    return {
+        "liquid_end_options": liquid_end_options,
+        "plunger_options": plunger_options,
+        "gear_options": gear_options,
+        "motor_options": motor_options,
+        "motor_mount_options": motor_mount_options,
+        "pipe_connection_options": pipe_connection_options,
+        "oring_options": oring_options,
+        "capacity_control_options": capacity_control_options,
+        "rupture_options": rupture_options,
+        "base_options": base_options,
+        "code_identifier_options": code_identifier_options,
+        "liquid_end_ext_options": liquid_end_ext_options,
+        "temperature_ext_options": temperature_ext_options,
+        "drive_ext_options": drive_ext_options,
+        "motor_ext_options": motor_ext_options,
+        "lubrication_options": lubrication_options,
+        "coating_options": coating_options,
+        "run_test_options": run_test_options,
+    }
 
 
 # -----------------------------------------------
@@ -74,20 +268,51 @@ def _normalize_detected_list(raw):
             return parsed
         # Si es dict con "items" o similar, intenta sacar lista
         if isinstance(parsed, dict):
-            # Ajusta aquí si sabes la clave real
             if "items" in parsed and isinstance(parsed["items"], list):
                 return parsed["items"]
             return []
 
     # Si es dict simple o cualquier otra cosa, no nos arriesgamos
     if isinstance(raw, dict):
-        # Caso extremo: si tiene una clave "detected" que es lista
         if "detected" in raw and isinstance(raw["detected"], list):
             return raw["detected"]
         return []
 
     # Fallback
     return []
+
+
+# -----------------------------------------------
+# Helper: dejar una sola opción por código (UI)
+# -----------------------------------------------
+def dedupe_by_code(items):
+    """
+    Recibe una lista de filas con atributo .code y
+    devuelve solo una (la primera) por cada código.
+    Esto es SOLO para el modal (UI), la lógica de
+    selección sigue usando todas las filas en la BD.
+    """
+    if not items:
+        return []
+
+    seen = set()
+    result = []
+    for item in items:
+        code = getattr(item, "code", None)
+        # Si no tiene code, lo dejamos pasar
+        if code is None:
+            result.append(item)
+            continue
+
+        if code in seen:
+            # Ya mostramos este code en el combo, lo saltamos
+            continue
+
+        seen.add(code)
+        result.append(item)
+
+    return result
+
 
 
 # -----------------------------------------------
@@ -177,7 +402,6 @@ async def get_quote_view(
     # ------------------------------------
     current_user = db.get(User, current_user_id)
     if not current_user:
-        # Mejor 401 que un AttributeError silencioso
         raise HTTPException(401, "Usuario no encontrado o sesión inválida")
 
     # ------------------------------------
@@ -187,18 +411,30 @@ async def get_quote_view(
         db.query(PumpsDetected)
         .filter(
             PumpsDetected.case_id == case_id,
-            PumpsDetected.is_active == True
+            PumpsDetected.is_active == True,
         )
         .all()
     )
     has_pumps_in_db = len(detected_from_db) > 0
 
     # ------------------------------------
+    # 3.b Cargar bombas MROY seleccionadas desde BD
+    # ------------------------------------
+    selected_pumps = (
+        db.query(MroySelectedPump)
+        .filter(
+            MroySelectedPump.case_id == case_id,
+            MroySelectedPump.is_active == True,
+        )
+        .order_by(MroySelectedPump.id.asc())
+        .all()
+    )
+    has_selected_pumps = len(selected_pumps) > 0
+
+    # ------------------------------------
     # 4. Cargar bombas detectadas del asistente (JSON / storage)
     # ------------------------------------
     raw_detected = load_requirements_from_storage(case_id)
-
-    # Normalizamos para que SIEMPRE sea lista
     detected_from_json = _normalize_detected_list(raw_detected)
 
     # ------------------------------------
@@ -207,7 +443,21 @@ async def get_quote_view(
     try:
         pumps_payload = {
             "detected": detected_from_json or [],
-            "db": [pump.to_dict() for pump in detected_from_db],
+            "db": [
+                {
+                    "id": pump.id,
+                    "tag": pump.tag,
+                    "fluid": pump.fluid,
+                    "flow_max_std": pump.flow_max_std,
+                    "flow_unit_std": pump.flow_unit_std,
+                    "discharge_pressure_std": pump.discharge_pressure_std,
+                    "discharge_pressure": pump.discharge_pressure,
+                    "cantidad_bombas": pump.cantidad_bombas,
+                    }
+                for pump in detected_from_db
+            ],
+
+            
         }
         pumps_payload_json = json.dumps(
             pumps_payload,
@@ -218,7 +468,7 @@ async def get_quote_view(
         print(f"[quote_routes] ERROR serializando pumps_payload: {e}")
         pumps_payload_json = json.dumps(
             {"detected": [], "db": []},
-            ensure_ascii=False
+            ensure_ascii=False,
         )
 
     # ------------------------------------
@@ -228,13 +478,17 @@ async def get_quote_view(
         "request": request,
         "case": case,
 
-        # Para panel JSON
+        # Panel JSON (asistente)
         "requirements": detected_from_json,
         "requirements_json": detected_from_json,
 
-        # Para panel DB
+        # Panel Bombas detectadas en BD
         "pumps_from_db": detected_from_db,
         "has_pumps_in_db": has_pumps_in_db,
+
+        # Panel Bombas MROY seleccionadas
+        "selected_pumps": selected_pumps,
+        "has_selected_pumps": has_selected_pumps,
 
         # JSON maestro para JS
         "pumps_payload_json": pumps_payload_json,
@@ -248,9 +502,12 @@ async def get_quote_view(
         "user_rol": current_user.rol,
     }
 
+    # ⬇️ AÑADIR CATÁLOGO MROY PARA EL MODAL
+    context.update(get_mroy_catalog_context(db))
+
     return templates.TemplateResponse(
         "assistant/_quote_final.html",
-        context
+        context,
     )
 
 
@@ -271,16 +528,19 @@ async def save_detected_pumps(
         raise HTTPException(404, "Caso no encontrado")
 
     # 2. Verificar si ya existen bombas activas
-    existing = db.query(PumpsDetected).filter(
-        PumpsDetected.case_id == case_id,
-        PumpsDetected.is_active == True
-    ).count()
+    existing = (
+        db.query(PumpsDetected)
+        .filter(
+            PumpsDetected.case_id == case_id,
+            PumpsDetected.is_active == True,
+        )
+        .count()
+    )
 
-    # Regla: si hay bombas activas → NO dejar guardar
     if existing > 0:
         raise HTTPException(
             400,
-            "Ya existen bombas detectadas guardadas para este caso."
+            "Ya existen bombas detectadas guardadas para este caso.",
         )
 
     # 3. Parsear JSON recibido
@@ -330,7 +590,7 @@ async def save_detected_pumps(
     # 5. Redirigir a GET
     return RedirectResponse(
         url=f"/quote/{case_id}",
-        status_code=303
+        status_code=303,
     )
 
 
@@ -346,11 +606,15 @@ async def update_detected_pump(
     current_user_id: int = Depends(get_current_user_id),
 ):
     # 1. Buscar bomba activa
-    pump = db.query(PumpsDetected).filter(
-        PumpsDetected.id == pump_id,
-        PumpsDetected.case_id == case_id,
-        PumpsDetected.is_active == True
-    ).first()
+    pump = (
+        db.query(PumpsDetected)
+        .filter(
+            PumpsDetected.id == pump_id,
+            PumpsDetected.case_id == case_id,
+            PumpsDetected.is_active == True,
+        )
+        .first()
+    )
 
     if not pump:
         raise HTTPException(404, "Bomba no encontrada o inactiva.")
@@ -366,7 +630,9 @@ async def update_detected_pump(
     pump.viscosity = to_float_or_none(form.get("viscosity"))
 
     pump.discharge_pressure = to_float_or_none(form.get("discharge_pressure"))
-    pump.discharge_pressure_std = to_float_or_none(form.get("discharge_pressure_std"))
+    pump.discharge_pressure_std = to_float_or_none(
+        form.get("discharge_pressure_std")
+    )
 
     pump.flow_min = to_float_or_none(form.get("flow_min"))
     pump.flow_nominal = to_float_or_none(form.get("flow_nominal"))
@@ -381,7 +647,6 @@ async def update_detected_pump(
     new_cant = to_int_or_none(raw_cant)
     if new_cant is not None and new_cant > 0:
         pump.cantidad_bombas = new_cant
-    # Si viene vacío o inválido, se deja el valor anterior.
 
     # 6. Actualizar campos de texto
     pump.fluid = normalize_str(form.get("fluid"))
@@ -398,7 +663,6 @@ async def update_detected_pump(
     estado_form = normalize_str(form.get("estado"))
     if estado_form in {"borrador", "ajustada", "validada"}:
         pump.estado = estado_form
-    # Si viene raro o vacío, conserva el estado actual.
 
     # 8. Commit
     db.commit()
@@ -406,7 +670,68 @@ async def update_detected_pump(
     # 9. Redirigir a GET
     return RedirectResponse(
         url=f"/quote/{case_id}",
-        status_code=303
+        status_code=303,
+    )
+
+
+# ======================================================
+# POST – Seleccionar bomba MROY para una bomba detectada
+# ======================================================
+@router.post("/quote/{case_id}/detected-pump/{pump_id}/select-mroy")
+async def select_mroy_pump_route(
+    case_id: int,
+    pump_id: int,
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    """
+    Ejecuta el selector maestro de bomba MROY a partir de una bomba detectada:
+
+      - Verifica que el caso exista.
+      - Verifica que la bomba detectada esté activa y pertenezca al caso.
+      - Llama a upsert_mroy_selected_pump(pump_id, current_user_id, db).
+      - Redirige de nuevo a la vista de cotización.
+    """
+
+    # 1. Validar caso
+    case = db.query(Case).filter(Case.id == case_id).first()
+    if not case:
+        raise HTTPException(404, "Caso no encontrado")
+
+    # 2. Validar bomba detectada activa
+    pump = (
+        db.query(PumpsDetected)
+        .filter(
+            PumpsDetected.id == pump_id,
+            PumpsDetected.case_id == case_id,
+            PumpsDetected.is_active == True,
+        )
+        .first()
+    )
+    if not pump:
+        raise HTTPException(404, "Bomba detectada no encontrada o inactiva.")
+
+    # 3. Ejecutar selector y persistir selección
+    try:
+        _selected = upsert_mroy_selected_pump(
+            pump_id=pump_id,
+            user_id=current_user_id,
+            db=db,
+        )
+    except SelectionError as e:
+        # Error de reglas de selección (viscosidad, presión, catálogo, etc.)
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        # Cualquier otro error inesperado
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error seleccionando bomba MROY: {e}",
+        )
+
+    # 4. Redirigir a la vista de cotización
+    return RedirectResponse(
+        url=f"/quote/{case_id}",
+        status_code=303,
     )
 
 
@@ -421,13 +746,21 @@ async def delete_detected_pump(
     current_user_id: int = Depends(get_current_user_id),
 ):
 
-    pump = db.query(PumpsDetected).filter(
-        PumpsDetected.id == pump_id,
-        PumpsDetected.case_id == case_id
-    ).first()
+    pump = (
+        db.query(PumpsDetected)
+        .filter(
+            PumpsDetected.id == pump_id,
+            PumpsDetected.case_id == case_id,
+            PumpsDetected.is_active == True,
+        )
+        .first()
+    )
 
     if not pump:
-        raise HTTPException(404, "Bomba no encontrada.")
+        raise HTTPException(
+            404,
+            "Bomba no encontrada o ya inactiva.",
+        )
 
     pump.is_active = False
     pump.updated_by = current_user_id
@@ -437,5 +770,5 @@ async def delete_detected_pump(
 
     return RedirectResponse(
         url=f"/quote/{case_id}",
-        status_code=303
+        status_code=303,
     )

@@ -1,0 +1,533 @@
+<!-- MODAL SELECCIÓN / EDICIÓN MROY -->
+<div id="modal-mroy-selector"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-3xl p-5 border border-gray-700">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-2 border-b border-slate-700">
+      <div class="flex flex-col">
+        <h2 class="text-sm font-semibold text-white">
+          Selección de bomba MROY – <span id="mroy-modal-tag" class="text-emerald-300"></span>
+        </h2>
+        <div class="text-[11px] text-gray-300 mt-0.5">
+          Tag:
+          <span id="mroy_header_tag" class="font-semibold text-emerald-300"></span>
+          · Código MROY:
+          <span id="mroy_full_code_preview" class="font-mono text-emerald-300">
+            MRA1-
+          </span>
+        </div>
+      </div>
+
+      <button type="button" class="text-gray-400 hover:text-gray-200 text-lg"
+        onclick="closeModal('modal-mroy-selector')">
+        ×
+      </button>
+    </div>
+
+    <!-- Body -->
+    <form id="mroy-selection-form" method="post" action="" class="space-y-3 text-xs max-h-[65vh] overflow-y-auto">
+
+      <input type="hidden" name="pump_id" id="mroy_pump_id">
+      <input type="hidden" name="mroy_full_code" id="mroy_full_code">
+
+      <div class="grid grid-cols-2 gap-4 px-4 py-3 text-xs">
+
+        <!-- Columna izquierda: datos de proceso + 01–09 -->
+        <div class="space-y-2 border-r border-slate-800 pr-4">
+          <p class="text-[11px] text-gray-400 mb-1">Datos de proceso</p>
+
+          <div class="text-gray-300">
+            <span class="text-gray-400">Tag: </span>
+            <span id="mroy_proc_tag" class="font-semibold text-emerald-300"></span>
+          </div>
+
+          <div class="text-gray-300">
+            <span class="text-gray-400">Caudal requerido: </span>
+            <span id="mroy_proc_flow" class="font-semibold"></span>
+          </div>
+
+          <div class="text-gray-300">
+            <span class="text-gray-400">Presión requerida: </span>
+            <span id="mroy_proc_pressure" class="font-semibold"></span>
+          </div>
+
+          <div class="text-gray-300">
+            <span class="text-gray-400">Fluido: </span>
+            <span id="mroy_proc_fluid" class="font-semibold"></span>
+          </div>
+
+          <!-- Configuración MROY (01–09) -->
+          <div class="mt-2 space-y-2">
+            <p class="text-[11px] text-gray-400 mb-1">
+              Configuración MROY (MRA1)
+            </p>
+
+            <!-- 01 – Liquid End -->
+            <div>
+              <label class="mroy-field-label">01 – Liquid End Material</label>
+              <select name="code_01" id="code_01" class="mroy-select">
+                <!-- placeholder sin selección -->
+                <option value="" selected disabled>Selecciona el liquid end...</option>
+
+                {% for opt in liquid_end_options %}
+                <option value="{{ opt.code }}">
+                  {{ opt.code }} – {{ opt.end_material }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- 02 – Plunger -->
+            <div>
+              <label class="mroy-field-label">02 – Plunger</label>
+              <select name="code_02" id="code_02" class="mroy-select">
+                <option value="" selected disabled>Selecciona el plunger...</option>
+
+                {% for opt in plunger_options %}
+                <option value="{{ opt.code }}">
+                  {{ opt.code }} – {{ opt.plunger_in }} ({{ opt.material_pump }})
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- 03 – Gear Ratio -->
+            <div>
+              <label class="mroy-field-label">03 – Gear Ratio</label>
+              <select name="code_03" id="code_03" class="mroy-select">
+                <option value="" selected disabled>Selecciona el gear ratio...</option>
+
+                {% for opt in gear_options %}
+                <option value="{{ opt.code }}">
+                  {{ opt.code }} – {{ opt.description }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Opciones principales (04–09) -->
+            <div class="mt-2 pt-2 border-t border-slate-700 space-y-2">
+              <p class="text-[11px] text-gray-400 mb-1">Opciones principales (04–08)</p>
+
+              <!-- 04 – Motor Options -->
+              <div>
+                <label class="mroy-field-label">04 – Motor Options</label>
+                <select name="code_04" id="code_04" class="mroy-select">
+                  {% for opt in motor_options %}
+                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                    {{ opt.code }} – {{ opt.category }}{% if opt.hp_kw is not none %} ({{ opt.hp_kw }}){% endif %}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- 05 – Motor Mount -->
+              <div>
+                <label class="mroy-field-label">05 – Motor Mount</label>
+                <select name="code_05" id="code_05" class="mroy-select">
+                  {% for opt in motor_mount_options %}
+                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                    {{ opt.code }} – {{ opt.description }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- 06 – Pipe Connections -->
+              <div>
+                <label class="mroy-field-label">06 – Pipe Connections</label>
+                <select name="code_06" id="code_06" class="mroy-select">
+                  {% for opt in pipe_connection_options %}
+                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                    {{ opt.code }} – {{ opt.description_metallic or opt.description_plastic }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- 07 – O-Ring -->
+              <div>
+                <label class="mroy-field-label">07 – O-Ring</label>
+                <select name="code_07" id="code_07" class="mroy-select">
+                  {% for opt in oring_options %}
+                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                    {{ opt.code }} – {{ opt.material }} ({{ opt.material_pump }})
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- 08 – Capacity Control -->
+              <div>
+                <label class="mroy-field-label">08 – Capacity Control</label>
+                <select name="code_08" id="code_08" class="mroy-select">
+                  {% for opt in capacity_control_options %}
+                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                    {{ opt.code }} – {{ opt.description }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: opciones extendidas 10–18 -->
+        <div class="space-y-2">
+
+          <!-- 09 – Diaphragm Rupture Detection -->
+          <div>
+            <label class="mroy-field-label">09 – Diaphragm Rupture Detection</label>
+            <select name="code_09" id="code_09" class="mroy-select">
+              {% for opt in rupture_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <p class="text-[11px] text-gray-400 mb-1">
+            Configuración MROY (10–18 – Opciones extendidas)
+          </p>
+
+          <!-- 10 – Base Options -->
+          <div>
+            <label class="mroy-field-label">10 – Base Options</label>
+            <select name="code_10" id="code_10" class="mroy-select">
+              {% for opt in base_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 11 – Code Complete Identifier -->
+          <div>
+            <label class="mroy-field-label">11 – Code Complete Identifier</label>
+            <select name="code_11" id="code_11" class="mroy-select">
+              {% for opt in code_identifier_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 12 – Liquid End Extended -->
+          <div>
+            <label class="mroy-field-label">12 – Liquid End Extended</label>
+            <select name="code_12" id="code_12" class="mroy-select">
+              {% for opt in liquid_end_ext_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 13 – Temperature Extended -->
+          <div>
+            <label class="mroy-field-label">13 – Temperature Extended</label>
+            <select name="code_13" id="code_13" class="mroy-select">
+              {% for opt in temperature_ext_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 14 – Drive Extended -->
+          <div>
+            <label class="mroy-field-label">14 – Drive Extended</label>
+            <select name="code_14" id="code_14" class="mroy-select">
+              {% for opt in drive_ext_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 15 – Motor Extended -->
+          <div>
+            <label class="mroy-field-label">15 – Motor Extended</label>
+            <select name="code_15" id="code_15" class="mroy-select">
+              {% for opt in motor_ext_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 16 – Lubrication Options -->
+          <div>
+            <label class="mroy-field-label">16 – Lubrication Options</label>
+            <select name="code_16" id="code_16" class="mroy-select">
+              {% for opt in lubrication_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 17 – Coating System -->
+          <div>
+            <label class="mroy-field-label">17 – Coating System</label>
+            <select name="code_17" id="code_17" class="mroy-select">
+              {% for opt in coating_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- 18 – Run Test Options -->
+          <div>
+            <label class="mroy-field-label">18 – Run Test Options</label>
+            <select name="code_18" id="code_18" class="mroy-select">
+              {% for opt in run_test_options %}
+              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="flex justify-end gap-2 px-4 py-2 border-t border-slate-700">
+        <button type="button" class="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs"
+          onclick="closeModal('modal-mroy-selector')">
+          Cancelar
+        </button>
+        <button type="submit" class="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-xs text-white">
+          Guardar selección
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- ESTILOS ESPECÍFICOS PARA EL MODAL MROY -->
+<style>
+  /* Etiquetas de los campos */
+  .mroy-field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #e0f2fe;
+    /* azul muy claro tipo sky-100 */
+    margin-bottom: 0.15rem;
+    display: block;
+  }
+
+  /* Selects e inputs del modal */
+  .mroy-select,
+  .mroy-input {
+    width: 100%;
+    font-size: 11px;
+    border-radius: 0.45rem;
+    padding: 0.35rem 0.55rem;
+    background: #020617;
+    /* fondo azul muy oscuro (slate-950) */
+    border: 1px solid rgba(34, 197, 94, 0.55);
+    /* borde verde-azulado */
+    color: #e0f2fe;
+    /* texto azul claro */
+    appearance: none;
+  }
+
+  .mroy-select::placeholder,
+  .mroy-input::placeholder {
+    color: #64748b;
+    /* gris azulado suave */
+  }
+
+  .mroy-select:focus,
+  .mroy-input:focus {
+    outline: none;
+    border-color: #22c55e;
+    /* verde-azulado más brillante */
+    box-shadow: 0 0 0 1px #22c55e;
+    /* anillo tipo focus */
+  }
+
+  /* Opciones del desplegable */
+  .mroy-select option {
+    background-color: #020617;
+    /* mismo fondo oscuro */
+    color: #e0f2fe;
+    /* texto claro */
+  }
+
+  /* Estado deshabilitado */
+  .mroy-select:disabled,
+  .mroy-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+</style>
+
+
+<script>
+  // Construye el código MROY completo usando códigos 01–18
+  function updateMroyCodePreview() {
+    const c01 = document.getElementById("code_01")?.value || "";
+    const c02 = document.getElementById("code_02")?.value || "";
+    const c03 = document.getElementById("code_03")?.value || "";
+    const c04 = document.getElementById("code_04")?.value || "";
+    const c05 = document.getElementById("code_05")?.value || "";
+    const c06 = document.getElementById("code_06")?.value || "";
+    const c07 = document.getElementById("code_07")?.value || "";
+    const c08 = document.getElementById("code_08")?.value || "";
+    const c09 = document.getElementById("code_09")?.value || "";
+    const c10 = document.getElementById("code_10")?.value || "";
+    const c11 = document.getElementById("code_11")?.value || "";
+    const c12 = document.getElementById("code_12")?.value || "";
+    const c13 = document.getElementById("code_13")?.value || "";
+    const c14 = document.getElementById("code_14")?.value || "";
+    const c15 = document.getElementById("code_15")?.value || "";
+    const c16 = document.getElementById("code_16")?.value || "";
+    const c17 = document.getElementById("code_17")?.value || "";
+    const c18 = document.getElementById("code_18")?.value || "";
+
+    let fullCode = "MRA1-";
+
+    // Parte base de la bomba (01–03)
+    const core = (c01 || c02 || c03) ? `${c01}${c02}${c03}` : "";
+    fullCode += core;
+
+    // Opciones 04–18 (no afectan modelo, solo visual)
+    const extras = [
+      c04, c05, c06, c07, c08, c09,
+      c10, c11, c12, c13, c14, c15, c16, c17, c18
+    ].filter(Boolean).join("");
+
+    if (extras) {
+      fullCode += "-" + extras;
+    }
+
+    const previewSpan = document.getElementById("mroy_full_code_preview");
+    if (previewSpan) previewSpan.textContent = fullCode;
+
+    const hiddenFull = document.getElementById("mroy_full_code");
+    if (hiddenFull) hiddenFull.value = fullCode;
+  }
+
+  // Abrir modal MROY
+  function openMroySelector(pumpIdStr) {
+    // 🔹 Reset visual del código y selects 01–18 al abrir
+    [
+      "code_01", "code_02", "code_03",
+      "code_04", "code_05", "code_06", "code_07", "code_08",
+      "code_09", "code_10", "code_11", "code_12", "code_13",
+      "code_14", "code_15", "code_16", "code_17", "code_18"
+    ].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        // Si quieres que alguno tenga valor por defecto, no lo toques aquí
+        // por ahora lo dejamos en blanco ⇒ el usuario elige todos.
+        el.value = "";
+      }
+    });
+
+    const hiddenFull = document.getElementById("mroy_full_code");
+    if (hiddenFull) hiddenFull.value = "MRA1-";
+
+    const previewSpan = document.getElementById("mroy_full_code_preview");
+    if (previewSpan) previewSpan.textContent = "MRA1-";
+
+    const pumpId = parseInt(pumpIdStr, 10);
+
+    const pump = (pumpsData.db || []).find(p => p.id === pumpId);
+    if (!pump) {
+      console.warn("No se encontró bomba en BD para pumpId", pumpId);
+      return;
+    }
+
+    // Datos de proceso
+    const tagSpan = document.getElementById("mroy_proc_tag");
+    if (tagSpan) {
+       tagSpan.textContent = pump.tag || `Bomba #${pump.id}`;
+    }
+
+    const flowSpan = document.getElementById("mroy_proc_flow");
+    if (flowSpan) {
+      if (pump.flow_max_std && pump.flow_unit_std) {
+        flowSpan.textContent = `${pump.flow_max_std} ${pump.flow_unit_std}`;
+      } else if (pump.flow_max) {
+        flowSpan.textContent = `${pump.flow_max} GPD`;
+      } else {
+        flowSpan.textContent = "—";
+      }
+    }
+
+    const pressureSpan = document.getElementById("mroy_proc_pressure");
+    if (pressureSpan) {
+      if (pump.discharge_pressure_std) {
+        pressureSpan.textContent = `${pump.discharge_pressure_std} PSI`;
+      } else if (pump.discharge_pressure) {
+        pressureSpan.textContent = `${pump.discharge_pressure} PSI`;
+      } else {
+        pressureSpan.textContent = "—";
+      }
+    }
+
+    const fluidSpan = document.getElementById("mroy_proc_fluid");
+    if (fluidSpan) {
+      fluidSpan.textContent = pump.fluid || "—";
+    }
+
+    // Tag en el título
+    const titleTag = document.getElementById("mroy-modal-tag");
+    if (titleTag) {
+      titleTag.textContent = pump.tag || `Bomba #${pump.id}`;
+    }
+
+    // Tag en la línea de detalle del header
+    const headerTag = document.getElementById("mroy_header_tag");
+    if (headerTag) {
+      headerTag.textContent = pump.tag || `Bomba #${pump.id}`;
+    }
+
+    // Hidden con pump_id
+    const hiddenPumpId = document.getElementById("mroy_pump_id");
+    if (hiddenPumpId) {
+      hiddenPumpId.value = pump.id;
+    }
+
+    // Action del form
+    const form = document.getElementById("mroy-selection-form");
+    if (form) {
+      form.action = `/quote/${currentCaseId}/detected-pump/${pump.id}/select-mroy`;
+      form.method = "post";
+    }
+
+    // Inicializar preview del código MROY
+    updateMroyCodePreview();
+
+    // Abrir modal
+    openModal("modal-mroy-selector");
+  }
+
+  // Escuchar cambios en TODOS los selects 01–18 para actualizar el código
+  [
+    "code_01", "code_02", "code_03",
+    "code_04", "code_05", "code_06", "code_07", "code_08",
+    "code_09", "code_10", "code_11", "code_12", "code_13",
+    "code_14", "code_15", "code_16", "code_17", "code_18"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", updateMroyCodePreview);
+  });
+</script>

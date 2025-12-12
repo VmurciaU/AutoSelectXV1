@@ -4,11 +4,17 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database.conection import Base
 
+
 class Case(Base):
     __tablename__ = "cases"
 
     id = Column(Integer, primary_key=True, index=True)  # consecutivo del caso
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="RESTRICT"), nullable=False, index=True)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
     customer_id = Column(Integer, nullable=True, index=True)  # futuro FK a clientes
 
     # Datos principales del caso
@@ -38,7 +44,15 @@ class Case(Base):
         "PumpsDetected",
         back_populates="case",
         cascade="all, delete-orphan",
-        lazy="selectin"
+        lazy="selectin",
+    )
+
+    # 👇 NUEVA relación con bombas MROY seleccionadas
+    selected_pumps = relationship(
+        "MroySelectedPump",
+        back_populates="case",
+        cascade="all, delete-orphan",
+        lazy="selectin",
     )
 
     # Índices

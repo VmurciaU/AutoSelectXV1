@@ -20,86 +20,132 @@ Usa pumps_from_db (lista de objetos ORM) + pumpsData.db en JS
     <!-- ===== FILA ===== -->
     <div class="flex items-center justify-between py-2 px-2 border-b border-gray-800 hover:bg-gray-800 rounded">
 
-      <div class="flex items-center gap-6 flex-wrap text-[11px]">
+      {# =====================================================
+      COLUMNA IZQUIERDA – BOMBA DETECTADA (pumps_from_db / BD)
+      ===================================================== #}
+      <div class="flex-1">
+        <div class="flex items-center gap-6 flex-wrap text-[11px]">
 
-        <!-- TAG -->
-        <span class="font-semibold text-gray-100">
-          {{ pump.tag or "Sin TAG" }}
-        </span>
+          <!-- TAG -->
+          <span class="font-semibold text-gray-100">
+            {{ pump.tag or "Sin TAG" }}
+          </span>
 
-        <!-- Caudal -->
-        <span>
-          Caudal:
-          <strong class="text-gray-300">
-            {% if pump.flow_max_std %}
-            {{ "%.3f"|format(pump.flow_max_std) }} {{ pump.flow_unit_std or "" }}
-            {% elif pump.flow_max %}
-            {{ pump.flow_max }} GPD
-            {% else %}
-            —
-            {% endif %}
-          </strong>
-        </span>
+          <!-- Caudal -->
+          <span>
+            Caudal:
+            <strong class="text-gray-300">
+              {% if pump.flow_max_std %}
+              {{ "%.3f"|format(pump.flow_max_std) }} {{ pump.flow_unit_std or "" }}
+              {% elif pump.flow_max %}
+              {{ pump.flow_max }} GPD
+              {% else %}
+              —
+              {% endif %}
+            </strong>
+          </span>
 
-        <!-- Presión -->
-        <span>
-          Presión:
-          <strong class="text-gray-300">
-            {% if pump.discharge_pressure_std %}
-            {{ pump.discharge_pressure_std }} PSI
-            {% elif pump.discharge_pressure %}
-            {{ pump.discharge_pressure }} PSI
-            {% else %}
-            —
-            {% endif %}
-          </strong>
-        </span>
+          <!-- Presión -->
+          <span>
+            Presión:
+            <strong class="text-gray-300">
+              {% if pump.discharge_pressure_std %}
+              {{ pump.discharge_pressure_std }} PSI
+              {% elif pump.discharge_pressure %}
+              {{ pump.discharge_pressure }} PSI
+              {% else %}
+              —
+              {% endif %}
+            </strong>
+          </span>
 
-        <!-- Fluido -->
-        <span>
-          Fluido:
-          <strong class="text-gray-300">{{ pump.fluid or "—" }}</strong>
-        </span>
+          <!-- Fluido -->
+          <span>
+            Fluido:
+            <strong class="text-gray-300">{{ pump.fluid or "—" }}</strong>
+          </span>
 
-        <!-- Cantidad -->
-        <span>
-          Cant:
-          <strong class="text-gray-300">
-            {{ pump.cantidad_bombas or 1 }}
-          </strong>
-        </span>
+          <!-- Cantidad -->
+          <span>
+            Cant:
+            <strong class="text-gray-300">
+              {{ pump.cantidad_bombas or 1 }}
+            </strong>
+          </span>
 
-        <!-- Estado -->
-        <span class="text-gray-400">
-          {{ pump.estado or "borrador" }}
-        </span>
+          <!-- Estado + botón Editar (solo bomba detectada) -->
+          <span class="flex items-center gap-2 text-gray-400">
+            <span class="hidden sm:inline">
+              {{ pump.estado or "borrador" }}
+            </span>
+            <button type="button"
+              class="px-2 py-[2px] text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
+              onclick="openEditDetectedModal('{{ loop.index0 }}')">
+              Editar
+            </button>
+          </span>
+        </div>
       </div>
 
-      <!-- ACCIONES -->
-      <div class="flex gap-2">
-        <!-- Editar: usa índice de loop como índice en pumpsData.db -->
-        <button type="button" class="px-2 py-1 text-[10px] rounded bg-gray-700 hover:bg-gray-600 border border-gray-600"
-          onclick="openEditDetectedModal('{{ loop.index0 }}')">
-          Editar
-        </button>
+      {# =====================================================
+      COLUMNA DERECHA – MROY + ELIMINAR
+      ===================================================== #}
+      <div class="flex items-center gap-3 ml-4">
 
-        <!-- Eliminar: soft delete usando el form global quote_form -->
-        <button type="button" onclick="submitDeleteDetectedPump('{{ pump.id }}')"
-          class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600">
-          Eliminar
-        </button>
+        {# Zona MROY: link o código según haya selección o no #}
+        <div>
+          {% if pump.mroy_full_code %}
 
+          {# YA HAY SELECCIÓN MROY GUARDADA #}
+          <button type="button" class="text-emerald-300 underline underline-offset-2 hover:text-emerald-200 text-[11px]"
+            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}', '{{ pump.tag or "" }}')">
+            MROY A – {{ pump.mroy_full_code }}
+          </button>
 
+          {% else %}
+          {# NO HAY SELECCIÓN MROY TODAVÍA #}
+          
+          <button type="button" class="text-sky-300 underline underline-offset-2 hover:text-sky-200 text-[11px]"
+            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}', '{{ pump.tag or "" }}')">
+            Seleccionar bomba MROY
+          </button>
+
+          {% endif %}
+        </div>
+
+        {# Botón Eliminar: soft delete de la bomba detectada + selección #}
+        <div>
+          <button type="button" onclick="submitDeleteDetectedPump('{{ pump.id }}')"
+            class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600">
+            Eliminar
+          </button>
+        </div>
 
       </div>
 
     </div>
     {% endfor %}
 
-    <p class="pt-2 text-[11px] text-gray-400">
-      Para volver a usar las bombas del JSON inicial, elimina todas las bombas de la BD. El panel de “Bombas detectadas
-      (JSON)” se volverá a activar.
-    </p>
+    {# =====================================================
+    NOTA + BOTÓN PARA ADICIONAR BOMBA MANUAL
+    ===================================================== #}
+    <div class="pt-2 mt-1 border-t border-gray-800">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[11px]">
+        <p class="text-gray-400">
+          Para volver a usar las bombas del JSON inicial, elimina todas las bombas de la BD.
+          El panel de “Bombas detectadas (JSON)” se volverá a activar.
+        </p>
+
+        <!-- Botón para crear bomba suelta (manual) -->
+        <button type="button"
+          class="px-3 py-1.5 rounded bg-sky-700 hover:bg-sky-600 border border-sky-500 text-gray-100 text-[11px]"
+          onclick="openCreateManualPumpModal()">
+          + Adicionar bomba manual
+        </button>
+      </div>
+
+
+    </div>
 
   </div>
 </details>
