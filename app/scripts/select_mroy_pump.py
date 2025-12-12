@@ -430,6 +430,34 @@ def build_code_segments(
     }
 
 
+def normalize_end_material(raw: str | None) -> str:
+    """
+    Devuelve un string que sí matchee con MroyMRA1LiquidEnd.end_material.
+    Ajusta aquí según tus valores reales en la tabla MRA1_01.
+    """
+    if not raw:
+        return "316L SS"
+
+    s = str(raw).strip().lower()
+
+    # 316 / inox
+    if "316" in s or "inox" in s or "stainless" in s:
+        return "316L SS"
+
+    # plásticos típicos
+    if "pvdf" in s:
+        return "PVDF"
+    if "pvc" in s:
+        return "PVC"
+    if "cpvc" in s:
+        return "CPVC"
+    if "pp" in s or "polypropylene" in s:
+        return "PP"
+
+    # fallback: usa el valor original limpio
+    return str(raw).strip()
+
+
 # -------------------------------------------------------------------
 # Selección principal de bomba por ID (pumps_detected.id)
 # -------------------------------------------------------------------
@@ -478,9 +506,10 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
         # -------------------------------
         # 1) Extraer requisitos básicos
         # -------------------------------
-        material = (pump.materials or "").strip() or "316L SS"  # default metálico
-        head_type = _material_to_head_type(material)
-
+        material_raw = (pump.materials or "").strip()
+        end_material = normalize_end_material(material_raw)   # ✅ para REGLA 01
+        head_type = _material_to_head_type(end_material)
+        
         required_pressure_psi = as_float(
             pump.discharge_pressure_std
             if pump.discharge_pressure_std is not None
@@ -535,11 +564,11 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
         # -------------------------------
         liquid_end = select_liquid_end(
             session,
-            end_material=material,
+            end_material=end_material,  # ✅ ahora sí matchea DB
             requires_plunger_h=requires_plunger_h,
             ctx=ctx,
         )
-
+        
         # -------------------------------
         # 4) REGLA 02 — Plunger (02)
         # -------------------------------
@@ -589,7 +618,8 @@ def select_mroy_pump_by_id(pump_id: int) -> Dict[str, Any]:
             "service": pump.service,
             "input_requirements": {
                 "fluid": pump.fluid,
-                "material": material,
+                "material_raw": material_raw,
+                "end_material": end_material,
                 "head_type": head_type,
                 "required_flow_gph": required_flow_gph,
                 "required_pressure_psi": required_pressure_psi,

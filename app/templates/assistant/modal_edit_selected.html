@@ -380,42 +380,73 @@
 
 
 <script>
-  // Construye el código MROY completo usando códigos 01–18
+  // --- Debug helper
+  const dbgModal = (msg, obj) => console.log(`🟣 MROY MODAL: ${msg}`, obj ?? "");
+
+  // --- Normaliza códigos tipo "1" -> "01"
+  const normalize2 = (val) => {
+    const s = String(val ?? "").trim();
+    if (!s) return "";
+    if (/^\d$/.test(s)) return `0${s}`;
+    return s;
+  };
+
+  // --- Set seguro de un select, probando varias variantes
+  const setSelectValueSafe = (selectId, value) => {
+    const el = document.getElementById(selectId);
+    if (!el) {
+      console.warn(`⚠️ ${selectId}: no existe en DOM`);
+      return false;
+    }
+
+    const raw = String(value ?? "").trim();
+    if (!raw) {
+      dbgModal(`${selectId}: value vacío`, { value });
+      return false;
+    }
+
+    const v1 = raw;
+    const v2 = normalize2(raw);
+    const v3 = raw.replace(/^0/, "");
+    const options = Array.from(el.options).map(o => String(o.value).trim());
+    const candidates = [v1, v2, v3].filter(Boolean);
+
+    dbgModal(`${selectId}: intento set`, { raw, candidates });
+
+    for (const v of candidates) {
+      if (options.includes(v)) {
+        el.value = v;
+        dbgModal(`✅ ${selectId} seteado`, { selected: el.value });
+        return true;
+      }
+    }
+
+    console.warn(`⚠️ ${selectId}: no existe en options`, { raw, candidates, options });
+    return false;
+  };
+
+  // --- Preview del código MROY
   function updateMroyCodePreview() {
-    const c01 = document.getElementById("code_01")?.value || "";
-    const c02 = document.getElementById("code_02")?.value || "";
-    const c03 = document.getElementById("code_03")?.value || "";
-    const c04 = document.getElementById("code_04")?.value || "";
-    const c05 = document.getElementById("code_05")?.value || "";
-    const c06 = document.getElementById("code_06")?.value || "";
-    const c07 = document.getElementById("code_07")?.value || "";
-    const c08 = document.getElementById("code_08")?.value || "";
-    const c09 = document.getElementById("code_09")?.value || "";
-    const c10 = document.getElementById("code_10")?.value || "";
-    const c11 = document.getElementById("code_11")?.value || "";
-    const c12 = document.getElementById("code_12")?.value || "";
-    const c13 = document.getElementById("code_13")?.value || "";
-    const c14 = document.getElementById("code_14")?.value || "";
-    const c15 = document.getElementById("code_15")?.value || "";
-    const c16 = document.getElementById("code_16")?.value || "";
-    const c17 = document.getElementById("code_17")?.value || "";
-    const c18 = document.getElementById("code_18")?.value || "";
+    const ids = [
+      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08","code_09",
+      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+    ];
+    const values = {};
+    ids.forEach(id => values[id] = document.getElementById(id)?.value || "");
 
     let fullCode = "MRA1-";
-
-    // Parte base de la bomba (01–03)
-    const core = (c01 || c02 || c03) ? `${c01}${c02}${c03}` : "";
+    const core = (values.code_01 || values.code_02 || values.code_03)
+      ? `${values.code_01}${values.code_02}${values.code_03}`
+      : "";
     fullCode += core;
 
-    // Opciones 04–18 (no afectan modelo, solo visual)
     const extras = [
-      c04, c05, c06, c07, c08, c09,
-      c10, c11, c12, c13, c14, c15, c16, c17, c18
+      values.code_04, values.code_05, values.code_06, values.code_07, values.code_08, values.code_09,
+      values.code_10, values.code_11, values.code_12, values.code_13, values.code_14, values.code_15,
+      values.code_16, values.code_17, values.code_18
     ].filter(Boolean).join("");
 
-    if (extras) {
-      fullCode += "-" + extras;
-    }
+    if (extras) fullCode += "-" + extras;
 
     const previewSpan = document.getElementById("mroy_full_code_preview");
     if (previewSpan) previewSpan.textContent = fullCode;
@@ -424,110 +455,91 @@
     if (hiddenFull) hiddenFull.value = fullCode;
   }
 
-  // Abrir modal MROY
-  function openMroySelector(pumpIdStr) {
-    // 🔹 Reset visual del código y selects 01–18 al abrir
-    [
-      "code_01", "code_02", "code_03",
-      "code_04", "code_05", "code_06", "code_07", "code_08",
-      "code_09", "code_10", "code_11", "code_12", "code_13",
-      "code_14", "code_15", "code_16", "code_17", "code_18"
-    ].forEach(id => {
+  // --- Función global (para onclick)
+  window.openMroySelector = function(pumpIdStr) {
+    // 1) Reset 01–03 a vacío (placeholder)
+    ["code_01","code_02","code_03"].forEach(id => {
       const el = document.getElementById(id);
-      if (el) {
-        // Si quieres que alguno tenga valor por defecto, no lo toques aquí
-        // por ahora lo dejamos en blanco ⇒ el usuario elige todos.
-        el.value = "";
-      }
+      if (el) el.value = "";
     });
 
+    // 2) Reset 04–18 al primer item
+    [
+      "code_04","code_05","code_06","code_07","code_08","code_09",
+      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+    ].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.selectedIndex = 0;
+    });
+
+    // 3) Reset preview/hidden
     const hiddenFull = document.getElementById("mroy_full_code");
     if (hiddenFull) hiddenFull.value = "MRA1-";
-
     const previewSpan = document.getElementById("mroy_full_code_preview");
     if (previewSpan) previewSpan.textContent = "MRA1-";
 
+    // 4) Buscar bomba en payload
     const pumpId = parseInt(pumpIdStr, 10);
-
-    const pump = (pumpsData.db || []).find(p => p.id === pumpId);
+    const pump = (window.pumpsData?.db || []).find(p => p.id === pumpId);
     if (!pump) {
       console.warn("No se encontró bomba en BD para pumpId", pumpId);
       return;
     }
 
-    // Datos de proceso
-    const tagSpan = document.getElementById("mroy_proc_tag");
-    if (tagSpan) {
-       tagSpan.textContent = pump.tag || `Bomba #${pump.id}`;
-    }
+    const hasMroySelection = !!pump.mroy_full_code;
 
-    const flowSpan = document.getElementById("mroy_proc_flow");
-    if (flowSpan) {
-      if (pump.flow_max_std && pump.flow_unit_std) {
-        flowSpan.textContent = `${pump.flow_max_std} ${pump.flow_unit_std}`;
-      } else if (pump.flow_max) {
-        flowSpan.textContent = `${pump.flow_max} GPD`;
-      } else {
-        flowSpan.textContent = "—";
-      }
-    }
+    // 5) UI básica (safe)
+    const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val ?? ""; };
+    setText("mroy_proc_tag", pump.tag || `Bomba #${pump.id}`);
+    setText("mroy-modal-tag", pump.tag || `Bomba #${pump.id}`);
+    setText("mroy_header_tag", pump.tag || `Bomba #${pump.id}`);
 
-    const pressureSpan = document.getElementById("mroy_proc_pressure");
-    if (pressureSpan) {
-      if (pump.discharge_pressure_std) {
-        pressureSpan.textContent = `${pump.discharge_pressure_std} PSI`;
-      } else if (pump.discharge_pressure) {
-        pressureSpan.textContent = `${pump.discharge_pressure} PSI`;
-      } else {
-        pressureSpan.textContent = "—";
-      }
-    }
+    const pumpIdEl = document.getElementById("mroy_pump_id");
+    if (pumpIdEl) pumpIdEl.value = pump.id;
 
-    const fluidSpan = document.getElementById("mroy_proc_fluid");
-    if (fluidSpan) {
-      fluidSpan.textContent = pump.fluid || "—";
-    }
-
-    // Tag en el título
-    const titleTag = document.getElementById("mroy-modal-tag");
-    if (titleTag) {
-      titleTag.textContent = pump.tag || `Bomba #${pump.id}`;
-    }
-
-    // Tag en la línea de detalle del header
-    const headerTag = document.getElementById("mroy_header_tag");
-    if (headerTag) {
-      headerTag.textContent = pump.tag || `Bomba #${pump.id}`;
-    }
-
-    // Hidden con pump_id
-    const hiddenPumpId = document.getElementById("mroy_pump_id");
-    if (hiddenPumpId) {
-      hiddenPumpId.value = pump.id;
-    }
-
-    // Action del form
+    // 6) Action del form
     const form = document.getElementById("mroy-selection-form");
     if (form) {
-      form.action = `/quote/${currentCaseId}/detected-pump/${pump.id}/select-mroy`;
-      form.method = "post";
+      if (!window.currentCaseId) {
+        console.warn("⚠️ currentCaseId no existe o está vacío. No puedo armar el form.action");
+      } else {
+        form.action = `/quote/${window.currentCaseId}/detected-pump/${pump.id}/select-mroy`;
+        form.method = "post";
+      }
     }
 
-    // Inicializar preview del código MROY
+    // 7) Autoselección 01–03 si NO hay selección previa
+    if (!hasMroySelection && window.autoMroyData) {
+      const suggestion = window.autoMroyData[pumpId] || window.autoMroyData[String(pumpId)] || null;
+      dbgModal("SUGGESTION lookup", { pumpId, suggestion });
+
+      if (suggestion) {
+        setSelectValueSafe("code_01", suggestion.code_01);
+        setSelectValueSafe("code_02", suggestion.code_02);
+        setSelectValueSafe("code_03", suggestion.code_03);
+      } else {
+        console.warn("⚠️ No hubo suggestion para pumpId", pumpId);
+      }
+    }
+
+    // 8) Preview + abrir modal
     updateMroyCodePreview();
 
-    // Abrir modal
-    openModal("modal-mroy-selector");
-  }
+    if (typeof window.openModal !== "undefined") window.openModal("modal-mroy-selector");
+    else document.getElementById("modal-mroy-selector")?.classList.remove("hidden");
+  };
 
-  // Escuchar cambios en TODOS los selects 01–18 para actualizar el código
-  [
-    "code_01", "code_02", "code_03",
-    "code_04", "code_05", "code_06", "code_07", "code_08",
-    "code_09", "code_10", "code_11", "code_12", "code_13",
-    "code_14", "code_15", "code_16", "code_17", "code_18"
-  ].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("change", updateMroyCodePreview);
-  });
+  // --- Listeners (una vez)
+  (function bindMroyListenersOnce(){
+    if (window.__mroyListenersBound) return;
+    window.__mroyListenersBound = true;
+
+    [
+      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08",
+      "code_09","code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+    ].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("change", updateMroyCodePreview);
+    });
+  })();
 </script>

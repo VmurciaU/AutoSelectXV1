@@ -48,6 +48,7 @@ from app.models.mroy_extended import (
 from app.scripts.select_mroy_pump import (
     upsert_mroy_selected_pump,
     SelectionError,
+    select_mroy_pump_by_id,   # ⬅️ NUEVO
 )
 
 # Loader del asistente
@@ -430,12 +431,53 @@ async def get_quote_view(
         .all()
     )
     has_selected_pumps = len(selected_pumps) > 0
+    
+        # Mapa auxiliar: detected_pump_id -> MroySelectedPump
+    selected_by_pump_id = {
+        sp.detected_pump_id: sp for sp in selected_pumps
+    }
+
 
     # ------------------------------------
     # 4. Cargar bombas detectadas del asistente (JSON / storage)
     # ------------------------------------
     raw_detected = load_requirements_from_storage(case_id)
     detected_from_json = _normalize_detected_list(raw_detected)
+    
+    
+    
+        # ------------------------------------
+    # 5. Sugerencias automáticas MROY 01–03
+    # ------------------------------------
+    auto_mroy_suggestions = {}
+
+    for pump in detected_from_db:
+        # Solo bombas activas
+        if getattr(pump, "is_active", True) is False:
+            continue
+
+        # Si ya hay bomba MROY seleccionada para esta bomba detectada, no sugerimos nada
+        sp = selected_by_pump_id.get(pump.id)
+        if sp and sp.full_code:
+            continue
+
+        try:
+            res = select_mroy_pump_by_id(pump.id)
+            code_info = (res.get("code_info") or {})
+            segments = (code_info.get("segments") or {})
+
+            auto_mroy_suggestions[pump.id] = {
+                "code_01": (segments.get("01") or {}).get("code"),
+                "code_02": (segments.get("02") or {}).get("code"),
+                "code_03": (segments.get("03") or {}).get("code"),
+            }
+        except SelectionError:
+            # Si falla la regla (viscosidad, presión, etc.), simplemente no damos sugerencia
+            continue
+
+    
+    
+    
 
     # ------------------------------------
     # 5. Construir JSON maestro para JS (modales)
@@ -453,7 +495,13 @@ async def get_quote_view(
                     "discharge_pressure_std": pump.discharge_pressure_std,
                     "discharge_pressure": pump.discharge_pressure,
                     "cantidad_bombas": pump.cantidad_bombas,
-                    }
+                    "mroy_full_code": (
+                        selected_by_pump_id.get(pump.id).full_code
+                        if selected_by_pump_id.get(pump.id)
+                        else None
+                    ),
+                    
+                }
                 for pump in detected_from_db
             ],
 
@@ -492,6 +540,13 @@ async def get_quote_view(
 
         # JSON maestro para JS
         "pumps_payload_json": pumps_payload_json,
+        
+        # ⬇️ NUEVO: sugerencias automáticas para 01–03
+        "auto_mroy_suggestions_json": json.dumps(
+            auto_mroy_suggestions,
+            ensure_ascii=False,
+            default=_json_default,
+        ),
 
         # Otros elementos del banner de cotización
         "quote_items": [],

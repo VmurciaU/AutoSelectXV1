@@ -149,7 +149,7 @@
 
   </div>
 
-</form>  {# ⬅️ CERRAMOS EL FORM AQUÍ (ANTES DE LOS MODALES) #}
+</form> {# ⬅️ CERRAMOS EL FORM AQUÍ (ANTES DE LOS MODALES) #}
 
 {# ==========================
 MODALES CENTRALIZADOS
@@ -170,8 +170,19 @@ MODALES CENTRALIZADOS
   {{ pumps_payload_json | safe }}
 </script>
 
+<script id="auto-mroy-json" type="application/json">
+  {{ auto_mroy_suggestions_json | safe }}
+</script>
+
+
 <!-- 🔥 SCRIPTS NUEVOS  -->
 <script>
+
+  const autoMroyData = JSON.parse(
+    document.getElementById("auto-mroy-json")?.textContent || "{}"
+  );
+
+
   // 1️⃣ Parsear JSON maestro (detected + db)
   const pumpsData = JSON.parse(
     document.getElementById("pumps-json").textContent || '{"detected": [], "db": []}'
@@ -179,6 +190,11 @@ MODALES CENTRALIZADOS
 
   // Case ID disponible para URLs de update/delete
   const currentCaseId = {{ case.id }};
+
+  // ✅ HACERLOS GLOBALES PARA EL MODAL
+  window.autoMroyData = autoMroyData;
+  window.pumpsData = pumpsData;
+  window.currentCaseId = currentCaseId;
 
   // Helper para mostrar valores bonitos en VIEW
   function displayValue(value, fallback = "—") {
