@@ -25,6 +25,8 @@ from app.models.delivery_terms import DeliveryTerm
 from fastapi.responses import Response
 from playwright.async_api import async_playwright
 
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from playwright.async_api import async_playwright
 
 
 
@@ -1061,33 +1063,61 @@ async def quote_preview_view(
 # ======================================================
 # GET – PDF (MVP) usando ReportLab
 # ======================================================
+# ======================================================
+# GET – PDF (igual al Preview) usando Playwright
+# ======================================================
 @router.get("/quote/{case_id}/pdf")
-async def quote_pdf(case_id: int, request: Request):
-    # URL ABSOLUTA al preview (misma vista)
+async def quote_pdf(
+    request: Request,
+    case_id: int,
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    # ✅ Validaciones mínimas (evita PDF de casos inexistentes)
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    case = db.query(Case).filter(Case.id == case_id).first()
+    if not case:
+        raise HTTPException(404, "Caso no encontrado")
+
+    # ✅ URL absoluta al preview (misma vista)
     base_url = str(request.base_url).rstrip("/")
     url = f"{base_url}/quote/{case_id}/preview"
 
+    # ✅ Si tu auth usa cookies (session cookie), hay que pasarlas a Playwright
+    # FastAPI/Starlette: request.cookies trae dict con cookies actuales.
+    cookies = [{"name": k, "value": v, "url": base_url} for k, v in request.cookies.items()]
+
     async with async_playwright() as p:
         browser = await p.chromium.launch()
-        page = await browser.new_page()
+        context = await browser.new_context()
 
-        # Importante: si tu preview requiere login/cookies, esto hay que manejarlo.
+        # ✅ Inyectar cookies para que el preview abra logueado
+        if cookies:
+            await context.add_cookies(cookies)
+
+        page = await context.new_page()
+
+        # Carga y espera a que termine (HTML/CSS)
         await page.goto(url, wait_until="networkidle")
 
+        # ✅ Genera PDF (usa CSS @media print de tu preview)
         pdf_bytes = await page.pdf(
             format="A4",
             print_background=True,
             margin={"top": "12mm", "bottom": "12mm", "left": "12mm", "right": "12mm"},
         )
+
         await browser.close()
 
-    filename = f"quote_case_{case_id}.pdf"
+    filename = f"Cotizacion_Caso_{case_id}.pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
-
 
 
 # ======================================================
