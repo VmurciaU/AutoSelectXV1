@@ -44,3 +44,5 @@ Pillow==11.2.1
 
 # PDF / HTML rendering (server-side)
 playwright==1.57.0
+
+openpyxl==3.1.2
