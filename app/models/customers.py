@@ -1,34 +1,33 @@
 # app/models/customers.py
-from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey, Index
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Index
 from datetime import datetime
 from app.database.conection import Base
+
 
 class Customer(Base):
     __tablename__ = "customers"
 
     id = Column(Integer, primary_key=True, index=True)
-    # Empresa y contacto
-    company_name = Column(String(200), nullable=False)
-    contact_name = Column(String(150), nullable=True)
-    job_title = Column(String(120), nullable=True)
-    email = Column(String(200), nullable=True, index=True)
-    phone = Column(String(50), nullable=True)    # fijo
-    mobile = Column(String(50), nullable=True)   # celular
-    city = Column(String(120), nullable=True)
-    country = Column(String(120), nullable=True)
-    comments = Column(Text, nullable=True)
 
-    active = Column(Boolean, nullable=False, default=True)
-    created_by = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    name = Column(String(200), nullable=False)
+    nit = Column(String(32), nullable=True, index=True)  # ✅ dejamos SOLO este index
+
+    contact_name = Column(String(150), nullable=True)
+    email = Column(String(150), nullable=True)
+    phone = Column(String(60), nullable=True)
+
+    country = Column(String(80), nullable=True, default="Colombia")
+    city = Column(String(120), nullable=True)
+    address = Column(String(220), nullable=True)
+
+    notes = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True, nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    creator = relationship("User", backref="customers", lazy="joined")
-
     __table_args__ = (
-        Index("ix_customers_active_company", "active", "company_name"),
+        Index("ix_customers_name", "name"),  # ✅ solo este
     )
 
     def touch(self):

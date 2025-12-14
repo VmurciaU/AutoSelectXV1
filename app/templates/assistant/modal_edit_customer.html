@@ -1,0 +1,139 @@
+<!-- MODAL CLIENTE (seleccionar / crear rápido) -->
+<div id="modal-client-selector"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-3xl border border-gray-700 overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+      <div>
+        <h2 class="text-sm font-semibold text-white">Cliente</h2>
+        <p class="text-[11px] text-gray-400">
+          Selecciona un cliente existente o crea uno rápido (MVP).
+        </p>
+      </div>
+      <button type="button" class="text-gray-400 hover:text-gray-200 text-lg"
+        onclick="closeModal('modal-client-selector')">×</button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-4 space-y-4">
+
+      <!-- Seleccionar existente -->
+      <div class="bg-gray-900 border border-gray-700 rounded-lg p-3">
+        <h3 class="text-[12px] font-semibold text-gray-100 mb-2">Seleccionar cliente existente</h3>
+
+        <form method="post" action="/quote/{{ case.id }}/set-customer" class="space-y-3">
+          <div>
+            <label class="block text-[11px] text-gray-300 mb-1">Cliente</label>
+            <select name="customer_id"
+              class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100">
+              {% if customers_list and customers_list|length > 0 %}
+                {% for c in customers_list %}
+                  <option value="{{ c.id }}" {% if quote and quote.customer_id == c.id %}selected{% endif %}>
+                    {{ c.name }}{% if c.nit %} · NIT {{ c.nit }}{% endif %}
+                  </option>
+                {% endfor %}
+              {% else %}
+                <option value="">No hay clientes activos</option>
+              {% endif %}
+            </select>
+          </div>
+
+          <div class="flex gap-2 justify-end">
+            <button type="button"
+              class="px-3 py-2 rounded text-[12px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600"
+              onclick="closeModal('modal-client-selector')">
+              Cancelar
+            </button>
+            <button type="submit"
+              class="px-3 py-2 rounded text-[12px] font-semibold bg-emerald-600 hover:bg-emerald-500 border border-emerald-500">
+              Asignar cliente
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Crear rápido -->
+      <div class="bg-gray-900 border border-gray-700 rounded-lg p-3">
+        <h3 class="text-[12px] font-semibold text-gray-100 mb-2">Crear cliente rápido (MVP)</h3>
+
+        <form method="post" action="/quote/{{ case.id }}/create-customer-and-set" class="space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Nombre *</label>
+              <input name="name" required
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Ecopetrol / Seringtec / Cliente X">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">NIT</label>
+              <input name="nit"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="900...">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Ciudad</label>
+              <input name="city"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Cali">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">País</label>
+              <input name="country"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Colombia">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Contacto</label>
+              <input name="contact_name"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Nombre contacto">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Email</label>
+              <input name="email"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="correo@cliente.com">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Teléfono</label>
+              <input name="phone"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="+57 ...">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Notas</label>
+              <input name="notes"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Observaciones (opcional)">
+            </div>
+
+          </div>
+
+          <div class="flex gap-2 justify-end">
+            <button type="button"
+              class="px-3 py-2 rounded text-[12px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600"
+              onclick="closeModal('modal-client-selector')">
+              Cancelar
+            </button>
+            <button type="submit"
+              class="px-3 py-2 rounded text-[12px] font-semibold bg-emerald-600 hover:bg-emerald-500 border border-emerald-500">
+              Crear y asignar
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>

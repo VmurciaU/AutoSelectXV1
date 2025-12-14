@@ -1,0 +1,78 @@
+<!-- MODAL TÉRMINOS + NOTAS (MVP) -->
+<div id="modal-terms-selector"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+
+  <div class="bg-gray-800 text-gray-200 rounded-lg shadow-xl w-full max-w-3xl border border-gray-700 overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+      <div>
+        <h2 class="text-sm font-semibold text-white">Términos comerciales y notas</h2>
+        <p class="text-[11px] text-gray-400">
+          Selecciona la plantilla de términos e ingresa notas (cliente / internas).
+        </p>
+      </div>
+      <button type="button" class="text-gray-400 hover:text-gray-200 text-lg"
+        onclick="closeModal('modal-terms-selector')">×</button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-4 space-y-4">
+
+      <form method="post" action="/quote/{{ case.id }}/set-terms" class="space-y-4">
+
+        <!-- Terminos -->
+        <div class="bg-gray-900 border border-gray-700 rounded-lg p-3">
+          <h3 class="text-[12px] font-semibold text-gray-100 mb-2">Plantilla de términos</h3>
+
+          <label class="block text-[11px] text-gray-300 mb-1">Término</label>
+          <select name="delivery_term_id"
+            class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100">
+            {% if delivery_terms_list and delivery_terms_list|length > 0 %}
+              {% for t in delivery_terms_list %}
+                <option value="{{ t.id }}" {% if quote and quote.delivery_term_id == t.id %}selected{% endif %}>
+                  {{ t.incoterm }}{% if t.place %} · {{ t.place }}{% endif %}
+                  {% if t.lead_time_days %} · Entrega {{ t.lead_time_days }}d{% endif %}
+                  {% if t.validity_days %} · Validez {{ t.validity_days }}d{% endif %}
+                  {% if t.warranty_months %} · Garantía {{ t.warranty_months }}m{% endif %}
+                </option>
+              {% endfor %}
+            {% else %}
+              <option value="">No hay términos activos</option>
+            {% endif %}
+          </select>
+
+          <p class="text-[11px] text-gray-400 mt-2">
+            Nota: los detalles completos se ven en el panel de “Términos comerciales y Notas”.
+          </p>
+        </div>
+
+        <!-- Notas -->
+        <div class="bg-gray-900 border border-gray-700 rounded-lg p-3">
+          <h3 class="text-[12px] font-semibold text-gray-100 mb-2">Notas</h3>
+
+          <div class="grid grid-cols-1 gap-3">
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Notas para el cliente</label>
+              <textarea name="customer_notes" rows="4"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Notas visibles para el cliente en la cotización / PDF...">{{ quote.customer_notes or "" }}</textarea>
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Notas internas</label>
+              <textarea name="internal_notes" rows="4"
+                class="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-[12px] text-gray-100"
+                placeholder="Notas internas (no visibles al cliente)...">{{ quote.internal_notes or "" }}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 justify-end">
+          <button type="button"
+            class="px-3 py-2 rounded text-[12px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600"
+            onclick="closeModal('modal-terms-selector')">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="px-3 py-2 rounded text-[12px] font-semibold bg-emerald-600 hover:bg-emerald-500 border border-emerald-500">

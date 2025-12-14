@@ -302,3 +302,7 @@ xlsxwriter==3.2.9
 yarl==1.20.1
 zipp==3.23.0
 zstandard==0.24.0
+
+
+# PDF / HTML rendering (server-side)
+playwright==1.57.0

@@ -1,4 +1,3 @@
-# app/models/quotes.py
 from sqlalchemy import Column, Integer, String, Text, Date, DateTime, Numeric, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -17,17 +16,17 @@ class Quote(Base):
     __tablename__ = "quotes"
 
     id = Column(Integer, primary_key=True, index=True)
-    quote_code = Column(String(20), unique=True, nullable=True, index=True)  # CA-###-AA (se asigna al emitir, o al crear si prefieres)
+    quote_code = Column(String(20), unique=True, nullable=True, index=True)  # CA-###-AA
 
     case_id = Column(Integer, ForeignKey("cases.id", ondelete="CASCADE"), nullable=False, index=True)
     customer_id = Column(Integer, ForeignKey("customers.id", ondelete="RESTRICT"), nullable=False, index=True)
     delivery_term_id = Column(Integer, ForeignKey("delivery_terms.id", ondelete="RESTRICT"), nullable=False, index=True)
 
-    currency = Column(String(3), nullable=False, default=CURRENCY_COP)  # COP|USD
-    exchange_rate = Column(Numeric(14, 6), nullable=False, default=1.0) # TRM si USD, 1.0 si COP
+    currency = Column(String(3), nullable=False, default=CURRENCY_COP)
+    exchange_rate = Column(Numeric(14, 6), nullable=False, default=1.0)
     exchange_date = Column(Date, nullable=True)
 
-    status = Column(String(10), nullable=False, default=QUOTE_DRAFT)  # draft|final
+    status = Column(String(10), nullable=False, default=QUOTE_DRAFT)
 
     subtotal = Column(Numeric(14, 2), nullable=True)
     discount = Column(Numeric(14, 2), nullable=True)
@@ -45,9 +44,11 @@ class Quote(Base):
 
     # Relaciones
     case = relationship("Case", backref="quote", lazy="joined", uselist=False)
-    customer = relationship("Customer", backref="quotes", lazy="joined")
     delivery_term = relationship("DeliveryTerm", backref="quotes", lazy="joined")
     creator = relationship("User", backref="quotes", lazy="joined")
+    
+    # Relación con customer, si no se ha importado aún
+    customer = relationship("Customer", backref="quotes", lazy="joined")
 
     __table_args__ = (
         Index("ix_quotes_status_currency", "status", "currency"),

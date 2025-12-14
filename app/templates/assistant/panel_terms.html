@@ -1,10 +1,12 @@
-<!-- Términos -->
+<!-- Términos comerciales y notas -->
 <details class="bg-gray-900 rounded-lg border border-gray-700">
-  <summary class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
+  <summary
+    class="cursor-pointer px-3 py-2 flex items-center justify-between text-xs font-semibold bg-gray-800 text-gray-200">
     <span>Términos comerciales y Notas</span>
+
     <span class="text-gray-400 text-[11px]">
       {% if selected_terms %}
-        {{ selected_terms.nombre }}
+        {{ selected_terms.incoterm }}{% if selected_terms.place %} · {{ selected_terms.place }}{% endif %}
       {% else %}
         estándar
       {% endif %}
@@ -14,9 +16,32 @@
   <div class="px-3 py-2 border-t border-gray-700 space-y-2 text-xs text-gray-200">
 
     {% if selected_terms %}
-      <p class="text-[11px] text-gray-300 whitespace-pre-line">
-        {{ selected_terms.texto }}
-      </p>
+      <div class="text-[11px] text-gray-300 space-y-1">
+        <p class="font-semibold text-gray-100">
+          {{ selected_terms.incoterm }}
+          {% if selected_terms.place %}
+            <span class="text-gray-400 font-normal"> · {{ selected_terms.place }}</span>
+          {% endif %}
+        </p>
+
+        <p class="text-gray-400">
+          {% if selected_terms.lead_time_days %}Entrega: {{ selected_terms.lead_time_days }} días{% endif %}
+          {% if selected_terms.validity_days %}{% if selected_terms.lead_time_days %} · {% endif %}Validez: {{ selected_terms.validity_days }} días{% endif %}
+          {% if selected_terms.warranty_months %}{% if selected_terms.lead_time_days or selected_terms.validity_days %} · {% endif %}Garantía: {{ selected_terms.warranty_months }} meses{% endif %}
+        </p>
+
+        {% if selected_terms.shipping_mode %}
+          <p class="text-gray-400">
+            Envío: {{ selected_terms.shipping_mode }}
+          </p>
+        {% endif %}
+
+        {% if selected_terms.notes %}
+          <p class="text-gray-400 whitespace-pre-line">
+            {{ selected_terms.notes }}
+          </p>
+        {% endif %}
+      </div>
     {% else %}
       <p class="text-[11px] text-gray-400">
         Se usarán términos estándar hasta seleccionar una plantilla.
@@ -24,10 +49,10 @@
     {% endif %}
 
     <button type="button"
-            class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
+      class="w-full px-3 py-1.5 rounded-md text-[11px] font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600"
+      onclick="openModal('modal-terms-selector')">
       Seleccionar / editar términos
     </button>
 
   </div>
 </details>
-

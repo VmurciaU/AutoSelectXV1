@@ -124,15 +124,17 @@
 
           {# FOOTER FIJO DEL PANEL #}
           <div class="border-t border-gray-800 p-4 flex flex-col md:flex-row gap-2 flex-shrink-0 bg-gray-900">
-            <button type="button"
+            <button type="button" onclick="window.open(`/quote/${currentCaseId}/preview`, '_blank')"
               class="w-full md:w-1/3 px-3 py-2 rounded-md text-xs font-semibold bg-gray-800 hover:bg-gray-700 border border-gray-600">
               Ver preview de cotización
             </button>
+
             <!-- Por ahora este botón NO dispara el POST de bombas detectadas -->
-            <button type="button"
+            <button type="button" onclick="submitSaveQuote()"
               class="w-full md:flex-1 px-3 py-2 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 border border-emerald-500">
               Guardar cotización
             </button>
+
           </div>
         </div>
 
@@ -155,6 +157,11 @@ MODALES CENTRALIZADOS
 
 {# Modal selección / edición MROY #}
 {% include "assistant/modal_edit_selected.html" %}
+
+
+{% include "assistant/modal_edit_customer.html" %}
+
+{% include "assistant/modal_edit_delivery_terms.html" %}
 
 
 
@@ -470,6 +477,16 @@ MODALES CENTRALIZADOS
     form.submit();
   }
 </script>
+
+<script>
+  function submitSaveQuote() {
+    const form = document.getElementById("quote_form");
+    form.action = `/quote/${currentCaseId}/save-quote`;
+    form.method = "post";
+    form.submit();
+  }
+</script>
+
 
 
 {% endblock %}

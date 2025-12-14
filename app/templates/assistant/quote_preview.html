@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% block title %}Preview cotización - Caso {{ case.id }}{% endblock %}
+
+{% block content %}
+
+<style>
+  @media print {
+    /* Oculta navegación y footer globales */
+    nav, header, footer { display: none !important; }
+
+    /* Oculta elementos marcados como no imprimibles */
+    .no-print { display: none !important; }
+
+    /* Fondo blanco y texto negro */
+    html, body { background: #fff !important; }
+    * { color: #000 !important; }
+
+    /* Evita fondos oscuros / tarjetas oscuras en impresión */
+    .bg-gray-900, .bg-gray-950, .bg-gray-800 { background: #fff !important; }
+    .border, .border-gray-800, .border-gray-700, .border-gray-600 { border-color: #ddd !important; }
+
+    /* Sombra afuera (si existe en base) */
+    .shadow, .shadow-md, .shadow-lg { box-shadow: none !important; }
+
+    /* Ajuste de página */
+    @page { margin: 12mm; }
+
+    /* Evita cortar tarjetas a la mitad (si el navegador lo respeta) */
+    .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+
+<div class="max-w-6xl mx-auto p-6 text-gray-100">
+
+  <!-- ================= HEADER ================= -->
+  <div class="flex items-start justify-between gap-3 mb-6 avoid-break">
+    <div>
+      <h1 class="text-2xl font-semibold">Cotización comercial</h1>
+      <p class="text-[12px] text-gray-400">
+        Caso #{{ case.id }}{% if case.name %} · {{ case.name }}{% endif %}
+        {% if quote and quote.status %} · Estado: {{ quote.status }}{% endif %}
+      </p>
+
+      <div class="mt-2 flex flex-wrap gap-2 text-[11px] text-gray-400">
+        {# ✅ Quitamos el chip Moneda para evitar confusión COP vs USD #}
+        <span class="px-2 py-0.5 rounded bg-gray-900 border border-gray-800">
+          Ítems: {{ selected_pumps|length }}
+        </span>
+        <span class="px-2 py-0.5 rounded bg-gray-900 border border-gray-800">
+          Actualizado: {{ quote.updated_at.strftime("%Y-%m-%d %H:%M") if quote and quote.updated_at else "—" }}
+        </span>
+      </div>
+    </div>
+
+    <!-- ✅ Estos botones NO se imprimen -->
+    <div class="flex gap-2 no-print">
+      <a href="/quote/{{ case.id }}"
+        class="px-3 py-2 text-xs font-semibold rounded-md border border-gray-600 bg-gray-800 hover:bg-gray-700">
+        ← Volver
+      </a>
+
+      <button type="button" onclick="window.print()"
+        class="px-3 py-2 text-xs font-semibold rounded-md border border-gray-600 bg-gray-800 hover:bg-gray-700">
+        Imprimir / PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= CLIENTE & TÉRMINOS ================= -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+
+    <!-- CLIENTE -->
+    <div class="bg-gray-900 border border-gray-800 rounded-lg p-4 avoid-break">
+      <h2 class="text-sm font-semibold mb-2">Cliente</h2>
+
+      {% set c = customer %}
+      <div class="text-[12px] space-y-1">
+        <p class="font-semibold">
+          {{ c.name if c else "—" }}
+          {% if c and c.nit %}<span class="text-gray-400"> · NIT {{ c.nit }}</span>{% endif %}
+        </p>
+
+        <p class="text-gray-300">
+          {{ c.city if c and c.city else "—" }}{% if c and c.country %}, {{ c.country }}{% endif %}
+        </p>
+
+        <p class="text-gray-400">
+          Contacto:
+          {{ c.contact_name if c and c.contact_name else "—" }}
+          {% if c and c.email %} · {{ c.email }}{% endif %}
+          {% if c and c.phone %} · {{ c.phone }}{% endif %}
+        </p>
+
+        {% if quote and quote.customer_notes %}
+          <div class="mt-2 p-2 border border-gray-800 rounded bg-gray-950 whitespace-pre-line">
+            <span class="text-gray-400">Notas cliente:</span><br>
+            {{ quote.customer_notes }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- TÉRMINOS -->
+    <div class="bg-gray-900 border border-gray-800 rounded-lg p-4 avoid-break">
+      <h2 class="text-sm font-semibold mb-2">Términos comerciales</h2>
+
+      {% set t = terms %}
+      <div class="text-[12px] space-y-1">
+        <p class="font-semibold">
+          {{ t.incoterm if t else "—" }}
+          {% if t and t.place %}<span class="text-gray-400"> · {{ t.place }}</span>{% endif %}
+        </p>
+
+        <p class="text-gray-300">
+          {% if t and t.lead_time_days %}Entrega: {{ t.lead_time_days }} días{% else %}Entrega: —{% endif %}
+          ·
+          {% if t and t.validity_days %}Validez: {{ t.validity_days }} días{% else %}Validez: —{% endif %}
+          ·
+          {% if t and t.warranty_months %}Garantía: {{ t.warranty_months }} meses{% else %}Garantía: —{% endif %}
+        </p>
+
+        {% if t and t.shipping_mode %}
+          <p class="text-gray-400">Envío: {{ t.shipping_mode }}</p>
+        {% else %}
+          <p class="text-gray-400">Envío: —</p>
+        {% endif %}
+
+        {% if t and t.notes %}
+          <div class="mt-2 whitespace-pre-line text-gray-300">{{ t.notes }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= BOMBAS ================= -->
+  <div class="bg-gray-900 border border-gray-800 rounded-lg mb-6 overflow-hidden">
+    <div class="px-4 py-3 border-b border-gray-800 flex justify-between items-center avoid-break">
+      <h2 class="text-sm font-semibold">Bombas seleccionadas</h2>
+      <span class="text-[11px] text-gray-400">{{ selected_pumps|length }} ítems</span>
+    </div>
+
+    {% for sp in selected_pumps %}
+      {% set dp = detected_by_id.get(sp.detected_pump_id) %}
+      <div class="px-4 py-3 border-b border-gray-800 text-[12px] avoid-break">
+
+        <div class="flex justify-between gap-3">
+          <div class="min-w-0">
+            <!-- ITEM N -->
+            <div class="text-[11px] text-gray-400 mb-1">
+              <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-950 border border-gray-800">
+                Item {{ loop.index }}
+              </span>
+              <span class="ml-2 text-gray-500">
+                {% if dp and dp.tag %}Tag: {{ dp.tag }}{% else %}DetectedPumpID: {{ sp.detected_pump_id }}{% endif %}
+              </span>
+            </div>
+
+            <p class="font-semibold break-words">{{ sp.full_code }}</p>
+
+            <p class="text-gray-400 text-[11px]">
+              Caudal:
+              {% if dp and dp.flow_max_std %}{{ dp.flow_max_std }}{% else %}—{% endif %}
+              {% if dp and dp.flow_unit_std %} {{ dp.flow_unit_std }}{% endif %}
+              · Presión:
+              {% if dp and dp.discharge_pressure_std %}
+                {{ dp.discharge_pressure_std }}
+              {% elif dp and dp.discharge_pressure %}
+                {{ dp.discharge_pressure }}
+              {% else %}
+                —
+              {% endif %}
+              PSI
+            </p>
+          </div>
+
+          <!-- MONEDA POR PRECIO (USD) -->
+          <div class="text-right font-semibold whitespace-nowrap">
+            USD {{ "%.2f"|format((sp.price_total_usd or 0)|float) }}
+          </div>
+        </div>
+
+        <div class="mt-2 text-gray-400 text-[11px] grid grid-cols-1 md:grid-cols-2 gap-2">
+          <span>Fluido: {{ dp.fluid if dp and dp.fluid else "—" }}</span>
+          <span>Viscosidad: {{ dp.viscosity if dp and dp.viscosity is not none else "—" }}</span>
+          <span>Materiales: {{ dp.materials if dp and dp.materials else "—" }}</span>
+          <span>Servicio: {{ dp.service if dp and dp.service else "—" }}</span>
+        </div>
+
+        <div class="mt-2 text-[11px] text-gray-500">
+          Cumple API 675 · Bomba dosificadora MROY MRA I
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- ================= TOTALES ================= -->
+  <div class="flex justify-end avoid-break">
+    <div class="w-full md:w-1/3 text-[13px] space-y-1">
+      <div class="flex justify-between">
+        <span>Subtotal</span>
+        <span>USD {{ "%.2f"|format((subtotal or 0)|float) }}</span>
+      </div>
+      <div class="flex justify-between text-gray-400">
+        <span>Descuento</span>
+        <span>USD {{ "%.2f"|format((discount or 0)|float) }}</span>
+      </div>
+      <div class="flex justify-between text-gray-400">
+        <span>Impuestos</span>
+        <span>USD {{ "%.2f"|format((tax or 0)|float) }}</span>
+      </div>
+      <div class="flex justify-between font-semibold text-[14px] pt-2 border-t border-gray-700">
+        <span>Total</span>
+        <span>USD {{ "%.2f"|format((total or 0)|float) }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

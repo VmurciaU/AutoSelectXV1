@@ -18,6 +18,16 @@ from app.models.user import User
 from app.models.pumps_detected import PumpsDetected
 from app.models.mroy_selected_pump import MroySelectedPump
 
+from app.models.quotes import Quote
+from app.models.customers import Customer
+from app.models.delivery_terms import DeliveryTerm
+
+from fastapi.responses import Response
+from playwright.async_api import async_playwright
+
+
+
+
 # ⬇️ MODELOS MROY (core 01–09)
 from app.models.mroy_main import (
     MroyMRA1LiquidEnd,
@@ -58,6 +68,15 @@ from app.routers.chat_routes import load_requirements_from_storage
 
 router = APIRouter(tags=["quote"])
 templates = Jinja2Templates(directory="app/templates")
+
+
+def compute_quote_totals_from_selected(selected_pumps: list[MroySelectedPump]):
+    subtotal = 0.0
+    for sp in selected_pumps:
+        if sp.price_total_usd is None:
+            continue
+        subtotal += float(sp.price_total_usd)
+    return subtotal
 
 
 # ================================================
@@ -394,6 +413,47 @@ def normalize_str(value):
     return value or None
 
 
+def get_or_create_quote(db: Session, case_id: int, user_id: int) -> Quote:
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if quote:
+        return quote
+
+    # 1) customer default: el primero activo, si no existe -> error claro
+    customer = (
+        db.query(Customer)
+        .filter(Customer.is_active == True)
+        .order_by(Customer.id.asc())
+        .first()
+    )
+    if not customer:
+        raise HTTPException(400, "No hay clientes activos. Crea un cliente primero.")
+
+    # 2) delivery term default: el primero activo
+    term = (
+        db.query(DeliveryTerm)
+        .filter(DeliveryTerm.active == True)
+        .order_by(DeliveryTerm.id.asc())
+        .first()
+    )
+    if not term:
+        raise HTTPException(400, "No hay términos activos. Crea un término primero.")
+
+    quote = Quote(
+        case_id=case_id,
+        customer_id=customer.id,
+        delivery_term_id=term.id,
+        created_by=user_id,
+        status="draft",
+        currency="COP",
+        exchange_rate=1.0,
+    )
+    db.add(quote)
+    db.commit()
+    db.refresh(quote)
+    return quote
+
+
+
 # ======================================================
 # GET PRINCIPAL – Vista de cotización
 # ======================================================
@@ -404,7 +464,28 @@ async def get_quote_view(
     db: Session = Depends(get_db),
     current_user_id: int = Depends(get_current_user_id),
 ):
+    
+    quote = get_or_create_quote(db=db, case_id=case_id, user_id=current_user_id)
 
+
+    # ------------------------------------
+    # Listas para modales (Cliente / Términos)
+    # ------------------------------------
+    customers_list = (
+        db.query(Customer)
+        .filter(Customer.is_active == True)
+        .order_by(Customer.name.asc())
+        .all()
+    )
+
+    delivery_terms_list = (
+        db.query(DeliveryTerm)
+        .filter(DeliveryTerm.active == True)
+        .order_by(DeliveryTerm.incoterm.asc(), DeliveryTerm.place.asc())
+        .all()
+    )
+
+    
     # ------------------------------------
     # 1. Validar caso
     # ------------------------------------
@@ -457,7 +538,7 @@ async def get_quote_view(
     
     
     
-        # ------------------------------------
+    # ------------------------------------
     # 5. Sugerencias automáticas MROY 01–03
     # ------------------------------------
     auto_mroy_suggestions = {}
@@ -561,6 +642,10 @@ async def get_quote_view(
 
         # JSON maestro para JS
         "pumps_payload_json": pumps_payload_json,
+
+        # Listas para modales
+        "customers_list": customers_list,
+        "delivery_terms_list": delivery_terms_list,
         
         # ⬇️ NUEVO: sugerencias automáticas para 01–03
         "auto_mroy_suggestions_json": json.dumps(
@@ -570,10 +655,12 @@ async def get_quote_view(
         ),
 
         # Otros elementos del banner de cotización
+        "quote": quote,
+        "selected_client": quote.customer,
+        "selected_terms": quote.delivery_term,
+        "quote_notes": quote.customer_notes or "",
         "quote_items": [],
-        "selected_client": None,
-        "selected_terms": None,
-        "quote_notes": "",
+
         "user_name": current_user.nombre,
         "user_rol": current_user.rol,
     }
@@ -863,3 +950,251 @@ async def delete_detected_pump(
         url=f"/quote/{case_id}",
         status_code=303,
     )
+
+
+
+@router.post("/quote/{case_id}/save-quote")
+async def save_quote(
+    case_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    form = await request.form()
+
+    # Campos mínimos
+    quote.customer_notes = normalize_str(form.get("customer_notes"))
+    quote.internal_notes = normalize_str(form.get("internal_notes"))
+
+    # Números
+    quote.discount = to_float_or_none(form.get("discount")) or 0
+    quote.tax = to_float_or_none(form.get("tax")) or 0
+
+    # Recalcular subtotal desde MROY seleccionadas
+    selected_pumps = (
+        db.query(MroySelectedPump)
+        .filter(MroySelectedPump.case_id == case_id, MroySelectedPump.is_active == True)
+        .all()
+    )
+    subtotal = compute_quote_totals_from_selected(selected_pumps)
+    quote.subtotal = subtotal
+    quote.total = float(subtotal) - float(quote.discount or 0) + float(quote.tax or 0)
+
+    quote.updated_at = datetime.utcnow()
+
+    db.commit()
+
+    return RedirectResponse(url=f"/quote/{case_id}", status_code=303)
+
+
+
+from fastapi.responses import Response
+from io import BytesIO
+
+# ======================================================
+# GET – Preview HTML (MVP)
+# ======================================================
+@router.get("/quote/{case_id}/preview", response_class=HTMLResponse)
+async def quote_preview_view(
+    request: Request,
+    case_id: int,
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    case = db.query(Case).filter(Case.id == case_id).first()
+    if not case:
+        raise HTTPException(404, "Caso no encontrado")
+
+    selected_pumps = (
+        db.query(MroySelectedPump)
+        .filter(MroySelectedPump.case_id == case_id, MroySelectedPump.is_active == True)
+        .order_by(MroySelectedPump.id.asc())
+        .all()
+    )
+
+    # Traer bombas detectadas para enriquecer datos técnicos en el preview
+    detected = (
+        db.query(PumpsDetected)
+        .filter(PumpsDetected.case_id == case_id, PumpsDetected.is_active == True)
+        .all()
+    )
+    detected_by_id = {p.id: p for p in detected}
+
+    subtotal = compute_quote_totals_from_selected(selected_pumps)
+    discount = float(quote.discount or 0)
+    tax = float(quote.tax or 0)
+    total = float(subtotal) - discount + tax
+
+    # Helpers rápidos para mostrar unidades
+    def _fmt(v, suf=""):
+        if v is None or v == "":
+            return "—"
+        try:
+            return f"{float(v):g}{suf}"
+        except Exception:
+            return f"{v}{suf}"
+
+    context = {
+        "request": request,
+        "case": case,
+        "quote": quote,
+        "customer": quote.customer,
+        "terms": quote.delivery_term,
+        "selected_pumps": selected_pumps,
+        "detected_by_id": detected_by_id,   # ✅ clave para detalles técnicos
+        "subtotal": subtotal,
+        "discount": discount,
+        "tax": tax,
+        "total": total,
+    }
+    return templates.TemplateResponse("assistant/quote_preview.html", context)
+
+
+# ======================================================
+# GET – PDF (MVP) usando ReportLab
+# ======================================================
+@router.get("/quote/{case_id}/pdf")
+async def quote_pdf(case_id: int, request: Request):
+    # URL ABSOLUTA al preview (misma vista)
+    base_url = str(request.base_url).rstrip("/")
+    url = f"{base_url}/quote/{case_id}/preview"
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+
+        # Importante: si tu preview requiere login/cookies, esto hay que manejarlo.
+        await page.goto(url, wait_until="networkidle")
+
+        pdf_bytes = await page.pdf(
+            format="A4",
+            print_background=True,
+            margin={"top": "12mm", "bottom": "12mm", "left": "12mm", "right": "12mm"},
+        )
+        await browser.close()
+
+    filename = f"quote_case_{case_id}.pdf"
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+
+# ======================================================
+# POST – Asignar cliente existente a la quote
+# ======================================================
+@router.post("/quote/{case_id}/set-customer")
+async def set_customer_for_quote(
+    case_id: int,
+    customer_id: int = Form(...),
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    customer = (
+        db.query(Customer)
+        .filter(Customer.id == customer_id, Customer.is_active == True)
+        .first()
+    )
+    if not customer:
+        raise HTTPException(400, "Cliente inválido o inactivo.")
+
+    quote.customer_id = customer.id
+    quote.updated_at = datetime.utcnow()
+    db.commit()
+
+    return RedirectResponse(url=f"/quote/{case_id}", status_code=303)
+
+
+# ======================================================
+# POST – Crear cliente rápido y asignarlo a la quote (MVP)
+# ======================================================
+@router.post("/quote/{case_id}/create-customer-and-set")
+async def create_customer_and_set_for_quote(
+    case_id: int,
+    name: str = Form(...),
+    nit: str = Form(None),
+    city: str = Form(None),
+    country: str = Form(None),
+    contact_name: str = Form(None),
+    email: str = Form(None),
+    phone: str = Form(None),
+    notes: str = Form(None),
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    new_customer = Customer(
+        name=name.strip(),
+        nit=normalize_str(nit),
+        city=normalize_str(city),
+        country=normalize_str(country),
+        contact_name=normalize_str(contact_name),
+        email=normalize_str(email),
+        phone=normalize_str(phone),
+        notes=normalize_str(notes),
+        is_active=True,
+    )
+    db.add(new_customer)
+    db.commit()
+    db.refresh(new_customer)
+
+    quote.customer_id = new_customer.id
+    quote.updated_at = datetime.utcnow()
+    db.commit()
+
+    return RedirectResponse(url=f"/quote/{case_id}", status_code=303)
+
+
+# ======================================================
+# POST – Asignar términos a la quote + (opcional) notas
+# ======================================================
+@router.post("/quote/{case_id}/set-terms")
+async def set_terms_for_quote(
+    case_id: int,
+    delivery_term_id: int = Form(...),
+    customer_notes: str = Form(None),
+    internal_notes: str = Form(None),
+    db: Session = Depends(get_db),
+    current_user_id: int = Depends(get_current_user_id),
+):
+    quote = db.query(Quote).filter(Quote.case_id == case_id).first()
+    if not quote:
+        raise HTTPException(404, "Quote no encontrada para este caso.")
+
+    term = (
+        db.query(DeliveryTerm)
+        .filter(DeliveryTerm.id == delivery_term_id, DeliveryTerm.active == True)
+        .first()
+    )
+    if not term:
+        raise HTTPException(400, "Término inválido o inactivo.")
+
+    quote.delivery_term_id = term.id
+
+    # notas (MVP) viven en Quote
+    quote.customer_notes = normalize_str(customer_notes) if customer_notes is not None else quote.customer_notes
+    quote.internal_notes = normalize_str(internal_notes) if internal_notes is not None else quote.internal_notes
+
+    quote.updated_at = datetime.utcnow()
+    db.commit()
+
+    return RedirectResponse(url=f"/quote/{case_id}", status_code=303)
+
+

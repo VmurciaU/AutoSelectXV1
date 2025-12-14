@@ -41,3 +41,6 @@ tiktoken==0.11.0
 tqdm==4.66.2
 numpy==2.2.6
 Pillow==11.2.1
+
+# PDF / HTML rendering (server-side)
+playwright==1.57.0
