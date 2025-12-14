@@ -40,11 +40,38 @@ import math
 from typing import Dict, Any, Optional
 
 from app.database.conection import SessionLocal
+
+
+
+# CORE 01–09
 from app.models.mroy_main import (
     MroyMRA1LiquidEnd,
     MroyMRA1Plunger,
     MroyMRA1GearRatio,
+    MroyMRA1MotorOptions,
+    MroyMRA1MotorMount,
+    MroyMRA1PipeConnections,
+    MroyMRA1Oring,
+    MroyMRA1CapacityControl,
+    MroyMRA1DiaphragmRupture,
 )
+
+# EXTENDED 10–19
+from app.models.mroy_extended import (
+    MroyMRA1BaseOptions,              # 10
+    MroyMRA1CodeCompleteIdentifier,   # 11
+    MroyMRA1LiquidEndExtended,        # 12
+    MroyMRA1TemperatureExtended,      # 13
+    MroyMRA1DriveExtended,            # 14
+    MroyMRA1MotorExtended,            # 15
+    MroyMRA1LubricationOptions,       # 16
+    MroyMRA1CoatingSystem,            # 17
+    MroyMRA1BaseOptions18,            # 18
+    MroyMRA1RunTestOptions,           # 19
+)
+
+
+
 from app.models.mroy_master import (
     MroyaCapacityMaster,
     MroyaViscosidadMaster,
@@ -128,6 +155,55 @@ def _lph_from_gph(gph: Optional[float]) -> Optional[float]:
         return None
     return gph * 3.78541
 
+def _as_price(val) -> float:
+    try:
+        if val is None:
+            return 0.0
+        return float(val)
+    except Exception:
+        return 0.0
+
+
+
+def _get_price_usd(row) -> float:
+    return _as_price(getattr(row, "price_usd", None))
+
+def _q_by_code(db: Session, Model, code: str):
+    return db.query(Model).filter(Model.code == code)
+
+def _first_or_none(q):
+    try:
+        return q.first()
+    except Exception:
+        return None
+
+
+
+def _price_pipe_connections(row, end_material: str, head_type: str) -> float:
+    if not row:
+        return 0.0
+    m = (end_material or "").upper()
+    if head_type == "metallic":
+        if "ALLOY" in m or "20" in m:
+            return _as_price(getattr(row, "price_alloy20_usd", None))
+        return _as_price(getattr(row, "price_316L_base_usd", None))
+    # plastic
+    if "PVDF" in m:
+        return _as_price(getattr(row, "price_PVDF_base_usd", None))
+    return _as_price(getattr(row, "price_PVC_base_usd", None))
+
+
+def _price_liquid_end_extended(row, end_material: str, head_type: str) -> float:
+    if not row:
+        return 0.0
+    m = (end_material or "").upper()
+    if head_type == "metallic":
+        return _as_price(getattr(row, "price_usd_metallic", None))
+    if "PVDF" in m:
+        return _as_price(getattr(row, "price_usd_pvdf", None))
+    return _as_price(getattr(row, "price_usd_pvc", None))
+
+
 
 # -------------------------------------------------------------------
 # Excepción específica del selector
@@ -194,11 +270,17 @@ def select_plunger(
     La tabla de plunger NO tiene columna material_pump.
     Por lo tanto, la selección es SOLO por plunger_code.
     """
+    
     pl = (
         session.query(MroyMRA1Plunger)
-        .filter(MroyMRA1Plunger.code == plunger_code)
+        .filter(
+            MroyMRA1Plunger.code == plunger_code,
+            MroyMRA1Plunger.material_pump == head_type,
+        )
         .first()
     )
+
+
 
     if not pl:
         raise SelectionError(
@@ -360,15 +442,24 @@ def find_capacity_candidate(
         flow_col = MroyaCapacityMaster.cap60_100psi_gph
     else:
         flow_col = MroyaCapacityMaster.cap60_maxP_gph
+        
+
+    head_candidates = [head_type]
+    if head_type == "metallic":
+        head_candidates.append("metal")
+    elif head_type == "metal":
+        head_candidates.append("metallic")
+
+
 
     q = (
         session.query(MroyaCapacityMaster)
         .filter(
-            MroyaCapacityMaster.head_type == head_type,
+            MroyaCapacityMaster.head_type.in_(head_candidates),
             flow_col >= required_flow_gph,
             MroyaCapacityMaster.maxP_psi >= pressure,
         )
-        .order_by(flow_col.asc())
+
     )
 
     cap_row = q.first()
@@ -765,6 +856,14 @@ def upsert_mroy_selected_pump(
         selected.updated_by = user_id
         selected.mroy_series = code_info.get("series") or selected.mroy_series
         selected.full_code = code_info.get("full_code") or selected.full_code
+
+        # Guardar códigos 01–03 (para modal y consistencia)
+        selected.code_01 = str(result["code_info"]["segments"]["01"]["code"])
+        selected.code_02 = str(result["code_info"]["segments"]["02"]["code"])
+        selected.code_03 = str(result["code_info"]["segments"]["03"]["code"])
+
+
+
         selected.summary_text = summary_text
 
         # FKs de catálogo
@@ -781,11 +880,18 @@ def upsert_mroy_selected_pump(
         selected.design_pressure_psi = design_pressure_psi
         selected.design_viscosity_cp = design_viscosity_cp
 
-        # Precio total todavía no calculado (MVP)
-        if selected.price_total_usd is None:
-            selected.price_total_usd = None
-        if selected.currency is None:
-            selected.currency = "USD"
+        # ✅ Precio MVP = suma 01 + 02 + 03 (también en selección automática)
+        le = db.get(MroyMRA1LiquidEnd, liquid_end_id) if liquid_end_id else None
+        pl = db.get(MroyMRA1Plunger, plunger_id) if plunger_id else None
+        gr = db.get(MroyMRA1GearRatio, gear_ratio_id) if gear_ratio_id else None
+
+        selected.price_total_usd = (
+            _as_price(getattr(le, "price_usd", None)) +
+            _as_price(getattr(pl, "price_usd", None)) +
+            _as_price(getattr(gr, "price_usd", None))
+        )
+        selected.currency = "USD"
+
 
         selected.is_active = True
         selected.touch()
@@ -854,17 +960,177 @@ def upsert_mroy_selected_pump_from_form(
             if hasattr(selected, key):
                 setattr(selected, key, (form.get(key) or None))
 
-        # Snapshot rápido desde la bomba detectada (opcional, pero útil)
-        selected.design_pressure_psi = detected.discharge_pressure_std or detected.discharge_pressure
-        selected.design_flow_gph = detected.flow_max_std
-        selected.design_viscosity_cp = detected.viscosity
 
-        tag = detected.tag or "Sin TAG"
-        fluid = detected.fluid or "-"
-        service = detected.service or "-"
-        selected.summary_text = f"{tag} – {fluid} – {service}"
 
+        # ---------------------------------------------------
+        # ✅ Resolver IDs + calcular precio (MVP FULL 01–19)
+        # ---------------------------------------------------
+        material_raw = (detected.materials or "").strip()
+        end_material = normalize_end_material(material_raw)
+        head_type = _material_to_head_type(end_material)  # metallic/plastic
+
+        # 1) Leer códigos del form (01–19)
+        codes = {}
+        for i in range(1, 20):
+            k = f"code_{i:02d}"
+            codes[k] = (form.get(k) or "").strip() or None
+
+        # 2) Buscar filas core 01–03 (con filtros simples)
+        le_row = pl_row = gr_row = None
+
+        # --- 01 Liquid End
+        if codes["code_01"]:
+            q = _q_by_code(db, MroyMRA1LiquidEnd, codes["code_01"])
+
+            # Si existe material_pump, filtra por head_type
+            if hasattr(MroyMRA1LiquidEnd, "material_pump"):
+                q = q.filter(MroyMRA1LiquidEnd.material_pump == head_type)
+
+            # Si existe end_material, filtra por end_material
+            if hasattr(MroyMRA1LiquidEnd, "end_material") and end_material:
+                q = q.filter(MroyMRA1LiquidEnd.end_material == end_material)
+
+            le_row = _first_or_none(q)
+
+        # --- 02 Plunger
+        if codes["code_02"]:
+            pl_row = _first_or_none(_q_by_code(db, MroyMRA1Plunger, codes["code_02"]))
+
+        # --- 03 Gear Ratio (depende de metallic/plastic)
+        if codes["code_03"]:
+            q = _q_by_code(db, MroyMRA1GearRatio, codes["code_03"])
+            if hasattr(MroyMRA1GearRatio, "material_pump"):
+                q = q.filter(MroyMRA1GearRatio.material_pump == head_type)
+            gr_row = _first_or_none(q)
+
+        # 3) Guardar FKs base (si tu modelo selected las tiene)
+        selected.liquid_end_id = le_row.id if le_row else None
+        selected.plunger_id = pl_row.id if pl_row else None
+        selected.gear_ratio_id = gr_row.id if gr_row else None
+
+        # 4) Calcular precio FULL 01–19 (sumatoria best-effort)
+        breakdown = {}  # para debug MVP
+        total_usd = 0.0
+
+        def add(seg: str, row):
+            nonlocal total_usd
+            p = _get_price_usd(row)
+            breakdown[seg] = float(p)
+            total_usd += p
+
+        # --- 01–03
+        add("01", le_row)
+        add("02", pl_row)
+        add("03", gr_row)
+
+        # --- 04 Motor Options
+        row04 = _first_or_none(_q_by_code(db, MroyMRA1MotorOptions, codes["code_04"])) if codes["code_04"] else None
+        add("04", row04)
+
+        # --- 05 Motor Mount
+        row05 = _first_or_none(_q_by_code(db, MroyMRA1MotorMount, codes["code_05"])) if codes["code_05"] else None
+        add("05", row05)
+
+        # --- 06 Pipe Connections (tu UI manda "NN", "AB"...)
+        row06 = None
+        if codes["code_06"]:
+            sc = codes["code_06"][:1]
+            dc = codes["code_06"][1:2] if len(codes["code_06"]) > 1 else ""
+            q = db.query(MroyMRA1PipeConnections).filter(
+                MroyMRA1PipeConnections.suction_code == sc,
+                MroyMRA1PipeConnections.discharge_code == dc,
+            )
+            if head_type == "metallic":
+                q = q.filter(MroyMRA1PipeConnections.metallic_applicable.is_(True))
+            else:
+                q = q.filter(MroyMRA1PipeConnections.plastic_applicable.is_(True))
+
+            row06 = _first_or_none(q)
+
+        p06 = _price_pipe_connections(row06, end_material, head_type)
+        breakdown["06"] = float(p06)
+        total_usd += p06
+
+
+        # --- 07 O-Ring
+        row07 = None
+        if codes["code_07"]:
+            q = _q_by_code(db, MroyMRA1Oring, codes["code_07"])
+            if hasattr(MroyMRA1Oring, "material_pump"):
+                q = q.filter(MroyMRA1Oring.material_pump == head_type)
+            row07 = _first_or_none(q)
+        add("07", row07)
+
+        # --- 08 Capacity Control
+        row08 = _first_or_none(_q_by_code(db, MroyMRA1CapacityControl, codes["code_08"])) if codes["code_08"] else None
+        add("08", row08)
+
+        # --- 09 Rupture Detection
+        row09 = _first_or_none(_q_by_code(db, MroyMRA1DiaphragmRupture, codes["code_09"])) if codes["code_09"] else None
+        add("09", row09)
+
+        # --- 10 Base Options
+        row10 = _first_or_none(_q_by_code(db, MroyMRA1BaseOptions, codes["code_10"])) if codes["code_10"] else None
+        add("10", row10)
+
+        # --- 11 Code Identifier
+        row11 = _first_or_none(_q_by_code(db, MroyMRA1CodeCompleteIdentifier, codes["code_11"])) if codes["code_11"] else None
+        add("11", row11)
+
+        # --- 12 Liquid End Extended
+        row12 = _first_or_none(_q_by_code(db, MroyMRA1LiquidEndExtended, codes["code_12"])) if codes["code_12"] else None
+
+        p12 = _price_liquid_end_extended(row12, end_material, head_type)
+        breakdown["12"] = float(p12)
+        total_usd += p12
+
+
+        # --- 13 Temperature Extended
+        row13 = _first_or_none(_q_by_code(db, MroyMRA1TemperatureExtended, codes["code_13"])) if codes["code_13"] else None
+        add("13", row13)
+
+        # --- 14 Drive Extended
+        row14 = _first_or_none(_q_by_code(db, MroyMRA1DriveExtended, codes["code_14"])) if codes["code_14"] else None
+        add("14", row14)
+
+        # --- 15 Motor Extended
+        row15 = _first_or_none(_q_by_code(db, MroyMRA1MotorExtended, codes["code_15"])) if codes["code_15"] else None
+        add("15", row15)
+
+        # --- 16 Lubrication
+        row16 = _first_or_none(_q_by_code(db, MroyMRA1LubricationOptions, codes["code_16"])) if codes["code_16"] else None
+        add("16", row16)
+
+        # --- 17 Coating System
+        row17 = _first_or_none(_q_by_code(db, MroyMRA1CoatingSystem, codes["code_17"])) if codes["code_17"] else None
+        add("17", row17)
+
+        # --- 18 Base Options Extra
+        row18 = _first_or_none(_q_by_code(db, MroyMRA1BaseOptions18, codes["code_18"])) if codes["code_18"] else None
+        add("18", row18)
+
+        # --- 19 Run Test Options
+        row19 = _first_or_none(_q_by_code(db, MroyMRA1RunTestOptions, codes["code_19"])) if codes["code_19"] else None
+        add("19", row19)
+
+        # 5) Persistir precio SIEMPRE (nunca NULL)
+        selected.price_total_usd = float(total_usd)
+        selected.currency = "USD"
+
+        # ✅ Debug MVP (luego lo quitas)
+        print("🧾 MROY PRICE DEBUG", {
+            "pump_id": pump_id,
+            "full_code": selected.full_code,
+            "head_type": head_type,
+            "end_material": end_material,
+            "total_usd": selected.price_total_usd,
+            "breakdown": breakdown,
+            "codes": {k: v for k, v in codes.items() if v},
+        })
+
+        # Marcar timestamps (si tu modelo tiene touch)
         selected.touch()
+
         db.commit()
         db.refresh(selected)
         return selected
@@ -878,8 +1144,6 @@ def upsert_mroy_selected_pump_from_form(
             db.close()
 
 
-
-
 # -------------------------------------------------------------------
 # Entry point para ejecución directa
 # -------------------------------------------------------------------
@@ -891,7 +1155,7 @@ def _print_pretty(result: Dict[str, Any]):
 def print_code_breakdown(result: Dict[str, Any]):
     """
     Imprime el desglose completo de los segmentos 01–18 usando únicamente
-    los datos que YA EXISTEN en result (01–03) y placeholders para 04–18.
+    los datos que YA EXISTEN en result (01–03) y placeholders para 04–19.
     """
     code_info = result.get("code_info", {})
     components = result.get("selected_components", {})
@@ -964,7 +1228,7 @@ if __name__ == "__main__":
     try:
         res = select_mroy_pump_by_id(pump_id)
         _print_pretty(res)         # JSON completo
-        print_code_breakdown(res)  # Desglose humano 01–18
+        print_code_breakdown(res)  # Desglose humano 01–19
     except SelectionError as e:
         print("❌ Error de selección:", e)
     except Exception as e:

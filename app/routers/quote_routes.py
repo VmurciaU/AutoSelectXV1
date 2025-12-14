@@ -446,11 +446,8 @@ async def get_quote_view(
     )
     has_selected_pumps = len(selected_pumps) > 0
     
-        # Mapa auxiliar: detected_pump_id -> MroySelectedPump
-    selected_by_pump_id = {
-        sp.detected_pump_id: sp for sp in selected_pumps
-    }
-
+    # Mapa auxiliar: detected_pump_id -> MroySelectedPump
+    selected_by_pump_id = {sp.detected_pump_id: sp for sp in selected_pumps}
 
     # ------------------------------------
     # 4. Cargar bombas detectadas del asistente (JSON / storage)

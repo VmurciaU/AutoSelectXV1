@@ -115,18 +115,11 @@
             {# 2. Bombas detectadas (estado técnico DB si existe) #}
             {% include "assistant/panel_pumps_detected_DB.html" %}
 
-            {# 3. Bombas seleccionadas para cotización #}
-            {% include "assistant/panel_pumps_selected.html" %}
-
-            {# 4. Cliente #}
+            {# 3. Cliente #}
             {% include "assistant/panel_client.html" %}
 
-            {# 5. Términos comerciales #}
+            {# 4 Términos comerciales y Notas #}
             {% include "assistant/panel_terms.html" %}
-
-            {# 6. Notas de la cotización #}
-            {% include "assistant/panel_notes.html" %}
-
           </div>
 
           {# FOOTER FIJO DEL PANEL #}
@@ -477,13 +470,6 @@ MODALES CENTRALIZADOS
     form.submit();
   }
 </script>
-<script>
-  window.currentCaseId = {{ case.id }};
-  window.pumpsData = {{ pumps_payload_json | safe }};
-  window.autoMroySuggestions = {{ auto_mroy_suggestions_json | safe }};
-</script>
-
-
 
 
 {% endblock %}
