@@ -48,7 +48,9 @@ from app.models.mroy_extended import (
     MroyMRA1LubricationOptions,
     MroyMRA1CoatingSystem,
     MroyMRA1RunTestOptions,
+    MroyMRA1BaseOptions18,   # <-- NUEVO
 )
+
 from app.models.mroy_master import (
     MroyaCapacityMaster,
     MroyaHpMaster,
@@ -474,18 +476,46 @@ def load_mroy_17_coating_system(session):
     print("✔ MRA1_17_coating_system cargado")
 
 
-def load_mroy_18_run_test(session):
-    df = _read_excel("mroy_MRA1_18_Run_Test_Options.xlsx")
-    session.query(MroyMRA1RunTestOptions).delete()
+def load_mroy_18_base_options(session):
+    df = _read_excel("mroy_MRA1_18_Base_Options.xlsx")
+
+    session.query(MroyMRA1BaseOptions18).delete()
+
     for _, row in df.iterrows():
-        obj = MroyMRA1RunTestOptions(
-            code=as_str(row["code"]),
-            description=as_str(row["description"]),
-            price_usd=as_float(row.get("price_usd")),
+        obj = MroyMRA1BaseOptions18(
+            code=as_str(row.get("code")),
+            description=as_str(row.get("description")),
+            applies_to=as_str(row.get("applies_to")),
+            price_usd=as_float(row.get("price_usd")) or 0.0,   # N => 0, NO NULL
+            consult_factory=as_bool(row.get("consult_factory")) or False,
             notes=as_str(row.get("notes")),
         )
         session.add(obj)
-    print("✔ MRA1_18_run_test_options cargado")
+
+    session.commit()
+    print("✔ MRA1_18_base_options cargado")
+
+
+
+def load_mroy_19_run_test(session):
+    df = _read_excel("mroy_MRA1_19_Run_Test_Options.xlsx")
+
+    session.query(MroyMRA1RunTestOptions).delete()
+
+    for _, row in df.iterrows():
+        obj = MroyMRA1RunTestOptions(
+            code=as_str(row.get("code")),
+            description=as_str(row.get("description")),
+            applies_to=as_str(row.get("applies_to")),
+            price_usd=as_float(row.get("price_usd")) or 0.0,
+            consult_factory=as_bool(row.get("consult_factory")) or False,
+            notes=as_str(row.get("notes")),
+        )
+        session.add(obj)
+
+    session.commit()
+    print("✔ MRA1_19_run_test cargado")
+
 
 
 # -------------------------------------------------------------------
@@ -604,12 +634,14 @@ def load_all_mroy_catalog():
     safe_run(load_mroy_15_motor_extended, session, "MRA1_15_motor_extended")
     safe_run(load_mroy_16_lubrication, session, "MRA1_16_lubrication")
     safe_run(load_mroy_17_coating_system, session, "MRA1_17_coating_system")
-    safe_run(load_mroy_18_run_test, session, "MRA1_18_run_test")
+    safe_run(load_mroy_18_base_options, session, "MRA1_18_base_options")
+    safe_run(load_mroy_19_run_test, session, "MRA1_19_run_test")
+
 
     # ------------------------
     # Masters
     # ------------------------
-    safe_run(load_capacity_master, session, "mroya_capacity_master")
+    safe_run(load_capacity_master, session, "mroya_capacity_master")  # <-- FALTA HOY
     safe_run(load_hp_master, session, "mroya_hp_master")
     safe_run(load_viscosidad_master, session, "mroya_viscosidad_master")
 

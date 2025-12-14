@@ -203,13 +203,13 @@ class MroyMRA1DiaphragmRupture(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    code = Column(String(5), nullable=False)  # 2, 3, 4, 5, 6, 7
+    code = Column(String(5), nullable=False)
     description = Column(Text, nullable=False)
 
     plunger_compatibility = Column(Text, nullable=False)
     hi_temp_allowed = Column(Boolean, nullable=False, default=False)
 
-    price_usd = Column(Float, nullable=False)
+    price_usd = Column(Float, nullable=True)  # NULL permitido (no aplica)
     consult_factory = Column(Boolean, nullable=False, default=False)
 
     notes = Column(Text, nullable=True)

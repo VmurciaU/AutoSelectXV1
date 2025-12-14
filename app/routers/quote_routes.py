@@ -41,6 +41,7 @@ from app.models.mroy_extended import (
     MroyMRA1MotorExtended,
     MroyMRA1LubricationOptions,
     MroyMRA1CoatingSystem,
+    MroyMRA1BaseOptions18,     # ✅ NUEVO
     MroyMRA1RunTestOptions,
 )
 
@@ -188,6 +189,15 @@ def get_mroy_catalog_context(db: Session) -> dict:
         .all()
     )
 
+    base_options_18 = (
+        db.query(MroyMRA1BaseOptions18)
+        .order_by(MroyMRA1BaseOptions18.code)
+        .all()
+    )
+
+
+    
+
     # ⬇️ AQUÍ aplicamos el filtro para el UI
     liquid_end_options        = dedupe_by_code(liquid_end_options)
     plunger_options           = dedupe_by_code(plunger_options)
@@ -207,6 +217,8 @@ def get_mroy_catalog_context(db: Session) -> dict:
     lubrication_options       = dedupe_by_code(lubrication_options)
     coating_options           = dedupe_by_code(coating_options)
     run_test_options          = dedupe_by_code(run_test_options)
+    base_options_18           = dedupe_by_code(base_options_18)
+
 
     return {
         "liquid_end_options": liquid_end_options,
@@ -227,6 +239,7 @@ def get_mroy_catalog_context(db: Session) -> dict:
         "lubrication_options": lubrication_options,
         "coating_options": coating_options,
         "run_test_options": run_test_options,
+        "base_options_18": base_options_18,
     }
 
 

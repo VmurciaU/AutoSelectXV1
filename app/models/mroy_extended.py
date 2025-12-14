@@ -9,7 +9,8 @@ Modelos SQLAlchemy para las tablas MRA1 de opciones extendidas:
 - 15 Motor Extended Options
 - 16 Lubrication Options
 - 17 Coating System Options
-- 18 Run Test Options
+- 18 Base Options (extra)
+- 19 Run Test Options
 """
 
 from sqlalchemy import Column, Integer, String, Float, Boolean, Text
@@ -166,16 +167,31 @@ class MroyMRA1CoatingSystem(Base):
     notes = Column(Text, nullable=True)
 
 
+
+class MroyMRA1BaseOptions18(Base):
+    __tablename__ = "mroy_mra1_18_base_options"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    code = Column(String(10), nullable=False)
+    description = Column(Text, nullable=False)
+    applies_to = Column(Text, nullable=True)
+    # OJO: en tu regla el N no es NULL, es 0.
+    price_usd = Column(Float, nullable=False, default=0.0)
+    consult_factory = Column(Boolean, nullable=False, default=False)
+    notes = Column(Text, nullable=True)
+
+
+
+# ✅ 19 — Run Test Options (antes era 18)
 class MroyMRA1RunTestOptions(Base):
-    """
-    Tabla: mroy_MRA1_18_Run_Test_Options.xlsx
-    """
-    __tablename__ = "mroy_mra1_18_run_test_options"
+    __tablename__ = "mroy_mra1_19_run_test_options"
 
     id = Column(Integer, primary_key=True, index=True)
-
-    code = Column(String(5), nullable=False)  # N, A, B, C, D, E, F, G...
+    code = Column(String(10), nullable=False, index=True)
     description = Column(Text, nullable=False)
+    applies_to = Column(Text, nullable=True)
 
+    # 👇 clave: no NULL, default 0.0 (si viene vacío, loader pone 0.0)
     price_usd = Column(Float, nullable=False, default=0.0)
+    consult_factory = Column(Boolean, nullable=False, default=False)
+
     notes = Column(Text, nullable=True)

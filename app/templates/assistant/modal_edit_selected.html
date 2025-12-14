@@ -116,7 +116,8 @@
                 <label class="mroy-field-label">04 – Motor Options</label>
                 <select name="code_04" id="code_04" class="mroy-select">
                   {% for opt in motor_options %}
-                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                  <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                     {{ opt.code }} – {{ opt.category }}{% if opt.hp_kw is not none %} ({{ opt.hp_kw }}){% endif %}
                   </option>
                   {% endfor %}
@@ -128,7 +129,8 @@
                 <label class="mroy-field-label">05 – Motor Mount</label>
                 <select name="code_05" id="code_05" class="mroy-select">
                   {% for opt in motor_mount_options %}
-                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                  <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                     {{ opt.code }} – {{ opt.description }}
                   </option>
                   {% endfor %}
@@ -140,19 +142,25 @@
                 <label class="mroy-field-label">06 – Pipe Connections</label>
                 <select name="code_06" id="code_06" class="mroy-select">
                   {% for opt in pipe_connection_options %}
-                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
-                    {{ opt.code }} – {{ opt.description_metallic or opt.description_plastic }}
+                  {% set code06 = (opt.suction_code or "") ~ (opt.discharge_code or "") %}
+                  <option value="{{ code06 }}" {% if code06=="NN" %}selected{% endif %}>
+                    {{ code06 }} – Suction {{ opt.suction_code }} / Discharge {{ opt.discharge_code }}
+                    {% if opt.description_metallic or opt.description_plastic %}
+                    · {{ opt.description_metallic or opt.description_plastic }}
+                    {% endif %}
                   </option>
                   {% endfor %}
                 </select>
               </div>
+
 
               <!-- 07 – O-Ring -->
               <div>
                 <label class="mroy-field-label">07 – O-Ring</label>
                 <select name="code_07" id="code_07" class="mroy-select">
                   {% for opt in oring_options %}
-                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                  <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                     {{ opt.code }} – {{ opt.material }} ({{ opt.material_pump }})
                   </option>
                   {% endfor %}
@@ -164,7 +172,8 @@
                 <label class="mroy-field-label">08 – Capacity Control</label>
                 <select name="code_08" id="code_08" class="mroy-select">
                   {% for opt in capacity_control_options %}
-                  <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+                  <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                     {{ opt.code }} – {{ opt.description }}
                   </option>
                   {% endfor %}
@@ -182,7 +191,8 @@
             <label class="mroy-field-label">09 – Diaphragm Rupture Detection</label>
             <select name="code_09" id="code_09" class="mroy-select">
               {% for opt in rupture_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -198,7 +208,8 @@
             <label class="mroy-field-label">10 – Base Options</label>
             <select name="code_10" id="code_10" class="mroy-select">
               {% for opt in base_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -210,7 +221,8 @@
             <label class="mroy-field-label">11 – Code Complete Identifier</label>
             <select name="code_11" id="code_11" class="mroy-select">
               {% for opt in code_identifier_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -222,7 +234,8 @@
             <label class="mroy-field-label">12 – Liquid End Extended</label>
             <select name="code_12" id="code_12" class="mroy-select">
               {% for opt in liquid_end_ext_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -234,7 +247,8 @@
             <label class="mroy-field-label">13 – Temperature Extended</label>
             <select name="code_13" id="code_13" class="mroy-select">
               {% for opt in temperature_ext_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -246,7 +260,8 @@
             <label class="mroy-field-label">14 – Drive Extended</label>
             <select name="code_14" id="code_14" class="mroy-select">
               {% for opt in drive_ext_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -258,7 +273,8 @@
             <label class="mroy-field-label">15 – Motor Extended</label>
             <select name="code_15" id="code_15" class="mroy-select">
               {% for opt in motor_ext_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -270,7 +286,8 @@
             <label class="mroy-field-label">16 – Lubrication Options</label>
             <select name="code_16" id="code_16" class="mroy-select">
               {% for opt in lubrication_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
@@ -282,24 +299,41 @@
             <label class="mroy-field-label">17 – Coating System</label>
             <select name="code_17" id="code_17" class="mroy-select">
               {% for opt in coating_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
             </select>
           </div>
 
-          <!-- 18 – Run Test Options -->
+          <!-- 18 – Base Options (extra) -->
           <div>
-            <label class="mroy-field-label">18 – Run Test Options</label>
+            <label class="mroy-field-label">18 – Base Options (Extra)</label>
             <select name="code_18" id="code_18" class="mroy-select">
-              {% for opt in run_test_options %}
-              <option value="{{ opt.code }}" {% if loop.first %}selected{% endif %}>
+              {% for opt in base_options_18 %}
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
                 {{ opt.code }} – {{ opt.description }}
               </option>
               {% endfor %}
             </select>
           </div>
+
+          <!-- 19 – Run Test Options -->
+          <div>
+            <label class="mroy-field-label">19 – Run Test Options</label>
+            <select name="code_19" id="code_19" class="mroy-select">
+              {% for opt in run_test_options %}
+              <option value="{{ opt.code }}" {% if opt.code=="N" %}selected{% elif loop.first %}selected{% endif %}>
+                {{ opt.code }} – {{ opt.description }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+
+
+
         </div>
 
       </div>
@@ -427,10 +461,13 @@
 
   // --- Preview del código MROY
   function updateMroyCodePreview() {
+
     const ids = [
       "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08","code_09",
-      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18","code_19"
     ];
+
+
     const values = {};
     ids.forEach(id => values[id] = document.getElementById(id)?.value || "");
 
@@ -443,7 +480,7 @@
     const extras = [
       values.code_04, values.code_05, values.code_06, values.code_07, values.code_08, values.code_09,
       values.code_10, values.code_11, values.code_12, values.code_13, values.code_14, values.code_15,
-      values.code_16, values.code_17, values.code_18
+      values.code_16, values.code_17, values.code_18, values.code_19
     ].filter(Boolean).join("");
 
     if (extras) fullCode += "-" + extras;
@@ -456,17 +493,17 @@
   }
 
   // --- Función global (para onclick)
-  window.openMroySelector = function(pumpIdStr) {
+  window.openMroySelector = function (pumpIdStr) {
     // 1) Reset 01–03 a vacío (placeholder)
-    ["code_01","code_02","code_03"].forEach(id => {
+    ["code_01", "code_02", "code_03"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = "";
     });
 
     // 2) Reset 04–18 al primer item
     [
-      "code_04","code_05","code_06","code_07","code_08","code_09",
-      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_04", "code_05", "code_06", "code_07", "code_08", "code_09",
+      "code_10", "code_11", "code_12", "code_13", "code_14", "code_15", "code_16", "code_17", "code_18", "code_19"
     ].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.selectedIndex = 0;
@@ -493,6 +530,26 @@
     setText("mroy_proc_tag", pump.tag || `Bomba #${pump.id}`);
     setText("mroy-modal-tag", pump.tag || `Bomba #${pump.id}`);
     setText("mroy_header_tag", pump.tag || `Bomba #${pump.id}`);
+
+
+
+
+    // 5.b) Datos de proceso
+    // Fluido
+    setText("mroy_proc_fluid", pump.fluid || "-");
+
+    // Presión (usa std si existe, si no la normal)
+    const p = (pump.discharge_pressure_std ?? pump.discharge_pressure);
+    setText("mroy_proc_pressure", (p != null && p !== "") ? `${p} psi` : "-");
+
+    // Caudal (con lo que tienes: flow_max_std + unidad)
+    const q = pump.flow_max_std;
+    const u = pump.flow_unit_std || "";
+    setText("mroy_proc_flow", (q != null && q !== "") ? `${q} ${u}` : "-");
+
+    
+
+
 
     const pumpIdEl = document.getElementById("mroy_pump_id");
     if (pumpIdEl) pumpIdEl.value = pump.id;
@@ -530,13 +587,13 @@
   };
 
   // --- Listeners (una vez)
-  (function bindMroyListenersOnce(){
+  (function bindMroyListenersOnce() {
     if (window.__mroyListenersBound) return;
     window.__mroyListenersBound = true;
 
     [
-      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08",
-      "code_09","code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18"
+      "code_01", "code_02", "code_03", "code_04", "code_05", "code_06", "code_07", "code_08",
+      "code_09", "code_10", "code_11", "code_12", "code_13", "code_14", "code_15", "code_16", "code_17", "code_18", "code_19"
     ].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener("change", updateMroyCodePreview);
