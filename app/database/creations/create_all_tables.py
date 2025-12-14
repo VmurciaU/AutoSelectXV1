@@ -63,6 +63,7 @@ from app.models.mroy_extended import (
     MroyMRA1MotorExtended,
     MroyMRA1LubricationOptions,
     MroyMRA1CoatingSystem,
+    MroyMRA1BaseOptions18,   # ✅ AGREGA ESTO
     MroyMRA1RunTestOptions,
 )
 

@@ -565,19 +565,46 @@
       }
     }
 
-    // 7) Autoselección 01–03 si NO hay selección previa
-    if (!hasMroySelection && window.autoMroyData) {
-      const suggestion = window.autoMroyData[pumpId] || window.autoMroyData[String(pumpId)] || null;
-      dbgModal("SUGGESTION lookup", { pumpId, suggestion });
 
-      if (suggestion) {
-        setSelectValueSafe("code_01", suggestion.code_01);
-        setSelectValueSafe("code_02", suggestion.code_02);
-        setSelectValueSafe("code_03", suggestion.code_03);
-      } else {
-        console.warn("⚠️ No hubo suggestion para pumpId", pumpId);
-      }
+    // ✅ SOLO reset si NO hay selección previa
+    if (!hasMroySelection) {
+      ["code_01", "code_02", "code_03"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+
+      [
+        "code_04", "code_05", "code_06", "code_07", "code_08", "code_09",
+        "code_10", "code_11", "code_12", "code_13", "code_14", "code_15",
+        "code_16", "code_17", "code_18", "code_19"
+      ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.selectedIndex = 0;
+      });
+
+      const hiddenFull = document.getElementById("mroy_full_code");
+      if (hiddenFull) hiddenFull.value = "MRA1-";
+      const previewSpan = document.getElementById("mroy_full_code_preview");
+      if (previewSpan) previewSpan.textContent = "MRA1-";
     }
+
+
+    // ✅ Si ya hay selección, cargarla al modal (EDIT)
+    if (hasMroySelection && pump.mroy_codes) {
+      for (let i = 1; i <= 19; i++) {
+        const key = `code_${String(i).padStart(2, "0")}`;
+        setSelectValueSafe(key, pump.mroy_codes[key]);
+      }
+
+      const hiddenFull = document.getElementById("mroy_full_code");
+      if (hiddenFull) hiddenFull.value = pump.mroy_full_code || "";
+
+      const previewSpan = document.getElementById("mroy_full_code_preview");
+      if (previewSpan) previewSpan.textContent = pump.mroy_full_code || "MRA1-";
+    }
+
+
+
 
     // 8) Preview + abrir modal
     updateMroyCodePreview();

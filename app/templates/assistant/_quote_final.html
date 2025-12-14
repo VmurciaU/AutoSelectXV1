@@ -477,5 +477,13 @@ MODALES CENTRALIZADOS
     form.submit();
   }
 </script>
+<script>
+  window.currentCaseId = {{ case.id }};
+  window.pumpsData = {{ pumps_payload_json | safe }};
+  window.autoMroySuggestions = {{ auto_mroy_suggestions_json | safe }};
+</script>
+
+
+
 
 {% endblock %}

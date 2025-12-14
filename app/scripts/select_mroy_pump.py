@@ -807,6 +807,78 @@ def upsert_mroy_selected_pump(
         if own_session:
             db.close()
 
+def upsert_mroy_selected_pump_from_form(
+    pump_id: int,
+    user_id: int,
+    form,
+    db: Optional[Session] = None,
+) -> MroySelectedPump:
+    own_session = False
+    if db is None:
+        db = SessionLocal()
+        own_session = True
+
+    try:
+        detected = (
+            db.query(PumpsDetected)
+            .filter(PumpsDetected.id == pump_id, PumpsDetected.is_active.is_(True))
+            .first()
+        )
+        if not detected:
+            raise ValueError(f"No existe bomba detectada activa con id={pump_id}")
+
+        selected = (
+            db.query(MroySelectedPump)
+            .filter(MroySelectedPump.detected_pump_id == pump_id)
+            .first()
+        )
+
+        if selected is None:
+            selected = MroySelectedPump(
+                case_id=detected.case_id,
+                detected_pump_id=pump_id,
+                created_by=user_id,
+                mroy_series="MRA1",
+                full_code=form.get("mroy_full_code") or "MRA1-",
+            )
+            db.add(selected)
+
+        selected.updated_by = user_id
+        selected.is_active = True
+        selected.mroy_series = "MRA1"
+        selected.full_code = form.get("mroy_full_code") or selected.full_code
+
+        # Guardar códigos (MVP)
+        for i in range(1, 20):
+            key = f"code_{i:02d}"
+            if hasattr(selected, key):
+                setattr(selected, key, (form.get(key) or None))
+
+        # Snapshot rápido desde la bomba detectada (opcional, pero útil)
+        selected.design_pressure_psi = detected.discharge_pressure_std or detected.discharge_pressure
+        selected.design_flow_gph = detected.flow_max_std
+        selected.design_viscosity_cp = detected.viscosity
+
+        tag = detected.tag or "Sin TAG"
+        fluid = detected.fluid or "-"
+        service = detected.service or "-"
+        selected.summary_text = f"{tag} – {fluid} – {service}"
+
+        selected.touch()
+        db.commit()
+        db.refresh(selected)
+        return selected
+
+    except Exception:
+        if own_session:
+            db.rollback()
+        raise
+    finally:
+        if own_session:
+            db.close()
+
+
+
 
 # -------------------------------------------------------------------
 # Entry point para ejecución directa

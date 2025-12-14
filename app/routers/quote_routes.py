@@ -48,6 +48,7 @@ from app.models.mroy_extended import (
 # ⬇️ Servicio maestro de selección MROY (usa el script que ya creaste)
 from app.scripts.select_mroy_pump import (
     upsert_mroy_selected_pump,
+    upsert_mroy_selected_pump_from_form,  # ✅ NUEVO
     SelectionError,
     select_mroy_pump_by_id,   # ⬅️ NUEVO
 )
@@ -513,6 +514,13 @@ async def get_quote_view(
                         if selected_by_pump_id.get(pump.id)
                         else None
                     ),
+
+                    "mroy_codes": (
+                        selected_by_pump_id.get(pump.id).to_dict()
+                        if selected_by_pump_id.get(pump.id)
+                        else None
+                    ),
+
                     
                 }
                 for pump in detected_from_db
@@ -747,6 +755,7 @@ async def update_detected_pump(
 # ======================================================
 @router.post("/quote/{case_id}/detected-pump/{pump_id}/select-mroy")
 async def select_mroy_pump_route(
+    request: Request,  # ✅ IMPORTANTE
     case_id: int,
     pump_id: int,
     db: Session = Depends(get_db),
@@ -781,11 +790,25 @@ async def select_mroy_pump_route(
 
     # 3. Ejecutar selector y persistir selección
     try:
-        _selected = upsert_mroy_selected_pump(
-            pump_id=pump_id,
-            user_id=current_user_id,
-            db=db,
-        )
+        form = await request.form()
+
+        # Si el modal mandó full_code, guardamos lo que el usuario eligió
+        if form.get("mroy_full_code"):
+            _selected = upsert_mroy_selected_pump_from_form(
+                pump_id=pump_id,
+                user_id=current_user_id,
+                form=form,
+                db=db,
+            )
+        else:
+            # fallback (si alguien llama el endpoint sin modal)
+            _selected = upsert_mroy_selected_pump(
+                pump_id=pump_id,
+                user_id=current_user_id,
+                db=db,
+            )
+
+    
     except SelectionError as e:
         # Error de reglas de selección (viscosidad, presión, catálogo, etc.)
         raise HTTPException(status_code=400, detail=str(e))
