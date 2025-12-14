@@ -87,41 +87,39 @@ Usa pumps_from_db (lista de objetos ORM) + pumpsData.db en JS
         </div>
       </div>
 
-      {# =====================================================
-      COLUMNA DERECHA – MROY + ELIMINAR
-      ===================================================== #}
-      <div class="flex items-center gap-3 ml-4">
+      {# ===========================
+      ZONA MROY (SERVER-SIDE CORRECTA)
+      =========================== #}
 
-        {# Zona MROY: link o código según haya selección o no #}
-        <div>
-          {% if pump.mroy_full_code %}
+      {% set sp = selected_by_pump_id.get(pump.id) %}
 
-          {# YA HAY SELECCIÓN MROY GUARDADA #}
-          <button type="button" class="text-emerald-300 underline underline-offset-2 hover:text-emerald-200 text-[11px]"
-            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}', '{{ pump.tag or "" }}')">
-            MROY A – {{ pump.mroy_full_code }}
+      <div class="flex items-center gap-4 ml-4">
+        <!-- MROY -->
+        <div class="flex flex-col gap-2 items-start">
+          {% if sp and sp.full_code %}
+          <button type="button"
+            class="text-emerald-300 underline underline-offset-2 hover:text-emerald-200 text-[11px] whitespace-nowrap"
+            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}')">
+            MROY A – {{ sp.full_code }}
           </button>
-
           {% else %}
-          {# NO HAY SELECCIÓN MROY TODAVÍA #}
-          
-          <button type="button" class="text-sky-300 underline underline-offset-2 hover:text-sky-200 text-[11px]"
-            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}', '{{ pump.tag or "" }}')">
+          <button type="button"
+            class="text-sky-300 underline underline-offset-2 hover:text-sky-200 text-[11px] whitespace-nowrap"
+            data-pump-id="{{ pump.id }}" onclick="openMroySelector('{{ pump.id }}')">
             Seleccionar bomba MROY
           </button>
-
           {% endif %}
         </div>
 
-        {# Botón Eliminar: soft delete de la bomba detectada + selección #}
+        <!-- Eliminar -->
         <div>
           <button type="button" onclick="submitDeleteDetectedPump('{{ pump.id }}')"
             class="px-2 py-1 text-[10px] rounded bg-red-700 hover:bg-red-600 border border-red-600">
             Eliminar
           </button>
         </div>
-
       </div>
+
 
     </div>
     {% endfor %}

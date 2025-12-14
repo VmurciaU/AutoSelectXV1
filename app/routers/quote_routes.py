@@ -559,6 +559,9 @@ async def get_quote_view(
         "selected_pumps": selected_pumps,
         "has_selected_pumps": has_selected_pumps,
 
+        # ✅ NUEVO: mapa para usar en Jinja (panel BD)
+        "selected_by_pump_id": selected_by_pump_id,
+
         # JSON maestro para JS
         "pumps_payload_json": pumps_payload_json,
         

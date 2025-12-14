@@ -461,36 +461,42 @@
 
   // --- Preview del código MROY
   function updateMroyCodePreview() {
+  const ids = [
+    "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08","code_09",
+    "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18","code_19"
+  ];
 
-    const ids = [
-      "code_01","code_02","code_03","code_04","code_05","code_06","code_07","code_08","code_09",
-      "code_10","code_11","code_12","code_13","code_14","code_15","code_16","code_17","code_18","code_19"
-    ];
+  const values = {};
+  ids.forEach(id => values[id] = document.getElementById(id)?.value || "");
 
+  const core = (values.code_01 || values.code_02 || values.code_03)
+    ? `${values.code_01}${values.code_02}${values.code_03}`
+    : "";
 
-    const values = {};
-    ids.forEach(id => values[id] = document.getElementById(id)?.value || "");
+  const extras = [
+    values.code_04, values.code_05, values.code_06, values.code_07, values.code_08, values.code_09,
+    values.code_10, values.code_11, values.code_12, values.code_13, values.code_14, values.code_15,
+    values.code_16, values.code_17, values.code_18, values.code_19
+  ].filter(Boolean).join("");
 
-    let fullCode = "MRA1-";
-    const core = (values.code_01 || values.code_02 || values.code_03)
-      ? `${values.code_01}${values.code_02}${values.code_03}`
-      : "";
+  // ✅ No producir "MRA1--..."
+  let fullCode = "MRA1-";
+  if (core) {
     fullCode += core;
-
-    const extras = [
-      values.code_04, values.code_05, values.code_06, values.code_07, values.code_08, values.code_09,
-      values.code_10, values.code_11, values.code_12, values.code_13, values.code_14, values.code_15,
-      values.code_16, values.code_17, values.code_18, values.code_19
-    ].filter(Boolean).join("");
-
     if (extras) fullCode += "-" + extras;
-
-    const previewSpan = document.getElementById("mroy_full_code_preview");
-    if (previewSpan) previewSpan.textContent = fullCode;
-
-    const hiddenFull = document.getElementById("mroy_full_code");
-    if (hiddenFull) hiddenFull.value = fullCode;
+  } else {
+    // si no hay core, no agregamos el guión extra
+    if (extras) fullCode += extras; // quedaría "MRA1-1X..." (sin doble "-")
   }
+
+  const previewSpan = document.getElementById("mroy_full_code_preview");
+  if (previewSpan) previewSpan.textContent = fullCode;
+
+  const hiddenFull = document.getElementById("mroy_full_code");
+  if (hiddenFull) hiddenFull.value = fullCode;
+}
+
+
 
   // --- Función global (para onclick)
   window.openMroySelector = function (pumpIdStr) {
@@ -586,6 +592,25 @@
       if (hiddenFull) hiddenFull.value = "MRA1-";
       const previewSpan = document.getElementById("mroy_full_code_preview");
       if (previewSpan) previewSpan.textContent = "MRA1-";
+
+
+
+
+      // ✅ Preselección 01–03 usando sugerencias del backend (autoMroyData)
+      const sug = (window.autoMroyData && window.autoMroyData[pump.id]) ? window.autoMroyData[pump.id] : null;
+
+      if (sug) {
+        dbgModal("Sugerencias auto 01–03 encontradas", sug);
+        setSelectValueSafe("code_01", sug.code_01);
+        setSelectValueSafe("code_02", sug.code_02);
+        setSelectValueSafe("code_03", sug.code_03);
+      } else {
+        dbgModal("Sin sugerencias auto 01–03 para esta bomba", { pumpId: pump.id });
+      }      
+
+
+
+    
     }
 
 
