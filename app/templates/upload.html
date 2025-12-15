@@ -194,7 +194,7 @@
           cronometro.textContent = `⏳ ${m}m ${s.toString().padStart(2, '0')}s`;
         }
 
-        cronometroInterval = setInterval(actualizarCronometro, 5000);
+        cronometroInterval = setInterval(actualizarCronometro, 1000);
         actualizarCronometro();
 
         let progresoSimbolico = 5;
