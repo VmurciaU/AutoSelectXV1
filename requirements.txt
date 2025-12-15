@@ -15,7 +15,7 @@ Jinja2==3.1.2
 # === Auth ===
 passlib==1.7.4
 python-jose==3.5.0
-bcrypt==4.2.1          # ← OBLIGATORIO para Passlib (Render lo necesita)
+bcrypt==4.0.1          # ← OBLIGATORIO para Passlib (Render lo necesita)
 
 # === Database ===
 SQLAlchemy==2.0.41

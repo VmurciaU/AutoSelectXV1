@@ -1,6 +1,5 @@
-# app/routers/admin_routes.py
 from fastapi import APIRouter, Request, Depends, status, Query
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.responses import RedirectResponse, HTMLResponse, Response
 from starlette.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -24,14 +23,29 @@ def get_db():
 # -----------------------------------------------------------
 # Helper: verificar si el usuario es admin
 # -----------------------------------------------------------
-def _require_admin(request: Request, db: Session):
-    """Devuelve el usuario admin si existe, de lo contrario None."""
+def _require_admin(request: Request, db: Session) -> User | Response:
+    """
+    Devuelve el usuario admin si existe.
+    Si hay cookie inválida → limpia sesión y redirige a login.
+    """
     user_id = get_current_user_id(request)
+
+    # Cookie existe pero token inválido
+    if request.cookies.get("session_token") and not user_id:
+        resp = RedirectResponse(url="/login", status_code=302)
+        resp.delete_cookie("session_token", path="/")
+        return resp
+
     if not user_id:
-        return None
+        return RedirectResponse(url="/login", status_code=302)
+
     usuario = db.query(User).filter(User.id == user_id).first()
-    if not usuario or usuario.rol != "admin":
-        return None
+
+    if not usuario or usuario.rol != "admin" or not bool(usuario.activo):
+        resp = RedirectResponse(url="/login", status_code=302)
+        resp.delete_cookie("session_token", path="/")
+        return resp
+
     return usuario
 
 # -----------------------------------------------------------
@@ -47,15 +61,16 @@ def gestionar_usuarios(
     db: Session = Depends(get_db),
 ):
     admin = _require_admin(request, db)
-    if not admin:
-        return RedirectResponse(url="/", status_code=302)
+    if isinstance(admin, Response):
+        return admin
 
     query = db.query(User)
 
-    # --- Filtros dinámicos ---
     if q:
         like = f"%{q.strip()}%"
-        query = query.filter((User.nombre.ilike(like)) | (User.email.ilike(like)))
+        query = query.filter(
+            (User.nombre.ilike(like)) | (User.email.ilike(like))
+        )
 
     if role in {"admin", "usuario"}:
         query = query.filter(User.rol == role)
@@ -86,8 +101,8 @@ def gestionar_usuarios(
 @router.post("/usuarios/estado/{user_id}")
 def cambiar_estado(user_id: int, request: Request, db: Session = Depends(get_db)):
     admin = _require_admin(request, db)
-    if not admin:
-        return RedirectResponse(url="/", status_code=302)
+    if isinstance(admin, Response):
+        return admin
 
     usuario = db.query(User).filter(User.id == user_id).first()
     if usuario:
@@ -102,8 +117,8 @@ def cambiar_estado(user_id: int, request: Request, db: Session = Depends(get_db)
 @router.post("/usuarios/rol/{user_id}")
 def cambiar_rol(user_id: int, request: Request, db: Session = Depends(get_db)):
     admin = _require_admin(request, db)
-    if not admin:
-        return RedirectResponse(url="/", status_code=302)
+    if isinstance(admin, Response):
+        return admin
 
     usuario = db.query(User).filter(User.id == user_id).first()
     if usuario:

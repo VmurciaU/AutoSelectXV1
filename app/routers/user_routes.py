@@ -4,7 +4,8 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from starlette.templating import Jinja2Templates
 from passlib.context import CryptContext
-from itsdangerous import URLSafeSerializer
+from app.utils.auth import get_current_user_id, serializer
+
 
 from app.database.conection import SessionLocal
 from app.models.user import User
@@ -14,9 +15,6 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# ⚠️ Para producción, lee del entorno (no hardcodear)
-SECRET_KEY = "autoselectx_secret_key_2024"
-serializer = URLSafeSerializer(SECRET_KEY, salt="session")
 
 def get_db():
     db = SessionLocal()

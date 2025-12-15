@@ -1,10 +1,8 @@
-# archivo: utils/auth.py
-
+import os
 from fastapi import Request
 from itsdangerous import URLSafeSerializer
 
-# Debe coincidir con el valor usado en user_routes.py
-SECRET_KEY = "autoselectx_secret_key_2024"
+SECRET_KEY = os.getenv("SECRET_KEY", "autoselectx_secret_key_2024")
 serializer = URLSafeSerializer(SECRET_KEY, salt="session")
 
 def get_current_user_id(request: Request) -> int | None:
