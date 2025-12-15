@@ -676,9 +676,6 @@ async def get_quote_view(
     )
 
 
-# ======================================================
-# POST – Guardar Bombas Detectadas (única vez)
-# ======================================================
 @router.post("/quote/{case_id}/save-detected-pumps")
 async def save_detected_pumps(
     case_id: int,
@@ -692,7 +689,7 @@ async def save_detected_pumps(
     if not case:
         raise HTTPException(404, "Caso no encontrado")
 
-    # 2. Verificar si ya existen bombas activas
+    # 2. Evitar duplicados
     existing = (
         db.query(PumpsDetected)
         .filter(
@@ -701,14 +698,13 @@ async def save_detected_pumps(
         )
         .count()
     )
-
     if existing > 0:
         raise HTTPException(
             400,
             "Ya existen bombas detectadas guardadas para este caso.",
         )
 
-    # 3. Parsear JSON recibido
+    # 3. Parsear JSON
     try:
         payload = json.loads(pumps_payload_json)
         detected_list = payload.get("detected", [])
@@ -717,46 +713,57 @@ async def save_detected_pumps(
     except Exception as e:
         raise HTTPException(400, f"JSON inválido: {e}")
 
-    # 4. Guardar cada bomba en BD
+    # 4. Guardar bombas (USANDO SOLO *_std)
     for item in detected_list:
+        opt = item.get("optional") or {}
+
         pump = PumpsDetected(
             case_id=case_id,
             created_by=current_user_id,
             updated_by=current_user_id,
+            is_active=True,
 
+            # =========================
+            # TEXTO / DISPLAY
+            # =========================
             fluid=item.get("fluid"),
-            viscosity=item.get("viscosity"),
+            tag=opt.get("tag"),
+            service=opt.get("service"),
+            materials=opt.get("materials"),
+            area=opt.get("area_classification"),
+            location=opt.get("location"),
+            description=opt.get("pump_type"),
 
-            discharge_pressure=item.get("discharge_pressure"),
+            estado="borrador",
+            cantidad_bombas=item.get("cantidad_bombas") or 1,
+
+            # =========================
+            # NUMÉRICOS (STD ONLY)
+            # =========================
+            discharge_pressure=item.get("discharge_pressure_std"),
             discharge_pressure_std=item.get("discharge_pressure_std"),
 
-            flow_min=(item.get("flow") or {}).get("min"),
-            flow_nominal=(item.get("flow") or {}).get("nominal"),
-            flow_max=(item.get("flow") or {}).get("max"),
+            flow_min=item.get("flow_min_std"),
+            flow_nominal=item.get("flow_nominal_std"),
+            flow_max=item.get("flow_max_std"),
 
             flow_max_std=item.get("flow_max_std"),
             flow_unit_std=item.get("flow_unit_std"),
 
-            cantidad_bombas=item.get("cantidad_bombas") or 1,
-            estado=item.get("estado") or "borrador",
-
-            description=(item.get("optional") or {}).get("description"),
-            tag=(item.get("optional") or {}).get("tag"),
-            service=(item.get("optional") or {}).get("service"),
-            temperature=(item.get("optional") or {}).get("temperature"),
-            materials=(item.get("optional") or {}).get("materials"),
-            area=(item.get("optional") or {}).get("area"),
-            location=(item.get("optional") or {}).get("location"),
+            temperature=item.get("temperature_std"),
+            viscosity=item.get("viscosity_std"),
         )
+
         db.add(pump)
 
     db.commit()
 
-    # 5. Redirigir a GET
+    # 5. Redirigir
     return RedirectResponse(
         url=f"/quote/{case_id}",
         status_code=303,
     )
+
 
 
 # ======================================================
