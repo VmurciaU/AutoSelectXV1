@@ -5,6 +5,8 @@ from itsdangerous import URLSafeSerializer
 SECRET_KEY = os.getenv("SECRET_KEY", "autoselectx_secret_key_2024")
 serializer = URLSafeSerializer(SECRET_KEY, salt="session")
 
+
+
 def get_current_user_id(request: Request) -> int | None:
     token = request.cookies.get("session_token")
     if not token:
@@ -14,3 +16,5 @@ def get_current_user_id(request: Request) -> int | None:
         return int(user_id)
     except Exception:
         return None
+    
+    
