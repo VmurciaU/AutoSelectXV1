@@ -34,6 +34,12 @@ from raggrafo.scripts.rag_service import run_rag_case
 import os
 
 
+def with_case_salt(case_id: int, q: str) -> str:
+    # fuerza que el cache/consulta quede asociada al case_id
+    return f"[CASE_ID={case_id}] {q}"
+
+
+
 def load_requirements_from_storage(case_id: int):
     """Carga las bombas normalizadas desde rag_storage si existen."""
     path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
@@ -133,7 +139,7 @@ async def get_case_assistant(
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
         "requirements": load_requirements_from_storage(case_id),
-        "requirements_json": requirements_list if 'requirements_list' in locals() else [],
+        "requirements_json": load_requirements_from_storage(case_id),
         "quote_items": [],
         "selected_client": None,
         "selected_terms": None,
@@ -200,10 +206,12 @@ async def post_case_assistant(
         # ============================================================
         if clean_user_msg == "@buscar_bombas_items":
             try:
-                pregunta = (
+                pregunta = with_case_salt(case_id, (
                     "Extrae TODAS las bombas dosificadoras con caudal nominal, "
                     "presión, viscosidad, turndown y TAG. Devuelve el JSON limpio."
-                )
+                ))
+
+                print(f"[EXTRACT] case_id={case_id} -> raggrafo/rag_storage/case_{case_id}/normalized.json")
 
                 task = run_extract_and_normalize(case_id, pregunta)
 
@@ -217,11 +225,10 @@ async def post_case_assistant(
 
                 requirements_list = normalized_json.get("pumps", [])
 
-                # Guardar para persistencia
+                # Guardar para persistencia (SOLO case puntual)
                 path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
                 with open(path, "w") as f:
                     json.dump(normalized_json, f, indent=2)
-
 
                 msgs = build_all_messages(raw_json, normalized_json)
 
@@ -240,14 +247,21 @@ async def post_case_assistant(
                     f"Detalle técnico: {type(e).__name__}: {e}"
                 )
 
+
+
         # ============================================================
         # 5. Consulta normal al motor RAG (modo engineering)
         # ============================================================
         else:
             try:
+                print(
+                    f"[RAG] case_id={case.id} "
+                    f"question={with_case_salt(case.id, clean_user_msg)[:120]}"
+                )
+
                 rag_result = await run_rag_case(
                     case_id=case.id,
-                    question=clean_user_msg,
+                    question=with_case_salt(case.id, clean_user_msg),
                     mode="engineering",
                 )
 
