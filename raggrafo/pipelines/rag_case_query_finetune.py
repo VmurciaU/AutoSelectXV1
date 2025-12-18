@@ -33,8 +33,10 @@ import inspect
 import json
 import re
 import copy
+import os
+import pandas as pd
 from pathlib import Path
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Union, Optional, Tuple
 
 from .pc6_lightrag import (
     RAG_STORAGE_DIR,
@@ -42,6 +44,203 @@ from .pc6_lightrag import (
     _core_initialize,
 )
 from .json_repair import repair_and_parse
+
+
+# ================================================================
+# DETECCIÓN DETERMINÍSTICA DE TAGs (sin LLM)
+# ================================================================
+# Objetivo: maximizar recall de bombas SIN depender de que el LLM "entienda tablas"
+# Fuente primaria: pc4/corpus.jsonl + master_tables.csv (si existen en outputs del caso)
+# Fallback: discovery por LLM (métodos existentes) SOLO si no se encuentran tags.
+
+TAG_TOKEN_RE = re.compile(r"\b[A-Z0-9]{1,10}(?:[-/][A-Z0-9]{1,10}){1,6}\b")
+PUMP_HINT_RE = re.compile(r"\b(BOMBA|BOMBAS|DOSIFIC|DOSIFICAD|METERING|PUMP|DOSING|INJECTION PUMP)\b", re.I)
+NON_PUMP_HINT_RE = re.compile(r"\b(TANQUE|TANK|TK\b|TNK|VALV|VÁLV|LINEA|LINE|PIPING|TUBER|FILTRO|FILTER)\b", re.I)
+
+
+BLACKLIST_SEGMENTS = {
+    "HD", "MR", "ET", "EDP", "ECP", "IEC", "ISO", "ASTM", "NEMA", "API", "ATEX",
+    "DOC", "REV", "VERSION",
+}
+
+def _looks_like_doc_or_standard(token: str) -> bool:
+    t = token.upper()
+    if not t:
+        return True
+    # cosas tipo 220-127V, 94/9/EC
+    if t[0].isdigit():
+        return True
+    if re.match(r"\d{2,4}/\d{1,2}/[A-Z]{1,4}$", t):
+        return True
+    parts = re.split(r"[-/]", t)
+    if any(p in BLACKLIST_SEGMENTS for p in parts):
+        return True
+    # tokens de 2 segmentos: solo aceptamos si se parecen a tags de equipo (P-#### o M156CIP-####, etc.)
+    if len(parts) == 2:
+        if parts[0] == "P":
+            return False
+        if re.match(r"^[A-Z]\d{2,4}[A-Z]{0,4}$", parts[0]):  # M156CIP
+            return False
+        if parts[0].startswith("M") and re.search(r"\d", parts[0]):
+            return False
+        # si llega aquí, suele ser código de paquete/documento (DNC-00001, QUIM-TN05, etc.)
+        return True
+    # muchos estándares tienen patrón XXX-XXX-XXX (todo uppercase corto) y no parecen tags de equipo
+    if len(parts) >= 3 and all(re.match(r"^[A-Z]{2,6}\d*$", p) for p in parts):
+        return True
+    return False
+
+def _case_outputs_root() -> Path:
+    """
+    Intenta localizar outputs/cases de forma robusta.
+    - Env: RAG_CASE_OUTPUTS_DIR
+    - Default relativo al repo: raggrafo/outputs/cases
+    """
+    env = os.getenv("RAG_CASE_OUTPUTS_DIR")
+    if env:
+        return Path(env)
+    # Heurística: .../raggrafo/pipelines/ -> .../raggrafo/outputs/cases
+    here = Path(__file__).resolve()
+    for p in [here] + list(here.parents):
+        if p.name == "raggrafo":
+            return p / "outputs" / "cases"
+    # fallback: cwd
+    return Path("raggrafo") / "outputs" / "cases"
+
+def _find_case_artifact(case_id: int, pattern: str) -> Optional[Path]:
+    root = _case_outputs_root() / str(case_id)
+    if not root.exists():
+        return None
+    hits = list(root.rglob(pattern))
+    if not hits:
+        return None
+    # elegimos el más grande (suele ser el "real")
+    hits.sort(key=lambda p: p.stat().st_size, reverse=True)
+    return hits[0]
+
+def _load_case_corpus_text(case_id: int) -> Tuple[str, List[str]]:
+    """
+    Retorna texto concatenado de corpus + lista de hashes para salt determinístico.
+    """
+    corpus_path = _find_case_artifact(case_id, "corpus.jsonl")
+    if corpus_path is None:
+        return "", []
+    texts = []
+    hashes = []
+    try:
+        with corpus_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                obj = json.loads(line)
+                t = obj.get("text") or ""
+                if t:
+                    texts.append(t)
+                h = obj.get("hash")
+                if h:
+                    hashes.append(str(h)[:16])
+    except Exception:
+        return "", []
+    return "\n\n".join(texts), hashes
+
+def _load_master_tables(case_id: int) -> Optional[pd.DataFrame]:
+    path = _find_case_artifact(case_id, "master_tables.csv")
+    if path is None:
+        return None
+    try:
+        return pd.read_csv(path)
+    except Exception:
+        return None
+
+def _extract_tag_tokens(text: str) -> List[str]:
+    if not text:
+        return []
+    up = text.upper()
+    out = []
+    for m in TAG_TOKEN_RE.finditer(up):
+        tok = m.group(0)
+        if not (re.search(r"[A-Z]", tok) and re.search(r"\d", tok)):
+            continue
+        # excluye fechas tipo 20/11/2017
+        if re.match(r"\d{1,2}/\d{1,2}/\d{2,4}$", tok):
+            continue
+        out.append(tok)
+    return out
+
+def _score_tag_context(text: str, tag: str, window: int = 90) -> int:
+    """score simple: +2 pump-hint, -2 non-pump-hint, +1 si contiene INY/QUIM"""
+    tag = tag.upper()
+    score = 0
+    if "INY" in tag or "QUIM" in tag:
+        score += 1
+    # buscamos ocurrencias con contexto
+    for m in re.finditer(re.escape(tag), text.upper()):
+        a = max(0, m.start() - window)
+        b = min(len(text), m.end() + window)
+        ctx = text[a:b]
+        if PUMP_HINT_RE.search(ctx):
+            score += 2
+        if NON_PUMP_HINT_RE.search(ctx):
+            score -= 2
+    return score
+
+def _deterministic_discover_pump_tags(case_id: int, debug: bool = True) -> Tuple[List[str], Dict[str, Any]]:
+    """
+    Devuelve lista de TAGs candidatos a bombas (alta cobertura) + métricas debug.
+    """
+    corpus_text, hashes = _load_case_corpus_text(case_id)
+    df = _load_master_tables(case_id)
+
+    candidates = set(_extract_tag_tokens(corpus_text))
+
+    # también desde tablas (fila completa)
+    if df is not None and not df.empty:
+        # columnas c1..c50
+        ccols = [c for c in df.columns if c.startswith("c")]
+        for _, row in df[ccols].iterrows():
+            s = " ".join(str(x) for x in row.values if isinstance(x, str) or (isinstance(x, (int,float)) and not pd.isna(x)))
+            for tok in _extract_tag_tokens(s):
+                candidates.add(tok)
+
+    # scoring
+    scored = []
+    for t in candidates:
+        t_up = t.upper()
+        sc = _score_tag_context(corpus_text, t_up)
+
+        # Inclusión por patrones fuertes (alta prioridad)
+        strong = (
+            t_up.startswith("P-") or
+            t_up.startswith("M-INY-QUIM-") or
+            re.match(r"^[A-Z]\d{2,4}[A-Z]{0,4}-\d{3,6}$", t_up)  # ej: M156CIP-5503
+        )
+
+        if _looks_like_doc_or_standard(t_up) and not strong:
+            continue
+
+        # heurística final: requerimos evidencia de "bomba" en contexto, salvo strong
+        if strong or sc >= 3:
+            scored.append((sc, t_up))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+
+    tags = [t for _, t in scored]
+    dbg = {
+        "case_id": case_id,
+        "corpus_hashes": hashes,
+        "candidates_total": len(candidates),
+        "selected_total": len(tags),
+        "selected_head": tags[:20],
+    }
+    if debug:
+        print(f"[DET] corpus_hashes={hashes[:3]} candidates={len(candidates)} selected={len(tags)} head={tags[:10]}")
+    return tags, dbg
+
+def _salt_from_hashes(case_id: int, hashes: List[str]) -> str:
+    if not hashes:
+        return f"[CASE_SALT:{case_id}]"
+    return f"[CASE_SALT:{case_id}:{'-'.join(hashes[:4])}]"
+
 
 try:
     # Config central del RAG (prompts, modos, etc.)
@@ -362,7 +561,7 @@ Devuelve JSON ESTRICTO:
 {
   "skids": [
     {"skid_tag": "M-INY-QUIM-LOC05", "pump_tags": ["P-58","P-64","P-65"]},
-    {"skid_tag": "M-INY-QUIM-CB06", "pump_tags": ["CB-16","CB-17"] }
+    {"skid_tag": "M-INY-QUIM-CB06", "pump_tags": ["CB-16","CB-17"]}
   ]
 }
 
@@ -372,6 +571,7 @@ Reglas duras:
   • CB-<número> (ej: CB-16)
   • DT-<número> (ej: DT-194)
   • PG-<texto/número> (ej: PG-05R, PG-23)
+  • LOC-<texto/número> (ej: LOC-05, LOC-8E)
 - skid_tag debe ser el TAG SKID literal de la tabla (ej: M-INY-QUIM-...).
 - No inventes tags. Si un skid no tiene bombas claras, pon pump_tags=[].
 - Debe cubrir TODOS los skids listados en la tabla (si existe).
@@ -389,6 +589,8 @@ Reglas duras:
             pts = rec.get("pump_tags") or []
             if skid and isinstance(pts, list):
                 clean = [str(t).strip() for t in pts if str(t).strip()]
+                # Filtrar si el tag skid aparece también en la lista de bombas
+                clean = [tag for tag in clean if tag and tag != skid]
                 if clean:
                     out[skid] = sorted(list(set(clean)))
     return out
@@ -422,7 +624,7 @@ def _looks_like_valid_single_pump_dict(d: Dict[str, Any]) -> bool:
     return True
 
 
-async def _extract_single_by_tag(rag, tag: str) -> Dict[str, Any]:
+async def _extract_single_by_tag(rag, tag: str, salt: str = "") -> Dict[str, Any]:
     """
     EXTRAER UNA BOMBA COMPLETA POR TAG
 
@@ -441,6 +643,8 @@ async def _extract_single_by_tag(rag, tag: str) -> Dict[str, Any]:
     # ----------------------
     base_prompt = CFG.EXTRACT_CONFIG.get("prompt_json_single", "")
     q = f"{base_prompt}\n\nPregunta:\nDame todos los datos de proceso de la bomba {tag}"
+    if salt:
+        q = q + "\n\n" + salt
 
     resp = await _safe_aquery(rag, q, CFG.EXTRACT_CONFIG.get("query_param"))
     safe_a = repair_and_parse(resp)
@@ -552,7 +756,7 @@ Extrae TODAS las bombas dosificadoras únicamente desde TABLAS
 # MULTIPASO 80/20 (PIPELINE INDUSTRIAL)
 # ================================================================
 
-async def _run_extract_multipaso(rag, question: str, mode: str) -> Dict[str, Any]:
+async def _run_extract_multipaso(case_id: int, rag, question: str, mode: str) -> Dict[str, Any]:
     """
     Orquestador industrial 80/20:
 
@@ -564,62 +768,66 @@ async def _run_extract_multipaso(rag, question: str, mode: str) -> Dict[str, Any
     5) Fallback JSON LIST según CFG.MODES[mode]
     """
 
-    # 1 — TAGs REALES
-    tags = await _discover_pumps_primary(rag)
-    print(f"[DISCOVERY] primary tags count={len(tags)} head={tags[:10]}")
+    # 1 — TAGs DETERMINÍSTICOS (pc4/corpus + master_tables)
+    det_tags, det_dbg = _deterministic_discover_pump_tags(case_id, debug=True)
+    corpus_text, hashes = _load_case_corpus_text(case_id)
+    salt = _salt_from_hashes(case_id, hashes)
 
-    if tags:
-        pumps: List[Dict[str, Any]] = []
-        for t in tags:
-            pumps.append(await _extract_single_by_tag(rag, t))
-        return {"pumps": pumps, "notes": "ok-primary"}
+    tags_all: List[str] = []
+    if det_tags:
+        tags_all.extend(det_tags)
 
-    # 2 — TAGs secundarios
-    tags2 = await _discover_pumps_secondary(rag)
-    print(f"[DISCOVERY] secondary tags count={len(tags2)} head={tags2[:10]}")
+    # 2 — (Opcional) Discovery por LLM SOLO si no hallamos tags determinísticos
+    if not tags_all:
+        tags_llm = await _discover_pumps_primary(rag)
+        print(f"[DISCOVERY] primary tags count={len(tags_llm)} head={tags_llm[:10]}")
+        tags_all.extend(tags_llm)
 
-    if tags2:
-        pumps: List[Dict[str, Any]] = []
-        for t in tags2:
-            pumps.append(await _extract_single_by_tag(rag, t))
-        return {"pumps": pumps, "notes": "ok-secondary"}
+        tags_llm2 = await _discover_pumps_secondary(rag)
+        print(f"[DISCOVERY] secondary tags count={len(tags_llm2)} head={tags_llm2[:10]}")
+        tags_all.extend(tags_llm2)
 
-    # 2.5 — Discovery por TABLAS: SKID -> TAG BOMBA
+    # 2.5 — Discovery por TABLAS: SKID -> TAG BOMBA (suma, no reemplaza)
     skid_map = await _discover_skids_and_pump_tags(rag)
     print(f"[DISCOVERY] skid_map count={len(skid_map)}")
     if skid_map:
         sample = list(skid_map.items())[:3]
         print(f"[DISCOVERY] skid_map sample={sample}")
+        for _, pump_tags in skid_map.items():
+            tags_all.extend([t for t in pump_tags if t])
 
-        pump_tags: List[str] = []
-        for _, pts in skid_map.items():
-            pump_tags.extend(pts)
+    # Normaliza / dedupe
+    seen = set()
+    tags_all_norm: List[str] = []
+    for t in tags_all:
+        t = (t or "").strip()
+        if not t:
+            continue
+        t_up = t.upper()
+        if t_up in seen:
+            continue
+        seen.add(t_up)
+        tags_all_norm.append(t_up)
 
-        pump_tags = sorted(list({t for t in pump_tags if t}))
-        print(f"[DISCOVERY] pump_tags total={len(pump_tags)} head={pump_tags[:15]}")
+    print(f"[DISCOVERY] tags_final count={len(tags_all_norm)} head={tags_all_norm[:12]}")
 
-        if pump_tags:
-            pumps: List[Dict[str, Any]] = []
-            for t in pump_tags:
-                pumps.append(await _extract_single_by_tag(rag, t))
-            return {"pumps": pumps, "notes": "ok-skid-map"}
+    if tags_all_norm:
+        pumps: List[Dict[str, Any]] = []
+        for t in tags_all_norm:
+            pumps.append(await _extract_single_by_tag(rag, t, salt=salt))
+        return {"pumps": pumps, "notes": "ok-tags-deterministic" if det_tags else "ok-tags-llm"}
 
-    # 3 — Tablas usando la pregunta del usuario
-    tbl1 = await _extract_from_tables(rag, question)
-    if tbl1:
-        return {"pumps": tbl1, "notes": "ok-tables-question"}
-
-    # 4 — Tablas genéricas (consulta "all bombs")
+    # 3 — Tablas genéricas (fallback SOLO si no hubo tags)
     tbl2 = await _extract_from_tables(
         rag,
         "Listado completo de bombas dosificadoras del paquete químico con todos "
         "sus datos de proceso (caudal mínimo, nominal y máximo, presión, "
-        "temperatura, viscosidad, servicio y TAG).",
+        "temperatura, viscosidad, servicio y TAG).\n\n" + salt,
     )
     if tbl2:
         return {"pumps": tbl2, "notes": "ok-tables-generic"}
 
-    # 5 — Fallback JSON LIST (modo extract / extract-list)
+    # 4 — Fallback JSON LIST (modo extract / extract-list)
     if CFG is None or not hasattr(CFG, "MODES"):
         raise RuntimeError("rag_config.MODES no está disponible")
 
@@ -672,7 +880,7 @@ async def extract_query(
 
     # Modos estructurados
     if mode in ("extract", "extract-list"):
-        result = await _run_extract_multipaso(rag, question, mode)
+        result = await _run_extract_multipaso(int(case_id), rag, question, mode)
 
         # 1) Postproceso industrial obligatorio (flow fix)
         result = _postprocess_result(result)
