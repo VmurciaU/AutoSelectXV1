@@ -24,9 +24,13 @@ import sys
 import asyncio
 from typing import Dict, Any, Optional, Tuple, List
 
-from openai import OpenAI
-client = OpenAI()
-
+# OpenAI client (opcional). Si no está instalado, el normalizador NO usa LLM.
+try:
+    from openai import OpenAI  # type: ignore
+    client = OpenAI()
+except Exception:
+    OpenAI = None  # type: ignore
+    client = None
 # ================================================================
 # CONFIGURACIÓN UNIDADES
 # ================================================================
@@ -62,7 +66,7 @@ def _clean(raw: Optional[str]) -> Optional[str]:
 def _extract_nominal(raw_value: str) -> Optional[float]:
     """Extrae número o promedio si es rango."""
     try:
-        nums = re.findall(r"[\d\.]+", raw_value)
+        nums = re.findall(r"\d+(?:\.\d+)?", raw_value)
         if not nums:
             return None
         if len(nums) >= 2:
@@ -70,7 +74,6 @@ def _extract_nominal(raw_value: str) -> Optional[float]:
         return float(nums[0])
     except Exception:
         return None
-
 
 def _parse_value_and_unit(raw: Optional[str]) -> Tuple[Optional[str], Optional[str]]:
     """
@@ -93,7 +96,7 @@ def _parse_value_and_unit(raw: Optional[str]) -> Tuple[Optional[str], Optional[s
 
     # VALOR único
     s2 = re.sub(r"(\d)([a-zA-Z°])", r"\1 \2", s)
-    m = re.search(r"([\d\.]+)\s*([a-zA-Z°]+)", s2)
+    m = re.search(r"(\d+(?:\.\d+)?)\s*([a-zA-Z°]+)", s2)
     if not m:
         return s, None
 
@@ -108,10 +111,41 @@ def _extract_flow_numbers_and_unit(raw_text: str) -> Tuple[List[float], Optional
     if not s:
         return [], None
 
-    nums = [float(x) for x in re.findall(r"[\d\.]+", s)]
+    nums = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", s)]
     m = re.search(r"\b(GPH|LPH|GPD|LPD)\b", s.upper())
     unit = m.group(1) if m else None
     return nums, unit
+
+
+def _extract_flow_pairs(raw_text: str) -> List[Tuple[float, str]]:
+    """Extrae pares (valor, unidad) tipo 72 GPD, 3 GPH, etc."""
+    s = _clean(raw_text or "")
+    if not s:
+        return []
+    out: List[Tuple[float, str]] = []
+    for mm in re.finditer(r"(\d+(?:\.\d+)?)\s*(GPH|LPH|GPD|LPD)\b", s.upper()):
+        out.append((float(mm.group(1)), mm.group(2).upper()))
+    return out
+
+def _flow_to_gph(value: float, unit: str) -> Optional[float]:
+    unit = (unit or "").upper()
+    if unit == "GPH":
+        return value
+    if unit == "LPH":
+        return value / 3.78541
+    if unit == "GPD":
+        return value / 24.0
+    if unit == "LPD":
+        return (value / 24.0) / 3.78541
+    return None
+
+def _same_flow_dual_unit(a_val: float, a_unit: str, b_val: float, b_unit: str, rel_tol: float = 0.06) -> bool:
+    ag = _flow_to_gph(a_val, a_unit)
+    bg = _flow_to_gph(b_val, b_unit)
+    if ag is None or bg is None:
+        return False
+    denom = max(abs(ag), abs(bg), 1e-9)
+    return abs(ag - bg) / denom <= rel_tol
 
 # ================================================================
 # LLM SEMÁNTICO
@@ -156,6 +190,9 @@ Si NO puede inferirse, responde: null
 
 
 async def _ask_llm_for_unit_only(raw: str, field: str) -> Optional[str]:
+    if client is None:
+        return None
+
     try:
         prompt = f"""
 Identifica SOLO la unidad del parámetro '{field}'.
@@ -291,7 +328,7 @@ async def _normalize_param(raw_value: Any, field: str, allowed_units: set, conve
 async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     out = dict(p)
 
-    # ------------------------------------------------------------
+        # ------------------------------------------------------------
     # FLUJO (min–max–nominal) con heurística industrial
     # ------------------------------------------------------------
     flow_raw = p.get("flow", {}) or {}
@@ -300,29 +337,52 @@ async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     raw_max = flow_raw.get("max")
     raw_text = flow_raw.get("raw") or ""
 
+    # 1) Detectar unidad primaria y números (para rangos reales)
     nums, unit_txt = _extract_flow_numbers_and_unit(raw_text)
     unit_txt = unit_txt or "GPH"  # fallback conservador
+
+    # 2) Airbag para dual-unit equivalente: "72 GPD (3 GPH)" → NO es rango
+    pairs = _extract_flow_pairs(raw_text)
+    if len(pairs) >= 2 and _same_flow_dual_unit(pairs[0][0], pairs[0][1], pairs[1][0], pairs[1][1]):
+        # Preferimos el valor en GPH si está presente; si no, el primero.
+        chosen_val, chosen_unit = pairs[0]
+        for v, u in pairs[:3]:
+            if u == "GPH":
+                chosen_val, chosen_unit = v, u
+                break
+
+        raw_min = None
+        # NO inventamos nominal
+        raw_nom = raw_nom if raw_nom is not None else None
+        raw_max = chosen_val
+        unit_txt = chosen_unit
+        nums = [chosen_val]
 
     # Detectar si el texto menciona "nominal"
     has_nominal_word = bool(re.search(r"nominal", raw_text, re.IGNORECASE))
 
+    # Detectar textos tipo "hasta / up to" (máximo)
+    up_to_in_text = bool(re.search(r"\b(hasta|up to|max\.?|máx\.?)\b", str(raw_text), re.IGNORECASE))
+    has_dash_range = bool(re.search(r"\d\s*[-–—]\s*\d", str(raw_text)))
+
     # === MIN ===
+    min_val_str = None
     if raw_min is not None:
         min_val_str = str(raw_min)
-    elif len(nums) >= 1:
+    elif (not up_to_in_text) and len(nums) >= 1:
+        # si es "hasta X", preferimos no inventar min
         min_val_str = str(nums[0])
-    else:
-        min_val_str = None
 
     fmin_std = _convert_flow(min_val_str, unit_txt) if min_val_str is not None else None
 
     # === MAX ===
+    max_val_str = None
     if raw_max is not None:
         max_val_str = str(raw_max)
     elif len(nums) >= 2:
         max_val_str = str(nums[1])
-    else:
-        max_val_str = None
+    elif up_to_in_text and len(nums) >= 1:
+        max_val_str = str(nums[0])
 
     fmax_std = _convert_flow(max_val_str, unit_txt) if max_val_str is not None else None
 
@@ -330,18 +390,21 @@ async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     nominal_std = None
     if raw_nom is not None and has_nominal_word:
         # Solo consideramos nominal si el texto menciona nominal explícitamente
-        # y el valor no coincide con min/max (para evitar promedios inventados).
         same_as_min = (raw_min is not None and raw_nom == raw_min)
         same_as_max = (raw_max is not None and raw_nom == raw_max)
         if not same_as_min and not same_as_max:
             nominal_std = _convert_flow(str(raw_nom), unit_txt)
+
+    # Si el texto dice "hasta" y NO es rango real, forzamos nominal None
+    if up_to_in_text and not has_dash_range:
+        nominal_std = None
 
     out["flow_min_std"] = fmin_std
     out["flow_nominal_std"] = nominal_std
     out["flow_max_std"] = fmax_std
     out["flow_unit_std"] = FLOW_STD
 
-    # ------------------------------------------------------------
+# ------------------------------------------------------------
     # PRESIÓN
     # ------------------------------------------------------------
     dp_raw = p.get("discharge_pressure")
