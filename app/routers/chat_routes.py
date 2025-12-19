@@ -19,7 +19,7 @@ from app.database.conection import SessionLocal
 from app.utils.auth import get_current_user_id
 from app.models.cases import Case
 
-from app.models.user import User 
+from app.models.user import User
 
 
 # Pipelines EXTRACT-LIST + NORMALIZE
@@ -39,18 +39,18 @@ def with_case_salt(case_id: int, q: str) -> str:
     return f"[CASE_ID={case_id}] {q}"
 
 
-
 def load_requirements_from_storage(case_id: int):
     """Carga las bombas normalizadas desde rag_storage si existen."""
     path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
     if not os.path.exists(path):
         return []
     try:
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         return data.get("pumps", [])
-    except:
+    except Exception:
         return []
+
 
 # ============================================================
 #  CONFIGURACIÓN BASE
@@ -102,6 +102,7 @@ def clamp_history(history: list[dict]) -> list[dict]:
         return history
     return history[-MAX_HISTORY:]
 
+
 # ============================================================
 #  GET — CARGA INICIAL DE LA PÁGINA DEL ASISTENTE
 # ============================================================
@@ -121,15 +122,12 @@ async def get_case_assistant(
     case = db.query(Case).filter(Case.id == case_id).first()
     if not case:
         raise HTTPException(status_code=404, detail="Caso no encontrado")
-    
+
     current_user = db.query(User).get(current_user_id)
 
     chat_history = decode_history(history)
     if not chat_history:
         chat_history = build_initial_history()
-
-    
-
 
     history_serialized = encode_history(chat_history)
 
@@ -150,6 +148,7 @@ async def get_case_assistant(
     }
 
     return templates.TemplateResponse("case_assistant.html", context)
+
 
 # ============================================================
 #  POST — PROCESA MENSAJES DEL ASISTENTE
@@ -175,7 +174,6 @@ async def post_case_assistant(
         raise HTTPException(status_code=404, detail="Caso no encontrado")
     current_user = db.query(User).get(current_user_id)
 
-
     # -----------------------------------
     # 2. Reconstruir historial
     # -----------------------------------
@@ -189,6 +187,8 @@ async def post_case_assistant(
     # Evitar mensajes vacíos
     if not clean_user_msg:
         assistant_text = "⚠️ Mensaje vacío. Escribe una pregunta o usa @buscar_bombas_items."
+        requirements_list = load_requirements_from_storage(case_id)
+
     else:
         # -----------------------------------
         # 3. Agregar mensaje del usuario al historial
@@ -200,6 +200,7 @@ async def post_case_assistant(
         })
 
         assistant_text = None
+        requirements_list = None  # se define si ejecuta extracción
 
         # ============================================================
         # 4. Comando especial: @buscar_bombas_items
@@ -213,22 +214,20 @@ async def post_case_assistant(
 
                 print(f"[EXTRACT] case_id={case_id} -> raggrafo/rag_storage/case_{case_id}/normalized.json")
 
-                task = run_extract_and_normalize(case_id, pregunta)
-
-                if asyncio.iscoroutine(task) or isinstance(task, asyncio.Task):
-                    comando_result = await task
-                else:
-                    comando_result = task
+                # ✅ FIX CRÍTICO:
+                # Antes: se devolvía Task / coroutine dependiendo del wrapper -> carreras y mezcla
+                # Ahora: SIEMPRE esperamos el resultado (determinístico)
+                comando_result = await run_extract_and_normalize(case_id, pregunta, mode="extract-list")
 
                 raw_json = comando_result.get("raw", {})
                 normalized_json = comando_result.get("normalized", {})
 
                 requirements_list = normalized_json.get("pumps", [])
 
-                # Guardar para persistencia (SOLO case puntual)
+                # (Mantengo tu guardado manual por compatibilidad con tu UI)
                 path = f"raggrafo/rag_storage/case_{case_id}/normalized.json"
-                with open(path, "w") as f:
-                    json.dump(normalized_json, f, indent=2)
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(normalized_json, f, ensure_ascii=False, indent=2)
 
                 msgs = build_all_messages(raw_json, normalized_json)
 
@@ -246,8 +245,7 @@ async def post_case_assistant(
                     f"⚠️ Error ejecutando @buscar_bombas_items\n\n"
                     f"Detalle técnico: {type(e).__name__}: {e}"
                 )
-
-
+                requirements_list = load_requirements_from_storage(case_id)
 
         # ============================================================
         # 5. Consulta normal al motor RAG (modo engineering)
@@ -287,6 +285,9 @@ async def post_case_assistant(
                     f"Detalle: {type(e).__name__}: {e}"
                 )
 
+            # En consulta normal, requirements desde storage
+            requirements_list = load_requirements_from_storage(case_id)
+
     # ============================================================
     # 6. Agregar respuesta del asistente (si existe)
     # ============================================================
@@ -308,17 +309,15 @@ async def post_case_assistant(
         "case": case,
         "chat_messages": chat_history,
         "chat_history_serialized": history_serialized,
-        "requirements": requirements_list 
-            if 'requirements_list' in locals() 
-            else load_requirements_from_storage(case_id),
-        "requirements_json": requirements_list if 'requirements_list' in locals() else [],
+        "requirements": requirements_list if requirements_list is not None else load_requirements_from_storage(case_id),
+        "requirements_json": requirements_list if requirements_list is not None else [],
         "quote_items": [],
         "selected_client": None,
         "selected_terms": None,
         "quote_notes": "",
         "pipeline_summary": None,
         "user_name": current_user.nombre,
-        "user_rol": current_user.rol,   
+        "user_rol": current_user.rol,
     }
 
     return templates.TemplateResponse("case_assistant.html", context)

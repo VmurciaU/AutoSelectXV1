@@ -117,33 +117,18 @@ if __name__ == "__main__":
     print("\n=== FIN ===\n")
 
 
-
 # ================================================================
-# FUNCIÓN SINCRÓNICA PARA FASTAPI
+# FUNCIÓN PARA FASTAPI (CORRECTA)
 # ================================================================
-def run_extract_and_normalize(case_id: int, question: str, mode="extract-list", top_k=6):
+async def run_extract_and_normalize(case_id: int, question: str, mode="extract-list", top_k=6):
     """
-    Wrapper SEGURO para FastAPI.
-    Ejecuta extract_and_normalize() dentro del loop sin bloquearlo.
+    Wrapper CORRECTO para FastAPI (async):
+    - SIEMPRE se espera (await)
+    - NUNCA create_task (evita carreras y mezcla entre casos)
     """
-    try:
-        # Caso: CLI (no hay loop)
-        return asyncio.run(
-            extract_and_normalize(
-                case_id=case_id,
-                question=question,
-                mode=mode,
-                top_k=top_k,
-            )
-        )
-    except RuntimeError:
-        # Caso: FastAPI (loop ya corriendo)
-        loop = asyncio.get_running_loop()
-        return loop.create_task(
-            extract_and_normalize(
-                case_id=case_id,
-                question=question,
-                mode=mode,
-                top_k=top_k,
-            )
-        )
+    return await extract_and_normalize(
+        case_id=case_id,
+        question=question,
+        mode=mode,
+        top_k=top_k,
+    )
