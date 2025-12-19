@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-NORMALIZER v4.4 – AutoSelect-X (FINAL, industrial)
-==================================================
+NORMALIZER v4.5 – AutoSelect-X (industrial, group-safe)
+======================================================
 
 Objetivos clave:
 - NO inventar flow_nominal cuando no existe explícito en los documentos.
 - Si solo hay rango mínimo–máximo en el texto (sin palabra "nominal"):
     → solo se normalizan min y max, y flow_nominal_std = None.
-- Si el texto contiene explícitamente "nominal" y el JSON trae flow.nominal:
-    → se normaliza flow_nominal_std.
-- Manejo robusto para rangos típicos de especificaciones API-675.
-- Uso de LLM solo cuando no hay número explícito para presión/temperatura/viscosidad.
+- Manejo robusto para textos con múltiples unidades (p.ej. "72 GPD (3 GPH)").
+- Uso de LLM SOLO si está disponible (SDK + API key) y NO hay número explícito.
 - Conversión a unidades estándar: GPH, PSI, °C, cP.
 - API 100% compatible con extract_and_normalize.py:
     - async normalize_result(raw_json) -> dict
     - save_normalized(normalized, case_id)
 """
+
+from __future__ import annotations
 
 import json
 import os
@@ -24,13 +24,14 @@ import sys
 import asyncio
 from typing import Dict, Any, Optional, Tuple, List
 
-# OpenAI client (opcional). Si no está instalado, el normalizador NO usa LLM.
+# OpenAI client (opcional). Si no está instalado o no hay API key, el normalizador NO usa LLM.
 try:
     from openai import OpenAI  # type: ignore
-    client = OpenAI()
+    _client = OpenAI()
 except Exception:
     OpenAI = None  # type: ignore
-    client = None
+    _client = None
+
 # ================================================================
 # CONFIGURACIÓN UNIDADES
 # ================================================================
@@ -46,6 +47,12 @@ TEMP_STD = "°C"
 VISC_STD = "cP"
 
 BASE_STORAGE = os.path.join("raggrafo", "rag_storage")
+
+# Regex value+unit
+_FLOW_VU_RE = re.compile(r"(-?\d+(?:[.,]\d+)?)\s*(GPH|GPD|LPH|LPD)\b", re.IGNORECASE)
+_PRESS_VU_RE = re.compile(r"(-?\d+(?:[.,]\d+)?)\s*(PSIG?|BAR)\b", re.IGNORECASE)
+_TEMP_VU_RE = re.compile(r"(-?\d+(?:[.,]\d+)?)\s*(°?C|°?F)\b", re.IGNORECASE)
+_VISC_VU_RE = re.compile(r"(-?\d+(?:[.,]\d+)?)\s*(CP)\b", re.IGNORECASE)
 
 # ================================================================
 # UTILS
@@ -63,17 +70,26 @@ def _clean(raw: Optional[str]) -> Optional[str]:
     return s
 
 
+def _to_float(num_str: str) -> Optional[float]:
+    try:
+        return float(num_str.replace(",", "."))
+    except Exception:
+        return None
+
+
 def _extract_nominal(raw_value: str) -> Optional[float]:
     """Extrae número o promedio si es rango."""
     try:
-        nums = re.findall(r"\d+(?:\.\d+)?", raw_value)
-        if not nums:
+        nums = re.findall(r"-?\d+(?:[.,]\d+)?", raw_value)
+        vals = [v for v in (_to_float(x) for x in nums) if v is not None]
+        if not vals:
             return None
-        if len(nums) >= 2:
-            return (float(nums[0]) + float(nums[1])) / 2.0
-        return float(nums[0])
+        if len(vals) >= 2:
+            return (vals[0] + vals[1]) / 2.0
+        return vals[0]
     except Exception:
         return None
+
 
 def _parse_value_and_unit(raw: Optional[str]) -> Tuple[Optional[str], Optional[str]]:
     """
@@ -89,45 +105,25 @@ def _parse_value_and_unit(raw: Optional[str]) -> Tuple[Optional[str], Optional[s
     # RANGO tipo "0.1 - 2.0 GPD"
     if "-" in s:
         parts = s.split("-")
-        right = parts[1].strip()
+        right = parts[-1].strip()
         m = re.search(r"([a-zA-Z°]+)", right)
         u = m.group(1).upper() if m else None
         return s, u
 
     # VALOR único
     s2 = re.sub(r"(\d)([a-zA-Z°])", r"\1 \2", s)
-    m = re.search(r"(\d+(?:\.\d+)?)\s*([a-zA-Z°]+)", s2)
+    m = re.search(r"(-?\d+(?:[.,]\d+)?)\s*([a-zA-Z°]+)", s2)
     if not m:
         return s, None
 
     return m.group(1), m.group(2).upper()
 
 
-def _extract_flow_numbers_and_unit(raw_text: str) -> Tuple[List[float], Optional[str]]:
-    """
-    Extrae TODOS los números y una unidad de caudal (si existe) del campo flow.raw.
-    """
-    s = _clean(raw_text or "")
-    if not s:
-        return [], None
+# ================================================================
+# CONVERSIONES
+# ================================================================
 
-    nums = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", s)]
-    m = re.search(r"\b(GPH|LPH|GPD|LPD)\b", s.upper())
-    unit = m.group(1) if m else None
-    return nums, unit
-
-
-def _extract_flow_pairs(raw_text: str) -> List[Tuple[float, str]]:
-    """Extrae pares (valor, unidad) tipo 72 GPD, 3 GPH, etc."""
-    s = _clean(raw_text or "")
-    if not s:
-        return []
-    out: List[Tuple[float, str]] = []
-    for mm in re.finditer(r"(\d+(?:\.\d+)?)\s*(GPH|LPH|GPD|LPD)\b", s.upper()):
-        out.append((float(mm.group(1)), mm.group(2).upper()))
-    return out
-
-def _flow_to_gph(value: float, unit: str) -> Optional[float]:
+def _convert_flow_value(value: float, unit: str) -> Optional[float]:
     unit = (unit or "").upper()
     if unit == "GPH":
         return value
@@ -139,22 +135,53 @@ def _flow_to_gph(value: float, unit: str) -> Optional[float]:
         return (value / 24.0) / 3.78541
     return None
 
-def _same_flow_dual_unit(a_val: float, a_unit: str, b_val: float, b_unit: str, rel_tol: float = 0.06) -> bool:
-    ag = _flow_to_gph(a_val, a_unit)
-    bg = _flow_to_gph(b_val, b_unit)
-    if ag is None or bg is None:
-        return False
-    denom = max(abs(ag), abs(bg), 1e-9)
-    return abs(ag - bg) / denom <= rel_tol
+
+def _convert_flow(raw: str, unit: str) -> Optional[float]:
+    nominal = _extract_nominal(raw)
+    if nominal is None:
+        return None
+    return _convert_flow_value(nominal, unit)
+
+
+def _convert_pressure(raw: str, unit: str) -> Optional[float]:
+    nominal = _extract_nominal(raw)
+    if nominal is None:
+        return None
+    unit = (unit or "").upper()
+    if unit in {"PSI", "PSIG"}:
+        return nominal
+    if unit == "BAR":
+        return nominal * 14.5038
+    return None
+
+
+def _convert_temp(raw: str, unit: str) -> Optional[float]:
+    nominal = _extract_nominal(raw)
+    if nominal is None:
+        return None
+    unit = (unit or "").upper()
+    if unit in {"C", "°C"}:
+        return nominal
+    if unit in {"F", "°F"}:
+        return (nominal - 32.0) * 5.0 / 9.0
+    return None
+
+
+def _convert_visc(raw: str, unit: str) -> Optional[float]:
+    unit = (unit or "").upper()
+    if unit == "CP":
+        return _extract_nominal(raw)
+    return None
+
 
 # ================================================================
-# LLM SEMÁNTICO
+# LLM (opcional)
 # ================================================================
 
 async def _ask_llm_for_value_and_unit(raw: str, field: str) -> Optional[Dict[str, Any]]:
-    """
-    Solo se usa cuando NO hay número explícito.
-    """
+    """Solo se usa cuando NO hay número explícito y el cliente existe."""
+    if _client is None:
+        return None
     try:
         prompt = f"""
 Convierte el parámetro '{field}' en JSON estricto:
@@ -170,126 +197,57 @@ Entrada: "{raw}"
 
 Si NO puede inferirse, responde: null
 """
-        res = client.chat.completions.create(
-            model="gpt-4o-mini",
+        res = _client.chat.completions.create(
+            model=os.getenv("NORMALIZER_LLM_MODEL", "gpt-4o-mini"),
             messages=[{"role": "user", "content": prompt}],
             temperature=0.0,
         )
-        txt = res.choices[0].message["content"].strip()
-
+        txt = (res.choices[0].message["content"] or "").strip()
         if txt.lower() == "null":
             return None
-
         data = json.loads(txt)
         if isinstance(data, dict) and "value" in data and "unit" in data:
             return data
         return None
-
     except Exception:
         return None
 
 
 async def _ask_llm_for_unit_only(raw: str, field: str) -> Optional[str]:
-    if client is None:
+    if _client is None:
         return None
-
     try:
         prompt = f"""
 Identifica SOLO la unidad del parámetro '{field}'.
 Entrada: "{raw}"
 Responde únicamente la unidad (ej: "GPH") o null.
 """
-        res = client.chat.completions.create(
-            model="gpt-4o-mini",
+        res = _client.chat.completions.create(
+            model=os.getenv("NORMALIZER_LLM_MODEL", "gpt-4o-mini"),
             messages=[{"role": "user", "content": prompt}],
             temperature=0.0,
         )
-        unit = res.choices[0].message["content"].strip().upper()
-
+        unit = (res.choices[0].message["content"] or "").strip().upper()
         all_units = FLOW_UNITS | PRESSURE_UNITS | TEMP_UNITS | VISC_UNITS
-        if unit in all_units:
-            return unit
-        return None
-
+        return unit if unit in all_units else None
     except Exception:
         return None
 
-# ================================================================
-# CONVERSIONES
-# ================================================================
-
-def _convert_flow(raw: str, unit: str) -> Optional[float]:
-    nominal = _extract_nominal(raw)
-    if nominal is None:
-        return None
-
-    unit = (unit or "").upper()
-    if unit == "GPH":
-        return nominal
-    if unit == "LPH":
-        return nominal / 3.78541
-    if unit == "GPD":
-        return nominal / 24.0
-    if unit == "LPD":
-        return (nominal / 24.0) / 3.78541
-    return None
-
-
-def _convert_pressure(raw: str, unit: str) -> Optional[float]:
-    nominal = _extract_nominal(raw)
-    if nominal is None:
-        return None
-
-    unit = (unit or "").upper()
-    if unit in {"PSI", "PSIG"}:
-        return nominal
-    if unit == "BAR":
-        return nominal * 14.5038
-    return None
-
-
-def _convert_temp(raw: str, unit: str) -> Optional[float]:
-    nominal = _extract_nominal(raw)
-    if nominal is None:
-        return None
-
-    unit = (unit or "").upper()
-    if unit in {"C", "°C"}:
-        return nominal
-    if unit in {"F", "°F"}:
-        return (nominal - 32.0) * 5.0 / 9.0
-    return None
-
-
-def _convert_visc(raw: str, unit: str) -> Optional[float]:
-    unit = (unit or "").upper()
-    if unit == "CP":
-        return _extract_nominal(raw)
-    return None
 
 # ================================================================
 # NORMALIZAR PARÁMETRO ESCALAR
 # ================================================================
 
-async def _normalize_param(raw_value: Any, field: str, allowed_units: set, convert_func):
+async def _normalize_param(raw_value: Any, field: str, allowed_units: set, convert_func, std_unit: str):
     """
-    Normaliza un parámetro escalar (pressure, temperature, viscosity)
-    a su unidad estándar.
+    Normaliza un parámetro escalar (pressure, temperature, viscosity) a su unidad estándar.
     """
     if raw_value is None:
         return None, None
 
     # Caso: el RAG ya devolvió un número "crudo" sin unidad → asumimos estándar.
     if isinstance(raw_value, (int, float)):
-        val = float(raw_value)
-        # Asumimos que ya viene en la unidad estándar del campo.
-        if field == "pressure":
-            return val, PRESSURE_STD
-        if field == "temperature":
-            return val, TEMP_STD
-        if field == "viscosity":
-            return val, VISC_STD
-        return val, None
+        return float(raw_value), std_unit
 
     raw_str = _clean(str(raw_value))
     if not raw_str:
@@ -302,24 +260,51 @@ async def _normalize_param(raw_value: Any, field: str, allowed_units: set, conve
         # unidad explícita válida
         if raw_unit in allowed_units:
             std = convert_func(raw_str, raw_unit)
-            return std, list(allowed_units)[0]
+            return std, std_unit
 
-        # pedir unidad al LLM
+        # pedir unidad al LLM (solo si está disponible)
         unit2 = await _ask_llm_for_unit_only(raw_str, field)
         if unit2:
             std = convert_func(raw_str, unit2)
-            return std, list(allowed_units)[0]
+            return std, std_unit
 
         return None, None
 
-    # 2) No hay número → LLM semántico
+    # 2) No hay número → LLM semántico (si hay cliente)
     sem = await _ask_llm_for_value_and_unit(raw_str, field)
     if sem is None:
         return None, None
 
     fake_raw = f"{sem['value']} {sem['unit']}"
     std = convert_func(fake_raw, sem["unit"])
-    return std, list(allowed_units)[0]
+    return std, std_unit
+
+
+# ================================================================
+# NORMALIZAR FLUJO ROBUSTO
+# ================================================================
+
+def _extract_flow_values_gph(raw_text: str) -> List[float]:
+    """
+    Extrae TODAS las ocurrencias value+unit en flow.raw y las convierte a GPH.
+    Maneja textos con múltiples unidades (p.ej. "72 GPD (3 GPH)").
+    """
+    s = _clean(raw_text or "") or ""
+    vals: List[float] = []
+    for m in _FLOW_VU_RE.finditer(s):
+        v = _to_float(m.group(1))
+        u = m.group(2).upper()
+        if v is None:
+            continue
+        gph = _convert_flow_value(v, u)
+        if gph is not None:
+            vals.append(gph)
+    return vals
+
+
+def _text_mentions_nominal(raw_text: str) -> bool:
+    return bool(re.search(r"\b(nominal|rated)\b", raw_text or "", re.IGNORECASE))
+
 
 # ================================================================
 # NORMALIZAR BOMBA COMPLETA
@@ -328,92 +313,93 @@ async def _normalize_param(raw_value: Any, field: str, allowed_units: set, conve
 async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     out = dict(p)
 
-        # ------------------------------------------------------------
-    # FLUJO (min–max–nominal) con heurística industrial
+    # ------------------------------------------------------------
+    # FLUJO (min–max–nominal) con heurística industrial robusta
     # ------------------------------------------------------------
     flow_raw = p.get("flow", {}) or {}
+    if not isinstance(flow_raw, dict):
+        flow_raw = {}
+
     raw_min = flow_raw.get("min")
     raw_nom = flow_raw.get("nominal")
     raw_max = flow_raw.get("max")
-    raw_text = flow_raw.get("raw") or ""
+    raw_text = str(flow_raw.get("raw") or "")
 
-    # 1) Detectar unidad primaria y números (para rangos reales)
-    nums, unit_txt = _extract_flow_numbers_and_unit(raw_text)
-    unit_txt = unit_txt or "GPH"  # fallback conservador
+    # 1) Si vienen min/max numéricos, convertirlos usando unidad deducida del texto
+    # 2) Si NO vienen, intentar deducir desde value+unit en texto (convertidos a GPH)
+    vals_gph = _extract_flow_values_gph(raw_text)
 
-    # 2) Airbag para dual-unit equivalente: "72 GPD (3 GPH)" → NO es rango
-    pairs = _extract_flow_pairs(raw_text)
-    if len(pairs) >= 2 and _same_flow_dual_unit(pairs[0][0], pairs[0][1], pairs[1][0], pairs[1][1]):
-        # Preferimos el valor en GPH si está presente; si no, el primero.
-        chosen_val, chosen_unit = pairs[0]
-        for v, u in pairs[:3]:
-            if u == "GPH":
-                chosen_val, chosen_unit = v, u
-                break
+    def _coerce_flow(v) -> Optional[float]:
+        if v is None:
+            return None
+        if isinstance(v, (int, float)):
+            # OJO: si viene ya numérico, se asume que está en la unidad del texto si detectable,
+            # pero para evitar inventar, si no hay unidad en texto asumimos GPH.
+            unit = None
+            m = re.search(r"\b(GPH|GPD|LPH|LPD)\b", raw_text.upper())
+            unit = m.group(1) if m else "GPH"
+            return _convert_flow(str(v), unit)
+        try:
+            v2 = _to_float(str(v))
+            if v2 is None:
+                return None
+            m = re.search(r"\b(GPH|GPD|LPH|LPD)\b", raw_text.upper())
+            unit = m.group(1) if m else "GPH"
+            return _convert_flow(str(v2), unit)
+        except Exception:
+            return None
 
-        raw_min = None
-        # NO inventamos nominal
-        raw_nom = raw_nom if raw_nom is not None else None
-        raw_max = chosen_val
-        unit_txt = chosen_unit
-        nums = [chosen_val]
+    fmin_std = _coerce_flow(raw_min)
+    fmax_std = _coerce_flow(raw_max)
 
-    # Detectar si el texto menciona "nominal"
-    has_nominal_word = bool(re.search(r"nominal", raw_text, re.IGNORECASE))
+    if fmin_std is None or fmax_std is None:
+        if vals_gph:
+            # si hay múltiples valores, usar min/max de los valores convertidos
+            mn = min(vals_gph)
+            mx = max(vals_gph)
+            if fmin_std is None:
+                fmin_std = mn
+            if fmax_std is None:
+                fmax_std = mx
+    # Heurísticas industriales adicionales:
+    # - Si el texto indica "hasta / up to / max" y los valores convertidos colapsan al mismo número,
+    #   interpretarlo como un máximo (sin mínimo).
+    if vals_gph and re.search(r"\b(hasta|up to|máx|max)\b", raw_text, re.IGNORECASE):
+        mx = max(vals_gph)
+        fmax_std = mx
+        # si no hay pista clara de mínimo, lo anulamos
+        if not re.search(r"\b(desde|min(?:\.|imo)?|mín(?:\.|imo)?)\b", raw_text, re.IGNORECASE):
+            fmin_std = None
 
-    # Detectar textos tipo "hasta / up to" (máximo)
-    up_to_in_text = bool(re.search(r"\b(hasta|up to|max\.?|máx\.?)\b", str(raw_text), re.IGNORECASE))
-    has_dash_range = bool(re.search(r"\d\s*[-–—]\s*\d", str(raw_text)))
+    # - Si por errores del extractor vienen invertidos, intercambiar
+    if fmin_std is not None and fmax_std is not None and fmin_std > fmax_std:
+        fmin_std, fmax_std = fmax_std, fmin_std
 
-    # === MIN ===
-    min_val_str = None
-    if raw_min is not None:
-        min_val_str = str(raw_min)
-    elif (not up_to_in_text) and len(nums) >= 1:
-        # si es "hasta X", preferimos no inventar min
-        min_val_str = str(nums[0])
 
-    fmin_std = _convert_flow(min_val_str, unit_txt) if min_val_str is not None else None
-
-    # === MAX ===
-    max_val_str = None
-    if raw_max is not None:
-        max_val_str = str(raw_max)
-    elif len(nums) >= 2:
-        max_val_str = str(nums[1])
-    elif up_to_in_text and len(nums) >= 1:
-        max_val_str = str(nums[0])
-
-    fmax_std = _convert_flow(max_val_str, unit_txt) if max_val_str is not None else None
-
-    # === NOMINAL ===
+    # nominal: SOLO si el texto menciona nominal explícito y existe raw_nom
     nominal_std = None
-    if raw_nom is not None and has_nominal_word:
-        # Solo consideramos nominal si el texto menciona nominal explícitamente
-        same_as_min = (raw_min is not None and raw_nom == raw_min)
-        same_as_max = (raw_max is not None and raw_nom == raw_max)
-        if not same_as_min and not same_as_max:
-            nominal_std = _convert_flow(str(raw_nom), unit_txt)
-
-    # Si el texto dice "hasta" y NO es rango real, forzamos nominal None
-    if up_to_in_text and not has_dash_range:
-        nominal_std = None
+    if raw_nom is not None and _text_mentions_nominal(raw_text):
+        # evitar duplicar min/max
+        try:
+            if raw_min is not None and raw_nom == raw_min:
+                nominal_std = None
+            elif raw_max is not None and raw_nom == raw_max:
+                nominal_std = None
+            else:
+                nominal_std = _coerce_flow(raw_nom)
+        except Exception:
+            nominal_std = None
 
     out["flow_min_std"] = fmin_std
     out["flow_nominal_std"] = nominal_std
     out["flow_max_std"] = fmax_std
     out["flow_unit_std"] = FLOW_STD
 
-# ------------------------------------------------------------
+    # ------------------------------------------------------------
     # PRESIÓN
     # ------------------------------------------------------------
     dp_raw = p.get("discharge_pressure")
-    dp_std, _unit_dp = await _normalize_param(
-        dp_raw,
-        "pressure",
-        PRESSURE_UNITS,
-        _convert_pressure,
-    )
+    dp_std, _ = await _normalize_param(dp_raw, "pressure", PRESSURE_UNITS, _convert_pressure, PRESSURE_STD)
     out["discharge_pressure_std"] = dp_std
     out["discharge_pressure_unit"] = PRESSURE_STD
 
@@ -421,12 +407,7 @@ async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     # TEMPERATURA
     # ------------------------------------------------------------
     temp_raw = (p.get("optional") or {}).get("temperature")
-    temp_std, _unit_t = await _normalize_param(
-        temp_raw,
-        "temperature",
-        TEMP_UNITS,
-        _convert_temp,
-    )
+    temp_std, _ = await _normalize_param(temp_raw, "temperature", TEMP_UNITS, _convert_temp, TEMP_STD)
     out["temperature_std"] = temp_std
     out["temperature_unit"] = TEMP_STD
 
@@ -434,16 +415,12 @@ async def normalize_pump(p: Dict[str, Any]) -> Dict[str, Any]:
     # VISCOSIDAD
     # ------------------------------------------------------------
     visc_raw = p.get("viscosity")
-    visc_std, _unit_v = await _normalize_param(
-        visc_raw,
-        "viscosity",
-        VISC_UNITS,
-        _convert_visc,
-    )
+    visc_std, _ = await _normalize_param(visc_raw, "viscosity", VISC_UNITS, _convert_visc, VISC_STD)
     out["viscosity_std"] = visc_std
     out["viscosity_unit"] = VISC_STD
 
     return out
+
 
 # ================================================================
 # API PRINCIPAL PARA extract_and_normalize.py
@@ -457,20 +434,12 @@ async def normalize_result(raw_json: Dict[str, Any]) -> Dict[str, Any]:
       "notes": "...",
       ...
     }
-
-    Devuelve:
-    {
-      "pumps": [ bombas con *_std ],
-      "notes": "...",
-      "units": { ... }
-    }
     """
     pumps = raw_json.get("pumps", []) or []
     pumps_norm = []
-
     for p in pumps:
-        pumps_norm.append(await normalize_pump(p))
-
+        if isinstance(p, dict):
+            pumps_norm.append(await normalize_pump(p))
     normalized = {
         "pumps": pumps_norm,
         "notes": raw_json.get("notes", ""),
@@ -485,18 +454,14 @@ async def normalize_result(raw_json: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def save_normalized(normalized: Dict[str, Any], case_id: int):
-    """
-    Guarda normalized.json en:
-        raggrafo/rag_storage/case_{case_id}/normalized.json
-    """
+    """Guarda normalized.json en raggrafo/rag_storage/case_{case_id}/normalized.json"""
     case_dir = os.path.join(BASE_STORAGE, f"case_{case_id}")
     os.makedirs(case_dir, exist_ok=True)
-
     out_path = os.path.join(case_dir, "normalized.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(normalized, f, ensure_ascii=False, indent=2)
-
     print(f"\n✔ Normalizado guardado en: {out_path}\n")
+
 
 # ================================================================
 # CLI MANUAL (opcional)
