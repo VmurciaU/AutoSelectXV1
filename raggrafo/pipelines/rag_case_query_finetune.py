@@ -10,6 +10,7 @@ Fixes principales:
 - ✅ Fallback determinístico adicional: si NO existe outputs/cases/<id> (PC4/PC5),
   intenta extraer tags directamente desde PDFs del caso (shared_data/inbox, rag_storage, etc.)
 - ✅ No limita artificialmente cantidad de bombas: si detecta N tags, extrae N.
+- ✅ Anti-cache cruzado: namespace con [CASE_ID=] en TODAS las queries al RAG.
 
 Compatibilidad:
 - pc6_lightrag.py
@@ -27,7 +28,7 @@ import re
 import copy
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Union, Optional, Iterable
+from typing import Any, Dict, List, Union, Optional
 
 import pandas as pd
 import numpy as np
@@ -45,6 +46,7 @@ except Exception:  # pragma: no cover
     CFG = None
 
 CaseId = Union[int, str]
+
 
 # ================================================================
 # POSTPROCESSOR (duplicación por fallback-text)
@@ -79,8 +81,13 @@ def apply_pump_count_postprocessor(pumps: list, fb_text: str) -> list:
             return [copy.deepcopy(base) for _ in range(n)]
 
     # 3) "dos bombas", "tres bombas"
-    WORD2NUM = {"una": 1, "un": 1, "dos": 2, "tres": 3, "cuatro": 4, "cinco": 5, "seis": 6, "siete": 7, "ocho": 8, "nueve": 9}
-    pat_word = re.search(r"\b(una|un|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\s+bombas?\b", text)
+    WORD2NUM = {
+        "una": 1, "un": 1, "dos": 2, "tres": 3, "cuatro": 4, "cinco": 5,
+        "seis": 6, "siete": 7, "ocho": 8, "nueve": 9
+    }
+    pat_word = re.search(
+        r"\b(una|un|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\s+bombas?\b", text
+    )
     if pat_word:
         n = WORD2NUM.get(pat_word.group(1), 1)
         if n > 1:
@@ -89,14 +96,27 @@ def apply_pump_count_postprocessor(pumps: list, fb_text: str) -> list:
 
     return pumps
 
+
+# ================================================================
+# ANTI-CACHE CRUZADO (namespace por case_id)
+# ================================================================
+
+def _namespace_question(case_id: Any, question: str) -> str:
+    # prefijo estable que no afecta semántica pero cambia el cache-key
+    return f"[CASE_ID={case_id}] {question}"
+
+
 # ================================================================
 # HELPERS BÁSICOS
 # ================================================================
 
-async def _safe_aquery(rag, question: str, query_param=None, **kwargs):
+async def _safe_aquery(rag, case_id: Any, question: str, query_param=None, **kwargs):
     """Wrapper seguro para rag.aquery() (async o sync)."""
     if rag is None:
         raise RuntimeError("RAG no inicializado")
+
+    # ✅ anti-cache cruzado
+    question = _namespace_question(case_id, question)
 
     # kwargs ignorados (compatibilidad futura)
     if query_param is None and CFG is not None and hasattr(CFG, "MODES"):
@@ -112,6 +132,7 @@ async def _safe_aquery(rag, question: str, query_param=None, **kwargs):
     if inspect.iscoroutinefunction(fn):
         return await fn(question, query_param)
     return fn(question, query_param)
+
 
 async def _load_rag(case_id: CaseId):
     """Carga el RAG construido por PC6/PC7 para un caso específico."""
@@ -131,6 +152,7 @@ async def _load_rag(case_id: CaseId):
 
     return rag
 
+
 # ================================================================
 # REGEX de unidades (pistas adicionales RAW)
 # ================================================================
@@ -140,6 +162,7 @@ PRESSURE_PATTERN = re.compile(r"(\d+(?:\.\d+)?)\s*(psig|psi|bar|kg/cm2)\b", re.I
 TEMP_PATTERN = re.compile(r"(-?\d+(?:\.\d+)?)\s*(°F|°C|F|C)\b", re.IGNORECASE)
 VISC_PATTERN = re.compile(r"(\d+(?:\.\d+)?)\s*(cP|cSt)\b", re.IGNORECASE)
 DENS_PATTERN = re.compile(r"(\d+(?:\.\d+)?)\s*(kg/m3|g/cm3)\b", re.IGNORECASE)
+
 
 def _extract_unit(pattern, text: str) -> Dict[str, Any]:
     """
@@ -170,6 +193,7 @@ def _extract_unit(pattern, text: str) -> Dict[str, Any]:
 
     return {"value": value, "unit": unit}
 
+
 def _extract_numbers_from_text(text: str) -> List[float]:
     if not text:
         return []
@@ -181,6 +205,7 @@ def _extract_numbers_from_text(text: str) -> List[float]:
         except ValueError:
             continue
     return out
+
 
 # ================================================================
 # FIX GENÉRICO DE FLOW (para TODAS las bombas)
@@ -222,6 +247,7 @@ def _fix_pump_flow(pump: Dict[str, Any]) -> Dict[str, Any]:
     pump["flow"] = flow
     return pump
 
+
 def _postprocess_result(result: Dict[str, Any]) -> Dict[str, Any]:
     pumps = result.get("pumps") or []
     fixed: List[Dict[str, Any]] = []
@@ -230,11 +256,12 @@ def _postprocess_result(result: Dict[str, Any]) -> Dict[str, Any]:
     result["pumps"] = fixed
     return result
 
+
 # ================================================================
 # DISCOVERY DE TAGS (LLM)
 # ================================================================
 
-async def _discover_pumps_primary(rag) -> List[str]:
+async def _discover_pumps_primary(rag, case_id: int) -> List[str]:
     prompt = """
 Analiza TODOS los documentos del caso (HD, MR, ET, P&ID).
 
@@ -254,7 +281,7 @@ Reglas IMPORTANTES:
 - NO inventes TAGs. Solo devuelve los que realmente aparezcan.
 - Si no estás seguro, usa una lista vacía: "tags": [].
 """
-    resp = await _safe_aquery(rag, prompt)
+    resp = await _safe_aquery(rag, case_id, prompt)
     safe = repair_and_parse(resp)
     if isinstance(safe, dict):
         tags = safe.get("tags") or []
@@ -262,7 +289,8 @@ Reglas IMPORTANTES:
             return [str(t).strip() for t in tags if str(t).strip()]
     return []
 
-async def _discover_pumps_secondary(rag) -> List[str]:
+
+async def _discover_pumps_secondary(rag, case_id: int) -> List[str]:
     prompt = """
 Lista TODOS los equipos dosificadores del paquete químico en formato JSON estricto:
 {
@@ -270,7 +298,7 @@ Lista TODOS los equipos dosificadores del paquete químico en formato JSON estri
 }
 NO inventes datos. Si no hay equipos claros, usa "tags": [].
 """
-    resp = await _safe_aquery(rag, prompt)
+    resp = await _safe_aquery(rag, case_id, prompt)
     safe = repair_and_parse(resp)
     if isinstance(safe, dict):
         tags = safe.get("tags") or []
@@ -278,24 +306,24 @@ NO inventes datos. Si no hay equipos claros, usa "tags": [].
             return [str(t).strip() for t in tags if str(t).strip()]
     return []
 
+
 # ================================================================
 # DISCOVERY determinístico: tablas/corpus + PDFs
 # ================================================================
 
-# Token tipo TAG con guiones (sin espacios)
 _TAG_TOKEN_RE = re.compile(r"\b[A-Z0-9]{1,12}(?:-[A-Z0-9]{1,16}){1,10}\b")
-# Index + TAG (permite "1 M-INY-QUIM-LOC05")
 _INDEXED_TAG_RE = re.compile(r"\b(\d{1,3})\s+([A-Z][A-Z0-9]{0,10}(?:-[A-Z0-9]{1,16}){1,10})\b")
-# Une tags partidos por salto de línea: "M-INY-QUIM-\nLOC05" -> "M-INY-QUIM-LOC05"
 _BROKEN_HYPHEN_RE = re.compile(r"([A-Z0-9])-\s*\n\s*([A-Z0-9])")
 
 _BAD_PREFIXES = ("DNC-", "SER-", "EDP-", "API-", "ISO-", "IEC-")
+
 
 def _safe_upper(s: Any) -> str:
     try:
         return str(s).strip()
     except Exception:
         return ""
+
 
 def _normalize_text_for_tags(text: str) -> str:
     if not text:
@@ -305,6 +333,7 @@ def _normalize_text_for_tags(text: str) -> str:
     t = _BROKEN_HYPHEN_RE.sub(r"\1-\2", t)
     t = re.sub(r"[ \t]+", " ", t)
     return t
+
 
 def _extract_tag_tokens(text: str) -> List[str]:
     """
@@ -333,6 +362,7 @@ def _extract_tag_tokens(text: str) -> List[str]:
 
     return sorted(tokens)
 
+
 def _find_case_outputs_dir(case_id: CaseId) -> Optional[Path]:
     """Encuentra outputs/cases/<case_id> en layouts típicos (Render/WSL)."""
     env = os.getenv("RAG_CASE_OUTPUTS_DIR", "").strip()
@@ -356,6 +386,7 @@ def _find_case_outputs_dir(case_id: CaseId) -> Optional[Path]:
         except Exception:
             continue
     return None
+
 
 def _discover_skid_pump_mapping_from_pc4(case_id: CaseId) -> Dict[str, List[str]]:
     """
@@ -384,17 +415,21 @@ def _discover_skid_pump_mapping_from_pc4(case_id: CaseId) -> Dict[str, List[str]
         return out
 
     for _table_uid, g in df.groupby("table_uid", dropna=False):
-        g2 = g.sort_values(by=[c for c in ["_page", "_table_idx", "_row"] if c in g.columns], kind="stable")
+        g2 = g.sort_values(
+            by=[c for c in ["_page", "_table_idx", "_row"] if c in g.columns],
+            kind="stable",
+        )
 
         col_stats = {}
         for c in ccols:
             vals = [_safe_upper(v) for v in g2[c].tolist()]
             tok_lists = [_extract_tag_tokens(v) for v in vals]
             tok_count = sum(len(tl) for tl in tok_lists)
-            uniq = len(set([t for tl in tok_lists for t in tl]))
             avg_len = np.mean([len(t) for tl in tok_lists for t in tl]) if tok_count else 0
-            skid_hits = sum(1 for v in vals if any(k in str(v).upper() for k in ["INY", "QUIM", "SKID", "LOC"]))
-            col_stats[c] = {"tok_count": tok_count, "uniq": uniq, "avg_len": avg_len, "skid_hits": skid_hits}
+            skid_hits = sum(
+                1 for v in vals if any(k in str(v).upper() for k in ["INY", "QUIM", "SKID", "LOC"])
+            )
+            col_stats[c] = {"tok_count": tok_count, "avg_len": avg_len, "skid_hits": skid_hits}
 
         if not col_stats:
             continue
@@ -411,7 +446,6 @@ def _discover_skid_pump_mapping_from_pc4(case_id: CaseId) -> Dict[str, List[str]
             if not skid_tokens or not pump_tokens:
                 continue
 
-            # skid = token más largo (estable)
             skid = max(skid_tokens, key=len).strip()
             clean = [t for t in pump_tokens if t and t != skid]
             if not clean:
@@ -423,12 +457,14 @@ def _discover_skid_pump_mapping_from_pc4(case_id: CaseId) -> Dict[str, List[str]
         out[skid] = sorted(list(dict.fromkeys([p.strip() for p in pts if p and str(p).strip()])))
     return out
 
+
 def _discover_skid_pump_mapping_from_corpus(case_id: CaseId) -> Dict[str, List[str]]:
     """Fallback: co-ocurrencias de tags en líneas de corpus.jsonl."""
     out: Dict[str, List[str]] = {}
     case_out = _find_case_outputs_dir(case_id)
     if not case_out:
         return out
+
     corpus_path = None
     for p in case_out.rglob("corpus.jsonl"):
         corpus_path = p
@@ -462,14 +498,6 @@ def _discover_skid_pump_mapping_from_corpus(case_id: CaseId) -> Dict[str, List[s
         out[skid] = sorted(list(dict.fromkeys([p.strip() for p in pts if p and str(p).strip()])))
     return out
 
-def _collect_tag_candidates_from_case(case_id: CaseId) -> Optional[set]:
-    cand: set[str] = set()
-    for m in (_discover_skid_pump_mapping_from_pc4(case_id), _discover_skid_pump_mapping_from_corpus(case_id)):
-        for skid, pts in (m or {}).items():
-            cand.add(str(skid).strip().upper())
-            for p in (pts or []):
-                cand.add(str(p).strip().upper())
-    return cand if cand else None
 
 def _find_case_pdfs(case_id: CaseId) -> List[Path]:
     """
@@ -482,17 +510,14 @@ def _find_case_pdfs(case_id: CaseId) -> List[Path]:
     """
     cid = str(case_id).strip()
 
-    # 1) Estructura real que YA tienes en Render
     inbox_case = Path("shared_data") / "inbox" / cid
     if inbox_case.exists():
         return sorted(inbox_case.rglob("*.pdf"))
 
-    # 2) Variación
     inbox_case2 = Path("shared_data") / "inbox" / f"case_{cid}"
     if inbox_case2.exists():
         return sorted(inbox_case2.rglob("*.pdf"))
 
-    # 3) Env override (si lo usas)
     env = os.getenv("RAG_CASE_PDF_DIR", "").strip()
     if env:
         p = Path(env) / cid
@@ -502,7 +527,6 @@ def _find_case_pdfs(case_id: CaseId) -> List[Path]:
         if p2.exists():
             return sorted(p2.rglob("*.pdf"))
 
-    # IMPORTANTÍSIMO: NO usar inbox global ni rglob global
     return []
 
 
@@ -518,7 +542,6 @@ def _harvest_tags_from_pdfs(case_id: CaseId) -> List[str]:
 
     pdfs = _find_case_pdfs(case_id)
     print(f"[PDFS] case_id={case_id} count={len(pdfs)} head={[str(p) for p in pdfs[:5]]}")
-
 
     if not pdfs:
         return []
@@ -536,7 +559,6 @@ def _harvest_tags_from_pdfs(case_id: CaseId) -> List[str]:
                     txt = page.extract_text() or ""
                     _add_from_text(txt)
 
-                    # tablas
                     try:
                         tables = page.extract_tables() or []
                     except Exception:
@@ -549,17 +571,16 @@ def _harvest_tags_from_pdfs(case_id: CaseId) -> List[str]:
         except Exception:
             continue
 
-    # Filtrar candidatos demasiado genéricos (muy cortos) y limpiar
     cleaned = []
     for t in sorted(found):
         ts = str(t).strip()
         if not ts:
             continue
-        # descartar tokens puramente numéricos
         if re.fullmatch(r"\d+", ts):
             continue
         cleaned.append(ts)
     return cleaned
+
 
 def _harvest_pump_tags_deterministic(case_id: CaseId) -> List[str]:
     """
@@ -567,18 +588,15 @@ def _harvest_pump_tags_deterministic(case_id: CaseId) -> List[str]:
       1) mapping SKID->PUMP (tablas/corpus)
       2) corpus.jsonl completo
       3) PDFs del caso (si no hay outputs/cases)
-    NO filtra por prefijos rígidos.
     """
     out: set[str] = set()
 
-    # 1) mapping skid->pump
     for m in (_discover_skid_pump_mapping_from_pc4(case_id), _discover_skid_pump_mapping_from_corpus(case_id)):
         for skid, pts in (m or {}).items():
             out.add(str(skid).strip().upper())
             for p in (pts or []):
                 out.add(str(p).strip().upper())
 
-    # 2) scan corpus completo (si existe)
     case_out = _find_case_outputs_dir(case_id)
     if case_out:
         corpus_path = next(iter(case_out.rglob("corpus.jsonl")), None)
@@ -596,25 +614,22 @@ def _harvest_pump_tags_deterministic(case_id: CaseId) -> List[str]:
             except Exception:
                 pass
     else:
-        # 3) si no hay outputs, intenta PDFs
         for tg in _harvest_tags_from_pdfs(case_id):
             out.add(tg.upper())
 
-    # Filtro anti-ruido final: descartar docs/normas y tags sin dígitos
     cleaned = []
     for t in sorted(out):
         if not t:
             continue
         if t.startswith(_BAD_PREFIXES):
             continue
-        # permitir "BOMBA-1" etc; pero exigir al menos un dígito global
         if not any(ch.isdigit() for ch in t):
             continue
-        # limitar tamaño
         if len(t) > 60:
             continue
         cleaned.append(t)
     return cleaned
+
 
 # ================================================================
 # EXTRAER UNA BOMBA POR TAG (Método A + Método B)
@@ -632,7 +647,8 @@ def _looks_like_valid_single_pump_dict(d: Dict[str, Any]) -> bool:
     only_text = (set(d.keys()) <= {"text", "answer"})
     return not only_text
 
-async def _extract_single_by_tag(rag, tag: str, skid_tag: Optional[str] = None) -> Dict[str, Any]:
+
+async def _extract_single_by_tag(rag, case_id: int, tag: str, skid_tag: Optional[str] = None) -> Dict[str, Any]:
     """
     Extraer una bomba por TAG:
       - Método A: CFG.EXTRACT_CONFIG.prompt_json_single (JSON)
@@ -644,7 +660,7 @@ async def _extract_single_by_tag(rag, tag: str, skid_tag: Optional[str] = None) 
     base_prompt = CFG.EXTRACT_CONFIG.get("prompt_json_single", "")
     q = f"{base_prompt}\n\nPregunta:\nDame todos los datos de proceso de la bomba {tag}"
 
-    resp = await _safe_aquery(rag, q, CFG.EXTRACT_CONFIG.get("query_param"))
+    resp = await _safe_aquery(rag, case_id, q, CFG.EXTRACT_CONFIG.get("query_param"))
     safe_a = repair_and_parse(resp)
 
     if isinstance(safe_a, dict) and _looks_like_valid_single_pump_dict(safe_a):
@@ -693,7 +709,7 @@ async def _extract_single_by_tag(rag, tag: str, skid_tag: Optional[str] = None) 
     eng_mode = CFG.MODES.get("engineering", {}) or {}
     eng_qp = eng_mode.get("query_param")
 
-    eng = await _safe_aquery(rag, f"Describe técnicamente los datos de proceso de {tag}", eng_qp)
+    eng = await _safe_aquery(rag, case_id, f"Describe técnicamente los datos de proceso de {tag}", eng_qp)
     text = eng.get("text") if isinstance(eng, dict) else str(eng)
 
     pump = {
@@ -710,11 +726,12 @@ async def _extract_single_by_tag(rag, tag: str, skid_tag: Optional[str] = None) 
     }
     return _fix_pump_flow(pump)
 
+
 # ================================================================
 # TABLAS (cuando no hay tags claros)
 # ================================================================
 
-async def _extract_from_tables(rag, question: str) -> List[Dict[str, Any]]:
+async def _extract_from_tables(rag, case_id: int, question: str) -> List[Dict[str, Any]]:
     prompt = """
 Extrae TODAS las bombas dosificadoras únicamente desde TABLAS
 (en hojas de datos, MR, ET, etc.) y responde en JSON estricto:
@@ -731,7 +748,7 @@ Extrae TODAS las bombas dosificadoras únicamente desde TABLAS
   ]
 }
 """
-    resp = await _safe_aquery(rag, f"{prompt}\n\nPregunta:\n{question}")
+    resp = await _safe_aquery(rag, case_id, f"{prompt}\n\nPregunta:\n{question}")
     safe = repair_and_parse(resp)
 
     pumps: List[Dict[str, Any]] = []
@@ -740,6 +757,7 @@ Extrae TODAS las bombas dosificadoras únicamente desde TABLAS
             if isinstance(p, dict):
                 pumps.append(_fix_pump_flow(p))
     return pumps
+
 
 # ================================================================
 # MULTIPASO 80/20 (PIPELINE INDUSTRIAL)
@@ -771,35 +789,36 @@ async def _run_extract_multipaso(case_id: int, rag, question: str, mode: str) ->
     if det_tags:
         pumps: List[Dict[str, Any]] = []
         for t in det_tags:
-            pumps.append(await _extract_single_by_tag(rag, t, pump_to_skid.get(str(t).upper())))
+            pumps.append(await _extract_single_by_tag(rag, case_id, t, pump_to_skid.get(str(t).upper())))
         return {"pumps": pumps, "notes": "ok-deterministic"}
 
     # 1 — primary LLM
-    tags = await _discover_pumps_primary(rag)
+    tags = await _discover_pumps_primary(rag, case_id)
     print(f"[DISCOVERY] primary tags count={len(tags)} head={tags[:10]}")
     if tags:
         pumps: List[Dict[str, Any]] = []
         for t in tags:
-            pumps.append(await _extract_single_by_tag(rag, t, pump_to_skid.get(str(t).upper())))
+            pumps.append(await _extract_single_by_tag(rag, case_id, t, pump_to_skid.get(str(t).upper())))
         return {"pumps": pumps, "notes": "ok-primary"}
 
     # 2 — secondary LLM
-    tags2 = await _discover_pumps_secondary(rag)
+    tags2 = await _discover_pumps_secondary(rag, case_id)
     print(f"[DISCOVERY] secondary tags count={len(tags2)} head={tags2[:10]}")
     if tags2:
         pumps: List[Dict[str, Any]] = []
         for t in tags2:
-            pumps.append(await _extract_single_by_tag(rag, t, pump_to_skid.get(str(t).upper())))
+            pumps.append(await _extract_single_by_tag(rag, case_id, t, pump_to_skid.get(str(t).upper())))
         return {"pumps": pumps, "notes": "ok-secondary"}
 
     # 3 — tablas con pregunta
-    tbl1 = await _extract_from_tables(rag, question)
+    tbl1 = await _extract_from_tables(rag, case_id, question)
     if tbl1:
         return {"pumps": tbl1, "notes": "ok-tables-question"}
 
     # 4 — tablas genéricas
     tbl2 = await _extract_from_tables(
         rag,
+        case_id,
         "Listado completo de bombas dosificadoras del paquete químico con todos "
         "sus datos de proceso (caudal mínimo, nominal y máximo, presión, "
         "temperatura, viscosidad, servicio y TAG).",
@@ -821,13 +840,14 @@ async def _run_extract_multipaso(case_id: int, rag, question: str, mode: str) ->
         "temperatura, viscosidad, servicio y TAG)."
     )
 
-    fb = await _safe_aquery(rag, fb_prompt + f"\n\nPregunta:\n{canonical_q}", fb_qp)
+    fb = await _safe_aquery(rag, case_id, fb_prompt + f"\n\nPregunta:\n{canonical_q}", fb_qp)
     safe_fb = repair_and_parse(fb)
 
     if isinstance(safe_fb, dict) and isinstance(safe_fb.get("pumps"), list):
         return {"pumps": safe_fb["pumps"], "notes": "fallback-A", "_fallback_text": fb}
 
     return {"pumps": [], "notes": "fallback-invalid", "_fallback_text": fb}
+
 
 # ================================================================
 # API PÚBLICA
@@ -852,7 +872,10 @@ async def extract_query(
 
         if isinstance(result, dict) and isinstance(result.get("pumps"), list):
             fb_text = result.get("_fallback_text") or ""
-            has_explicit_tags = any(isinstance(p, dict) and (p.get("optional") or {}).get("tag") for p in (result.get("pumps") or []))
+            has_explicit_tags = any(
+                isinstance(p, dict) and (p.get("optional") or {}).get("tag")
+                for p in (result.get("pumps") or [])
+            )
             if (not has_explicit_tags) and fb_text:
                 result["pumps"] = apply_pump_count_postprocessor(result["pumps"], fb_text)
 
@@ -867,7 +890,7 @@ async def extract_query(
         mode_cfg = CFG.MODES.get(mode) or {}
         query_param = mode_cfg.get("query_param")
 
-    out = await _safe_aquery(rag, question, query_param)
+    out = await _safe_aquery(rag, case_id, question, query_param)
 
     if isinstance(out, dict):
         text = out.get("text") or out.get("answer")
@@ -880,12 +903,14 @@ async def extract_query(
 
     return {"final": text, "raw": raw, "error": None}
 
+
 # ================================================================
 # CLI LEGACY
 # ================================================================
 
 async def run_case_query_finetune(case_id: CaseId, mode: str, question: str):
     return await extract_query(int(case_id), question, mode)
+
 
 if __name__ == "__main__":
     ap = __import__("argparse").ArgumentParser()
