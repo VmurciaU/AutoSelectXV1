@@ -473,54 +473,38 @@ def _collect_tag_candidates_from_case(case_id: CaseId) -> Optional[set]:
 
 def _find_case_pdfs(case_id: CaseId) -> List[Path]:
     """
-    Intenta localizar PDFs del caso cuando no hay outputs/cases.
-    Busca en:
-      - shared_data/inbox (varias variantes)
-      - rag_storage/case_<id> (si guarda originales)
-      - variable RAG_CASE_PDF_DIR (si existe)
+    Localiza PDFs SOLO del caso (anti-mezcla, production-safe).
+    Prioridad:
+      1) shared_data/inbox/<case_id>/
+      2) shared_data/inbox/case_<case_id>/
+      3) RAG_CASE_PDF_DIR/<case_id>/ (si existe)
+    Si no encuentra nada, retorna [] (NO mezclar).
     """
-    roots: List[Path] = []
+    cid = str(case_id).strip()
+
+    # 1) Estructura real que YA tienes en Render
+    inbox_case = Path("shared_data") / "inbox" / cid
+    if inbox_case.exists():
+        return sorted(inbox_case.rglob("*.pdf"))
+
+    # 2) Variación
+    inbox_case2 = Path("shared_data") / "inbox" / f"case_{cid}"
+    if inbox_case2.exists():
+        return sorted(inbox_case2.rglob("*.pdf"))
+
+    # 3) Env override (si lo usas)
     env = os.getenv("RAG_CASE_PDF_DIR", "").strip()
     if env:
-        roots.append(Path(env))
+        p = Path(env) / cid
+        if p.exists():
+            return sorted(p.rglob("*.pdf"))
+        p2 = Path(env) / f"case_{cid}"
+        if p2.exists():
+            return sorted(p2.rglob("*.pdf"))
 
-    # variantes comunes en tu proyecto
-    roots += [
-        Path("shared_data") / "inbox",
-        Path("/opt/render/project/src/shared_data/inbox"),
-        Path("/home/user/AutoSelectXV1/shared_data/inbox"),
-        Path(RAG_STORAGE_DIR),
-    ]
+    # IMPORTANTÍSIMO: NO usar inbox global ni rglob global
+    return []
 
-    candidates: List[Path] = []
-    for r in roots:
-        try:
-            if not r.exists():
-                continue
-            # buscar pdfs cercanos al case_id
-            for p in r.rglob("*.pdf"):
-                # heurística: si el nombre o la ruta contiene case_id
-                if str(case_id) in p.name or f"case_{case_id}" in str(p.parent) or f"/{case_id}/" in str(p):
-                    candidates.append(p)
-            # si no encontró por case id, igual lista (para casos donde inbox no separa por id)
-            if not candidates and r.name.lower() == "inbox":
-                candidates.extend(list(r.glob("*.pdf")))
-        except Exception:
-            continue
-
-    # dedup estable
-    uniq: List[Path] = []
-    seen = set()
-    for p in candidates:
-        try:
-            rp = str(p.resolve())
-        except Exception:
-            rp = str(p)
-        if rp in seen:
-            continue
-        seen.add(rp)
-        uniq.append(p)
-    return uniq
 
 def _harvest_tags_from_pdfs(case_id: CaseId) -> List[str]:
     """
@@ -533,6 +517,9 @@ def _harvest_tags_from_pdfs(case_id: CaseId) -> List[str]:
         return []
 
     pdfs = _find_case_pdfs(case_id)
+    print(f"[PDFS] case_id={case_id} count={len(pdfs)} head={[str(p) for p in pdfs[:5]]}")
+
+
     if not pdfs:
         return []
 
